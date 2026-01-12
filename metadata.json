@@ -1,0 +1,9 @@
+{
+  "name": "Copy of Demo Prototype: AD6.Ai SMART HSE SUITE ",
+  "description": "AI-Integrated Health, Safety, and Environment suite ensuring 100% UAE regulatory compliance (ADNOC, OSHAD) with AD6.Ai predictive intelligence.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

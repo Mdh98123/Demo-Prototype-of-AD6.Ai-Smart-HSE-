@@ -1,0 +1,334 @@
+
+import React, { useState, useEffect } from 'react';
+import { HealthMetricRecord, OccupationalHealthIncident } from '../types';
+import { analyzeHealthTrends } from '../services/geminiService';
+import { 
+  HeartPulse, Activity, Thermometer, Droplets, Stethoscope, 
+  AlertTriangle, BrainCircuit, Loader2, Sparkles, Plus, 
+  Search, ShieldCheck, History, Clock, GraduationCap, ArrowUpRight, MapPin,
+  ChevronRight, BookOpen, UserCheck, ShieldAlert, Zap
+} from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useUser } from '../contexts/UserContext';
+
+interface HealthAIResult {
+  trendSummary: string;
+  riskLevel: string;
+  suggestedInterventions: string[];
+  trainingRecommendations: {
+    title: string;
+    rationale: string;
+    priority: 'High' | 'Medium' | 'Low';
+  }[];
+}
+
+const HealthMonitoringModule: React.FC = () => {
+  const { currentUser } = useUser();
+  const [activeTab, setActiveTab] = useState<'Metrics' | 'Incidents' | 'AI Insights'>('Metrics');
+  
+  const [loading, setLoading] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<HealthAIResult | null>(null);
+
+  // Mock Data
+  const [metrics] = useState<HealthMetricRecord[]>([
+    { id: '1', employeeId: 'u6', employeeName: 'Rahul Gupta', timestamp: '2024-05-20 09:00', bloodPressure: '120/80', heartRate: 72, bodyTemp: 37.1, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '2', employeeId: 'u5', employeeName: 'Fatima Al-Kaabi', timestamp: '2024-05-20 09:15', bloodPressure: '135/85', heartRate: 88, bodyTemp: 37.8, hydrationLevel: 'Low', fitnessForDuty: 'Restricted' }
+  ]);
+
+  const [incidents] = useState<OccupationalHealthIncident[]>([
+    { id: 'H1', type: 'Heat Stress', description: 'Worker reported dizziness after 2 hours in direct sun.', severity: 'Moderate', timestamp: '2024-05-18', location: 'Zone B Excavation', status: 'Resolved' },
+    { id: 'H2', type: 'Respiratory', description: 'Coughing reports in Sector 4 storage unit.', severity: 'Minor', timestamp: '2024-05-19', location: 'Chemical Zone A', status: 'Under Observation' }
+  ]);
+
+  const heatIndexData = [
+    { time: '08:00', value: 32 }, { time: '10:00', value: 38 }, { time: '12:00', value: 45 }, { time: '14:00', value: 48 }, { time: '16:00', value: 42 }
+  ];
+
+  const handleRunAI = async () => {
+    setLoading(true);
+    try {
+      const result = await analyzeHealthTrends(metrics, incidents);
+      setAiAnalysis(result);
+    } catch (e) {
+      alert("AI Health analysis failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const isManagement = ['Board_Director', 'CEO', 'Head_Group_HSE', 'Regional_HSE_Director', 'Site_HSE_Manager'].includes(currentUser.role);
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-4">
+          <div className="flex items-center space-x-5">
+            <div className="bg-rose-600 p-4 rounded-2xl text-white shadow-xl shadow-rose-500/20">
+                <HeartPulse size={28} />
+            </div>
+            <div>
+                <h2 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">Health Monitoring</h2>
+                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Occupational Wellness & Fitness for Duty</p>
+            </div>
+          </div>
+          <div className="flex bg-slate-200 p-1 rounded-2xl w-fit shadow-inner">
+              {['Metrics', 'Incidents', 'AI Insights'].map(tab => (
+                  <button 
+                    key={tab}
+                    onClick={() => setActiveTab(tab as any)}
+                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-white text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                      {tab}
+                  </button>
+              ))}
+          </div>
+      </div>
+
+      {activeTab === 'Metrics' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-8 space-y-6">
+                  <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                      <div className="flex justify-between items-center mb-8">
+                          <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                              <History size={16} className="text-rose-500"/> Recent Health Screenings
+                          </h3>
+                          <button className="bg-slate-900 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                              <Plus size={14}/> Log Check-in
+                          </button>
+                      </div>
+                      <div className="space-y-4">
+                          {metrics.map(m => (
+                              <div key={m.id} className="p-6 rounded-[2rem] border-2 border-slate-50 bg-white hover:border-rose-100 transition-all shadow-sm group">
+                                  <div className="flex justify-between items-start">
+                                      <div className="flex items-center gap-4">
+                                          <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-black group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                                              {m.employeeName.charAt(0)}
+                                          </div>
+                                          <div>
+                                              <h4 className="font-black text-slate-800 text-sm uppercase tracking-tight">{m.employeeName}</h4>
+                                              <p className="text-[10px] text-slate-400 font-bold uppercase">{m.timestamp}</p>
+                                          </div>
+                                      </div>
+                                      <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                                          m.fitnessForDuty === 'Fit' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-orange-50 text-orange-700 border-orange-100'
+                                      }`}>{m.fitnessForDuty} For Duty</span>
+                                  </div>
+                                  <div className="grid grid-cols-4 gap-4 mt-6">
+                                      <div className="text-center">
+                                          <p className="text-[8px] font-black text-slate-400 uppercase">BP</p>
+                                          <p className="text-xs font-bold text-slate-700">{m.bloodPressure}</p>
+                                      </div>
+                                      <div className="text-center">
+                                          <p className="text-[8px] font-black text-slate-400 uppercase">Rate</p>
+                                          <p className="text-xs font-bold text-slate-700">{m.heartRate} bpm</p>
+                                      </div>
+                                      <div className="text-center">
+                                          <p className="text-[8px] font-black text-slate-400 uppercase">Temp</p>
+                                          <p className="text-xs font-bold text-slate-700">{m.bodyTemp}°C</p>
+                                      </div>
+                                      <div className="text-center">
+                                          <p className="text-[8px] font-black text-slate-400 uppercase">Hydration</p>
+                                          <span className={`text-[10px] font-black ${m.hydrationLevel === 'Optimal' ? 'text-emerald-600' : 'text-orange-600'}`}>{m.hydrationLevel}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          ))}
+                      </div>
+                  </div>
+              </div>
+              <div className="lg:col-span-4 space-y-6">
+                  <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-8 opacity-10"><Activity size={100}/></div>
+                      <h3 className="text-xs font-black text-teal-400 uppercase tracking-widest mb-6">Site Heat Stress Index</h3>
+                      <div className="h-40 w-full mb-6">
+                          <ResponsiveContainer width="100%" height="100%">
+                              <AreaChart data={heatIndexData}>
+                                  <Area type="monotone" dataKey="value" stroke="#14b8a6" fill="#14b8a6" fillOpacity={0.2} strokeWidth={3}/>
+                                  <Tooltip contentStyle={{backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff'}}/>
+                              </AreaChart>
+                          </ResponsiveContainer>
+                      </div>
+                      <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center gap-4">
+                          <div className="bg-orange-500 p-2 rounded-xl"><AlertTriangle size={16}/></div>
+                          <div>
+                              <p className="text-xs font-black uppercase">Category IV Alert</p>
+                              <p className="text-[10px] text-slate-400 mt-1">Mandatory 15m rest every hour required.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100">
+                      <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><GraduationCap size={14}/> Health Training</h3>
+                      <div className="space-y-3">
+                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
+                              <div>
+                                  <p className="text-xs font-black text-slate-800 uppercase tracking-tight">Heat Stress Awareness</p>
+                                  <p className="text-[9px] text-slate-500 uppercase">92% Completion</p>
+                              </div>
+                              <ArrowUpRight size={14} className="text-slate-300 group-hover:text-rose-500 transition-colors"/>
+                          </div>
+                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
+                              <div>
+                                  <p className="text-xs font-black text-slate-800 uppercase tracking-tight">Advanced First Aid</p>
+                                  <p className="text-[9px] text-slate-500 uppercase">Due for 4 Staff</p>
+                              </div>
+                              <ArrowUpRight size={14} className="text-slate-300 group-hover:text-rose-500 transition-colors"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      )}
+
+      {activeTab === 'Incidents' && (
+          <div className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {incidents.map(inc => (
+                      <div key={inc.id} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
+                          <div className={`absolute top-0 left-0 w-2 h-full ${inc.severity === 'Severe' ? 'bg-red-500' : 'bg-orange-500'}`} />
+                          <div className="flex justify-between items-start mb-6">
+                              <div>
+                                  <span className={`text-[9px] font-black uppercase px-2 py-1 rounded-full border ${inc.severity === 'Severe' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-orange-50 text-orange-700 border-orange-100'}`}>{inc.severity} Severity</span>
+                                  <h4 className="text-xl font-black text-slate-800 uppercase tracking-tighter mt-3 leading-none">{inc.type} Incident</h4>
+                              </div>
+                              <div className="text-right">
+                                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{inc.timestamp}</p>
+                                  <p className="text-xs font-bold text-slate-600 mt-1 flex items-center gap-1 justify-end"><MapPin size={10}/> {inc.location}</p>
+                              </div>
+                          </div>
+                          <p className="text-sm text-slate-600 font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl italic">"{inc.description}"</p>
+                          <div className="mt-6 pt-6 border-t border-slate-50 flex justify-between items-center">
+                              <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-widest border border-indigo-100">{inc.status}</span>
+                              <button className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-rose-600 flex items-center gap-2">Follow-up Log <ArrowUpRight size={14}/></button>
+                          </div>
+                      </div>
+                  ))}
+                  <div className="bg-white border-4 border-dashed border-slate-100 rounded-[2.5rem] flex flex-col items-center justify-center p-12 text-center group cursor-pointer hover:border-rose-300 transition-all">
+                      <div className="bg-slate-50 p-6 rounded-full group-hover:bg-rose-50 transition-colors mb-4">
+                          <Plus size={32} className="text-slate-300 group-hover:text-rose-500"/>
+                      </div>
+                      <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">Log Occupational Issue</h4>
+                      <p className="text-xs text-slate-400 font-medium mt-1">Record workforce health alerts or illnesses.</p>
+                  </div>
+              </div>
+          </div>
+      )}
+
+      {activeTab === 'AI Insights' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+              {loading ? (
+                  <div className="bg-white h-[400px] rounded-[3rem] flex flex-col items-center justify-center p-20 text-center border border-slate-100 shadow-inner">
+                      <Loader2 className="animate-spin text-rose-500 mb-6" size={48} />
+                      <p className="text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Synthesizing Bio-Telemetry & Site Hazards...</p>
+                  </div>
+              ) : aiAnalysis ? (
+                  <div className="bg-slate-900 rounded-[3rem] p-12 text-white shadow-3xl relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-12 opacity-5 text-rose-400 pointer-events-none"><Stethoscope size={300} /></div>
+                      
+                      <div className="flex justify-between items-start mb-12 relative z-10 border-b border-white/10 pb-10">
+                          <div className="flex items-center gap-6">
+                              <div className="bg-rose-500 p-5 rounded-3xl shadow-2xl shadow-rose-500/40">
+                                  <BrainCircuit size={40} />
+                              </div>
+                              <div>
+                                  <p className="text-[10px] font-black text-rose-400 uppercase tracking-[0.3em] mb-1">AD6.Ai Health Diagnostic</p>
+                                  <h3 className="text-3xl font-black uppercase tracking-tighter">Workforce Wellness Intelligence</h3>
+                              </div>
+                          </div>
+                          <div className="text-right">
+                              <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">Aggregate Risk</p>
+                              <div className={`text-4xl font-black tracking-tighter ${
+                                  aiAnalysis.riskLevel === 'Low' ? 'text-emerald-400' : aiAnalysis.riskLevel === 'Moderate' ? 'text-yellow-400' : 'text-rose-400'
+                              }`}>{aiAnalysis.riskLevel}</div>
+                          </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                          <div className="space-y-8">
+                              <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
+                                  <h4 className="text-xs font-black text-teal-400 uppercase tracking-widest mb-6 flex items-center gap-2"><Sparkles size={16}/> Strategic Trend Summary</h4>
+                                  <p className="text-lg font-bold text-slate-200 leading-relaxed italic border-l-4 border-rose-500 pl-8 py-2">
+                                      "{aiAnalysis.trendSummary}"
+                                  </p>
+                              </div>
+                              <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
+                                  <h4 className="text-xs font-black text-rose-400 uppercase tracking-widest mb-6 flex items-center gap-2"><ShieldCheck size={16}/> Recommended Interventions</h4>
+                                  <div className="grid gap-4">
+                                      {aiAnalysis.suggestedInterventions.map((item, i) => (
+                                          <div key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 group hover:bg-white/10 transition-all">
+                                              <div className="w-2 h-2 rounded-full bg-rose-500 mt-2 shrink-0 group-hover:scale-125 transition-transform" />
+                                              <p className="text-sm font-bold text-slate-300">{item}</p>
+                                          </div>
+                                      ))}
+                                  </div>
+                              </div>
+                          </div>
+                          <div className="space-y-8">
+                              <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                                  <div className="absolute top-0 right-0 p-8 opacity-5 text-slate-900 group-hover:scale-110 transition-transform duration-1000"><GraduationCap size={200} /></div>
+                                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-8 flex items-center gap-3 relative z-10">
+                                      <Zap size={18} className="text-yellow-500"/> AI Training Blueprint
+                                  </h4>
+                                  
+                                  <div className="space-y-6 relative z-10">
+                                      {aiAnalysis.trainingRecommendations.map((rec, i) => (
+                                          <div key={i} className="p-6 rounded-3xl border-2 border-slate-50 bg-slate-50/50 hover:bg-white hover:border-rose-100 transition-all shadow-sm group/item">
+                                              <div className="flex justify-between items-start mb-4">
+                                                  <div className="flex items-center gap-4">
+                                                      <div className={`p-3 rounded-2xl shadow-md ${
+                                                          rec.priority === 'High' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600'
+                                                      }`}>
+                                                          <BookOpen size={20}/>
+                                                      </div>
+                                                      <div>
+                                                          <h5 className="font-black text-slate-800 text-sm uppercase tracking-tight">{rec.title}</h5>
+                                                          <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full border mt-1 inline-block ${
+                                                              rec.priority === 'High' ? 'bg-rose-50 text-rose-700 border-rose-100' : 'bg-slate-100 text-slate-500 border-slate-200'
+                                                          }`}>{rec.priority} Priority</span>
+                                                      </div>
+                                                  </div>
+                                                  <button className="p-2 text-slate-300 hover:text-rose-600 transition-colors">
+                                                      <ChevronRight size={20}/>
+                                                  </button>
+                                              </div>
+                                              <p className="text-xs text-slate-600 leading-relaxed font-bold italic border-l-2 border-rose-500 pl-4">
+                                                  {rec.rationale}
+                                              </p>
+                                              <div className="mt-6 flex justify-end">
+                                                  <button className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-rose-600 transition-all active:scale-95 shadow-lg">
+                                                      <UserCheck size={14}/> Deploy to Department
+                                                  </button>
+                                              </div>
+                                          </div>
+                                      ))}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div className="mt-12 flex justify-end relative z-10">
+                          <button className="bg-white text-slate-900 px-10 py-5 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-3xl hover:bg-slate-100 transition-all active:scale-95 flex items-center gap-3">
+                              Generate Full Compliance Dossier <ArrowUpRight size={20}/>
+                          </button>
+                      </div>
+                  </div>
+              ) : (
+                  <div className="bg-white border-2 border-dashed border-slate-100 rounded-[3rem] h-[400px] flex flex-col items-center justify-center p-20 text-center">
+                      <div className="bg-slate-50 p-8 rounded-full mb-6 animate-pulse">
+                          <Stethoscope size={64} className="opacity-20" />
+                      </div>
+                      <h3 className="text-2xl font-black text-slate-700 uppercase tracking-tighter">AI Health Lab Awaiting Execution</h3>
+                      <p className="text-sm text-slate-400 mt-3 max-w-sm font-medium italic">Execute workforce diagnostic to identify occupational health risks and UAE compliance gaps.</p>
+                      <button 
+                          onClick={handleRunAI}
+                          className="mt-10 bg-rose-600 text-white px-12 py-5 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-2xl shadow-rose-500/30 hover:bg-rose-700 transition-all active:scale-95 flex items-center gap-3"
+                      >
+                          <BrainCircuit size={24}/> Run Population Analysis
+                      </button>
+                  </div>
+              )}
+          </div>
+      )}
+    </div>
+  );
+};
+
+export default HealthMonitoringModule;
