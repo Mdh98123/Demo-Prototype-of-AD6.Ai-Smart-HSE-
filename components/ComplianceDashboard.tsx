@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   LineChart, Line, Legend, AreaChart, Area, Cell, PieChart, Pie
@@ -7,30 +7,32 @@ import {
 import { 
   Gavel, ShieldAlert, CheckCircle, AlertTriangle, Clock, Landmark, 
   FileText, ArrowUpRight, TrendingUp, Info, Scale, Target, Calendar,
-  Activity, Zap, ShieldCheck, Filter, BrainCircuit, ChevronRight
+  Activity, Zap, ShieldCheck, Filter, BrainCircuit, ChevronRight,
+  ChevronDown, ChevronUp, BookOpen, FileCheck, AlertOctagon
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { View } from '../types';
 
+// Updated Mock Data to match specific UAE Frameworks (ADNOC, OSHAD, DM, MoHRE)
 const authorityCompliance = [
-  { name: 'OSHAD-SF', compliance: 96, ncrCount: 2, status: 'Compliant', color: '#14b8a6' },
-  { name: 'DM-Code', compliance: 88, ncrCount: 5, status: 'Correction Pending', color: '#f59e0b' },
-  { name: 'MoHRE', compliance: 100, ncrCount: 0, status: 'Verified', color: '#10b981' },
-  { name: 'Trakhees', compliance: 92, ncrCount: 1, status: 'Compliant', color: '#6366f1' },
+  { name: 'ADNOC COP', compliance: 94, ncrCount: 1, status: 'Compliant', color: '#0066CC' }, // Brand Blue
+  { name: 'OSHAD SF', compliance: 96, ncrCount: 2, status: 'Compliant', color: '#14b8a6' }, // Teal
+  { name: 'DM Code', compliance: 88, ncrCount: 5, status: 'Correction Pending', color: '#f59e0b' }, // Amber
+  { name: 'MoHRE', compliance: 100, ncrCount: 0, status: 'Verified', color: '#10b981' }, // Emerald
 ];
 
 const complianceTrend = [
-  { month: 'Jan', overall: 85, oshad: 82, dm: 88 },
-  { month: 'Feb', overall: 88, oshad: 86, dm: 84 },
-  { month: 'Mar', overall: 92, oshad: 90, dm: 91 },
-  { month: 'Apr', overall: 90, oshad: 94, dm: 85 },
-  { month: 'May', overall: 95, oshad: 96, dm: 88 },
+  { month: 'Jan', overall: 85, oshad: 82, dm: 88, adnoc: 80 },
+  { month: 'Feb', overall: 88, oshad: 86, dm: 84, adnoc: 85 },
+  { month: 'Mar', overall: 92, oshad: 90, dm: 91, adnoc: 89 },
+  { month: 'Apr', overall: 90, oshad: 94, dm: 85, adnoc: 92 },
+  { month: 'May', overall: 95, oshad: 96, dm: 88, adnoc: 94 },
 ];
 
 const deadlineData = [
-  { id: '1', title: 'OSHAD Q2 Performance Report', authority: 'OSHAD', date: '2024-06-30', status: 'Upcoming', priority: 'High' },
+  { id: '1', title: 'ADNOC COP V6.0 Gap Analysis', authority: 'ADNOC', date: '2024-06-25', status: 'In Progress', priority: 'High' },
   { id: '2', title: 'DM Midday Break Certification', authority: 'Dubai Mun.', date: '2024-06-15', status: 'Awaiting Evidence', priority: 'Critical' },
-  { id: '3', title: 'Trakhees HSE Plan Update', authority: 'Trakhees', date: '2024-07-10', status: 'Planned', priority: 'Medium' },
+  { id: '3', title: 'OSHAD Q2 Performance Report', authority: 'OSHAD', date: '2024-06-30', status: 'Upcoming', priority: 'Medium' },
 ];
 
 interface ComplianceDashboardProps {
@@ -39,9 +41,31 @@ interface ComplianceDashboardProps {
 
 const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate }) => {
   const { activeFramework } = useUser();
+  const [activeRegTab, setActiveRegTab] = useState<'ADNOC' | 'OSHAD'>('ADNOC');
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const activeNCRs = useMemo(() => authorityCompliance.reduce((acc, curr) => acc + curr.ncrCount, 0), []);
   const avgCompliance = useMemo(() => Math.round(authorityCompliance.reduce((acc, curr) => acc + curr.compliance, 0) / authorityCompliance.length), []);
+
+  const adnocElements = [
+    { id: 'COP-1', title: 'HSE Administration', status: 'Compliant', score: 100, gaps: [] },
+    { id: 'COP-2', title: 'Risk Management', status: 'Partial', score: 85, gaps: ['JSA review cycle overdue'] },
+    { id: 'COP-3', title: 'Occupational Health', status: 'Compliant', score: 95, gaps: [] },
+    { id: 'COP-4', title: 'Environment Protection', status: 'Compliant', score: 92, gaps: [] },
+    { id: 'COP-5', title: 'Emergency Response', status: 'Critical', score: 60, gaps: ['Evacuation drill pending for Zone B'] },
+  ];
+
+  const oshadElements = [
+    { id: 'SF-1', title: 'Leadership & Commitment', status: 'Compliant', score: 100, gaps: [] },
+    { id: 'SF-2', title: 'Risk Management', status: 'Compliant', score: 98, gaps: [] },
+    { id: 'SF-3', title: 'Competence & Training', status: 'Partial', score: 88, gaps: ['First aid certs expiring for 5 staff'] },
+    { id: 'SF-4', title: 'Audit & Inspection', status: 'Compliant', score: 94, gaps: [] },
+    { id: 'SF-5', title: 'Management Review', status: 'Compliant', score: 100, gaps: [] },
+  ];
+
+  const toggleSection = (id: string) => {
+    setExpandedSection(expandedSection === id ? null : id);
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-20">
@@ -136,6 +160,99 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Authority adherence comparison */}
           <div className="lg:col-span-7 space-y-8">
+              {/* Detailed Regulatory Breakdown Section */}
+              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                      <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
+                          <BookOpen size={20} className="text-indigo-600"/> Regulatory Detail Matrix
+                      </h3>
+                      <div className="flex bg-slate-100 p-1 rounded-xl">
+                          <button 
+                            onClick={() => setActiveRegTab('ADNOC')}
+                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'ADNOC' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                          >
+                              ADNOC COP
+                          </button>
+                          <button 
+                            onClick={() => setActiveRegTab('OSHAD')}
+                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'OSHAD' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                          >
+                              OSHAD SF
+                          </button>
+                      </div>
+                  </div>
+
+                  <div className="space-y-3">
+                      {(activeRegTab === 'ADNOC' ? adnocElements : oshadElements).map((el) => (
+                          <div key={el.id} className="border border-slate-100 rounded-2xl overflow-hidden transition-all hover:border-indigo-100">
+                              <button 
+                                onClick={() => toggleSection(el.id)}
+                                className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 transition-colors"
+                              >
+                                  <div className="flex items-center gap-4">
+                                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs ${
+                                          el.status === 'Compliant' ? 'bg-emerald-50 text-emerald-600' : 
+                                          el.status === 'Partial' ? 'bg-orange-50 text-orange-600' : 
+                                          'bg-red-50 text-red-600'
+                                      }`}>
+                                          {el.score}%
+                                      </div>
+                                      <div className="text-left">
+                                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{el.id}</p>
+                                          <h5 className="text-sm font-black text-slate-800 uppercase tracking-tight">{el.title}</h5>
+                                      </div>
+                                  </div>
+                                  <div className="flex items-center gap-4">
+                                      <span className={`px-2.5 py-1 rounded-lg text-[8px] font-black uppercase border ${
+                                          el.status === 'Compliant' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 
+                                          el.status === 'Partial' ? 'bg-orange-50 text-orange-700 border-orange-100' : 
+                                          'bg-red-50 text-red-700 border-red-100'
+                                      }`}>
+                                          {el.status}
+                                      </span>
+                                      {expandedSection === el.id ? <ChevronUp size={16} className="text-slate-400"/> : <ChevronDown size={16} className="text-slate-400"/>}
+                                  </div>
+                              </button>
+                              
+                              {expandedSection === el.id && (
+                                  <div className="p-6 bg-slate-50 border-t border-slate-100 animate-in slide-in-from-top-2 duration-200">
+                                      <div className="space-y-4">
+                                          <div>
+                                              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Compliance Status</p>
+                                              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                                                  <div 
+                                                    className={`h-full transition-all duration-1000 ${el.score > 90 ? 'bg-emerald-500' : el.score > 70 ? 'bg-orange-500' : 'bg-red-500'}`}
+                                                    style={{ width: `${el.score}%` }}
+                                                  ></div>
+                                              </div>
+                                          </div>
+                                          {el.gaps.length > 0 && (
+                                              <div>
+                                                  <p className="text-[9px] font-black text-red-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                      <AlertOctagon size={12}/> Identified Gaps
+                                                  </p>
+                                                  <ul className="space-y-2">
+                                                      {el.gaps.map((gap, i) => (
+                                                          <li key={i} className="text-xs font-bold text-slate-600 bg-white p-3 rounded-xl border border-red-100 flex items-center gap-3">
+                                                              <div className="w-1 h-1 rounded-full bg-red-400"></div>
+                                                              {gap}
+                                                          </li>
+                                                      ))}
+                                                  </ul>
+                                              </div>
+                                          )}
+                                          <div className="flex gap-3 pt-2">
+                                              <button className="flex-1 bg-white border border-slate-200 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-100 transition-all">View Evidence</button>
+                                              <button className="flex-1 bg-slate-900 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-slate-800 transition-all">Remediate Gap</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              )}
+                          </div>
+                      ))}
+                  </div>
+              </div>
+
               <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                   <div className="flex items-center justify-between mb-10">
                       <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
@@ -154,7 +271,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                               <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}} />
                               <Bar dataKey="compliance" name="Compliance %" radius={[10, 10, 0, 0]} barSize={40}>
                                   {authorityCompliance.map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={entry.compliance < 90 ? '#f59e0b' : '#14b8a6'} />
+                                      <Cell key={`cell-${index}`} fill={entry.color} />
                                   ))}
                               </Bar>
                           </BarChart>
@@ -196,8 +313,23 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                               <Tooltip contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}} />
                               <Area type="monotone" dataKey="overall" name="Global Adherence" stroke="#6366f1" strokeWidth={4} fillOpacity={1} fill="url(#colorOverall)" />
                               <Line type="monotone" dataKey="oshad" name="OSHAD Sync" stroke="#14b8a6" strokeWidth={2} dot={{r: 4}} />
+                              <Line type="monotone" dataKey="adnoc" name="ADNOC Sync" stroke="#0066CC" strokeWidth={2} dot={{r: 4}} />
                           </AreaChart>
                       </ResponsiveContainer>
+                  </div>
+                  <div className="flex gap-6 justify-center mt-2">
+                      <div className="flex items-center gap-2">
+                          <div className="w-3 h-1 bg-indigo-500 rounded-full"></div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase">Overall</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                          <div className="w-3 h-1 bg-teal-500 rounded-full"></div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase">OSHAD</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                          <div className="w-3 h-1 bg-blue-600 rounded-full"></div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase">ADNOC</span>
+                      </div>
                   </div>
               </div>
           </div>
@@ -282,7 +414,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                               <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">Recommended Strategic Shift</p>
                           </div>
                           <p className="text-sm font-bold leading-relaxed text-slate-200">
-                              Accelerate OSHAD SF 4.0 migration for "Ruwais Zone A" to align with Q3 reporting requirements and gain preferential tender status.
+                              Accelerate ADNOC COP V6.0 migration for "Ruwais Zone A" to align with Q3 reporting requirements and gain preferential tender status.
                           </p>
                       </div>
                   </div>

@@ -54,7 +54,7 @@ const EnvironmentalModule: React.FC = () => {
               <Activity className="text-red-600 mb-4" size={32}/>
               <span className="text-[10px] font-black text-red-400 uppercase tracking-widest">Noise Level</span>
               <div className="text-3xl font-black text-red-700">88<span className="text-xs ml-1">dB</span></div>
-              <p className="text-[10px] text-red-600 font-black mt-2 uppercase flex items-center gap-1"><AlertTriangle size={12}/> Critical > {KEZAD_LIMITS.NOISE_DAY}dB</p>
+              <p className="text-[10px] text-red-600 font-black mt-2 uppercase flex items-center gap-1"><AlertTriangle size={12}/> Critical &gt; {KEZAD_LIMITS.NOISE_DAY}dB</p>
           </div>
           <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center text-center">
               <Droplets className="text-teal-500 mb-4" size={32}/>

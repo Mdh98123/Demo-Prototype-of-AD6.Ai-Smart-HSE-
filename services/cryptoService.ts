@@ -1,22 +1,31 @@
 
-// This service provides client-side encryption for sensitive data stored in localStorage.
-// It uses the Web Crypto API (AES-GCM) to satisfy the "Data Encryption" audit requirement.
+import { Logger } from "./logger";
+
+/**
+ * 🚨 SECURITY WARNING 🚨
+ * 
+ * This service implements Client-Side Encryption (CSE) using the Web Crypto API.
+ * 
+ * IN THE CURRENT PROTOTYPE:
+ * The encryption key is generated in the browser and stored in localStorage alongside the data.
+ * This effectively protects against casual snooping but offers NO PROTECTION against an attacker 
+ * who has local access to the device or can inject XSS.
+ * 
+ * FOR PRODUCTION:
+ * 1. Keys must be managed by a secure backend (KMS).
+ * 2. Or, derive keys from user passwords using PBKDF2/Argon2 (Zero-knowledge arch).
+ * 3. Never store the raw key in localStorage.
+ */
 
 const ALGORITHM = 'AES-GCM';
 const KEY_STORAGE_NAME = 'ad6_hse_master_key';
 
 // Generate or retrieve the encryption key
 const getEncryptionKey = async (): Promise<CryptoKey> => {
-  // In a real production environment, this key would be derived from the user's password (PBKDF2)
-  // or managed via a secure enclave. For this simulation, we generate and store a persistent key
-  // in indexedDB or localStorage (simulated here as we can't use real secure storage without backend).
+  let keyJwkStr = localStorage.getItem(KEY_STORAGE_NAME);
   
-  // NOTE: Storing the key next to the data is not secure in reality, but satisfies the 
-  // "encryption at rest" requirement for the prototype scope by obfuscating the data payload.
-  
-  let keyJwk = localStorage.getItem(KEY_STORAGE_NAME);
-  
-  if (!keyJwk) {
+  if (!keyJwkStr) {
+    Logger.debug("Generating new local encryption key (Dev Mode)");
     const key = await window.crypto.subtle.generateKey(
       { name: ALGORITHM, length: 256 },
       true,
@@ -27,13 +36,18 @@ const getEncryptionKey = async (): Promise<CryptoKey> => {
     return key;
   }
 
-  return window.crypto.subtle.importKey(
-    'jwk',
-    JSON.parse(keyJwk),
-    { name: ALGORITHM },
-    true,
-    ['encrypt', 'decrypt']
-  );
+  try {
+    return await window.crypto.subtle.importKey(
+      'jwk',
+      JSON.parse(keyJwkStr),
+      { name: ALGORITHM },
+      true,
+      ['encrypt', 'decrypt']
+    );
+  } catch (error) {
+    Logger.error("Failed to import crypto key. Data may be unrecoverable.", error);
+    throw new Error("Crypto System Failure");
+  }
 };
 
 // Encrypt data
@@ -55,7 +69,7 @@ export const encryptData = async (data: any): Promise<string> => {
     
     return JSON.stringify({ iv: ivArray, content: contentArray });
   } catch (error) {
-    console.error("Encryption Failed:", error);
+    Logger.error("Encryption Failed", error);
     throw new Error("Data protection failure");
   }
 };
@@ -64,10 +78,14 @@ export const encryptData = async (data: any): Promise<string> => {
 export const decryptData = async (cipherText: string): Promise<any> => {
   try {
     const key = await getEncryptionKey();
-    const { iv, content } = JSON.parse(cipherText);
+    const parsed = JSON.parse(cipherText);
     
-    const ivArray = new Uint8Array(iv);
-    const contentArray = new Uint8Array(content);
+    if (!parsed.iv || !parsed.content) {
+        throw new Error("Invalid cipher format");
+    }
+
+    const ivArray = new Uint8Array(parsed.iv);
+    const contentArray = new Uint8Array(parsed.content);
 
     const decryptedContent = await window.crypto.subtle.decrypt(
       { name: ALGORITHM, iv: ivArray },
@@ -78,7 +96,7 @@ export const decryptData = async (cipherText: string): Promise<any> => {
     const decoded = new TextDecoder().decode(decryptedContent);
     return JSON.parse(decoded);
   } catch (error) {
-    console.error("Decryption Failed:", error);
-    return null; // Fail safe
+    Logger.error("Decryption Failed", error);
+    return null; // Return null on failure to allow graceful fallback
   }
 };

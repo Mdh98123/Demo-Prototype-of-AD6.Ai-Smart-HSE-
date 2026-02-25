@@ -48,6 +48,84 @@ const PlanningModule: React.FC = () => {
         approvals: [
             { role: 'Environmental Officer', name: 'Khalid Al-Dhaheri', date: '2024-05-15' }
         ]
+    },
+    {
+        id: 'PLN-004',
+        title: 'Traffic Management Plan - Zone B',
+        type: 'PHSP',
+        phase: 'Operations',
+        status: 'Approved',
+        version: '1.0',
+        lastUpdated: '2024-03-20',
+        approvals: [
+            { role: 'Site Manager', name: 'Sarah Jones', date: '2024-03-18' }
+        ]
+    },
+    {
+        id: 'PLN-005',
+        title: 'Waste Management Plan (Annual)',
+        type: 'EMP',
+        phase: 'Operations',
+        status: 'Draft',
+        version: '2.0',
+        lastUpdated: '2024-05-22',
+        approvals: []
+    },
+    {
+        id: 'PLN-006',
+        title: 'Work at Height Safety Strategy',
+        type: 'PHSP',
+        phase: 'Construction',
+        status: 'Client_Review',
+        version: '3.1',
+        lastUpdated: '2024-05-12',
+        approvals: [
+            { role: 'HSE Officer', name: 'Fatima Al-Kaabi', date: '2024-05-10' }
+        ]
+    },
+    {
+        id: 'PLN-007',
+        title: 'Fujairah Terminal Oil Spill Response',
+        type: 'ERP',
+        phase: 'Operations',
+        status: 'Approved',
+        version: '5.2',
+        lastUpdated: '2024-01-30',
+        approvals: [
+            { role: 'Regional Director', name: 'Ahmed Al-Mansoori', date: '2024-01-25' }
+        ]
+    },
+    {
+        id: 'PLN-008',
+        title: 'Lifting Operations Plan - Heavy',
+        type: 'PHSP',
+        phase: 'Execution',
+        status: 'Regulator_Review',
+        version: '1.1',
+        lastUpdated: '2024-05-20',
+        approvals: []
+    },
+    {
+        id: 'PLN-009',
+        title: 'Labor Welfare Plan (Summer)',
+        type: 'PHSP',
+        phase: 'Planning',
+        status: 'Draft',
+        version: '2.2',
+        lastUpdated: '2024-05-25',
+        approvals: []
+    },
+    {
+        id: 'PLN-010',
+        title: 'Site Decommissioning Strategy',
+        type: 'EMP',
+        phase: 'Decommissioning',
+        status: 'Approved',
+        version: '1.0',
+        lastUpdated: '2024-02-15',
+        approvals: [
+            { role: 'CEO', name: 'James Sterling', date: '2024-02-10' }
+        ]
     }
   ]);
 

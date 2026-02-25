@@ -4,7 +4,7 @@ import {
   MapPin, Navigation, X, Check, Crosshair, Loader2, Factory, Building, 
   Fuel, Truck, Warehouse, Map, Search, AlertCircle, Info, Activity, 
   ShieldAlert, Radio, Wind, Droplets, Zap, ChevronRight, BarChart3, Thermometer,
-  Filter, Tag, Globe
+  Filter, Tag, Globe, CheckCircle2
 } from 'lucide-react';
 import { searchLocationWithMaps } from '../services/geminiService';
 
@@ -99,6 +99,7 @@ interface LocationSelectorProps {
   label?: string;
   placeholder?: string;
   required?: boolean;
+  error?: string;
 }
 
 const LocationSelector: React.FC<LocationSelectorProps> = ({ 
@@ -106,13 +107,15 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
   onChange, 
   label = "Operational Site Zone",
   placeholder = "Search site zones or use map...",
-  required = false
+  required = false,
+  error
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchingMaps, setIsSearchingMaps] = useState(false);
   const [mapsResult, setMapsResult] = useState<PredefinedLocation | null>(null);
+  const [touched, setTouched] = useState(false);
   
   // Filtering States
   const [activeType, setActiveType] = useState<string | null>(null);
@@ -149,6 +152,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
     setSearchTerm('');
     setActiveType(null);
     setActiveStatus(null);
+    setTouched(true);
   };
 
   const handleMapsSearch = async () => {
@@ -188,16 +192,18 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
       }
   };
 
+  const isValid = value && !error;
+
   return (
     <div className="relative w-full">
       <div className="flex justify-between items-center mb-2">
-        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 ml-1">
             <Radio size={12} className={value ? "text-indigo-500 animate-pulse" : "text-slate-300"} />
             {label} {required && <span className="text-red-500">*</span>}
         </label>
-        {value && (
-            <span className="text-[9px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100 flex items-center gap-1">
-                <Check size={10}/> Authenticated
+        {isValid && (
+            <span className="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-1 animate-in fade-in">
+                <CheckCircle2 size={10}/> Location Locked
             </span>
         )}
       </div>
@@ -205,12 +211,18 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
       <div className="flex gap-2">
         <div className="relative flex-1">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search size={16} className={isOpen ? 'text-indigo-500' : 'text-slate-400'} />
+                <Search size={18} className={error ? 'text-red-400' : isOpen || value ? 'text-indigo-500' : 'text-slate-400'} />
             </div>
             <input
                 type="text"
-                className={`w-full pl-12 pr-10 py-4 bg-slate-50 border-2 rounded-2xl outline-none transition-all text-sm font-bold text-slate-700 placeholder:text-slate-400 placeholder:font-medium ${
-                    isOpen ? 'border-indigo-500 bg-white shadow-xl shadow-indigo-500/10' : 'border-transparent focus:border-indigo-500 focus:bg-white hover:bg-slate-100'
+                className={`w-full pl-12 pr-10 py-4 bg-white border rounded-2xl outline-none transition-all text-sm font-bold text-slate-700 placeholder:text-slate-400 placeholder:font-bold ${
+                    error 
+                        ? 'border-red-500 focus:border-red-500 bg-red-50/10' 
+                        : isOpen 
+                            ? 'border-indigo-500 bg-white shadow-xl shadow-indigo-500/10 ring-4 ring-indigo-500/10' 
+                            : value 
+                                ? 'border-emerald-500 focus:border-emerald-500'
+                                : 'border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 hover:border-slate-300'
                 }`}
                 placeholder={placeholder}
                 value={isOpen ? searchTerm : value}
@@ -218,7 +230,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
                     setSearchTerm(e.target.value);
                     if (!isOpen) setIsOpen(true);
                 }}
-                onFocus={() => setIsOpen(true)}
+                onFocus={() => { setIsOpen(true); setTouched(true); }}
                 onBlur={() => setTimeout(() => setIsOpen(false), 200)}
             />
             {value && !isOpen && (
@@ -234,16 +246,26 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
         <button
             type="button"
             onClick={() => setIsMapOpen(true)}
-            className="w-14 bg-slate-900 border-2 border-slate-900 rounded-2xl flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-xl active:scale-95 group/map"
+            className={`w-14 border-2 rounded-2xl flex items-center justify-center transition-all shadow-lg active:scale-95 group/map ${
+                error ? 'border-red-500 bg-red-500 text-white' : 'bg-slate-900 border-slate-900 text-white hover:bg-slate-800'
+            }`}
             title="Visual Site Navigator"
         >
             <Map size={22} className="group-hover/map:scale-110 transition-transform" />
         </button>
       </div>
+      
+      {/* Error Message */}
+      {error && (
+          <div className="flex items-center gap-1 mt-2 text-red-500 animate-in slide-in-from-top-1 ml-1">
+              <AlertCircle size={12} />
+              <p className="text-[10px] font-bold uppercase tracking-wide">{error}</p>
+          </div>
+      )}
 
       {/* Enhanced Typeahead Suggestions & Filters */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white border-2 border-slate-100 rounded-[1.5rem] shadow-3xl max-h-[500px] overflow-y-auto animate-in fade-in zoom-in-95 duration-150 origin-top">
+        <div className="absolute z-50 w-full mt-2 bg-white border border-slate-200 rounded-[1.5rem] shadow-2xl max-h-[500px] overflow-y-auto animate-in fade-in zoom-in-95 duration-150 origin-top">
             <div className="p-4 sticky top-0 bg-white/95 backdrop-blur-md z-10 border-b border-slate-50 space-y-4">
                 {searchTerm && (
                     <button 
@@ -265,10 +287,10 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
                       <button
                         key={t}
                         onMouseDown={(e) => { e.preventDefault(); setActiveType(activeType === t ? null : t); }}
-                        className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight transition-all border-2 ${
+                        className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight transition-all border ${
                           activeType === t 
                             ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg' 
-                            : 'bg-slate-50 border-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                            : 'bg-slate-50 border-slate-100 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
                         }`}
                       >
                         {t}
@@ -286,10 +308,10 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
                       <button
                         key={s}
                         onMouseDown={(e) => { e.preventDefault(); setActiveStatus(activeStatus === s ? null : s); }}
-                        className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight transition-all border-2 ${
+                        className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tight transition-all border ${
                           activeStatus === s 
                             ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg' 
-                            : 'bg-slate-50 border-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                            : 'bg-slate-50 border-slate-100 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
                         }`}
                       >
                         {s}

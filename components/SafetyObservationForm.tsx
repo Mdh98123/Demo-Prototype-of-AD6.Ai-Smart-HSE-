@@ -7,7 +7,7 @@ import {
   MessageSquarePlus, BrainCircuit, Loader2, Send, ThumbsUp, Lightbulb, 
   MapPin, ClipboardList, History, HardHat, Trash2, UserCheck, 
   Leaf, FileText, Award, AlertTriangle, CheckCircle2, Star, Shield, Mic, Zap, Edit3, X, Activity, RefreshCcw, Eye, BarChart3, Smile, Meh, MessageSquare, Target, Sparkles, ShieldCheck, ChevronRight, TrendingUp, ArrowLeft,
-  PieChart as PieChartIcon, Camera
+  PieChart as PieChartIcon, Camera, AlertCircle
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
@@ -25,8 +25,13 @@ const SafetyObservationForm: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
+  // Validation State
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
+  
   // Processing State
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
   const [submissionResult, setSubmissionResult] = useState<{
     id: string;
     analysis: AISafetyObservationAnalysis;
@@ -56,11 +61,28 @@ const SafetyObservationForm: React.FC = () => {
     return { categoryData, typeData, total: allObservations.length };
   }, [allObservations]);
 
+  const validate = (field: string, value: string) => {
+      if (field === 'description' && !value.trim()) return "Observation details are required.";
+      if (field === 'location' && !value) return "Location is required.";
+      return "";
+  };
+
+  const handleBlur = (field: string, value: string) => {
+      setTouched(prev => ({...prev, [field]: true}));
+      setErrors(prev => ({...prev, [field]: validate(field, value)}));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!obsDescription || !obsLocation) return;
+    const descErr = validate('description', obsDescription);
+    const locErr = validate('location', obsLocation);
+    setErrors({ description: descErr, location: locErr });
+    setTouched({ description: true, location: true });
+
+    if (descErr || locErr) return;
 
     setIsSubmitting(true);
+    setAiError(null);
     const newObsId = `OBS-${Date.now()}`;
     const initialHistory: AuditLog[] = [{
         timestamp: new Date().toISOString(),
@@ -74,6 +96,8 @@ const SafetyObservationForm: React.FC = () => {
       // 1. Trigger AI Analysis
       const analysis = await analyzeSafetyObservation(obsDescription, obsType);
       
+      if (!analysis) throw new Error("AI Analysis failed to return data.");
+
       // 2. Prepare Record
       const newObs: SafetyObservation = {
         id: newObsId,
@@ -95,23 +119,41 @@ const SafetyObservationForm: React.FC = () => {
       setSubmissionResult({ id: newObsId, analysis });
       
     } catch (err) {
-      alert("AI Processing failed. The observation was saved but diagnostic data is pending.");
-      // Fallback submission without analysis
-      addObservation({
-        id: newObsId,
-        type: obsType,
-        description: obsDescription,
-        location: obsLocation,
-        timestamp: new Date().toISOString(),
-        status: 'Submitted',
-        isAnonymous: isAnonymous,
-        history: initialHistory,
-        images: images
-      });
-      resetForm();
+      console.error("AI Analysis Error:", err);
+      setAiError("AI Analysis failed. You can submit without analysis or retry.");
+      
+      // We don't automatically submit here anymore to give user a choice to retry
+      // unless they explicitly want to "Submit Anyway" (which we can add as a button)
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleFallbackSubmit = () => {
+    const newObsId = `OBS-${Date.now()}`;
+    const initialHistory: AuditLog[] = [{
+        timestamp: new Date().toISOString(),
+        actorId: currentUser.id,
+        actorName: isAnonymous ? 'Anonymous' : currentUser.name,
+        action: 'Created',
+        details: 'Manual submission (AI analysis failed)'
+    }];
+
+    addObservation({
+      id: newObsId,
+      type: obsType,
+      description: obsDescription,
+      location: obsLocation,
+      timestamp: new Date().toISOString(),
+      status: 'Submitted',
+      isAnonymous: isAnonymous,
+      history: initialHistory,
+      images: images
+    });
+    
+    // Show a simplified success state or just reset
+    alert("Observation submitted successfully without AI analysis.");
+    resetForm();
   };
 
   const handleReview = (obs: SafetyObservation) => {
@@ -151,6 +193,8 @@ const SafetyObservationForm: React.FC = () => {
     setObsType('Positive');
     setIsAnonymous(false);
     setImages([]);
+    setErrors({});
+    setTouched({});
   };
 
   const handleVoiceInput = () => {
@@ -162,6 +206,8 @@ const SafetyObservationForm: React.FC = () => {
             : "Emergency eyewash station in Lab 2 has a cracked basin and low pressure.";
           setObsDescription(prev => prev ? prev + " " + simulatedText : simulatedText);
           setIsListening(false);
+          // Clear error if valid
+          if(touched.description) setErrors(prev => ({...prev, description: ""}));
       }, 1500);
   };
 
@@ -318,6 +364,7 @@ const SafetyObservationForm: React.FC = () => {
 
       {viewMode === 'Insights' ? (
           <div className="space-y-6 animate-in fade-in duration-500">
+            {/* Insights content remains unchanged */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Total Contributions</p>
@@ -424,7 +471,7 @@ const SafetyObservationForm: React.FC = () => {
                                         <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded border mt-1 inline-block ${obs.status === 'Reviewed' ? 'bg-teal-50 text-teal-600 border-teal-100' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>{obs.status}</span>
                                     </div>
                                 </div>
-                                <p className="text-xs text-slate-600 font-medium leading-relaxed italic border-l-2 border-slate-100 pl-4 mb-3">"{obs.description}"</p>
+                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-2 italic border-l-2 border-slate-100 pl-4 mb-3">"{obs.description}"</p>
                                 {obs.analysis?.suggestedAction && (
                                     <div className="mb-3 flex items-center gap-2 bg-slate-50 p-2 px-4 rounded-xl border border-slate-100 w-fit">
                                         <ShieldCheck size={14} className="text-teal-500"/>
@@ -501,15 +548,19 @@ const SafetyObservationForm: React.FC = () => {
 
                           <LocationSelector 
                               value={obsLocation}
-                              onChange={setObsLocation}
+                              onChange={(val) => {
+                                  setObsLocation(val);
+                                  if (touched.location) setErrors(prev => ({...prev, location: validate('location', val)}));
+                              }}
                               label="Operational sector"
                               placeholder="Where was this observed?"
                               required
+                              error={errors.location}
                           />
 
                           <div className="relative">
                               <div className="flex justify-between items-center mb-3">
-                                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Narrative Evidence</label>
+                                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Narrative Evidence <span className="text-red-500">*</span></label>
                                   <button
                                       type="button"
                                       onClick={handleVoiceInput}
@@ -521,11 +572,21 @@ const SafetyObservationForm: React.FC = () => {
                                   </button>
                               </div>
                               <textarea
-                                  className="w-full p-6 bg-slate-50 border-2 border-slate-50 rounded-[2rem] h-44 focus:bg-white focus:border-slate-900 outline-none transition-all resize-none text-sm font-semibold text-slate-800 placeholder:font-medium shadow-inner"
+                                  className={`w-full p-6 bg-slate-50 border-2 rounded-[2rem] h-44 outline-none transition-all resize-none text-sm font-semibold text-slate-800 placeholder:font-medium shadow-inner ${
+                                      errors.description ? 'border-red-500 focus:border-red-500' : touched.description && !errors.description ? 'border-emerald-500 focus:border-emerald-500' : 'border-slate-50 focus:bg-white focus:border-slate-900'
+                                  }`}
                                   placeholder={obsType === 'Positive' ? "e.g. Scaffolding team verified harness tie-off correctly..." : "e.g. Identified loose floor tiles near emergency exit B4..."}
                                   value={obsDescription}
-                                  onChange={(e) => setObsDescription(e.target.value)}
+                                  onChange={(e) => {
+                                      setObsDescription(e.target.value);
+                                      if(touched.description) setErrors(prev => ({...prev, description: validate('description', e.target.value)}));
+                                  }}
+                                  onBlur={() => {
+                                      setTouched(prev => ({...prev, description: true}));
+                                      setErrors(prev => ({...prev, description: validate('description', obsDescription)}));
+                                  }}
                               />
+                              {errors.description && <p className="text-red-500 text-[10px] font-bold mt-1 flex items-center gap-1 ml-4"><AlertCircle size={10} /> {errors.description}</p>}
                           </div>
 
                           <div>
@@ -555,24 +616,35 @@ const SafetyObservationForm: React.FC = () => {
                               </div>
                           </div>
 
-                          <div className="flex items-center gap-4 bg-slate-50 p-6 rounded-[2rem] border-2 border-slate-100 shadow-inner">
-                                <div className="flex-1">
-                                    <h4 className="text-xs font-black text-slate-800 uppercase tracking-tight leading-none">Confidential Log</h4>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase mt-2">Strip identifying metadata from report.</p>
-                                </div>
-                                <button 
-                                    type="button"
-                                    onClick={() => setIsAnonymous(!isAnonymous)}
-                                    className={`w-14 h-7 rounded-full relative transition-all duration-500 border-2 ${isAnonymous ? 'bg-indigo-600 border-indigo-700' : 'bg-slate-200 border-slate-300'}`}
-                                >
-                                    <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-lg transition-transform duration-500 ${isAnonymous ? 'translate-x-7' : 'translate-x-1'}`} />
-                                </button>
-                          </div>
+                          {aiError && (
+                              <div className="bg-red-50 border-2 border-red-100 p-6 rounded-[2rem] animate-in fade-in slide-in-from-top-2">
+                                  <div className="flex items-start gap-4">
+                                      <AlertCircle className="text-red-500 shrink-0 mt-1" size={20}/>
+                                      <div className="flex-1">
+                                          <p className="text-sm font-bold text-red-700">{aiError}</p>
+                                          <div className="flex gap-4 mt-3">
+                                              <button 
+                                                onClick={handleSubmit}
+                                                className="text-[10px] font-black uppercase tracking-widest text-red-700 hover:underline flex items-center gap-2"
+                                              >
+                                                  <RefreshCcw size={12}/> Retry Analysis
+                                              </button>
+                                              <button 
+                                                onClick={handleFallbackSubmit}
+                                                className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:underline flex items-center gap-2"
+                                              >
+                                                  <Send size={12}/> Submit Anyway
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          )}
                       </div>
 
                       <button
                           onClick={handleSubmit}
-                          disabled={isSubmitting || !obsDescription || !obsLocation}
+                          disabled={isSubmitting}
                           className="w-full mt-10 bg-slate-900 hover:bg-slate-800 text-white font-black uppercase tracking-[0.2em] py-6 rounded-[2rem] flex items-center justify-center gap-4 transition-all shadow-3xl hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:translate-y-0"
                       >
                           {isSubmitting ? (
@@ -583,7 +655,7 @@ const SafetyObservationForm: React.FC = () => {
                           ) : (
                               <>
                                 <BrainCircuit size={24} className="text-teal-400" />
-                                <span>Submit & Analyze</span>
+                                <span>{aiError ? 'Retry Analysis' : 'Submit & Analyze'}</span>
                               </>
                           )}
                       </button>

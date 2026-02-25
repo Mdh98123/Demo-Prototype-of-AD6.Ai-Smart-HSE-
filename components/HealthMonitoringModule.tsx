@@ -24,7 +24,7 @@ interface HealthAIResult {
 
 const HealthMonitoringModule: React.FC = () => {
   const { currentUser } = useUser();
-  const [activeTab, setActiveTab] = useState<'Metrics' | 'Incidents' | 'AI Insights'>('Metrics');
+  const [activeTab, setActiveTab] = useState<'Metrics' | 'Incidents' | 'AI Insights' | 'Wellness'>('Metrics');
   
   const [loading, setLoading] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState<HealthAIResult | null>(null);
@@ -32,12 +32,28 @@ const HealthMonitoringModule: React.FC = () => {
   // Mock Data
   const [metrics] = useState<HealthMetricRecord[]>([
     { id: '1', employeeId: 'u6', employeeName: 'Rahul Gupta', timestamp: '2024-05-20 09:00', bloodPressure: '120/80', heartRate: 72, bodyTemp: 37.1, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
-    { id: '2', employeeId: 'u5', employeeName: 'Fatima Al-Kaabi', timestamp: '2024-05-20 09:15', bloodPressure: '135/85', heartRate: 88, bodyTemp: 37.8, hydrationLevel: 'Low', fitnessForDuty: 'Restricted' }
+    { id: '2', employeeId: 'u5', employeeName: 'Fatima Al-Kaabi', timestamp: '2024-05-20 09:15', bloodPressure: '135/85', heartRate: 88, bodyTemp: 37.8, hydrationLevel: 'Low', fitnessForDuty: 'Restricted' },
+    { id: '3', employeeId: 'u7', employeeName: 'Marcus Chen', timestamp: '2024-05-20 08:30', bloodPressure: '118/76', heartRate: 68, bodyTemp: 36.9, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '4', employeeId: 'u11', employeeName: 'John Doe', timestamp: '2024-05-20 10:00', bloodPressure: '140/90', heartRate: 92, bodyTemp: 37.2, hydrationLevel: 'Critical', fitnessForDuty: 'Unfit' },
+    { id: '5', employeeId: 'u4', employeeName: 'Sarah Jones', timestamp: '2024-05-20 08:00', bloodPressure: '122/81', heartRate: 70, bodyTemp: 37.0, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '6', employeeId: 'u10', employeeName: 'Khalid Al-Dhaheri', timestamp: '2024-05-20 11:00', bloodPressure: '125/82', heartRate: 75, bodyTemp: 37.3, hydrationLevel: 'Low', fitnessForDuty: 'Fit' },
+    { id: '7', employeeId: 'u6', employeeName: 'Rahul Gupta', timestamp: '2024-05-19 09:00', bloodPressure: '119/79', heartRate: 71, bodyTemp: 37.0, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '8', employeeId: 'u5', employeeName: 'Fatima Al-Kaabi', timestamp: '2024-05-19 09:15', bloodPressure: '130/84', heartRate: 85, bodyTemp: 37.6, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '9', employeeId: 'u3', employeeName: 'Ahmed Al-Mansoori', timestamp: '2024-05-20 07:30', bloodPressure: '128/84', heartRate: 78, bodyTemp: 37.1, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' },
+    { id: '10', employeeId: 'u12', employeeName: 'Alice Smith', timestamp: '2024-05-20 08:45', bloodPressure: '115/75', heartRate: 65, bodyTemp: 36.8, hydrationLevel: 'Optimal', fitnessForDuty: 'Fit' }
   ]);
 
   const [incidents] = useState<OccupationalHealthIncident[]>([
     { id: 'H1', type: 'Heat Stress', description: 'Worker reported dizziness after 2 hours in direct sun.', severity: 'Moderate', timestamp: '2024-05-18', location: 'Zone B Excavation', status: 'Resolved' },
-    { id: 'H2', type: 'Respiratory', description: 'Coughing reports in Sector 4 storage unit.', severity: 'Minor', timestamp: '2024-05-19', location: 'Chemical Zone A', status: 'Under Observation' }
+    { id: 'H2', type: 'Respiratory', description: 'Coughing reports in Sector 4 storage unit.', severity: 'Minor', timestamp: '2024-05-19', location: 'Chemical Zone A', status: 'Under Observation' },
+    { id: 'H3', type: 'Fatigue', description: 'Operator fell asleep during break, signs of exhaustion.', severity: 'Moderate', timestamp: '2024-05-15', location: 'Control Room', status: 'Resolved' },
+    { id: 'H4', type: 'Hearing Loss', description: 'Temporary threshold shift reported after noise exposure.', severity: 'Minor', timestamp: '2024-05-10', location: 'Generator Room', status: 'Resolved' },
+    { id: 'H5', type: 'Dehydration', description: 'Worker collapsed, required IV fluids.', severity: 'Severe', timestamp: '2024-05-01', location: 'Site C', status: 'Closed' },
+    { id: 'H6', type: 'Ergonomic', description: 'Back pain reported from manual lifting.', severity: 'Minor', timestamp: '2024-04-25', location: 'Warehouse', status: 'Resolved' },
+    { id: 'H7', type: 'Skin Irritation', description: 'Rash developed after handling cement.', severity: 'Minor', timestamp: '2024-04-20', location: 'Construction Area', status: 'Resolved' },
+    { id: 'H8', type: 'Heat Stroke', description: 'Emergency medical evacuation required.', severity: 'Severe', timestamp: '2024-06-15', location: 'Open Field', status: 'Closed' }, // Future date for simulation
+    { id: 'H9', type: 'Stress', description: 'Employee reported high stress levels.', severity: 'Minor', timestamp: '2024-05-05', location: 'Admin Office', status: 'Under Observation' },
+    { id: 'H10', type: 'Food Poisoning', description: '3 workers reported nausea after lunch.', severity: 'Moderate', timestamp: '2024-05-12', location: 'Canteen', status: 'Resolved' }
   ]);
 
   const heatIndexData = [
@@ -71,7 +87,7 @@ const HealthMonitoringModule: React.FC = () => {
             </div>
           </div>
           <div className="flex bg-slate-200 p-1 rounded-2xl w-fit shadow-inner">
-              {['Metrics', 'Incidents', 'AI Insights'].map(tab => (
+              {['Metrics', 'Incidents', 'AI Insights', 'Wellness'].map(tab => (
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab as any)}
@@ -109,7 +125,9 @@ const HealthMonitoringModule: React.FC = () => {
                                           </div>
                                       </div>
                                       <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                                          m.fitnessForDuty === 'Fit' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-orange-50 text-orange-700 border-orange-100'
+                                          m.fitnessForDuty === 'Fit' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 
+                                          m.fitnessForDuty === 'Unfit' ? 'bg-red-50 text-red-700 border-red-100' :
+                                          'bg-orange-50 text-orange-700 border-orange-100'
                                       }`}>{m.fitnessForDuty} For Duty</span>
                                   </div>
                                   <div className="grid grid-cols-4 gap-4 mt-6">
@@ -127,7 +145,7 @@ const HealthMonitoringModule: React.FC = () => {
                                       </div>
                                       <div className="text-center">
                                           <p className="text-[8px] font-black text-slate-400 uppercase">Hydration</p>
-                                          <span className={`text-[10px] font-black ${m.hydrationLevel === 'Optimal' ? 'text-emerald-600' : 'text-orange-600'}`}>{m.hydrationLevel}</span>
+                                          <span className={`text-[10px] font-black ${m.hydrationLevel === 'Optimal' ? 'text-emerald-600' : m.hydrationLevel === 'Critical' ? 'text-red-600' : 'text-orange-600'}`}>{m.hydrationLevel}</span>
                                       </div>
                                   </div>
                               </div>
@@ -183,10 +201,10 @@ const HealthMonitoringModule: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {incidents.map(inc => (
                       <div key={inc.id} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-                          <div className={`absolute top-0 left-0 w-2 h-full ${inc.severity === 'Severe' ? 'bg-red-500' : 'bg-orange-500'}`} />
+                          <div className={`absolute top-0 left-0 w-2 h-full ${inc.severity === 'Severe' ? 'bg-red-500' : inc.severity === 'Moderate' ? 'bg-orange-500' : 'bg-yellow-500'}`} />
                           <div className="flex justify-between items-start mb-6">
                               <div>
-                                  <span className={`text-[9px] font-black uppercase px-2 py-1 rounded-full border ${inc.severity === 'Severe' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-orange-50 text-orange-700 border-orange-100'}`}>{inc.severity} Severity</span>
+                                  <span className={`text-[9px] font-black uppercase px-2 py-1 rounded-full border ${inc.severity === 'Severe' ? 'bg-red-50 text-red-700 border-red-200' : inc.severity === 'Moderate' ? 'bg-orange-50 text-orange-700 border-orange-100' : 'bg-yellow-50 text-yellow-700 border-yellow-100'}`}>{inc.severity} Severity</span>
                                   <h4 className="text-xl font-black text-slate-800 uppercase tracking-tighter mt-3 leading-none">{inc.type} Incident</h4>
                               </div>
                               <div className="text-right">
@@ -207,6 +225,52 @@ const HealthMonitoringModule: React.FC = () => {
                       </div>
                       <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">Log Occupational Issue</h4>
                       <p className="text-xs text-slate-400 font-medium mt-1">Record workforce health alerts or illnesses.</p>
+                  </div>
+              </div>
+          </div>
+      )}
+
+      {activeTab === 'Wellness' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {[
+                      { title: 'Mental Health Awareness', category: 'Psychological', icon: BrainCircuit, color: 'text-purple-600', bg: 'bg-purple-50' },
+                      { title: 'Healthy Eating & Nutrition', category: 'Lifestyle', icon: HeartPulse, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                      { title: 'Physical Activity & Ergonomics', category: 'Physical', icon: Activity, color: 'text-blue-600', bg: 'bg-blue-50' },
+                      { title: 'Smoking Cessation Program', category: 'Lifestyle', icon: Droplets, color: 'text-rose-600', bg: 'bg-rose-50' },
+                      { title: 'Sleep Hygiene & Fatigue', category: 'Physiological', icon: Clock, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                      { title: 'Hydration & Heat Safety', category: 'Environmental', icon: Thermometer, color: 'text-orange-600', bg: 'bg-orange-50' },
+                  ].map((item, i) => (
+                      <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:border-rose-100 transition-all group">
+                          <div className={`p-4 ${item.bg} ${item.color} rounded-2xl w-fit mb-6 group-hover:scale-110 transition-transform`}>
+                              <item.icon size={32}/>
+                          </div>
+                          <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2">{item.title}</h4>
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">{item.category}</p>
+                          <button className="w-full py-3 bg-slate-50 text-slate-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                              View Content <ChevronRight size={14}/>
+                          </button>
+                      </div>
+                  ))}
+              </div>
+
+              <div className="bg-rose-600 rounded-[3rem] p-12 text-white shadow-3xl flex flex-col md:flex-row items-center gap-10 relative overflow-hidden">
+                  <div className="absolute -bottom-20 -right-20 opacity-10">
+                      <HeartPulse size={300} />
+                  </div>
+                  <div className="flex-1 relative z-10">
+                      <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">Employee Assistance Program (EAP)</h3>
+                      <p className="text-rose-100 font-medium leading-relaxed max-w-xl">
+                          Confidential support for mental health, financial advice, and personal wellbeing. Available 24/7 for all employees and their families.
+                      </p>
+                      <div className="flex gap-4 mt-8">
+                          <button className="px-8 py-4 bg-white text-rose-600 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-3">
+                              <ShieldAlert size={18}/> Emergency Support
+                          </button>
+                          <button className="px-8 py-4 bg-rose-700 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-rose-800 transition-all">
+                              Book a Consultation
+                          </button>
+                      </div>
                   </div>
               </div>
           </div>

@@ -32,7 +32,17 @@ export const MOCK_EQUIPMENT: Equipment[] = [
   { id: 'EQ-002', name: 'HVAC Chiller Unit 3', type: 'Industrial Chiller', location: 'Rooftop - Main Office', lastMaintenanceDate: getDate(-12), operationalHours: 4500, sensors: { temperature: 45, vibration: 1.1, pressure: 85 }, status: 'Operational' },
   { id: 'EQ-003', name: 'Tower Crane 04', type: 'Heavy Machinery', location: 'Site C - Construction', lastMaintenanceDate: getDate(-90), operationalHours: 3200, sensors: { temperature: 65, vibration: 6.5, oilLevel: 45 }, status: 'Critical', relatedIncidents: ['Cable spool jamming reported'] },
   { id: 'EQ-004', name: 'Fire Pump Beta', type: 'Safety System', location: 'Fujairah Terminal', lastMaintenanceDate: getDate(-5), operationalHours: 120, sensors: { temperature: 28, vibration: 0.5, pressure: 150 }, status: 'Operational' },
-  { id: 'EQ-005', name: 'Air Compressor 09', type: 'Pneumatics', location: 'Ruwais Workshop', lastMaintenanceDate: getDate(-150), operationalHours: 8900, sensors: { temperature: 78, vibration: 3.8, pressure: 95 }, status: 'Warning' }
+  { id: 'EQ-005', name: 'Air Compressor 09', type: 'Pneumatics', location: 'Ruwais Workshop', lastMaintenanceDate: getDate(-150), operationalHours: 8900, sensors: { temperature: 78, vibration: 3.8, pressure: 95 }, status: 'Warning' },
+  { id: 'EQ-006', name: 'Centrifugal Pump P-101', type: 'Pump', location: 'Ruwais Zone A', lastMaintenanceDate: getDate(-60), operationalHours: 15000, sensors: { temperature: 65, vibration: 2.1, pressure: 45 }, status: 'Operational' },
+  { id: 'EQ-007', name: 'Conveyor Belt C-404', type: 'Conveyor', location: 'Jebel Ali Site C', lastMaintenanceDate: getDate(-20), operationalHours: 8000, sensors: { temperature: 55, vibration: 3.5 }, status: 'Warning', relatedIncidents: ['Belt misalignment'] },
+  { id: 'EQ-008', name: 'Diesel Tank T-90', type: 'Storage Tank', location: 'Fujairah Terminal', lastMaintenanceDate: getDate(-365), operationalHours: 87600, sensors: { temperature: 30, vibration: 0.2, pressure: 101, oilLevel: 85 }, status: 'Operational' },
+  { id: 'EQ-009', name: 'Scrubber Unit S-22', type: 'Environmental', location: 'Habshan Gas Complex', lastMaintenanceDate: getDate(-10), operationalHours: 12000, sensors: { temperature: 88, vibration: 1.2 }, status: 'Operational' },
+  { id: 'EQ-010', name: 'Mobile Crane MC-05', type: 'Heavy Machinery', location: 'Site C - Construction', lastMaintenanceDate: getDate(-5), operationalHours: 2100, sensors: { temperature: 70, vibration: 4.0, oilLevel: 60 }, status: 'Operational' },
+  { id: 'EQ-011', name: 'Heat Exchanger HE-03', type: 'Exchanger', location: 'Ruwais Refinery Zone B', lastMaintenanceDate: getDate(-200), operationalHours: 45000, sensors: { temperature: 110, vibration: 0.5, pressure: 180 }, status: 'Warning' },
+  { id: 'EQ-012', name: 'Forklift FL-12', type: 'Vehicle', location: 'Warehouse A', lastMaintenanceDate: getDate(-45), operationalHours: 3500, sensors: { temperature: 60, vibration: 2.8 }, status: 'Operational' },
+  { id: 'EQ-013', name: 'Fire Alarm Panel FAP-01', type: 'Safety System', location: 'HQ Main Lobby', lastMaintenanceDate: getDate(-30), operationalHours: 50000, sensors: { temperature: 24, vibration: 0 }, status: 'Operational' },
+  { id: 'EQ-014', name: 'Backup Generator Gen-B', type: 'Diesel Generator', location: 'Data Center', lastMaintenanceDate: getDate(-180), operationalHours: 500, sensors: { temperature: 25, vibration: 0.1, oilLevel: 95 }, status: 'Operational' },
+  { id: 'EQ-015', name: 'Compressor CP-55', type: 'Pneumatics', location: 'Maintenance Shop', lastMaintenanceDate: getDate(-90), operationalHours: 6700, sensors: { temperature: 82, vibration: 5.5, pressure: 110 }, status: 'Critical', relatedIncidents: ['High vibration alarm'] }
 ];
 
 const TRANSLATIONS: Record<Language, Record<string, string>> = {
@@ -273,6 +283,7 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
 interface UserContextType {
   currentUser: UserProfile;
   login: (username: string, rememberMe?: boolean) => Promise<boolean>;
+  register: (email: string, name: string, department: string) => Promise<boolean>;
   logout: () => void;
   switchUser: (userId: string) => void;
   isDemoMode: boolean;
@@ -318,6 +329,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setCurrentUser({
                 id: sessionUser.id,
                 name: sessionUser.name,
+                email: sessionUser.username,
                 role: sessionUser.role,
                 department: sessionUser.department,
                 safetyScore: 0,
@@ -349,6 +361,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setCurrentUser({
                 id: result.user.id,
                 name: result.user.name,
+                email: result.user.username,
                 role: result.user.role,
                 department: result.user.department,
                 safetyScore: 0,
@@ -358,6 +371,27 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 achievements: []
             });
         }
+        setIsDemoMode(result.isDemo);
+        return true;
+    }
+    return false;
+  };
+
+  const register = async (email: string, name: string, department: string) => {
+    const result = await AuthService.register(email, name, department);
+    if (result) {
+        setCurrentUser({
+            id: result.user.id,
+            name: result.user.name,
+            email: result.user.username,
+            role: result.user.role,
+            department: result.user.department,
+            safetyScore: 0,
+            recentIncidents: [],
+            observations: [],
+            certifications: [],
+            achievements: []
+        });
         setIsDemoMode(result.isDemo);
         return true;
     }
@@ -429,6 +463,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <UserContext.Provider value={{ 
         currentUser: currentUser as UserProfile, 
         login,
+        register,
         logout,
         switchUser,
         isDemoMode,

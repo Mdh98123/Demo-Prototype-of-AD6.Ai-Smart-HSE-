@@ -1,27 +1,33 @@
 {
-  "name": "copy-of-demo-prototype:-ad6.ai-smart-hse-suite",
+  "name": "prototype1:-ad6.ai-smart-hse-suite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
     "@google/genai": "^1.33.0",
-    "recharts": "^3.6.0",
-    "lucide-react": "^0.561.0",
-    "framer-motion": "11.15.0",
     "canvas-confetti": "1.9.3",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "framer-motion": "11.15.0",
+    "jspdf": "2.5.1",
+    "jspdf-autotable": "3.8.2",
+    "lucide-react": "^0.561.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.6.0",
     "tailwind-merge": "2.5.5"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"

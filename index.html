@@ -7,7 +7,7 @@
     <title>AD6.Ai Smart HSE Suite</title>
     <meta name="description" content="AD6.Ai Integrated HSE Application for UAE Regulatory Compliance" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -15,34 +15,113 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'system-ui', 'sans-serif'],
+              mono: ['IBM Plex Mono', 'monospace'],
+            },
+            fontSize: {
+              // Enhanced readability scale (approx +1px from standard)
+              'xs': ['0.8125rem', { lineHeight: '1.125rem' }],   // 13px
+              'sm': ['0.9375rem', { lineHeight: '1.375rem' }],   // 15px
+              'base': ['1.0625rem', { lineHeight: '1.625rem' }], // 17px
+              'lg': ['1.1875rem', { lineHeight: '1.75rem' }],    // 19px
+              'xl': ['1.3125rem', { lineHeight: '1.875rem' }],   // 21px
+              '2xl': ['1.5625rem', { lineHeight: '2rem' }],       // 25px
+              '3xl': ['1.953rem', { lineHeight: '2.25rem' }],     // 31px
+              '4xl': ['2.441rem', { lineHeight: '2.5rem' }],      // 39px
+              '5xl': ['3.052rem', { lineHeight: '1' }],           // 49px
             },
             colors: {
               brand: {
-                50: '#eef2ff',
-                100: '#e0e7ff',
-                200: '#c7d2fe',
-                300: '#a5b4fc',
-                400: '#818cf8',
-                500: '#6366f1', // Indigo 500 - Primary Nexus Color
-                600: '#4f46e5',
-                700: '#4338ca',
-                800: '#3730a3',
-                900: '#312e81',
+                50: '#EEF2FF',
+                100: '#E0E7FF',
+                200: '#C7D2FE',
+                300: '#A5B4FC',
+                400: '#818CF8',
+                500: '#6366F1',
+                600: '#4F46E5',
+                700: '#4338CA',
+                800: '#3730A3',
+                900: '#312E81',
+                950: '#1E1B4B',
               },
+              status: {
+                pass: '#10B981',
+                warn: '#F59E0B',
+                fail: '#EF4444',
+                info: '#3B82F6',
+              },
+              // Enhanced contrast neutral palette
+              neutral: {
+                50: '#F8FAFC',
+                100: '#F1F5F9',
+                200: '#E2E8F0',
+                300: '#CBD5E1',
+                400: '#7E91AA', // Darkened from #94A3B8 for better text readability
+                500: '#5F738C', // Darkened from #64748B
+                600: '#475569',
+                700: '#334155',
+                800: '#1E293B',
+                900: '#0F172A',
+              },
+              // Override Slate to match enhanced neutral for consistency
               slate: {
-                850: '#1e293b', 
+                50: '#F8FAFC',
+                100: '#F1F5F9',
+                200: '#E2E8F0',
+                300: '#CBD5E1',
+                400: '#7E91AA',
+                500: '#5F738C',
+                600: '#475569',
+                700: '#334155',
+                800: '#1E293B',
+                900: '#0F172A',
               },
-              background: "#F8FAFC",
-              surface: "#FFFFFF",
+              background: "#FFFFFF",
+              surface: "#F8FAFC",
             },
             boxShadow: {
-              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-              'glow': '0 0 15px rgba(99, 102, 241, 0.3)',
+              'card': '0px 3px 6px rgba(0,0,0,0.02), 0px 10px 20px rgba(0,0,0,0.03)',
+              'card-hover': '0px 15px 35px rgba(0,0,0,0.08), 0px 5px 15px rgba(0,0,0,0.04)',
+              'input-focus': '0px 0px 0px 4px rgba(99, 102, 241, 0.15)', // Brand ring
+              'toast': '0px 10px 30px rgba(0,0,0,0.1)',
+              'glow': '0 0 20px rgba(99, 102, 241, 0.5)',
             },
             borderRadius: {
-              'xl': '1rem',
-              '2xl': '1.25rem',
-              '3xl': '1.5rem',
+              'sm': '4px',
+              'DEFAULT': '8px',
+              'md': '12px',
+              'lg': '16px',
+              'xl': '20px',
+              '2xl': '24px', // Inputs, Buttons
+              '3xl': '32px', // Cards
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(15px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              slideInRight: {
+                '0%': { transform: 'translateX(20px)', opacity: '0' },
+                '100%': { transform: 'translateX(0)', opacity: '1' },
+              },
+              zoomIn: {
+                '0%': { transform: 'scale(0.96)', opacity: '0' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              pulseSoft: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0.6' },
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+              'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              'zoom-in': 'zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+              'pulse-soft': 'pulseSoft 2.5s infinite ease-in-out',
             }
           }
         }
@@ -51,25 +130,42 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #F8FAFC;
-        color: #1e293b;
+        background-color: #F8FAFC; /* Neutral 50 */
+        color: #1E293B; /* Neutral 800 */
+        font-size: 16px; /* Explicit base size */
+        line-height: 1.6;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: "cv11", "ss01"; /* Inter clean char variants */
       }
       
-      /* Enterprise Scrollbar */
+      /* Horizon UI Scrollbar */
       ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
       }
       ::-webkit-scrollbar-track {
         background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #cbd5e1; 
+        background: #CBD5E1; /* Neutral 300 */
         border-radius: 10px;
+        border: 2px solid #F8FAFC; /* Padding effect */
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8; 
+        background: #94A3B8; /* Neutral 400 */
+      }
+
+      /* Consistent Focus */
+      *:focus-visible {
+        outline: none;
+        box-shadow: 0px 0px 0px 4px rgba(99, 102, 241, 0.15); /* Brand-500/15 */
+      }
+      
+      /* Selection Color */
+      ::selection {
+        background-color: #C7D2FE; /* Brand 200 */
+        color: #312E81; /* Brand 900 */
       }
     </style>
   <script type="importmap">
@@ -85,12 +181,16 @@
     "canvas-confetti": "https://esm.sh/canvas-confetti@1.9.3",
     "class-variance-authority": "https://esm.sh/class-variance-authority@0.7.1",
     "clsx": "https://esm.sh/clsx@2.1.1",
-    "tailwind-merge": "https://esm.sh/tailwind-merge@2.5.5"
+    "tailwind-merge": "https://esm.sh/tailwind-merge@2.5.5",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "jspdf-autotable": "https://esm.sh/jspdf-autotable@3.8.2"
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

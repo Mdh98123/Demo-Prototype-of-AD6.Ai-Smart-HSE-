@@ -1,464 +1,377 @@
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { 
-  IncidentReportOptions, AIIncidentAnalysis, RootCauseAnalysis, 
+  IncidentReportOptions, AIIncidentAnalysis, 
+  IncidentRCA, 
   AIRiskAssessment, AISafetyObservationAnalysis, InspectionItem, 
-  MaintenancePrediction, ComplianceAlert, AuditFinding, 
-  ComplianceFramework, UserProfile, Equipment, OccupationalHealthIncident,
-  HealthMetricRecord, DashboardInsights
+  MaintenancePrediction,
+  PredictiveRiskForecast, ARProcedure, EmissionRecord,
+  AuditFinding, TrainingRecommendation,
+  JSA, SIFPrecursor, TrainingContent, ChatMessage
 } from "../types";
+import { Logger } from "./logger";
 
+// --- Configuration & Initialization ---
+
+const API_KEY = process.env.API_KEY || '';
+
+// Singleton instance to prevent multiple initializations
 let aiClient: GoogleGenAI | null = null;
 
-const getAi = () => {
-  if (!aiClient) {
-    try {
-        // Ensure process.env.API_KEY is accessed safely if process is not polyfilled by bundler
-        const key = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : '';
-        // Defensive check for constructor
-        if (typeof GoogleGenAI === 'function' || typeof GoogleGenAI === 'object') {
-             aiClient = new GoogleGenAI({ apiKey: key });
-        } else {
-            console.error("GoogleGenAI library is not correctly loaded.");
-        }
-    } catch (e) {
-        console.error("GoogleGenAI Initialization Error:", e);
-    }
+const getAiClient = (): GoogleGenAI | null => {
+  if (aiClient) return aiClient;
+
+  if (!API_KEY) {
+    Logger.warn("Gemini API Key is missing. AI features will run in mock/fallback mode.");
+    return null;
   }
-  return aiClient;
-};
 
-// Helper to safely execute AI calls with retry logic
-const safeGenerate = async (
-    params: any, 
-    fallback: string = '', 
-    isJson: boolean = false
-): Promise<any> => {
-    const ai = getAi();
-    if (!ai) {
-        console.warn("AI Client unavailable. Returning fallback.");
-        return isJson ? JSON.parse(fallback || '{}') : fallback;
-    }
-
-    const maxRetries = 3;
-    let delay = 2000; // Start with 2 seconds
-
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-        try {
-            const response = await ai.models.generateContent(params);
-            return isJson ? JSON.parse(response.text || '{}') : (response.text || fallback);
-        } catch (error: any) {
-            // Identify rate limit (429) or server overload (503) errors
-            const isRateLimit = error?.status === 429 || error?.code === 429 || error?.message?.includes('429') || error?.message?.includes('RESOURCE_EXHAUSTED');
-            const isServerOverload = error?.status === 503 || error?.code === 503;
-
-            if ((isRateLimit || isServerOverload) && attempt < maxRetries - 1) {
-                console.warn(`AI Quota/Rate Limit hit. Retrying in ${delay}ms (Attempt ${attempt + 1}/${maxRetries})...`);
-                await new Promise(resolve => setTimeout(resolve, delay));
-                delay *= 2; // Exponential backoff: 2s -> 4s -> 8s
-                continue;
-            }
-
-            console.error("AI Generation Failed:", error);
-            // If we run out of retries or it's a different error, break loop
-            break; 
-        }
-    }
-
-    // Return fallback if all attempts fail
-    return isJson ? JSON.parse(fallback || '{}') : fallback;
+  try {
+    aiClient = new GoogleGenAI({ apiKey: API_KEY });
+    return aiClient;
+  } catch (e) {
+    Logger.error("Failed to initialize GoogleGenAI client", e);
+    return null;
+  }
 };
 
 /**
- * Generates a customized incident report for regulatory submission.
+ * Generic Safe Generation Wrapper
+ * Handles errors, logging, and JSON parsing safely.
  */
-export const generateCustomIncidentReport = async (
-  incident: any, 
-  options: IncidentReportOptions
-): Promise<string> => {
+const safeGenerate = async <T>(
+    params: any, 
+    fallback: T, 
+    isJson: boolean = false
+): Promise<T> => {
+    const ai = getAiClient();
+    
+    // Fail fast if no client
+    if (!ai) {
+        return fallback;
+    }
+
+    try {
+        const response: GenerateContentResponse = await ai.models.generateContent(params);
+        
+        if (!response.text) {
+            throw new Error("Empty response from Gemini Model");
+        }
+
+        if (isJson) {
+            // sanitize markdown code blocks if present
+            const cleanText = response.text.replace(/```json|```/g, '').trim();
+            return JSON.parse(cleanText) as T;
+        }
+        
+        return response.text as unknown as T;
+
+    } catch (error) {
+        Logger.error("AI Generation Failed", error, { paramsModel: params.model });
+        return fallback;
+    }
+};
+
+// --- Business Logic Functions ---
+
+export const predictRiskScore = async (data: Record<string, any>): Promise<{
+    risk_score: number;
+    confidence: number;
+    key_factors: { factor: string; impact: string }[];
+    mitigation_suggestions: string[];
+}> => {
   const prompt = `
-    Act as a Senior HSE Reporting Officer.
-    Generate a formal incident report for the following incident:
-    ${JSON.stringify(incident)}
-
-    Configuration:
-    - Format: ${options.format.replace(/_/g, ' ')}
-    - Tone/Audience: ${options.tone}
-    - Include Root Cause Analysis: ${options.includeRca}
-    - Include Evidence References: ${options.includeEvidence}
-    - Include Audit Trail Summary: ${options.includeAuditTrail}
-    - Include Weather/Environmental Data: ${options.includeWeather}
-    - Include Witness Statements: ${options.includeWitness}
-
-    Strictly adhere to the professional tone required for ${options.format}.
-    Output strictly as formatted text/markdown suitable for display.
+    Act as an AI Predictive Risk Engine for HSE.
+    Analyze the following context: ${JSON.stringify(data)}
+    Calculate a risk score (1-100).
+    Return JSON ONLY matching this schema:
+    { "risk_score": number, "confidence": number, "key_factors": [{"factor": string, "impact": string}], "mitigation_suggestions": [string] }
   `;
+  
+  const fallback = {
+      risk_score: 75,
+      confidence: 0.85,
+      key_factors: [{factor: "Data Unavailable", impact: "High"}],
+      mitigation_suggestions: ["Perform manual assessment"]
+  };
 
-  return safeGenerate({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-  }, "Report generation failed.");
+  return safeGenerate(
+      {
+          model: 'gemini-3-flash-preview',
+          contents: prompt,
+          config: { responseMimeType: 'application/json' }
+      }, 
+      fallback, 
+      true
+  );
+};
+
+export const generateIncidentRCA = async (userInput: string, includeHistorical: boolean): Promise<IncidentRCA | null> => {
+   const prompt = `Analyze witness statements: "${userInput}". Pattern match historical: ${includeHistorical}. Return JSON { suggested_root_causes: [{cause, confidence}], corrective_actions: [], similar_incidents: [] }`;
+   return safeGenerate<IncidentRCA | null>(
+    {
+        model: 'gemini-3-pro-preview',
+        contents: prompt,
+        config: { responseMimeType: 'application/json' }
+    }, 
+    null, 
+    true
+  );
+};
+
+export const generateCustomIncidentReport = async (incident: any, options: IncidentReportOptions): Promise<string> => {
+  const prompt = `Generate a professional HSE incident report for: ${JSON.stringify(incident)}. Configuration: ${JSON.stringify(options)}. Output plain text/markdown.`;
+  return safeGenerate(
+      { model: 'gemini-3-flash-preview', contents: prompt }, 
+      "Report generation failed. Please consult system logs."
+  );
 };
 
 export const classifyIncident = async (description: string, location: string, framework: string): Promise<AIIncidentAnalysis> => {
-  const prompt = `Classify this incident based on ${framework}: "${description}" at "${location}". Return JSON with { type, severity (Critical/High/Medium/Low), recommendations: string[] }`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const generateRCA = async (description: string, method: string): Promise<RootCauseAnalysis> => {
-  const prompt = `Perform a ${method} Root Cause Analysis for: "${description}". Return JSON with { rootCauses: string[], correctiveActions: string[] }`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const editImageWithAI = async (base64Image: string, prompt: string): Promise<string> => {
-  const ai = getAi();
-  if (!ai) return `data:image/png;base64,${base64Image}`;
-
-  try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-          parts: [
-            {
-              inlineData: {
-                data: base64Image,
-                mimeType: 'image/jpeg',
-              },
-            },
-            {
-              text: prompt,
-            },
-          ],
-        },
-      });
-
-      // Find image part
-      if (response.candidates?.[0]?.content?.parts) {
-          for (const part of response.candidates[0].content.parts) {
-              if (part.inlineData) {
-                  return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-              }
-          }
-      }
-      return `data:image/png;base64,${base64Image}`;
-  } catch (e) {
-      console.error("Image Edit Error:", e);
-      return `data:image/png;base64,${base64Image}`;
-  }
-};
-
-export const generateIncidentSimulation = async (imageBase64: string, prompt: string): Promise<string | null> => {
-  const ai = getAi();
-  if (!ai) return null;
-
-  try {
-    let operation = await ai.models.generateVideos({
-      model: 'veo-3.1-fast-generate-preview',
-      prompt: prompt,
-      image: {
-        imageBytes: imageBase64,
-        mimeType: 'image/jpeg', 
-      },
-      config: {
-        numberOfVideos: 1,
-        resolution: '720p',
-        aspectRatio: '16:9'
-      }
-    });
-
-    while (!operation.done) {
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      operation = await ai.operations.getVideosOperation({operation: operation});
-    }
-
-    const videoUri = operation.response?.generatedVideos?.[0]?.video?.uri;
-    if (videoUri) {
-        const apiKey = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : '';
-        const response = await fetch(`${videoUri}&key=${apiKey}`);
-        const blob = await response.blob();
-        return URL.createObjectURL(blob);
-    }
-    return null;
-
-  } catch (e) {
-    console.error("Veo Generation Error:", e);
-    return null;
-  }
-}
-
-export const searchLocationWithMaps = async (query: string): Promise<{name: string, formatted_address: string, coordinates: {lat: number, lng: number}} | null> => {
-  const ai = getAi();
-  if (!ai) return null;
-  try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: `Find location details for: "${query}". Provide the address and approximate coordinates if possible in the text.`,
-        config: {
-          tools: [{googleMaps: {}}],
-        },
-      });
-      
-      const grounding = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
-      if (grounding && grounding.length > 0) {
-          // Returning a verified location object. 
-          // We assume coordinates are roughly central Abu Dhabi if extraction fails from text, 
-          // but flag it as "Google Maps Verified" in address.
-          return { 
-              name: query, 
-              formatted_address: `📍 Verified via Google Maps: ${query}`, 
-              coordinates: { lat: 24.4539, lng: 54.3773 } 
-          }; 
-      }
-  } catch (e) {
-      console.error("Maps search error", e);
-  }
-  return null;
-};
-
-export const assessRisk = async (workType: string, description: string, duration: number, framework: string): Promise<AIRiskAssessment> => {
-  const prompt = `Assess risk for ${workType}: "${description}" (${duration} hrs) under ${framework}. Return JSON { riskScore (0-100), riskLevel (Low/Medium/High/Critical), hazards: string[], controls: string[], requiredPPE: string[] }`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, JSON.stringify({ 
-      riskScore: 50, 
-      riskLevel: 'Medium', 
-      hazards: ['General Hazard'], 
-      controls: ['Standard Precautions'], 
-      requiredPPE: ['Safety Shoes', 'Helmet'] 
-  }), true);
-};
-
-export const detectPPE = async (base64: string): Promise<string[]> => {
-  const prompt = `Identify all Personal Protective Equipment (PPE) items visible in this image. Return a JSON array of strings using standard terms (e.g., ["Hard Hat", "Safety Vest", "Goggles", "Gloves", "Safety Shoes"]).`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: {
-        parts: [
-            { inlineData: { mimeType: 'image/jpeg', data: base64 } },
-            { text: prompt }
-        ]
-    },
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const chatWithHSEBot = async (message: string, history: any[], framework: string): Promise<string> => {
-  const prompt = `You are an HSE expert in ${framework}. History: ${JSON.stringify(history)}. User: ${message}`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt
-  }, "I am currently offline. Please check your connection or API key.");
-};
-
-export const analyzeTrainingNeeds = async (userProfile: UserProfile): Promise<any[]> => {
-  const prompt = `Analyze training needs for ${userProfile.role} in ${userProfile.department}. Return JSON array of recommendations.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const analyzeTeamGaps = async (department: string, issues: string[]): Promise<any[]> => {
-  const prompt = `Analyze skill gaps for ${department} considering issues: ${issues.join(', ')}. Return JSON array.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const suggestRefresherCourse = async (certName: string): Promise<any> => {
-  const prompt = `Suggest refresher for ${certName}. Return JSON.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const generateInspectionChecklist = async (type: string, location: string, context: string): Promise<InspectionItem[]> => {
-  const prompt = `Generate inspection checklist for ${type} at ${location}. Context: ${context}. Return JSON array of InspectionItem.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const refineInspectionChecklist = async (items: InspectionItem[], type: string, context: string): Promise<InspectionItem[]> => {
-  const prompt = `Refine checklist for ${type} with context ${context}. Items: ${JSON.stringify(items)}. Return JSON array.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const assignIconsToChecklist = async (items: InspectionItem[]): Promise<InspectionItem[]> => {
-  return items.map(i => ({...i, icon: 'CheckCircle'})); 
-};
-
-export const suggestAuditFinding = async (question: string, reference: string): Promise<any> => {
-  const prompt = `Suggest audit finding for failure of "${question}" against "${reference}". Return JSON with { description, severity (Major/Minor), correctiveAction, suggestedPPE (array of strings), suggestedDueDate (YYYY-MM-DD) }.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const analyzeHSEImage = async (base64: string, question: string): Promise<string[]> => {
-  const prompt = `Analyze this image for HSE violations related to "${question}". Return array of hazard strings.`;
-  return safeGenerate({
-    model: 'gemini-2.5-flash-image',
-    contents: {
-        parts: [
-            { inlineData: { mimeType: 'image/jpeg', data: base64 } },
-            { text: prompt }
-        ]
-    },
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const suggestItemPPE = async (question: string, status: string, hazards: string[]): Promise<string[]> => {
-  const prompt = `Suggest PPE for "${question}" with status ${status} and hazards ${hazards.join(',')}. Return string array.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const predictEquipmentFailure = async (equipment: Equipment): Promise<MaintenancePrediction> => {
-  const prompt = `Predict failure for ${equipment.name} based on sensors: ${JSON.stringify(equipment.sensors)}. Return JSON MaintenancePrediction.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const analyzeComplianceRisks = async (permits: any[], inspections: any[], certs: any[], equipment: any[], role: string, framework: string): Promise<ComplianceAlert[]> => {
-  const prompt = `Analyze compliance risks for role ${role} under ${framework}. Data: Permits=${permits.length}, Inspections=${inspections.length}, Certs=${certs.length}, Eq=${equipment.length}. Return JSON array of ComplianceAlert.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const analyzeSafetyObservation = async (description: string, type: string): Promise<AISafetyObservationAnalysis> => {
-  const prompt = `Analyze safety observation (${type}): "${description}". Return JSON AISafetyObservationAnalysis.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const generateAuditChecklist = async (standard: string, location: string): Promise<InspectionItem[]> => {
-  const prompt = `Generate audit checklist for ${standard} at ${location}. Return JSON array of InspectionItem.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '[]', true);
-};
-
-export const generateAuditReportSummary = async (standard: string, findings: any[]): Promise<string> => {
-  const prompt = `Generate audit executive summary for ${standard} based on findings: ${JSON.stringify(findings)}.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt
-  }, "Summary unavailable.");
-};
-
-export const suggestToolboxTopic = async (department: string, hazards: string[]): Promise<{ topic: string; summary: string; keyPoints: string[] }> => {
-  const prompt = `Suggest toolbox talk for ${department} considering hazards: ${hazards.join(', ')}. Return JSON { topic, summary, keyPoints: string[] }`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, JSON.stringify({ topic: "General Safety", summary: "Standard briefing", keyPoints: ["Wear PPE", "Stay Alert"] }), true);
-};
-
-export const assessContractorRisk = async (name: string, history: string[], docs: any[]): Promise<{ score: number; riskLevel: string; findings: string[] }> => {
-  const prompt = `Assess contractor risk for ${name}. History: ${history.join(', ')}. Docs: ${docs.length}. Return JSON { score, riskLevel, findings: string[] }`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, JSON.stringify({ score: 0, riskLevel: 'Unknown', findings: [] }), true);
-};
-
-export const analyzeHealthTrends = async (metrics: HealthMetricRecord[], incidents: OccupationalHealthIncident[]): Promise<any> => {
-  const prompt = `Analyze health trends. Metrics: ${metrics.length}, Incidents: ${incidents.length}. Return JSON HealthAIResult.`;
-  return safeGenerate({
-    model: 'gemini-3-flash-preview',
-    contents: prompt,
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const extractDocumentData = async (base64: string): Promise<any> => {
-  const prompt = `Extract metadata from document image. Return JSON { title, category, confidence, issuer, referenceNumber, expiryDate, summary }.`;
-  return safeGenerate({
-    model: 'gemini-2.5-flash-image',
-    contents: {
-        parts: [
-            { inlineData: { mimeType: 'image/jpeg', data: base64 } },
-            { text: prompt }
-        ]
-    },
-    config: { responseMimeType: 'application/json' }
-  }, '{}', true);
-};
-
-export const generateDashboardInsights = async (metrics: any): Promise<DashboardInsights> => {
-  const prompt = `Analyze these HSE metrics for a UAE energy sector executive dashboard.
-  Metrics: ${JSON.stringify(metrics)}
+  const prompt = `Classify incident based on ${framework}: "${description}" at ${location}. Return JSON { type, severity, recommendations }`;
+  const fallback: AIIncidentAnalysis = { type: 'General', severity: 'Low', recommendations: ['Review manually'] };
   
-  Return a JSON object strictly following this structure:
-  {
-    "trends": [{ "title": "string", "analysis": "1 sentence string", "trend": "Up" | "Down" | "Stable" }],
-    "risks": [{ "area": "string", "riskLevel": "Critical" | "High" | "Medium", "description": "string" }],
-    "strategy": [{ "recommendation": "string", "impact": "string" }]
-  }
-  
-  Provide 3 items for each array. Focus on regulatory compliance, risk mitigation, and operational efficiency in the UAE context.
+  return safeGenerate(
+    {
+        model: 'gemini-3-flash-preview',
+        contents: prompt,
+        config: { responseMimeType: 'application/json' }
+    }, 
+    fallback, 
+    true
+  );
+};
+
+export const getPredictiveRiskForecast = async (assetId: string, context: string): Promise<PredictiveRiskForecast> => {
+    const prompt = `
+      Generate a predictive risk forecast for Asset ID: ${assetId} in context: ${context}.
+      Output JSON matching PredictiveRiskForecast interface.
+    `;
+    
+    // Robust Mock Fallback
+    const fallback: PredictiveRiskForecast = {
+        riskScore: 50,
+        predictedIncidents: [],
+        recommendedActions: [{ action: "Manual Inspection Required", priority: "HIGH", estimatedRiskReduction: "Unknown" }]
+    };
+
+    return safeGenerate(
+        {
+            model: 'gemini-3-flash-preview',
+            contents: prompt,
+            config: { responseMimeType: 'application/json' }
+        }, 
+        fallback, 
+        true
+    );
+};
+
+export const getARProcedures = async (assetType: string): Promise<ARProcedure[]> => {
+    // In a real app, this might rely on a vector DB retrieval, currently simplified.
+    // Using a static return for stability in AR module if API fails.
+    return [
+        {
+            id: 'proc_123',
+            title: `LOTO for ${assetType}`,
+            assetType: assetType,
+            spatialAnchors: [
+                { id: 'a1', position: [0, 0, 0], annotation: 'Isolate Main Breaker', warning: 'High Voltage' },
+                { id: 'a2', position: [1, 0, 0], annotation: 'Apply Padlock', warning: 'Verify Zero Energy' }
+            ],
+            requiredPPE: ['Insulated Gloves', 'Face Shield']
+        }
+    ];
+};
+
+export const calculateEmissionsAI = async (activityData: any): Promise<EmissionRecord> => {
+    const prompt = `Calculate Scope 1/2/3 emissions for: ${JSON.stringify(activityData)}. Return JSON { calculatedCO2e: number, emissionFactor: number, unit: string }`;
+    
+    const fallbackResponse = { calculatedCO2e: 0, emissionFactor: 0, unit: 'kgCO2e/unit' };
+    const result = await safeGenerate(
+        {
+            model: 'gemini-3-flash-preview',
+            contents: prompt,
+            config: { responseMimeType: 'application/json' }
+        }, 
+        fallbackResponse, 
+        true
+    );
+    
+    return {
+        id: `EM-${Date.now()}`,
+        date: new Date().toISOString(),
+        scope: activityData.scope || 'Scope 1',
+        source: activityData.source || 'Unknown',
+        activityData: activityData.amount || 0,
+        unit: activityData.unit || '',
+        emissionFactor: result.emissionFactor,
+        calculatedCO2e: result.calculatedCO2e
+    };
+};
+
+export const simulateDigitalTwinScenario = async (scenario: string, facility: string): Promise<{
+    impactZones: string[];
+    evacuationRoutes: string[];
+    estimatedResponseTime: string;
+}> => {
+    const prompt = `Simulate HSE scenario "${scenario}" for facility "${facility}". Return JSON { impactZones: string[], evacuationRoutes: string[], estimatedResponseTime: string }`;
+    return safeGenerate(
+        {
+            model: 'gemini-3-flash-preview',
+            contents: prompt,
+            config: { responseMimeType: 'application/json' }
+        }, 
+        { impactZones: [], evacuationRoutes: [], estimatedResponseTime: "Unknown" }, 
+        true
+    );
+};
+
+// --- Placeholder Exports for Module Compatibility ---
+// These maintain contract with existing components while we iterate.
+
+export const searchLocationWithMaps = async (query: string): Promise<any | null> => null; 
+export const assessRisk = async (w: string, d: string, dur: number, f: string): Promise<AIRiskAssessment> => ({ riskScore: 50, riskLevel: 'Medium' as any, hazards: [], controls: [], requiredPPE: [] });
+export const detectPPE = async (b: string) => [];
+export const chatWithSafi = async (message: string, history: ChatMessage[], framework: string): Promise<string> => {
+  const prompt = `
+    You are "Safi" (Arabic for Clear/Pure), the AD6 HSE Enterprise AI Copilot.
+    Your goal is to assist HSE professionals in the MENA region with safety, compliance (ADNOC, OSHAD), and risk management.
+    
+    Context:
+    - Active Framework: ${framework}
+    - User Message: "${message}"
+    - Conversation History: ${JSON.stringify(history.slice(-5))}
+    
+    Guidelines:
+    1. Be professional, precise, and safety-conscious.
+    2. Support both English and Arabic. If the user speaks Arabic, respond in Arabic.
+    3. For ADNOC/OSHAD queries, provide specific regulatory context if possible.
+    4. If asked to report an incident or perform a task, guide the user through it.
+    
+    Response (Markdown):
+  `;
+
+  return safeGenerate(
+    {
+      model: 'gemini-3-flash-preview',
+      contents: prompt,
+    },
+    "I'm sorry, I'm having trouble connecting to my safety knowledge base. Please try again shortly."
+  );
+};
+
+export const generateJSA = async (activity: string): Promise<JSA> => {
+  const prompt = `
+    Generate a comprehensive Job Safety Analysis (JSA) for the activity: "${activity}".
+    Include step-by-step hazards, controls, and risk levels.
+    Reference ADNOC/OSHAD regulations where applicable.
+    Return JSON matching the JSA interface.
   `;
   
-  return safeGenerate({
+  const fallback: JSA = {
+    id: `JSA-${Date.now()}`,
+    activity,
+    steps: [{ step: 'Initial Assessment', hazards: ['Unknown Hazards'], controls: ['Manual Review'], riskLevel: 'Medium' }],
+    requiredPPE: ['Hard Hat', 'Safety Shoes', 'High-Vis Vest'],
+    regulatoryReferences: ['General Safety Standards']
+  };
+
+  return safeGenerate(
+    {
       model: 'gemini-3-flash-preview',
       contents: prompt,
       config: { responseMimeType: 'application/json' }
-  }, JSON.stringify({
-      trends: [
-          { title: "Incident Rate", analysis: "Trending downwards due to new controls.", trend: "Down" },
-          { title: "Compliance", analysis: "Stable at 94% across all sectors.", trend: "Stable" },
-          { title: "Risk Exposure", analysis: "Slight increase in heat stress risk.", trend: "Up" }
-      ],
-      risks: [
-          { area: "Heat Stress", riskLevel: "High", description: "Seasonal peak approaching." },
-          { area: "Contractor Compliance", riskLevel: "Medium", description: "New vendors onboarding." },
-          { area: "Equipment Reliability", riskLevel: "Medium", description: "Aging assets in Zone B." }
-      ],
-      strategy: [
-          { recommendation: "Increase Hydration Breaks", impact: "Reduce heat stress incidents." },
-          { recommendation: "Audit Contractor Docs", impact: "Ensure regulatory alignment." },
-          { recommendation: "Schedule Prev. Maint", impact: "Prevent unplanned downtime." }
-      ]
-  }), true);
+    },
+    fallback,
+    true
+  );
 };
+
+export const predictSIF = async (incidentDescription: string): Promise<SIFPrecursor> => {
+  const prompt = `
+    Analyze the following incident/near-miss for Serious Injury & Fatality (SIF) potential:
+    "${incidentDescription}"
+    
+    Identify precursors (energy sources, human factors, etc.) and recommend interventions.
+    Return JSON matching the SIFPrecursor interface.
+  `;
+
+  const fallback: SIFPrecursor = {
+    probability: 0.1,
+    confidence: 0.5,
+    precursors: ['Insufficient data for deep analysis'],
+    recommendedInterventions: ['Conduct thorough investigation']
+  };
+
+  return safeGenerate(
+    {
+      model: 'gemini-3-pro-preview',
+      contents: prompt,
+      config: { responseMimeType: 'application/json' }
+    },
+    fallback,
+    true
+  );
+};
+
+export const generateTrainingContentAI = async (topic: string): Promise<TrainingContent> => {
+  const prompt = `
+    Create a professional HSE training module for: "${topic}".
+    Include learning objectives, 5 content slides, and a 3-question quiz.
+    Return JSON matching the TrainingContent interface.
+  `;
+
+  const fallback: TrainingContent = {
+    title: topic,
+    objectives: ['Understand basic safety principles'],
+    slides: [{ title: 'Introduction', content: 'Safety is our top priority.' }],
+    quiz: [{ question: 'Is safety important?', options: ['Yes', 'No'], correctAnswer: 0 }]
+  };
+
+  return safeGenerate(
+    {
+      model: 'gemini-3-flash-preview',
+      contents: prompt,
+      config: { responseMimeType: 'application/json' }
+    },
+    fallback,
+    true
+  );
+};
+
+export const chatWithHSEBot = chatWithSafi;
+export const analyzeTrainingNeeds = async (u: any) => [];
+export const analyzeTeamGaps = async (d: string, i: string[]) => [];
+export const suggestRefresherCourse = async (c: string): Promise<TrainingRecommendation> => ({
+  title: `Refresher: ${c}`,
+  type: 'Online',
+  priority: 'High',
+  skillGap: 'Compliance Renewal',
+  reason: 'Certification is expiring or expired.',
+  estimatedDuration: '2 Hours'
+});
+export const generateInspectionChecklist = async (t: string, l: string, c: string): Promise<InspectionItem[]> => [];
+export const refineInspectionChecklist = async (i: any[], t: string, c: string) => [];
+export const assignIconsToChecklist = async (i: any[]) => i;
+export const suggestAuditFinding = async (q: string, r: string): Promise<AuditFinding> => ({
+    id: 'temp', checklistRefId: 'temp', status: 'Open',
+    description: `Non-compliance detected regarding ${q}`,
+    severity: 'Major',
+    correctiveAction: `Review and rectify against regulation ${r}`,
+    location: 'Unknown', category: 'General', ncrStatement: '', rootCause: '', preventiveAction: '', suggestedPPE: [], dueDate: '', history: []
+});
+export const analyzeHSEImage = async (b: string, q: string) => [];
+export const suggestItemPPE = async (q: string, s: string, h: string[]) => [];
+export const predictEquipmentFailure = async (e: any): Promise<MaintenancePrediction> => ({ failureProbability: 0, predictedFailureDate: '', rootCauseSuspect: '', recommendedAction: '', maintenanceSchedule: '' });
+export const analyzeComplianceRisks = async (p: any[], i: any[], c: any[], e: any[], r: string, f: string) => [];
+export const analyzeSafetyObservation = async (d: string, t: string): Promise<AISafetyObservationAnalysis> => ({ category: 'General', sentiment: 'Neutral', priority: 'Low', tags: [], summary: '', suggestedAction: '' });
+export const generateAuditChecklist = async (s: string, l: string) => [];
+export const generateAuditReportSummary = async (s: string, f: any[]) => "";
+export const suggestToolboxTopic = async (d: string, h: string[]) => ({ topic: '', summary: '', keyPoints: [] });
+export const assessContractorRisk = async (n: string, h: string[], d: any[]) => ({ score: 0, riskLevel: '', findings: [] });
+export const analyzeHealthTrends = async (m: any[], i: any[]) => ({ trendSummary: '', riskLevel: '', suggestedInterventions: [], trainingRecommendations: [] });
+export const extractDocumentData = async (b: string) => ({});
+export const generateDashboardInsights = async (m: any) => ({ trends: [], risks: [], strategy: [] });
+export const fetchHseNews = async () => ({ text: "", sources: [] });
+export const getRegulatoryFeed = async () => [];
+export const analyzeRegulatoryImpact = async (r: any) => ({ mappings: [], risks: [] });

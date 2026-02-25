@@ -72,6 +72,29 @@ export const AuthService = {
     return { user: secureUser, token, isDemo };
   },
 
+  register: async (email: string, name: string, department: string): Promise<{ user: SecureUser; token: string; isDemo: boolean } | null> => {
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    const secureUser: SecureUser = {
+        id: `user_${Date.now()}`,
+        username: normalizedEmail,
+        name: name,
+        role: 'Worker', // Default role for new signups
+        department: department || 'General',
+        permissions: []
+    };
+
+    const token = generateToken(secureUser, false);
+    
+    await SecureStorage.setItem('hse_session_token', token);
+    await SecureStorage.setItem('hse_current_user', secureUser);
+    await SecureStorage.setItem('hse_is_demo_mode', true);
+
+    return { user: secureUser, token, isDemo: true };
+  },
+
   logout: async () => {
     await SecureStorage.removeItem('hse_session_token');
     await SecureStorage.removeItem('hse_current_user');

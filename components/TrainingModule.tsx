@@ -10,12 +10,18 @@ import {
   BarChart3,
   UserCheck2,
   Undo2,
-  BookOpen
+  BookOpen,
+  Play,
+  Presentation,
+  Layout,
+  Eye,
+  Plus,
+  Search
 } from 'lucide-react';
 
 const TrainingModule: React.FC = () => {
   const { currentUser, users } = useUser();
-  const [activeTab, setActiveTab] = useState<'MyProfile' | 'TeamMatrix' | 'Library'>('MyProfile');
+  const [activeTab, setActiveTab] = useState<'MyProfile' | 'TeamMatrix' | 'Library' | 'Presentations'>('MyProfile');
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<TrainingRecommendation[]>([]);
   const [teamAnalysis, setTeamAnalysis] = useState<TeamSkillAnalysis[]>([]);
@@ -93,6 +99,7 @@ const TrainingModule: React.FC = () => {
                 <button onClick={() => setActiveTab('MyProfile')} className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${activeTab === 'MyProfile' ? 'bg-white text-slate-800 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}>My Skills</button>
                 {isManager && <button onClick={() => setActiveTab('TeamMatrix')} className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${activeTab === 'TeamMatrix' ? 'bg-white text-slate-800 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}>Team Matrix</button>}
                 <button onClick={() => setActiveTab('Library')} className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${activeTab === 'Library' ? 'bg-white text-slate-800 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}>Course Library</button>
+                <button onClick={() => setActiveTab('Presentations')} className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${activeTab === 'Presentations' ? 'bg-white text-slate-800 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}>Presentations</button>
             </div>
         </div>
 
@@ -262,12 +269,75 @@ const TrainingModule: React.FC = () => {
         )}
 
         {activeTab === 'Library' && (
-            <div className="bg-white rounded-[3rem] p-12 text-center border border-slate-100 shadow-xl">
-                <BookOpen size={64} className="mx-auto text-slate-300 mb-6"/>
-                <h3 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">LMS Integration</h3>
-                <p className="text-slate-500 font-medium mt-4 max-w-md mx-auto">
-                    Full course catalog and SCORM content player are available in the production environment linked to the corporate LMS API.
-                </p>
+            <div className="space-y-8">
+                <div className="bg-white rounded-[3rem] p-12 text-center border border-slate-100 shadow-xl">
+                    <BookOpen size={64} className="mx-auto text-slate-300 mb-6"/>
+                    <h3 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">LMS Integration</h3>
+                    <p className="text-slate-500 font-medium mt-4 max-w-md mx-auto">
+                        Full course catalog and SCORM content player are available in the production environment linked to the corporate LMS API.
+                    </p>
+                </div>
+            </div>
+        )}
+
+        {activeTab === 'Presentations' && (
+            <div className="space-y-8 animate-in fade-in duration-500">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[
+                        { title: 'Welding & Cutting Safety', slides: 12, category: 'Hot Work', date: '2024-05-10' },
+                        { title: 'Compressed Gas Cylinder Safety', slides: 15, category: 'Equipment', date: '2024-04-22' },
+                        { title: 'Radiography Safety Protocols', slides: 20, category: 'Specialized', date: '2024-03-15' },
+                        { title: 'Oil & Gas Drilling Operations', slides: 25, category: 'Industry Specific', date: '2024-05-01' },
+                        { title: 'Hypertension & Workplace Health', slides: 10, category: 'Wellness', date: '2024-02-28' },
+                        { title: 'Emergency Response Procedures', slides: 18, category: 'Emergency', date: '2024-05-15' },
+                    ].map((pres, i) => (
+                        <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:shadow-2xl transition-all group cursor-pointer">
+                            <div className="flex justify-between items-start mb-6">
+                                <div className="p-4 bg-slate-50 rounded-2xl text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                                    <FileText size={32}/>
+                                </div>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-100">
+                                    {pres.category}
+                                </span>
+                            </div>
+                            <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2 group-hover:text-blue-600 transition-colors">{pres.title}</h4>
+                            <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">
+                                <span className="flex items-center gap-1"><Layout size={12}/> {pres.slides} Slides</span>
+                                <span className="flex items-center gap-1"><Calendar size={12}/> {pres.date}</span>
+                            </div>
+                            <div className="flex gap-3">
+                                <button className="flex-1 py-3 bg-slate-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all flex items-center justify-center gap-2">
+                                    <Eye size={14}/> Preview
+                                </button>
+                                <button className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:text-blue-600 transition-all">
+                                    <Download size={16}/>
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div className="bg-slate-900 rounded-[3rem] p-12 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-10 shadow-3xl">
+                    <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+                        <Sparkles size={240} />
+                    </div>
+                    <div className="flex-1 relative z-10">
+                        <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">AI Presentation Generator</h3>
+                        <p className="text-slate-400 font-medium leading-relaxed max-w-xl">
+                            Need a custom safety presentation? Describe the topic, and our AI will generate a structured slide deck with key safety points, regulatory references, and visual prompts.
+                        </p>
+                        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                            <input 
+                                type="text" 
+                                placeholder="e.g. Scaffolding safety for high-rise projects..." 
+                                className="flex-1 bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-sm font-bold outline-none focus:border-blue-500 transition-all"
+                            />
+                            <button className="bg-blue-500 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-400 transition-all flex items-center justify-center gap-3">
+                                <BrainCircuit size={18}/> Generate Deck
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         )}
     </div>

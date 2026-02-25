@@ -8,8 +8,16 @@ import {
 
 const EmergencyModule: React.FC = () => {
   const [drills] = useState<EmergencyDrill[]>([
-    { id: '1', type: 'Fire', date: '2024-03-10', location: 'Office HQ', outcome: 'Successful', timeTakenMinutes: 4.5, participants: 120 },
-    { id: '2', type: 'Chemical Spill', date: '2024-02-15', location: 'Ruwais Zone A', outcome: 'Needs Improvement', timeTakenMinutes: 12.0, participants: 45 }
+    { id: '1', type: 'Fire Evacuation', date: '2024-03-10', location: 'Office HQ', outcome: 'Successful', timeTakenMinutes: 4.5, participants: 120 },
+    { id: '2', type: 'Chemical Spill (H2S)', date: '2024-02-15', location: 'Ruwais Zone A', outcome: 'Needs Improvement', timeTakenMinutes: 12.0, participants: 45 },
+    { id: '3', type: 'Man Overboard', date: '2024-01-20', location: 'Fujairah Terminal', outcome: 'Successful', timeTakenMinutes: 8.0, participants: 20 },
+    { id: '4', type: 'Medical Emergency', date: '2024-03-01', location: 'Site C Clinic', outcome: 'Successful', timeTakenMinutes: 3.2, participants: 15 },
+    { id: '5', type: 'Confined Space Rescue', date: '2024-04-05', location: 'Tank Farm B', outcome: 'Needs Improvement', timeTakenMinutes: 15.5, participants: 10 },
+    { id: '6', type: 'Working at Height Rescue', date: '2024-04-12', location: 'Habshan Scaffolding', outcome: 'Successful', timeTakenMinutes: 9.0, participants: 12 },
+    { id: '7', type: 'Heat Stress Mass Casualty', date: '2024-05-01', location: 'Project Alpha Site', outcome: 'Successful', timeTakenMinutes: 20.0, participants: 200 },
+    { id: '8', type: 'Vehicle Accident', date: '2024-05-15', location: 'Main Gate Access', outcome: 'Successful', timeTakenMinutes: 6.0, participants: 8 },
+    { id: '9', type: 'Power Failure / Blackout', date: '2024-01-10', location: 'Control Room', outcome: 'Successful', timeTakenMinutes: 2.0, participants: 5 },
+    { id: '10', type: 'Environmental Spill (Marine)', date: '2023-12-15', location: 'Jetty 4', outcome: 'Needs Improvement', timeTakenMinutes: 25.0, participants: 30 }
   ]);
 
   return (
@@ -38,10 +46,10 @@ const EmergencyModule: React.FC = () => {
                           <div key={d.id} className="p-6 rounded-[2rem] border-2 border-slate-50 flex items-center justify-between hover:border-indigo-100 transition-all group">
                               <div className="flex items-center gap-6">
                                   <div className="bg-slate-50 p-4 rounded-2xl group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
-                                      {d.type === 'Fire' ? <Flame size={28}/> : <Biohazard size={28}/>}
+                                      {d.type.includes('Fire') ? <Flame size={28}/> : <Biohazard size={28}/>}
                                   </div>
                                   <div>
-                                      <h4 className="font-black text-slate-800 text-lg uppercase tracking-tight">{d.type} Response Simulation</h4>
+                                      <h4 className="font-black text-slate-800 text-lg uppercase tracking-tight">{d.type}</h4>
                                       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{d.location} • {d.date}</p>
                                   </div>
                               </div>
