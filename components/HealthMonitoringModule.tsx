@@ -1,4 +1,5 @@
 
+import { AITag } from './AITag';
 import React, { useState, useEffect } from 'react';
 import { HealthMetricRecord, OccupationalHealthIncident } from '../types';
 import { analyzeHealthTrends } from '../services/geminiService';
@@ -77,7 +78,7 @@ const HealthMonitoringModule: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-4">
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center gap-x-5">
             <div className="bg-rose-600 p-4 rounded-2xl text-white shadow-xl shadow-rose-500/20">
                 <HeartPulse size={28} />
             </div>
@@ -91,7 +92,7 @@ const HealthMonitoringModule: React.FC = () => {
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab as any)}
-                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-white text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'glass-card text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
                   >
                       {tab}
                   </button>
@@ -102,7 +103,7 @@ const HealthMonitoringModule: React.FC = () => {
       {activeTab === 'Metrics' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                  <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                       <div className="flex justify-between items-center mb-8">
                           <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                               <History size={16} className="text-rose-500"/> Recent Health Screenings
@@ -113,7 +114,7 @@ const HealthMonitoringModule: React.FC = () => {
                       </div>
                       <div className="space-y-4">
                           {metrics.map(m => (
-                              <div key={m.id} className="p-6 rounded-[2rem] border-2 border-slate-50 bg-white hover:border-rose-100 transition-all shadow-sm group">
+                              <div key={m.id} className="p-6 rounded-[2rem] border-2 border-slate-50 glass-card hover:border-rose-100 transition-all shadow-sm group">
                                   <div className="flex justify-between items-start">
                                       <div className="flex items-center gap-4">
                                           <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-black group-hover:bg-rose-600 group-hover:text-white transition-colors">
@@ -154,36 +155,62 @@ const HealthMonitoringModule: React.FC = () => {
                   </div>
               </div>
               <div className="lg:col-span-4 space-y-6">
-                  <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
-                      <div className="absolute top-0 right-0 p-8 opacity-10"><Activity size={100}/></div>
-                      <h3 className="text-xs font-black text-teal-400 uppercase tracking-widest mb-6">Site Heat Stress Index</h3>
-                      <div className="h-40 w-full mb-6">
+                  <div className="bg-slate-900 rounded-[2.5rem] p-7 text-white shadow-2xl relative overflow-hidden space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-[9px] font-black uppercase text-amber-400 tracking-wider block">Sultanate of Oman Statutory Heat Protocol</span>
+                          <h3 className="text-sm font-black text-white uppercase tracking-tight">Thermal Work Limit (TWL) & Midday Ban</h3>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
+                          MD 286/2008 [verify]
+                        </span>
+                      </div>
+
+                      {/* STATUTORY WORK RESTRICTION BANNER */}
+                      <div className="p-3 bg-red-950/60 border border-red-500/60 rounded-xl text-xs space-y-1">
+                        <div className="flex items-center justify-between font-bold text-red-300">
+                          <span className="flex items-center gap-1.5"><AlertTriangle size={14} className="text-red-400" /> Mandatory Midday Outdoor Work Stop</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded bg-red-500 text-white font-mono">12:30 - 15:30 GST</span>
+                        </div>
+                        <p className="text-[11px] text-red-200/90 leading-tight">
+                          Oman Labour Law prohibits outdoor direct sun exposure during peak summer months (June 1 – August 31) [verify current Ministerial Decision dates/times].
+                        </p>
+                      </div>
+
+                      {/* TWL METRICS (PDO SP-1170) */}
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="p-2.5 bg-slate-800/80 rounded-xl border border-slate-700">
+                          <span className="text-[9px] text-slate-400 uppercase font-bold block">Current TWL Index</span>
+                          <span className="text-lg font-black text-amber-400">108 W/m²</span>
+                          <span className="text-[10px] text-red-400 font-semibold block mt-0.5">Below 115 Stop Limit</span>
+                        </div>
+                        <div className="p-2.5 bg-slate-800/80 rounded-xl border border-slate-700">
+                          <span className="text-[9px] text-slate-400 uppercase font-bold block">Work/Rest Cycle</span>
+                          <span className="text-lg font-black text-white">15m Work / 45m Rest</span>
+                          <span className="text-[10px] text-emerald-400 font-semibold block mt-0.5">Shaded Rest + Saline</span>
+                        </div>
+                      </div>
+
+                      <div className="h-28 w-full">
                           <ResponsiveContainer width="100%" height="100%">
                               <AreaChart data={heatIndexData}>
-                                  <Area type="monotone" dataKey="value" stroke="#14b8a6" fill="#14b8a6" fillOpacity={0.2} strokeWidth={3}/>
+                                  <Area type="monotone" dataKey="value" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.2} strokeWidth={2}/>
                                   <Tooltip contentStyle={{backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff'}}/>
                               </AreaChart>
                           </ResponsiveContainer>
                       </div>
-                      <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center gap-4">
-                          <div className="bg-orange-500 p-2 rounded-xl"><AlertTriangle size={16}/></div>
-                          <div>
-                              <p className="text-xs font-black uppercase">Category IV Alert</p>
-                              <p className="text-[10px] text-slate-400 mt-1">Mandatory 15m rest every hour required.</p>
-                          </div>
-                      </div>
                   </div>
-                  <div className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100">
+                  <div className="glass-card p-6 rounded-[2rem] shadow-xl border border-slate-100">
                       <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><GraduationCap size={14}/> Health Training</h3>
                       <div className="space-y-3">
-                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
+                          <div className="p-3 glass-panel rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
                               <div>
                                   <p className="text-xs font-black text-slate-800 uppercase tracking-tight">Heat Stress Awareness</p>
                                   <p className="text-[9px] text-slate-500 uppercase">92% Completion</p>
                               </div>
                               <ArrowUpRight size={14} className="text-slate-300 group-hover:text-rose-500 transition-colors"/>
                           </div>
-                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
+                          <div className="p-3 glass-panel rounded-xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-rose-50 transition-all">
                               <div>
                                   <p className="text-xs font-black text-slate-800 uppercase tracking-tight">Advanced First Aid</p>
                                   <p className="text-[9px] text-slate-500 uppercase">Due for 4 Staff</p>
@@ -200,27 +227,27 @@ const HealthMonitoringModule: React.FC = () => {
           <div className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {incidents.map(inc => (
-                      <div key={inc.id} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-                          <div className={`absolute top-0 left-0 w-2 h-full ${inc.severity === 'Severe' ? 'bg-red-500' : inc.severity === 'Moderate' ? 'bg-orange-500' : 'bg-yellow-500'}`} />
+                      <div key={inc.id} className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
+                          <div className={`absolute top-0 start-0 w-2 h-full ${inc.severity === 'Severe' ? 'bg-red-500' : inc.severity === 'Moderate' ? 'bg-orange-500' : 'bg-yellow-500'}`} />
                           <div className="flex justify-between items-start mb-6">
                               <div>
                                   <span className={`text-[9px] font-black uppercase px-2 py-1 rounded-full border ${inc.severity === 'Severe' ? 'bg-red-50 text-red-700 border-red-200' : inc.severity === 'Moderate' ? 'bg-orange-50 text-orange-700 border-orange-100' : 'bg-yellow-50 text-yellow-700 border-yellow-100'}`}>{inc.severity} Severity</span>
                                   <h4 className="text-xl font-black text-slate-800 uppercase tracking-tighter mt-3 leading-none">{inc.type} Incident</h4>
                               </div>
-                              <div className="text-right">
+                              <div className="text-end">
                                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{inc.timestamp}</p>
                                   <p className="text-xs font-bold text-slate-600 mt-1 flex items-center gap-1 justify-end"><MapPin size={10}/> {inc.location}</p>
                               </div>
                           </div>
-                          <p className="text-sm text-slate-600 font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl italic">"{inc.description}"</p>
+                          <p className="text-sm text-slate-600 font-medium leading-relaxed glass-panel p-4 rounded-2xl italic">"{inc.description}"</p>
                           <div className="mt-6 pt-6 border-t border-slate-50 flex justify-between items-center">
                               <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-widest border border-indigo-100">{inc.status}</span>
                               <button className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-rose-600 flex items-center gap-2">Follow-up Log <ArrowUpRight size={14}/></button>
                           </div>
                       </div>
                   ))}
-                  <div className="bg-white border-4 border-dashed border-slate-100 rounded-[2.5rem] flex flex-col items-center justify-center p-12 text-center group cursor-pointer hover:border-rose-300 transition-all">
-                      <div className="bg-slate-50 p-6 rounded-full group-hover:bg-rose-50 transition-colors mb-4">
+                  <div className="glass-card border-4 border-dashed border-slate-100 rounded-[2.5rem] flex flex-col items-center justify-center p-12 text-center group cursor-pointer hover:border-rose-300 transition-all">
+                      <div className="glass-panel p-6 rounded-full group-hover:bg-rose-50 transition-colors mb-4">
                           <Plus size={32} className="text-slate-300 group-hover:text-rose-500"/>
                       </div>
                       <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight">Log Occupational Issue</h4>
@@ -241,13 +268,13 @@ const HealthMonitoringModule: React.FC = () => {
                       { title: 'Sleep Hygiene & Fatigue', category: 'Physiological', icon: Clock, color: 'text-indigo-600', bg: 'bg-indigo-50' },
                       { title: 'Hydration & Heat Safety', category: 'Environmental', icon: Thermometer, color: 'text-orange-600', bg: 'bg-orange-50' },
                   ].map((item, i) => (
-                      <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:border-rose-100 transition-all group">
+                      <div key={i} className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100 hover:border-rose-100 transition-all group">
                           <div className={`p-4 ${item.bg} ${item.color} rounded-2xl w-fit mb-6 group-hover:scale-110 transition-transform`}>
                               <item.icon size={32}/>
                           </div>
                           <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-2">{item.title}</h4>
                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">{item.category}</p>
-                          <button className="w-full py-3 bg-slate-50 text-slate-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center gap-2">
+                          <button className="w-full py-3 glass-panel text-slate-600 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center gap-2">
                               View Content <ChevronRight size={14}/>
                           </button>
                       </div>
@@ -255,7 +282,7 @@ const HealthMonitoringModule: React.FC = () => {
               </div>
 
               <div className="bg-rose-600 rounded-[3rem] p-12 text-white shadow-3xl flex flex-col md:flex-row items-center gap-10 relative overflow-hidden">
-                  <div className="absolute -bottom-20 -right-20 opacity-10">
+                  <div className="absolute -bottom-20 -end-20 opacity-10">
                       <HeartPulse size={300} />
                   </div>
                   <div className="flex-1 relative z-10">
@@ -264,7 +291,7 @@ const HealthMonitoringModule: React.FC = () => {
                           Confidential support for mental health, financial advice, and personal wellbeing. Available 24/7 for all employees and their families.
                       </p>
                       <div className="flex gap-4 mt-8">
-                          <button className="px-8 py-4 bg-white text-rose-600 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-3">
+                          <button className="px-8 py-4 glass-card text-rose-600 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:glass-button transition-all flex items-center justify-center gap-3">
                               <ShieldAlert size={18}/> Emergency Support
                           </button>
                           <button className="px-8 py-4 bg-rose-700 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-rose-800 transition-all">
@@ -279,13 +306,13 @@ const HealthMonitoringModule: React.FC = () => {
       {activeTab === 'AI Insights' && (
           <div className="space-y-8 animate-in fade-in duration-500">
               {loading ? (
-                  <div className="bg-white h-[400px] rounded-[3rem] flex flex-col items-center justify-center p-20 text-center border border-slate-100 shadow-inner">
+                  <div className="glass-card h-[400px] rounded-[3rem] flex flex-col items-center justify-center p-20 text-center border border-slate-100 shadow-inner">
                       <Loader2 className="animate-spin text-rose-500 mb-6" size={48} />
                       <p className="text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Synthesizing Bio-Telemetry & Site Hazards...</p>
                   </div>
               ) : aiAnalysis ? (
                   <div className="bg-slate-900 rounded-[3rem] p-12 text-white shadow-3xl relative overflow-hidden">
-                      <div className="absolute top-0 right-0 p-12 opacity-5 text-rose-400 pointer-events-none"><Stethoscope size={300} /></div>
+                      <div className="absolute top-0 end-0 p-12 opacity-5 text-rose-400 pointer-events-none"><Stethoscope size={300} /></div>
                       
                       <div className="flex justify-between items-start mb-12 relative z-10 border-b border-white/10 pb-10">
                           <div className="flex items-center gap-6">
@@ -297,7 +324,7 @@ const HealthMonitoringModule: React.FC = () => {
                                   <h3 className="text-3xl font-black uppercase tracking-tighter">Workforce Wellness Intelligence</h3>
                               </div>
                           </div>
-                          <div className="text-right">
+                          <div className="text-end">
                               <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">Aggregate Risk</p>
                               <div className={`text-4xl font-black tracking-tighter ${
                                   aiAnalysis.riskLevel === 'Low' ? 'text-emerald-400' : aiAnalysis.riskLevel === 'Moderate' ? 'text-yellow-400' : 'text-rose-400'
@@ -307,17 +334,17 @@ const HealthMonitoringModule: React.FC = () => {
 
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
                           <div className="space-y-8">
-                              <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
+                              <div className="glass-card/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
                                   <h4 className="text-xs font-black text-teal-400 uppercase tracking-widest mb-6 flex items-center gap-2"><Sparkles size={16}/> Strategic Trend Summary</h4>
-                                  <p className="text-lg font-bold text-slate-200 leading-relaxed italic border-l-4 border-rose-500 pl-8 py-2">
+                                  <p className="text-lg font-bold text-slate-200 leading-relaxed italic border-s-4 border-rose-500 ps-8 py-2">
                                       "{aiAnalysis.trendSummary}"
                                   </p>
                               </div>
-                              <div className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
+                              <div className="glass-card/5 border border-white/10 p-8 rounded-[2.5rem] backdrop-blur-md">
                                   <h4 className="text-xs font-black text-rose-400 uppercase tracking-widest mb-6 flex items-center gap-2"><ShieldCheck size={16}/> Recommended Interventions</h4>
                                   <div className="grid gap-4">
                                       {aiAnalysis.suggestedInterventions.map((item, i) => (
-                                          <div key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 group hover:bg-white/10 transition-all">
+                                          <div key={i} className="flex items-start gap-4 glass-card/5 p-4 rounded-2xl border border-white/5 group hover:glass-card/10 transition-all">
                                               <div className="w-2 h-2 rounded-full bg-rose-500 mt-2 shrink-0 group-hover:scale-125 transition-transform" />
                                               <p className="text-sm font-bold text-slate-300">{item}</p>
                                           </div>
@@ -326,15 +353,15 @@ const HealthMonitoringModule: React.FC = () => {
                               </div>
                           </div>
                           <div className="space-y-8">
-                              <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-                                  <div className="absolute top-0 right-0 p-8 opacity-5 text-slate-900 group-hover:scale-110 transition-transform duration-1000"><GraduationCap size={200} /></div>
+                              <div className="glass-card p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                                  <div className="absolute top-0 end-0 p-8 opacity-5 text-slate-900 group-hover:scale-110 transition-transform duration-1000"><GraduationCap size={200} /></div>
                                   <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-8 flex items-center gap-3 relative z-10">
                                       <Zap size={18} className="text-yellow-500"/> AI Training Blueprint
                                   </h4>
                                   
                                   <div className="space-y-6 relative z-10">
                                       {aiAnalysis.trainingRecommendations.map((rec, i) => (
-                                          <div key={i} className="p-6 rounded-3xl border-2 border-slate-50 bg-slate-50/50 hover:bg-white hover:border-rose-100 transition-all shadow-sm group/item">
+                                          <div key={i} className="p-6 rounded-3xl border-2 border-slate-50 glass-panel hover:glass-card hover:border-rose-100 transition-all shadow-sm group/item">
                                               <div className="flex justify-between items-start mb-4">
                                                   <div className="flex items-center gap-4">
                                                       <div className={`p-3 rounded-2xl shadow-md ${
@@ -353,7 +380,7 @@ const HealthMonitoringModule: React.FC = () => {
                                                       <ChevronRight size={20}/>
                                                   </button>
                                               </div>
-                                              <p className="text-xs text-slate-600 leading-relaxed font-bold italic border-l-2 border-rose-500 pl-4">
+                                              <p className="text-xs text-slate-600 leading-relaxed font-bold italic border-s-2 border-rose-500 ps-4">
                                                   {rec.rationale}
                                               </p>
                                               <div className="mt-6 flex justify-end">
@@ -369,14 +396,14 @@ const HealthMonitoringModule: React.FC = () => {
                       </div>
                       
                       <div className="mt-12 flex justify-end relative z-10">
-                          <button className="bg-white text-slate-900 px-10 py-5 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-3xl hover:bg-slate-100 transition-all active:scale-95 flex items-center gap-3">
+                          <button className="glass-card text-slate-900 px-10 py-5 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-3xl hover:bg-slate-100 transition-all active:scale-95 flex items-center gap-3">
                               Generate Full Compliance Dossier <ArrowUpRight size={20}/>
                           </button>
                       </div>
                   </div>
               ) : (
-                  <div className="bg-white border-2 border-dashed border-slate-100 rounded-[3rem] h-[400px] flex flex-col items-center justify-center p-20 text-center">
-                      <div className="bg-slate-50 p-8 rounded-full mb-6 animate-pulse">
+                  <div className="glass-card border-2 border-dashed border-slate-100 rounded-[3rem] h-[400px] flex flex-col items-center justify-center p-20 text-center">
+                      <div className="glass-panel p-8 rounded-full mb-6 animate-pulse">
                           <Stethoscope size={64} className="opacity-20" />
                       </div>
                       <h3 className="text-2xl font-black text-slate-700 uppercase tracking-tighter">AI Health Lab Awaiting Execution</h3>

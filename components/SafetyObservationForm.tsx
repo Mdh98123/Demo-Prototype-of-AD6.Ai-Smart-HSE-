@@ -1,4 +1,5 @@
 
+import { AITag } from './AITag';
 import React, { useState, useMemo, useRef } from 'react';
 import { analyzeSafetyObservation } from '../services/geminiService';
 import { AISafetyObservationAnalysis, SafetyObservation, AuditLog } from '../types';
@@ -11,6 +12,8 @@ import {
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+import { useAudioRecorder } from '../hooks/useAudioRecorder';
+import { GeminiClientService } from '../services/geminiClientService';
 
 const SafetyObservationForm: React.FC = () => {
   const { currentUser, allObservations, addObservation, updateObservation } = useUser();
@@ -21,9 +24,19 @@ const SafetyObservationForm: React.FC = () => {
   const [obsLocation, setObsLocation] = useState('');
   const [obsType, setObsType] = useState<'Positive' | 'Improvement'>('Positive');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Audio Recording & Transcription via gemini-3.5-transcribe
+  const { 
+    isRecording, 
+    recordingDuration, 
+    audioLevel, 
+    startRecording, 
+    stopRecording, 
+    cancelRecording 
+  } = useAudioRecorder();
+  const [isTranscribingVoice, setIsTranscribingVoice] = useState(false);
   
   // Validation State
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -34,6 +47,9 @@ const SafetyObservationForm: React.FC = () => {
   const [aiError, setAiError] = useState<string | null>(null);
   const [submissionResult, setSubmissionResult] = useState<{
     id: string;
+    analysis: AISafetyObservationAnalysis;
+  } | null>(null);
+  const [lowConfidencePrompt, setLowConfidencePrompt] = useState<{
     analysis: AISafetyObservationAnalysis;
   } | null>(null);
 
@@ -83,6 +99,7 @@ const SafetyObservationForm: React.FC = () => {
 
     setIsSubmitting(true);
     setAiError(null);
+    setLowConfidencePrompt(null);
     const newObsId = `OBS-${Date.now()}`;
     const initialHistory: AuditLog[] = [{
         timestamp: new Date().toISOString(),
@@ -94,9 +111,15 @@ const SafetyObservationForm: React.FC = () => {
 
     try {
       // 1. Trigger AI Analysis
-      const analysis = await analyzeSafetyObservation(obsDescription, obsType);
+      const analysis = await analyzeSafetyObservation(obsDescription, obsType, images);
       
       if (!analysis) throw new Error("AI Analysis failed to return data.");
+
+      if (analysis.confidence === undefined || analysis.confidence < 0.8) {
+        setLowConfidencePrompt({ analysis });
+        setIsSubmitting(false);
+        return;
+      }
 
       // 2. Prepare Record
       const newObs: SafetyObservation = {
@@ -127,6 +150,36 @@ const SafetyObservationForm: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmitAnyway = () => {
+    if (!lowConfidencePrompt) return;
+    
+    const newObsId = `OBS-${Date.now()}`;
+    const initialHistory: AuditLog[] = [{
+        timestamp: new Date().toISOString(),
+        actorId: currentUser.id,
+        actorName: isAnonymous ? 'Anonymous' : currentUser.name,
+        action: 'Created',
+        details: 'Initial submission (Low Confidence Override)'
+    }];
+
+    const newObs: SafetyObservation = {
+      id: newObsId,
+      type: obsType,
+      description: obsDescription,
+      location: obsLocation,
+      timestamp: new Date().toISOString(),
+      analysis: lowConfidencePrompt.analysis,
+      status: 'Submitted',
+      isAnonymous: isAnonymous,
+      history: initialHistory,
+      images: images
+    };
+    
+    addObservation(newObs);
+    setSubmissionResult({ id: newObsId, analysis: lowConfidencePrompt.analysis });
+    setLowConfidencePrompt(null);
   };
 
   const handleFallbackSubmit = () => {
@@ -197,18 +250,30 @@ const SafetyObservationForm: React.FC = () => {
     setTouched({});
   };
 
-  const handleVoiceInput = () => {
-      if (isListening) return;
-      setIsListening(true);
-      setTimeout(() => {
-          const simulatedText = obsType === 'Positive' 
-            ? "Worker in Zone A was observed double-checking the grounding cable before starting the welding task."
-            : "Emergency eyewash station in Lab 2 has a cracked basin and low pressure.";
-          setObsDescription(prev => prev ? prev + " " + simulatedText : simulatedText);
-          setIsListening(false);
-          // Clear error if valid
-          if(touched.description) setErrors(prev => ({...prev, description: ""}));
-      }, 1500);
+  const handleVoiceInput = async () => {
+    if (isRecording) {
+      setIsTranscribingVoice(true);
+      try {
+        const audioBlob = await stopRecording();
+        if (audioBlob && audioBlob.size > 0) {
+          const res = await GeminiClientService.transcribeAudio(
+            audioBlob,
+            'Transcribe this frontline safety observation narrative accurately. Preserve safety terminology, PPE, equipment names, and locations.'
+          );
+          if (res.text) {
+            setObsDescription(prev => (prev ? prev + ' ' + res.text : res.text));
+            if (touched.description) setErrors(prev => ({ ...prev, description: '' }));
+          }
+        }
+      } catch (err: any) {
+        console.error('Audio transcription error:', err);
+        setAiError('Voice transcription error: ' + (err.message || 'Microphone capture failed.'));
+      } finally {
+        setIsTranscribingVoice(false);
+      }
+    } else {
+      await startRecording();
+    }
   };
 
   const getCategoryIcon = (category: string) => {
@@ -233,6 +298,75 @@ const SafetyObservationForm: React.FC = () => {
     }
   };
 
+  if (lowConfidencePrompt) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in zoom-in duration-500 pb-20">
+          <div className="text-center space-y-4 pt-10">
+              <div className="bg-orange-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow-xl shadow-orange-500/20 border-4 border-white animate-bounce">
+                  <AlertTriangle size={48} className="text-orange-600" />
+              </div>
+              <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">More Details Needed</h2>
+              <p className="text-slate-500 font-medium max-w-md mx-auto">The AI analysis confidence is low ({lowConfidencePrompt.analysis.confidence !== undefined ? (lowConfidencePrompt.analysis.confidence * 100).toFixed(0) : 'Unknown'}%). Please provide more details or upload evidence to improve accuracy.</p>
+          </div>
+          
+          <div className="glass-card border-4 border-orange-100 rounded-[3rem] p-10 shadow-3xl relative overflow-hidden">
+              <div className="space-y-6 relative z-10">
+                  <div>
+                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-3">Additional Details</label>
+                      <textarea 
+                          className="w-full glass-panel border-2 border-slate-100 rounded-2xl p-6 text-sm font-medium text-slate-700 outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all resize-none h-32 shadow-inner"
+                          placeholder="Add more context, specific actions, or environmental factors..."
+                          value={obsDescription}
+                          onChange={(e) => setObsDescription(e.target.value)}
+                      />
+                  </div>
+                  
+                  {/* Evidence Upload */}
+                  <div>
+                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-3">Upload Evidence</label>
+                      <div className="flex items-center gap-4">
+                          <button 
+                              type="button"
+                              onClick={() => fileInputRef.current?.click()}
+                              className="bg-slate-100 text-slate-600 px-6 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-slate-200 transition-all shadow-sm flex items-center gap-3"
+                          >
+                              <Camera size={18}/> Add Photos
+                          </button>
+                          <input 
+                              type="file" 
+                              ref={fileInputRef} 
+                              onChange={handlePhotoCapture} 
+                              accept="image/*" 
+                              multiple 
+                              className="hidden" 
+                          />
+                          {images.length > 0 && (
+                              <span className="text-xs font-bold text-slate-500">{images.length} image(s) attached</span>
+                          )}
+                      </div>
+                  </div>
+
+                  <div className="flex justify-end gap-4 pt-6 border-t border-slate-100">
+                      <button 
+                          onClick={handleSubmitAnyway}
+                          className="glass-card border-2 border-slate-200 text-slate-600 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:glass-button transition-all shadow-sm"
+                      >
+                          Submit Anyway
+                      </button>
+                      <button 
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
+                          className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-indigo-700 transition-all shadow-xl flex items-center gap-2"
+                      >
+                          {isSubmitting ? <Loader2 className="animate-spin" size={16}/> : <BrainCircuit size={16}/>} Re-Analyze
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    );
+  }
+
   if (submissionResult) {
     const { analysis } = submissionResult;
     return (
@@ -252,8 +386,8 @@ const SafetyObservationForm: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white border-4 border-indigo-100 rounded-[3rem] p-10 shadow-3xl relative overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none transform translate-x-12 -translate-y-12">
+            <div className="glass-card border-4 border-indigo-100 rounded-[3rem] p-10 shadow-3xl relative overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="absolute top-0 end-0 p-12 opacity-5 pointer-events-none transform translate-x-12 -translate-y-12">
                     <BrainCircuit size={320} />
                 </div>
 
@@ -267,7 +401,7 @@ const SafetyObservationForm: React.FC = () => {
                     </div>
 
                     <div className="grid grid-cols-2 gap-6">
-                        <div className="bg-slate-50 p-6 rounded-[2rem] border-2 border-slate-100 flex flex-col items-center justify-center text-center shadow-inner">
+                        <div className="glass-panel p-6 rounded-[2rem] border-2 border-slate-100 flex flex-col items-center justify-center text-center shadow-inner">
                             <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-3">Culture Tone</label>
                             {getSentimentIcon(analysis.sentiment)}
                             <span className="text-[10px] font-black uppercase text-slate-700 mt-2">{analysis.sentiment}</span>
@@ -285,27 +419,27 @@ const SafetyObservationForm: React.FC = () => {
 
                     <div className="flex flex-wrap gap-2">
                         {analysis.tags.map((tag, i) => (
-                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100">#{tag}</span>
+                            <span key={i} className="text-[9px] font-black uppercase tracking-widest text-slate-400 glass-panel px-3 py-1 rounded-lg border border-slate-100">#{tag}</span>
                         ))}
                     </div>
                 </div>
 
                 <div className="space-y-8 relative z-10 flex flex-col h-full">
-                    <div className="bg-white p-8 rounded-[2.5rem] border-2 border-slate-50 shadow-lg flex-1">
+                    <div className="glass-card p-8 rounded-[2.5rem] border-2 border-slate-50 shadow-lg flex-1">
                         <label className="text-[10px] font-black text-indigo-500 uppercase tracking-widest block mb-4 flex items-center gap-2">
                             <MessageSquare size={16} className="text-indigo-400"/> AI Insights Summary
                         </label>
-                        <p className="text-sm font-bold text-slate-700 leading-relaxed italic border-l-4 border-indigo-100 pl-6 py-1">
+                        <p className="text-sm font-bold text-slate-700 leading-relaxed italic border-s-4 border-indigo-100 ps-6 py-1">
                             "{analysis.summary}"
                         </p>
                     </div>
 
                     <div className="bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl text-white relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-10"><Shield size={80}/></div>
+                        <div className="absolute top-0 end-0 p-4 opacity-10"><Shield size={80}/></div>
                         <label className="text-[10px] font-black text-teal-400 uppercase tracking-widest block mb-4 flex items-center gap-2 relative z-10">
                             <Shield size={16} className="text-teal-400"/> Corrective Action Plan
                         </label>
-                        <p className="text-xs font-bold text-slate-300 leading-relaxed relative z-10 pl-2">
+                        <p className="text-xs font-bold text-slate-300 leading-relaxed relative z-10 ps-2">
                             {analysis.suggestedAction || "Observation recorded for performance trending."}
                         </p>
                     </div>
@@ -321,7 +455,7 @@ const SafetyObservationForm: React.FC = () => {
                 </button>
                 <button 
                     onClick={() => setViewMode('Insights')}
-                    className="bg-white border-4 border-slate-900 text-slate-900 px-12 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center gap-4 hover:bg-slate-50 transition-all shadow-xl active:scale-95"
+                    className="glass-card border-4 border-slate-900 text-slate-900 px-12 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center gap-4 hover:glass-button transition-all shadow-xl active:scale-95"
                 >
                     <BarChart3 size={18} /> View Global Insights
                 </button>
@@ -334,27 +468,27 @@ const SafetyObservationForm: React.FC = () => {
     <div className="max-w-6xl mx-auto space-y-6 animate-in slide-in-from-bottom-4 duration-500 pb-20">
       
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-x-3">
             <div className={`p-4 rounded-2xl shadow-xl text-white transition-all transform hover:rotate-3 ${obsType === 'Positive' ? 'bg-emerald-600 shadow-emerald-500/20' : 'bg-blue-600 shadow-blue-500/20'}`}>
               <MessageSquarePlus size={28} />
             </div>
             <div>
               <h2 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">Safety Portal</h2>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2 border-l-2 border-teal-500 pl-4">Digital Observation & Intelligence</p>
+              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2 border-s-2 border-teal-500 ps-4">Digital Observation & Intelligence</p>
             </div>
           </div>
           
           <div className="flex bg-slate-200 p-1 rounded-2xl w-fit shadow-inner">
               <button 
                   onClick={() => setViewMode('Report')}
-                  className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${viewMode === 'Report' ? 'bg-white text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${viewMode === 'Report' ? 'glass-card text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
               >
                   <Edit3 size={14}/> New Report
               </button>
               {canViewInsights && (
                   <button 
                       onClick={() => setViewMode('Insights')}
-                      className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${viewMode === 'Insights' ? 'bg-white text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
+                      className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${viewMode === 'Insights' ? 'glass-card text-slate-800 shadow-lg' : 'text-slate-500 hover:text-slate-700'}`}
                   >
                       <BarChart3 size={14}/> Site Intelligence
                   </button>
@@ -366,7 +500,7 @@ const SafetyObservationForm: React.FC = () => {
           <div className="space-y-6 animate-in fade-in duration-500">
             {/* Insights content remains unchanged */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
+                <div className="glass-card p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Total Contributions</p>
                     <h4 className="text-4xl font-black text-slate-800 tracking-tighter">{insightsData.total}</h4>
                     <div className="flex items-center gap-1 mt-2 text-teal-600">
@@ -401,7 +535,7 @@ const SafetyObservationForm: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-slate-100 h-96">
+                <div className="glass-card p-8 rounded-[2rem] shadow-xl border border-slate-100 h-96">
                     <h5 className="font-black text-slate-800 mb-8 flex items-center gap-3 uppercase tracking-tight">
                         <Target size={20} className="text-indigo-600"/> Risk Category Analysis
                     </h5>
@@ -417,7 +551,7 @@ const SafetyObservationForm: React.FC = () => {
                         </ResponsiveContainer>
                     </div>
                 </div>
-                <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-slate-100 h-96 flex flex-col">
+                <div className="glass-card p-8 rounded-[2rem] shadow-xl border border-slate-100 h-96 flex flex-col">
                     <h5 className="font-black text-slate-800 mb-8 flex items-center gap-3 uppercase tracking-tight">
                         <PieChartIcon size={20} className="text-indigo-600"/> Observation Sentiment
                     </h5>
@@ -452,7 +586,7 @@ const SafetyObservationForm: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+            <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                 <h5 className="font-black text-slate-800 mb-6 uppercase tracking-tight flex items-center gap-3"><History size={20} className="text-teal-600"/> Site-wide Participation Stream</h5>
                 <div className="space-y-4">
                     {allObservations.map(obs => (
@@ -466,14 +600,14 @@ const SafetyObservationForm: React.FC = () => {
                                         <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{obs.analysis?.category || 'General'} • {obs.location}</span>
                                         <h6 className="font-black text-slate-800 text-sm mt-0.5">{obs.isAnonymous ? 'Anonymous Reporter' : obs.reportedBy}</h6>
                                     </div>
-                                    <div className="text-right">
+                                    <div className="text-end">
                                         <span className="text-[9px] font-black text-slate-300 uppercase block">{new Date(obs.timestamp).toLocaleDateString()}</span>
                                         <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded border mt-1 inline-block ${obs.status === 'Reviewed' ? 'bg-teal-50 text-teal-600 border-teal-100' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>{obs.status}</span>
                                     </div>
                                 </div>
-                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-2 italic border-l-2 border-slate-100 pl-4 mb-3">"{obs.description}"</p>
+                                <p className="text-xs text-slate-600 font-medium leading-relaxed line-clamp-2 italic border-s-2 border-slate-100 ps-4 mb-3">"{obs.description}"</p>
                                 {obs.analysis?.suggestedAction && (
-                                    <div className="mb-3 flex items-center gap-2 bg-slate-50 p-2 px-4 rounded-xl border border-slate-100 w-fit">
+                                    <div className="mb-3 flex items-center gap-2 glass-panel p-2 px-4 rounded-xl border border-slate-100 w-fit">
                                         <ShieldCheck size={14} className="text-teal-500"/>
                                         <span className="text-[10px] font-bold text-slate-500 uppercase">Action: {obs.analysis.suggestedAction}</span>
                                     </div>
@@ -518,7 +652,7 @@ const SafetyObservationForm: React.FC = () => {
       ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
               <div className="lg:col-span-6 h-full">
-                  <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100 relative overflow-hidden flex flex-col h-full">
+                  <div className="glass-card p-10 rounded-[2.5rem] shadow-2xl border border-slate-100 relative overflow-hidden flex flex-col h-full">
                       <div className="flex-1 space-y-8">
                           <div>
                               <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-5 text-center">Protocol Mode</label>
@@ -527,7 +661,7 @@ const SafetyObservationForm: React.FC = () => {
                                     type="button"
                                     onClick={() => { setObsType('Positive'); setSubmissionResult(null); }}
                                     className={`p-6 rounded-[2rem] border-4 flex flex-col items-center gap-3 transition-all duration-300 ${
-                                        obsType === 'Positive' ? 'border-emerald-500 bg-emerald-50 text-emerald-800 shadow-xl shadow-emerald-500/10 scale-[1.02]' : 'border-slate-50 text-slate-400 bg-slate-50 hover:bg-slate-100'
+                                        obsType === 'Positive' ? 'border-emerald-500 bg-emerald-50 text-emerald-800 shadow-xl shadow-emerald-500/10 scale-[1.02]' : 'border-slate-50 text-slate-400 glass-panel hover:bg-slate-100'
                                     }`}
                                 >
                                     <ThumbsUp size={32} className={obsType === 'Positive' ? 'fill-emerald-200 text-emerald-600' : ''} />
@@ -537,7 +671,7 @@ const SafetyObservationForm: React.FC = () => {
                                     type="button"
                                     onClick={() => { setObsType('Improvement'); setSubmissionResult(null); }}
                                     className={`p-6 rounded-[2rem] border-4 flex flex-col items-center gap-3 transition-all duration-300 ${
-                                        obsType === 'Improvement' ? 'border-blue-500 bg-blue-50 text-blue-800 shadow-xl shadow-blue-500/10 scale-[1.02]' : 'border-slate-50 text-slate-400 bg-slate-50 hover:bg-slate-100'
+                                        obsType === 'Improvement' ? 'border-blue-500 bg-blue-50 text-blue-800 shadow-xl shadow-blue-500/10 scale-[1.02]' : 'border-slate-50 text-slate-400 glass-panel hover:bg-slate-100'
                                     }`}
                                 >
                                     <Lightbulb size={32} className={obsType === 'Improvement' ? 'fill-blue-200 text-blue-600' : ''} />
@@ -561,19 +695,67 @@ const SafetyObservationForm: React.FC = () => {
                           <div className="relative">
                               <div className="flex justify-between items-center mb-3">
                                   <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Narrative Evidence <span className="text-red-500">*</span></label>
-                                  <button
-                                      type="button"
-                                      onClick={handleVoiceInput}
-                                      className={`p-2 px-4 rounded-xl flex items-center gap-2 text-[10px] font-black transition-all border-2 ${
-                                          isListening ? 'bg-red-500 border-red-600 text-white animate-pulse shadow-lg' : 'bg-slate-50 border-slate-100 text-slate-500 hover:bg-slate-100'
-                                      }`}
-                                  >
-                                      <Mic size={14} /> {isListening ? 'LISTENING...' : 'VOICE CAPTURE'}
-                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    {isRecording && (
+                                      <button
+                                        type="button"
+                                        onClick={cancelRecording}
+                                        className="text-[10px] font-bold text-slate-400 hover:text-slate-600 px-2 py-1"
+                                      >
+                                        Cancel
+                                      </button>
+                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={handleVoiceInput}
+                                        disabled={isTranscribingVoice}
+                                        className={`p-2 px-3.5 rounded-xl flex items-center gap-2 text-[10px] font-black transition-all border-2 ${
+                                            isRecording 
+                                              ? 'bg-red-500 border-red-600 text-white animate-pulse shadow-lg' 
+                                              : isTranscribingVoice
+                                                ? 'bg-purple-100 border-purple-200 text-purple-700'
+                                                : 'glass-panel border-slate-100 text-slate-600 hover:bg-slate-100'
+                                        }`}
+                                        title="Record voice with microphone and transcribe using gemini-3.5-transcribe"
+                                    >
+                                        {isTranscribingVoice ? (
+                                          <>
+                                            <Loader2 size={13} className="animate-spin" />
+                                            <span>TRANSCRIBING...</span>
+                                          </>
+                                        ) : isRecording ? (
+                                          <>
+                                            <Mic size={13} className="text-white" />
+                                            <span>STOP & TRANSCRIBE ({recordingDuration}s)</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Mic size={13} className="text-indigo-600" />
+                                            <span>VOICE LOG (gemini-3.5)</span>
+                                          </>
+                                        )}
+                                    </button>
+                                  </div>
                               </div>
+
+                              {/* Live Audio Level indicator during recording */}
+                              {isRecording && (
+                                <div className="mb-2 p-2 rounded-xl bg-red-50 border border-red-200 flex items-center justify-between text-[11px] text-red-700">
+                                  <span className="font-bold flex items-center gap-1.5">
+                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                                    Recording voice observation...
+                                  </span>
+                                  <div className="flex items-center gap-1 h-3">
+                                    <span className="w-1 bg-red-500 rounded" style={{ height: `${Math.max(3, audioLevel * 0.12)}px` }}></span>
+                                    <span className="w-1 bg-red-500 rounded" style={{ height: `${Math.max(5, audioLevel * 0.18)}px` }}></span>
+                                    <span className="w-1 bg-red-500 rounded" style={{ height: `${Math.max(3, audioLevel * 0.10)}px` }}></span>
+                                    <span className="w-1 bg-red-500 rounded" style={{ height: `${Math.max(6, audioLevel * 0.22)}px` }}></span>
+                                  </div>
+                                </div>
+                              )}
                               <textarea
-                                  className={`w-full p-6 bg-slate-50 border-2 rounded-[2rem] h-44 outline-none transition-all resize-none text-sm font-semibold text-slate-800 placeholder:font-medium shadow-inner ${
-                                      errors.description ? 'border-red-500 focus:border-red-500' : touched.description && !errors.description ? 'border-emerald-500 focus:border-emerald-500' : 'border-slate-50 focus:bg-white focus:border-slate-900'
+                                  className={`w-full p-6 glass-panel border-2 rounded-[2rem] h-44 outline-none transition-all resize-none text-sm font-semibold text-slate-800 placeholder:font-medium shadow-inner ${
+                                      errors.description ? 'border-red-500 focus:border-red-500' : touched.description && !errors.description ? 'border-emerald-500 focus:border-emerald-500' : 'border-slate-50 focus:glass-card focus:border-slate-900'
                                   }`}
                                   placeholder={obsType === 'Positive' ? "e.g. Scaffolding team verified harness tie-off correctly..." : "e.g. Identified loose floor tiles near emergency exit B4..."}
                                   value={obsDescription}
@@ -586,7 +768,7 @@ const SafetyObservationForm: React.FC = () => {
                                       setErrors(prev => ({...prev, description: validate('description', obsDescription)}));
                                   }}
                               />
-                              {errors.description && <p className="text-red-500 text-[10px] font-bold mt-1 flex items-center gap-1 ml-4"><AlertCircle size={10} /> {errors.description}</p>}
+                              {errors.description && <p className="text-red-500 text-[10px] font-bold mt-1 flex items-center gap-1 ms-4"><AlertCircle size={10} /> {errors.description}</p>}
                           </div>
 
                           <div>
@@ -594,9 +776,9 @@ const SafetyObservationForm: React.FC = () => {
                               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                   <div 
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50 hover:bg-indigo-50 flex flex-col items-center justify-center cursor-pointer transition-all group"
+                                    className="aspect-square rounded-2xl border-2 border-dashed border-slate-200 hover:border-indigo-400 glass-panel hover:bg-indigo-50 flex flex-col items-center justify-center cursor-pointer transition-all group"
                                   >
-                                      <div className="bg-white p-3 rounded-full shadow-sm mb-2 group-hover:scale-110 transition-transform">
+                                      <div className="glass-card p-3 rounded-full shadow-sm mb-2 group-hover:scale-110 transition-transform">
                                           <Camera size={20} className="text-slate-400 group-hover:text-indigo-600" />
                                       </div>
                                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide group-hover:text-indigo-600">Add Photo</span>
@@ -607,7 +789,7 @@ const SafetyObservationForm: React.FC = () => {
                                           <img src={img} className="w-full h-full object-cover" alt="evidence" />
                                           <button 
                                             onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}
-                                            className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
+                                            className="absolute top-2 end-2 bg-red-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
                                           >
                                               <X size={12} />
                                           </button>
@@ -663,8 +845,8 @@ const SafetyObservationForm: React.FC = () => {
               </div>
 
               <div className="lg:col-span-6 flex flex-col gap-8">
-                  <div className="flex-1 flex flex-col items-center justify-center text-slate-400 bg-white rounded-[3rem] border-4 border-dashed border-slate-100 p-12 text-center shadow-inner animate-in fade-in duration-300">
-                      <div className="bg-slate-50 p-12 rounded-full mb-8 shadow-xl border border-slate-100">
+                  <div className="flex-1 flex flex-col items-center justify-center text-slate-400 glass-card rounded-[3rem] border-4 border-dashed border-slate-100 p-12 text-center shadow-inner animate-in fade-in duration-300">
+                      <div className="glass-panel p-12 rounded-full mb-8 shadow-xl border border-slate-100">
                           <Target size={80} className="opacity-20 text-slate-400" />
                       </div>
                       <p className="text-3xl font-black text-slate-800 uppercase tracking-tighter">AI Diagnostic Terminal</p>
@@ -682,8 +864,8 @@ const SafetyObservationForm: React.FC = () => {
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                               {allObservations.slice(0, 2).map((obs) => (
-                                  <div key={obs.id} className="bg-white p-6 rounded-[2rem] border-2 border-slate-50 hover:shadow-2xl hover:border-indigo-100 transition-all group relative overflow-hidden">
-                                      <div className={`absolute top-0 left-0 w-1.5 h-full transition-all group-hover:w-2.5 ${
+                                  <div key={obs.id} className="glass-card p-6 rounded-[2rem] border-2 border-slate-50 hover:shadow-2xl hover:border-indigo-100 transition-all group relative overflow-hidden">
+                                      <div className={`absolute top-0 start-0 w-1.5 h-full transition-all group-hover:w-2.5 ${
                                           obs.type === 'Positive' ? 'bg-emerald-500' : 'bg-blue-500'
                                       }`} />
                                       <div className="flex justify-between items-start mb-4">
@@ -700,9 +882,9 @@ const SafetyObservationForm: React.FC = () => {
                                           </div>
                                           <span className="text-[9px] font-black text-slate-300 font-mono tracking-tighter uppercase">{new Date(obs.timestamp).toLocaleDateString()}</span>
                                       </div>
-                                      <p className="text-[11px] text-slate-600 font-bold leading-relaxed line-clamp-2 italic border-l-2 border-slate-100 pl-4">"{obs.description}"</p>
-                                      <div className="mt-3 text-right">
-                                          <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded border ${obs.status === 'Reviewed' ? 'bg-teal-50 text-teal-600 border-teal-100' : 'bg-slate-50 text-slate-400 border-slate-100'}`}>{obs.status}</span>
+                                      <p className="text-[11px] text-slate-600 font-bold leading-relaxed line-clamp-2 italic border-s-2 border-slate-100 ps-4">"{obs.description}"</p>
+                                      <div className="mt-3 text-end">
+                                          <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded border ${obs.status === 'Reviewed' ? 'bg-teal-50 text-teal-600 border-teal-100' : 'glass-panel text-slate-400 border-slate-100'}`}>{obs.status}</span>
                                       </div>
                                   </div>
                               ))}

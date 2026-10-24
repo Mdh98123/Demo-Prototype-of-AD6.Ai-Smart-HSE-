@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="50%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base with Rounded App Icon Corners -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="104" fill="none" stroke="#334155" stroke-width="3" opacity="0.6" />
+
+  <!-- Outer Protective Hexagon Matrix -->
+  <polygon points="256,54 426,152 426,348 256,446 86,348 86,152" 
+           fill="none" stroke="#10B981" stroke-width="4" stroke-opacity="0.3" stroke-dasharray="16,8" />
+
+  <!-- Core Safety Shield -->
+  <path d="M256 90 L380 155 C380 275 256 395 256 425 C256 395 132 275 132 155 Z" 
+        fill="url(#shieldGrad)" filter="url(#glow)" />
+  
+  <!-- Inner Shield Highlight -->
+  <path d="M256 112 L358 168 C358 265 256 368 256 395 C256 368 154 265 154 168 Z" 
+        fill="none" stroke="#34D399" stroke-width="4" stroke-opacity="0.7" />
+
+  <!-- Falcon / Eagle Safety Wing Dynamic Apex (UAE/GCC Identity) -->
+  <path d="M256 160 L310 240 L280 240 L320 310 L256 270 L192 310 L232 240 L202 240 Z" 
+        fill="#FFFFFF" />
+
+  <!-- Golden Core Energy Nexus -->
+  <circle cx="256" cy="256" r="24" fill="url(#accentGrad)" />
+  <circle cx="256" cy="256" r="14" fill="#FFFFFF" opacity="0.9" />
+
+  <!-- AD6 Brand Monogram -->
+  <text x="256" y="468" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" 
+        font-weight="900" font-size="34" letter-spacing="4" fill="#38BDF8">AD6 HSE</text>
+</svg>

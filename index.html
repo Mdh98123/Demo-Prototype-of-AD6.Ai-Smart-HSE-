@@ -1,21 +1,66 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AD6.Ai Smart HSE Suite</title>
-    <meta name="description" content="AD6.Ai Integrated HSE Application for UAE Regulatory Compliance" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script>
+      (function() {
+        var isDevHost = window.location.hostname.includes('ais-dev-') || 
+                        window.location.hostname.includes('ais-pre-') || 
+                        window.location.hostname.includes('run.app') ||
+                        window.location.hostname.includes('localhost') || 
+                        window.location.port === '3000' ||
+                        window.location.port === '8080';
+        if (isDevHost) {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              for (var i = 0; i < regs.length; i++) {
+                regs[i].unregister();
+              }
+            });
+          }
+          if ('caches' in window) {
+            caches.keys().then(function(keys) {
+              keys.forEach(function(k) { caches.delete(k); });
+            });
+          }
+        }
+      })();
+    </script>
+    <title>AD6 HSE Enterprise AI Platform</title>
+    <meta name="description" content="Next-generation AI-native HSE platform featuring Safi AI Copilot, predictive SIF analytics, and real-time computer vision for ADNOC & OSHAD compliance." />
+    <meta property="og:title" content="AD6 HSE Enterprise AI Platform" />
+    <meta property="og:description" content="Next-generation AI-native HSE platform featuring Safi AI Copilot, predictive SIF analytics, and real-time computer vision for ADNOC & OSHAD compliance." />
+    <!-- Progressive Web App (PWA) Standards -->
+    <meta name="theme-color" content="#0F172A" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AD6 HSE" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dubai-font@1.1.1/dubai-font/dubai-font.css">
     <script>
       tailwind.config = {
         darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
+              sans: ['Inter', 'Dubai', 'system-ui', 'sans-serif'],
+              arabic: ['Cairo', 'IBM Plex Sans Arabic', 'Dubai', 'sans-serif'],
+              cairo: ['Cairo', 'sans-serif'],
               mono: ['IBM Plex Mono', 'monospace'],
+              dubai: ['Dubai', 'sans-serif'],
             },
             fontSize: {
               // Enhanced readability scale (approx +1px from standard)
@@ -31,68 +76,78 @@
             },
             colors: {
               brand: {
-                50: '#EEF2FF',
-                100: '#E0E7FF',
-                200: '#C7D2FE',
-                300: '#A5B4FC',
-                400: '#818CF8',
-                500: '#6366F1',
-                600: '#4F46E5',
-                700: '#4338CA',
-                800: '#3730A3',
-                900: '#312E81',
-                950: '#1E1B4B',
+                50: '#F0F4FF',
+                100: '#D9E3FF',
+                200: '#AABDF9',
+                300: '#7A95EF',
+                400: '#5472E8',
+                500: '#0052CC', // Safety Blue (Primary)
+                600: '#0047B3',
+                700: '#003380',
+                800: '#001F4D',
+                900: '#001433', // Trust Navy
+                950: '#000A1A',
+              },
+              ai: {
+                50: '#FAF5FF',
+                100: '#F3E8FF',
+                500: '#A855F7', // AI Purple
+                600: '#9333EA',
+                900: '#581C87',
               },
               status: {
-                pass: '#10B981',
-                warn: '#F59E0B',
-                fail: '#EF4444',
-                info: '#3B82F6',
+                pass: '#10B981', // Safety Green
+                warn: '#F59E0B', // Warning Amber
+                fail: '#EF4444', // Critical Red
+                info: '#0052CC', // Safety Blue
               },
-              // Enhanced contrast neutral palette
               neutral: {
                 50: '#F8FAFC',
                 100: '#F1F5F9',
                 200: '#E2E8F0',
                 300: '#CBD5E1',
-                400: '#7E91AA', // Darkened from #94A3B8 for better text readability
-                500: '#5F738C', // Darkened from #64748B
+                400: '#94A3B8',
+                500: '#64748B', // Neutral Grey
                 600: '#475569',
                 700: '#334155',
                 800: '#1E293B',
                 900: '#0F172A',
+                950: '#020617',
               },
-              // Override Slate to match enhanced neutral for consistency
               slate: {
                 50: '#F8FAFC',
                 100: '#F1F5F9',
                 200: '#E2E8F0',
                 300: '#CBD5E1',
-                400: '#7E91AA',
-                500: '#5F738C',
+                400: '#94A3B8',
+                500: '#64748B',
                 600: '#475569',
                 700: '#334155',
                 800: '#1E293B',
                 900: '#0F172A',
+                950: '#020617',
               },
-              background: "#FFFFFF",
-              surface: "#F8FAFC",
+              background: "#F8FAFC",
+              surface: "#FFFFFF",
             },
             boxShadow: {
-              'card': '0px 3px 6px rgba(0,0,0,0.02), 0px 10px 20px rgba(0,0,0,0.03)',
-              'card-hover': '0px 15px 35px rgba(0,0,0,0.08), 0px 5px 15px rgba(0,0,0,0.04)',
-              'input-focus': '0px 0px 0px 4px rgba(99, 102, 241, 0.15)', // Brand ring
+              'card': '0px 4px 24px -4px rgba(11, 15, 25, 0.05), 0px 8px 16px -4px rgba(11, 15, 25, 0.02)',
+              'card-hover': '0px 12px 32px -4px rgba(11, 15, 25, 0.08), 0px 20px 24px -4px rgba(11, 15, 25, 0.04)',
+              'float': '0px 24px 48px -12px rgba(11, 15, 25, 0.18)',
+              'input-focus': '0px 0px 0px 4px rgba(59, 130, 246, 0.15)',
               'toast': '0px 10px 30px rgba(0,0,0,0.1)',
-              'glow': '0 0 20px rgba(99, 102, 241, 0.5)',
+              'glow-blue': '0 0 24px rgba(59, 130, 246, 0.4)',
+              'glow-emerald': '0 0 24px rgba(16, 185, 129, 0.4)',
             },
             borderRadius: {
               'sm': '4px',
               'DEFAULT': '8px',
-              'md': '12px',
-              'lg': '16px',
-              'xl': '20px',
-              '2xl': '24px', // Inputs, Buttons
-              '3xl': '32px', // Cards
+              'md': '10px',
+              'lg': '12px',
+              'xl': '16px', // Premium rounded cards
+              '2xl': '20px', 
+              '3xl': '24px', 
+              '4xl': '32px',
             },
             keyframes: {
               fadeIn: {
@@ -114,6 +169,10 @@
               pulseSoft: {
                 '0%, 100%': { opacity: '1' },
                 '50%': { opacity: '0.6' },
+              },
+              scan: {
+                '0%': { backgroundPosition: '0 -100%' },
+                '100%': { backgroundPosition: '0 200%' },
               }
             },
             animation: {
@@ -122,21 +181,155 @@
               'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
               'zoom-in': 'zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
               'pulse-soft': 'pulseSoft 2.5s infinite ease-in-out',
+              'scan': 'scan 2s linear infinite',
             }
           }
         }
       }
     </script>
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #F8FAFC; /* Neutral 50 */
-        color: #1E293B; /* Neutral 800 */
-        font-size: 16px; /* Explicit base size */
-        line-height: 1.6;
+      :root {
+        --z-base: 0;
+        --z-sticky-table: 10;
+        --z-header: 20;
+        --z-bottom-nav: 25;
+        --z-sidebar: 30;
+        --z-dropdown: 40;
+        --z-safi: 45;
+        --z-modal: 50;
+        --z-toast: 60;
+        
+        --color-navy: #0F172A;
+        --color-primary: #0052CC;
+        --color-primary-hover: #0040A8;
+        --color-surface: #FFFFFF;
+        --color-bg: #F8FAFC;
+        --color-border: #E2E8F0;
+      }
+      
+      :root[data-theme="dark"], html.dark { 
+        --color-navy: #0F172A;
+        --color-bg: #0F172A;
+        --color-surface: #1E293B;
+        --color-border: #334155;
+      }
+      
+      html, body {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #F8FAFC;
+        color: #0F172A;
+        font-size: 15px;
+        line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: "cv11", "ss01"; /* Inter clean char variants */
+        text-rendering: optimizeLegibility;
+      }
+      
+      /* Subtle industrial subtle pattern instead of pastel AI mesh slop */
+      body {
+        background-color: #F8FAFC;
+        background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+        background-size: 24px 24px;
+        background-attachment: fixed;
+      }
+      
+      /* --- ENTERPRISE INDUSTRIAL DESIGN SYSTEM SURFACES --- */
+      
+      .glass-panel, .enterprise-panel {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+        border-radius: 12px;
+      }
+      
+      .glass-card, .enterprise-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+        border-radius: 12px;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .glass-card:hover, .enterprise-card:hover {
+        border-color: #CBD5E1;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      }
+      
+      .glass-modal, .glass-dialog, .enterprise-modal {
+        background: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+        border-radius: 16px;
+      }
+      
+      .glass-sidebar, .enterprise-sidebar {
+        background: #0F172A;
+        border-right: 1px solid #1E293B;
+      }
+      
+      .glass-header, .enterprise-header {
+        background: #FFFFFF;
+        border-bottom: 1px solid #E2E8F0;
+      }
+      
+      .glass-toolbar, .enterprise-toolbar {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+      }
+      
+      .glass-table, .enterprise-table {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      .glass-widget, .enterprise-widget {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+        border-radius: 12px;
+      }
+      
+      .glass-dropdown, .glass-popover, .enterprise-dropdown {
+        background: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+        border-radius: 10px;
+      }
+      
+      .glass-navigation {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+      }
+      
+      .glass-input, .enterprise-input {
+        background: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 8px !important;
+        color: #0F172A !important;
+        transition: all 0.15s ease;
+      }
+      .glass-input:focus, .glass-input:focus-visible,
+      .enterprise-input:focus, .enterprise-input:focus-visible {
+        background: #FFFFFF !important;
+        border-color: #0052CC !important;
+        box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2) !important;
+        outline: none;
+      }
+      
+      .glass-button, .enterprise-button {
+        background: #F1F5F9;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        color: #0F172A;
+        font-weight: 600;
+        transition: all 0.15s ease;
+      }
+      .glass-button:hover, .enterprise-button:hover {
+        background: #E2E8F0;
+        border-color: #CBD5E1;
       }
       
       /* Horizon UI Scrollbar */
@@ -144,18 +337,36 @@
         width: 8px;
         height: 8px;
       }
+      
+      /* Directional Icon Flipper for RTL */
+      html[dir="rtl"] .lucide-chevron-right, 
+      html[dir="rtl"] .lucide-arrow-right,
+      html[dir="rtl"] .lucide-arrow-up-right,
+      html[dir="rtl"] .lucide-arrow-left {
+        transform: scaleX(-1);
+      }
+      
+      /* Arabic Typography standard for RTL */
+      html[dir="rtl"], 
+      html[lang="ar"], 
+      .font-arabic,
+      [dir="rtl"] body {
+        font-family: 'Cairo', 'IBM Plex Sans Arabic', 'Dubai', system-ui, -apple-system, sans-serif !important;
+        letter-spacing: 0 !important;
+      }
       ::-webkit-scrollbar-track {
         background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #CBD5E1; /* Neutral 300 */
+        background: rgba(203, 213, 225, 0.5); /* Neutral 300 transparent */
+        backdrop-filter: blur(4px);
         border-radius: 10px;
-        border: 2px solid #F8FAFC; /* Padding effect */
+        border: 2px solid transparent; /* Padding effect */
+        background-clip: padding-box;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #94A3B8; /* Neutral 400 */
+        background-color: rgba(148, 163, 184, 0.7); /* Neutral 400 transparent */
       }
-
       /* Consistent Focus */
       *:focus-visible {
         outline: none;
@@ -168,25 +379,7 @@
         color: #312E81; /* Brand 900 */
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "recharts": "https://esm.sh/recharts@^3.6.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "framer-motion": "https://esm.sh/framer-motion@11.15.0",
-    "canvas-confetti": "https://esm.sh/canvas-confetti@1.9.3",
-    "class-variance-authority": "https://esm.sh/class-variance-authority@0.7.1",
-    "clsx": "https://esm.sh/clsx@2.1.1",
-    "tailwind-merge": "https://esm.sh/tailwind-merge@2.5.5",
-    "jspdf": "https://esm.sh/jspdf@2.5.1",
-    "jspdf-autotable": "https://esm.sh/jspdf-autotable@3.8.2"
-  }
-}
-</script>
+
 <link rel="stylesheet" href="/index.css">
 </head>
   <body>

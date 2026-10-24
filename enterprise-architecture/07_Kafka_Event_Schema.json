@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HSE Event Schema - Apache Kafka",
+  "description": "Defines the event structure for cross-module asynchronous communication (e.g., Edge AI triggering IoT sirens, SIMOPS conflict alerts).",
+  "type": "object",
+  "required": ["eventId", "eventType", "timestamp", "tenantId", "payload"],
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the event."
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "HAZARD_DETECTED",
+        "PTW_APPROVED",
+        "SIMOPS_CONFLICT",
+        "BIOMETRIC_FAILED",
+        "ENVIRONMENTAL_LIMIT_EXCEEDED"
+      ],
+      "description": "The category of the event."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when the event occurred."
+    },
+    "tenantId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Mandatory tenant isolation identifier for RLS processing downstream."
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin of the event (e.g., 'edge-ai-node-abudhabi-01', 'ptw-service')."
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data payload.",
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

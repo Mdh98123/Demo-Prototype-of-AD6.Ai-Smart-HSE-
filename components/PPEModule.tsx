@@ -5,12 +5,17 @@ import { useUser } from '../contexts/UserContext';
 import { 
   HardHat, Shirt, Glasses, Package, RefreshCw, 
   UserCheck, AlertCircle, ShoppingCart, ShieldCheck,
-  Search
+  Search, QrCode, X, CheckCircle2
 } from 'lucide-react';
 
 const PPEModule: React.FC = () => {
   const { currentUser } = useUser();
   const [activeTab, setActiveTab] = useState<'Inventory' | 'Issuance'>('Inventory');
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanInput, setScanInput] = useState('');
+  const [scanStatus, setScanStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [scanMessage, setScanMessage] = useState('');
+
   const [inventory, setInventory] = useState<PPEItem[]>([
       { id: 'PPE-01', name: 'Safety Helmet (White)', type: 'Head', standard: 'ANSI Z89.1', stock: 45, reorderLevel: 20, lastIssued: '2024-05-18' },
       { id: 'PPE-02', name: 'Impact Gloves (L)', type: 'Hand', standard: 'EN 388', stock: 12, reorderLevel: 50, lastIssued: '2024-05-20' },
@@ -53,6 +58,34 @@ const PPEModule: React.FC = () => {
       setIssuanceLog([log, ...issuanceLog]);
   };
 
+  const handleScanSubmit = (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      const item = inventory.find(i => i.id.toLowerCase() === scanInput.toLowerCase());
+      
+      if (!item) {
+          setScanStatus('error');
+          setScanMessage('Item not found. Please check the QR code.');
+          return;
+      }
+      
+      if (item.stock < 1) {
+          setScanStatus('error');
+          setScanMessage(`${item.name} is out of stock!`);
+          return;
+      }
+
+      handleIssue(item);
+      setScanStatus('success');
+      setScanMessage(`Successfully issued 1x ${item.name} to ${currentUser.name}. Stock remaining: ${item.stock - 1}`);
+      setScanInput('');
+      
+      // Reset status after 3 seconds
+      setTimeout(() => {
+          setScanStatus('idle');
+          setScanMessage('');
+      }, 3000);
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -66,27 +99,92 @@ const PPEModule: React.FC = () => {
             </div>
         </div>
         <div className="flex bg-slate-200 p-1 rounded-2xl">
-            <button onClick={() => setActiveTab('Inventory')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Inventory' ? 'bg-white text-slate-900 shadow' : 'text-slate-500'}`}>Inventory</button>
-            <button onClick={() => setActiveTab('Issuance')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Issuance' ? 'bg-white text-slate-900 shadow' : 'text-slate-500'}`}>Issuance Log</button>
+            <button onClick={() => setActiveTab('Inventory')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Inventory' ? 'glass-card text-slate-900 shadow' : 'text-slate-500'}`}>Inventory</button>
+            <button onClick={() => setActiveTab('Issuance')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Issuance' ? 'glass-card text-slate-900 shadow' : 'text-slate-500'}`}>Issuance Log</button>
         </div>
       </div>
+
+      {/* QR Scanner Modal */}
+      {isScanning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+            <div className="glass-card rounded-[2.5rem] p-8 max-w-md w-full shadow-2xl relative">
+                <button 
+                    onClick={() => { setIsScanning(false); setScanStatus('idle'); setScanMessage(''); setScanInput(''); }}
+                    className="absolute top-6 end-6 text-slate-400 hover:text-slate-600"
+                >
+                    <X size={24} />
+                </button>
+                <div className="text-center mb-6">
+                    <div className="bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600">
+                        <QrCode size={32} />
+                    </div>
+                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Scan PPE QR Code</h3>
+                    <p className="text-xs text-slate-500 font-bold mt-2">Use your device camera or enter the PPE ID manually to log issuance.</p>
+                </div>
+
+                <div className="glass-panel border-2 border-dashed border-slate-200 rounded-2xl h-48 flex flex-col items-center justify-center mb-6 relative overflow-hidden">
+                    {/* Simulated Scanner Animation */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/20 to-transparent h-full w-full animate-[scan_2s_ease-in-out_infinite]" style={{ backgroundSize: '100% 20%', backgroundRepeat: 'no-repeat' }}></div>
+                    <QrCode size={48} className="text-slate-300 mb-2" />
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Camera Active</span>
+                </div>
+
+                <form onSubmit={handleScanSubmit} className="space-y-4">
+                    <div>
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Manual Entry (PPE ID)</label>
+                        <div className="flex gap-2">
+                            <input 
+                                type="text" 
+                                value={scanInput}
+                                onChange={(e) => setScanInput(e.target.value)}
+                                placeholder="e.g. PPE-01" 
+                                className="flex-1 p-3 glass-panel border border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-blue-500"
+                            />
+                            <button 
+                                type="submit"
+                                disabled={!scanInput}
+                                className="bg-blue-600 text-white px-6 py-3 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-blue-700 transition disabled:opacity-50"
+                            >
+                                Verify
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                {scanStatus !== 'idle' && (
+                    <div className={`mt-4 p-4 rounded-xl flex items-start gap-3 ${scanStatus === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+                        {scanStatus === 'success' ? <CheckCircle2 size={20} className="shrink-0" /> : <AlertCircle size={20} className="shrink-0" />}
+                        <p className="text-xs font-bold leading-relaxed">{scanMessage}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+      )}
 
       {activeTab === 'Inventory' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
-                  <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                  <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                       <div className="flex justify-between items-center mb-6">
                           <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2"><Package size={20}/> Stock Levels</h3>
-                          <div className="relative">
-                              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/>
-                              <input type="text" placeholder="Search item..." className="pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs font-bold w-48 border-none focus:ring-2 focus:ring-blue-500"/>
+                          <div className="flex gap-3">
+                              <button 
+                                onClick={() => setIsScanning(true)}
+                                className="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition flex items-center gap-2 shadow-lg"
+                              >
+                                  <QrCode size={14} /> Scan QR
+                              </button>
+                              <div className="relative">
+                                  <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400"/>
+                                  <input type="text" placeholder="Search item..." className="ps-9 pe-4 py-2 glass-panel rounded-xl text-xs font-bold w-48 border-none focus:ring-2 focus:ring-blue-500"/>
+                              </div>
                           </div>
                       </div>
                       <div className="space-y-4">
                           {inventory.map(item => (
-                              <div key={item.id} className="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border-2 border-slate-100 hover:border-blue-200 transition-all group">
+                              <div key={item.id} className="flex items-center justify-between p-5 glass-panel rounded-2xl border-2 border-slate-100 hover:border-blue-200 transition-all group">
                                   <div className="flex items-center gap-4">
-                                      <div className="p-3 bg-white rounded-xl text-slate-400 shadow-sm">
+                                      <div className="p-3 glass-card rounded-xl text-slate-400 shadow-sm">
                                           {item.type === 'Head' ? <HardHat size={20}/> : item.type === 'Eye' ? <Glasses size={20}/> : <Shirt size={20}/>}
                                       </div>
                                       <div>
@@ -94,7 +192,7 @@ const PPEModule: React.FC = () => {
                                           <p className="text-[10px] text-slate-500 font-mono mt-1 uppercase">{item.standard} • ID: {item.id}</p>
                                       </div>
                                   </div>
-                                  <div className="text-right flex items-center gap-6">
+                                  <div className="text-end flex items-center gap-6">
                                       <div>
                                           <p className={`text-xl font-black ${item.stock <= item.reorderLevel ? 'text-red-500' : 'text-slate-800'}`}>{item.stock}</p>
                                           <p className="text-[9px] text-slate-400 font-bold uppercase">Available</p>
@@ -116,7 +214,7 @@ const PPEModule: React.FC = () => {
                   <div className="bg-red-50 p-8 rounded-[2.5rem] border-2 border-red-100 shadow-xl">
                       <h3 className="text-xs font-black text-red-400 uppercase tracking-widest mb-6 flex items-center gap-2"><AlertCircle size={16}/> Low Stock Alerts</h3>
                       {inventory.filter(i => i.stock <= i.reorderLevel).map(i => (
-                          <div key={i.id} className="bg-white p-4 rounded-2xl shadow-sm border border-red-100 mb-3 flex items-center justify-between">
+                          <div key={i.id} className="glass-card p-4 rounded-2xl shadow-sm border border-red-100 mb-3 flex items-center justify-between">
                               <div>
                                   <p className="text-xs font-bold text-slate-700">{i.name}</p>
                                   <p className="text-[10px] text-red-500 font-bold uppercase mt-1">Below Level ({i.reorderLevel})</p>
@@ -135,29 +233,29 @@ const PPEModule: React.FC = () => {
       )}
 
       {activeTab === 'Issuance' && (
-          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+          <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
               <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-6 flex items-center gap-2"><ShieldCheck size={20} className="text-emerald-500"/> Distribution Log</h3>
               <div className="overflow-x-auto">
-                  <table className="w-full text-left">
+                  <table className="w-full text-start">
                       <thead>
-                          <tr className="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                          <tr className="glass-panel text-[10px] font-black text-slate-400 uppercase tracking-widest">
                               <th className="px-6 py-4">Transaction ID</th>
                               <th className="px-6 py-4">Recipient</th>
                               <th className="px-6 py-4">Items</th>
                               <th className="px-6 py-4">Date</th>
-                              <th className="px-6 py-4 text-right">Verification</th>
+                              <th className="px-6 py-4 text-end">Verification</th>
                           </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
                           {issuanceLog.map(log => (
-                              <tr key={log.id} className="hover:bg-slate-50/50">
+                              <tr key={log.id} className="hover:glass-button/50">
                                   <td className="px-6 py-4 font-mono text-xs font-bold text-slate-600">{log.id}</td>
                                   <td className="px-6 py-4 font-bold text-slate-800 text-sm">{log.userName}</td>
                                   <td className="px-6 py-4 text-xs text-slate-600">
                                       {log.items.map(i => `${i.qty}x ${i.name}`).join(', ')}
                                   </td>
                                   <td className="px-6 py-4 text-xs font-mono text-slate-500">{new Date(log.date).toLocaleDateString()}</td>
-                                  <td className="px-6 py-4 text-right">
+                                  <td className="px-6 py-4 text-end">
                                       <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-[9px] font-black uppercase border border-emerald-100">Signed</span>
                                   </td>
                               </tr>

@@ -1,0 +1,73 @@
+{
+  "id": "/",
+  "name": "AD6 HSE Enterprise AI Platform",
+  "short_name": "AD6 HSE",
+  "description": "Next-generation AI-native HSE platform featuring Safi AI Copilot, predictive SIF analytics, and real-time computer vision for ADNOC & OSHAD compliance.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay", "minimal-ui"],
+  "theme_color": "#0F172A",
+  "background_color": "#0F172A",
+  "orientation": "any",
+  "lang": "en",
+  "dir": "auto",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My Work Cockpit",
+      "short_name": "My Work",
+      "description": "Open active operational tasks, approvals, and custody permits",
+      "url": "/my-work",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Report Incident",
+      "short_name": "Incident",
+      "description": "Log immediate safety incident or near miss in the field",
+      "url": "/incidents",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Control of Work",
+      "short_name": "Permits",
+      "description": "View live PTW permits, gas readings, and LOTO isolation logs",
+      "url": "/control-of-work",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "share_target": {
+    "action": "/incidents",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text"
+    }
+  }
+}

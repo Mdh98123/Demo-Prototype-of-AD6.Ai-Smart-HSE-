@@ -1,4 +1,5 @@
 
+import { AITag } from './AITag';
 import React, { useState, useEffect } from 'react';
 import { Bell, AlertTriangle, ShieldAlert, FileText, GraduationCap, X, Loader2, RefreshCcw, Activity, CheckCircle, CalendarClock } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
@@ -24,7 +25,7 @@ const NotificationCenter: React.FC = () => {
     const inspectionHistory = savedHistory ? JSON.parse(savedHistory) : [];
     const failedInspections = inspectionHistory.filter((r: any) => r.status === 'Flagged').slice(0, 5); // Last 5 failures
     
-    const expiringCerts = currentUser.certifications.filter(c => {
+    const expiringCerts = (currentUser?.certifications || []).filter(c => {
        const days = Math.ceil((new Date(c.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
        return days <= 90;
     });
@@ -120,14 +121,14 @@ const NotificationCenter: React.FC = () => {
       >
         <Bell size={20} />
         {criticalCount > 0 && (
-            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+            <span className="absolute top-1 end-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
         )}
       </button>
 
       {/* Proactive Toast Notification */}
       {latestCriticalAlert && !isOpen && (
-          <div className="fixed top-20 right-6 z-50 w-96 bg-white rounded-xl shadow-2xl border-l-4 border-red-500 animate-in slide-in-from-right duration-500 flex items-start p-4">
-              <div className="bg-red-100 p-2 rounded-full text-red-600 mr-3 shrink-0">
+          <div className="fixed top-20 end-6 z-50 w-96 glass-card rounded-xl shadow-2xl border-s-4 border-red-500 animate-in slide-in-from-right duration-500 flex items-start p-4">
+              <div className="bg-red-100 p-2 rounded-full text-red-600 me-3 shrink-0">
                   <AlertTriangle size={20} />
               </div>
               <div className="flex-1">
@@ -142,7 +143,7 @@ const NotificationCenter: React.FC = () => {
               </div>
               <button 
                 onClick={() => setLatestCriticalAlert(null)}
-                className="text-slate-400 hover:text-slate-600 ml-2"
+                className="text-slate-400 hover:text-slate-600 ms-2"
               >
                   <X size={16} />
               </button>
@@ -152,8 +153,8 @@ const NotificationCenter: React.FC = () => {
       {isOpen && (
         <>
             <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)}></div>
-            <div className="absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-xl border border-slate-100 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
-                <div className="p-4 border-b border-slate-100 bg-slate-50/80 flex justify-between items-center">
+            <div className="absolute end-0 mt-2 w-96 glass-card rounded-xl shadow-xl border border-slate-100 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
+                <div className="p-4 border-b border-slate-100 glass-panel/80 flex justify-between items-center">
                     <div>
                         <h3 className="font-bold text-slate-800">Compliance Alerts</h3>
                         <p className="text-xs text-slate-500">
@@ -200,7 +201,7 @@ const NotificationCenter: React.FC = () => {
                     )}
                 </div>
                 
-                <div className="p-3 border-t border-slate-100 bg-slate-50 text-center">
+                <div className="p-3 border-t border-slate-100 glass-panel text-center">
                     <button 
                         onClick={() => setIsOpen(false)}
                         className="text-xs font-semibold text-slate-500 hover:text-slate-800"
@@ -215,4 +216,5 @@ const NotificationCenter: React.FC = () => {
   );
 };
 
+export { NotificationCenter };
 export default NotificationCenter;

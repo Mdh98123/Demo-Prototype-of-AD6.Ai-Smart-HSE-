@@ -5,5 +5,17 @@
     "camera",
     "microphone",
     "geolocation"
+  ],
+  "defaultLocale": "ar-AE",
+  "fallbackLocale": "en",
+  "direction": "rtl",
+  "region": "middle-east1",
+  "tailwind": true,
+  "secrets": [
+    { "name": "GEMINI_API_KEY", "description": "Gemini API key - stored via AI Studio Secrets" },
+    { "name": "OSHAD_API_TOKEN", "description": "Secure token for OSHAD-SF integration" }
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
   ]
 }

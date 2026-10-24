@@ -104,23 +104,23 @@ const LiftingModule: React.FC = () => {
             </div>
         </div>
         <div className="flex bg-slate-200 p-1 rounded-2xl">
-            <button onClick={() => setActiveTab('Calculator')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Calculator' ? 'bg-white text-slate-900 shadow' : 'text-slate-500'}`}>Plan Calculator</button>
-            <button onClick={() => setActiveTab('Plans')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Plans' ? 'bg-white text-slate-900 shadow' : 'text-slate-500'}`}>Plan Registry</button>
+            <button onClick={() => setActiveTab('Calculator')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Calculator' ? 'glass-card text-slate-900 shadow' : 'text-slate-500'}`}>Plan Calculator</button>
+            <button onClick={() => setActiveTab('Plans')} className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'Plans' ? 'glass-card text-slate-900 shadow' : 'text-slate-500'}`}>Plan Registry</button>
         </div>
       </div>
 
       {activeTab === 'Calculator' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+              <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                   <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-6 flex items-center gap-2"><Calculator size={20}/> Load Dynamics</h3>
                   <div className="space-y-6">
                       <div>
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Load Weight (kg) <span className="text-red-500">*</span></label>
                           <div className="relative">
-                              <Weight size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                              <Weight size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400"/>
                               <input 
                                   type="number" 
-                                  className={`w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.weight ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.weight && weight > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
+                                  className={`w-full ps-12 pe-4 py-4 glass-panel rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.weight ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.weight && weight > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
                                   value={weight} 
                                   onChange={e => handleChange('weight', parseFloat(e.target.value))}
                                   onBlur={() => handleBlur('weight', weight)}
@@ -131,10 +131,10 @@ const LiftingModule: React.FC = () => {
                       <div>
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Crane Capacity at Radius (kg) <span className="text-red-500">*</span></label>
                           <div className="relative">
-                              <Anchor size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                              <Anchor size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400"/>
                               <input 
                                   type="number" 
-                                  className={`w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.capacity ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.capacity && capacity > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
+                                  className={`w-full ps-12 pe-4 py-4 glass-panel rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.capacity ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.capacity && capacity > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
                                   value={capacity} 
                                   onChange={e => handleChange('capacity', parseFloat(e.target.value))}
                                   onBlur={() => handleBlur('capacity', capacity)}
@@ -145,10 +145,10 @@ const LiftingModule: React.FC = () => {
                       <div>
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Operating Radius (m) <span className="text-red-500">*</span></label>
                           <div className="relative">
-                              <Ruler size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                              <Ruler size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400"/>
                               <input 
                                   type="number" 
-                                  className={`w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.radius ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.radius && radius > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
+                                  className={`w-full ps-12 pe-4 py-4 glass-panel rounded-2xl font-bold text-slate-800 outline-none transition-all ${errors.radius ? 'border-2 border-red-500 focus:ring-red-500 bg-red-50/10' : touched.radius && radius > 0 ? 'border-2 border-emerald-500 focus:ring-emerald-500 bg-emerald-50/5' : 'border-2 border-transparent focus:ring-2 focus:ring-yellow-500'}`}
                                   value={radius} 
                                   onChange={e => handleChange('radius', parseFloat(e.target.value))}
                                   onBlur={() => handleBlur('radius', radius)}
@@ -162,7 +162,7 @@ const LiftingModule: React.FC = () => {
 
               <div className="space-y-6">
                   <div className={`p-8 rounded-[2.5rem] shadow-xl border-4 flex flex-col items-center justify-center text-center transition-all duration-500 ${
-                      utilization === 0 ? 'bg-slate-50 border-slate-100' :
+                      utilization === 0 ? 'glass-panel border-slate-100' :
                       utilization > 85 ? 'bg-red-50 border-red-500 text-red-800' : 
                       utilization > 75 ? 'bg-orange-50 border-orange-400 text-orange-800' : 
                       'bg-emerald-50 border-emerald-500 text-emerald-800'
@@ -187,11 +187,11 @@ const LiftingModule: React.FC = () => {
       )}
 
       {activeTab === 'Plans' && (
-          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+          <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
               <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-6 flex items-center gap-2"><FileCheck size={20}/> Plan Registry</h3>
               <div className="space-y-4">
                   {plans.map(plan => (
-                      <div key={plan.id} className="p-6 bg-slate-50 rounded-3xl border-2 border-slate-100 flex justify-between items-center hover:border-yellow-200 transition-all">
+                      <div key={plan.id} className="p-6 glass-panel rounded-3xl border-2 border-slate-100 flex justify-between items-center hover:border-yellow-200 transition-all">
                           <div>
                               <div className="flex items-center gap-3 mb-2">
                                   <h4 className="font-black text-slate-800 text-sm uppercase">{plan.id}</h4>
@@ -201,7 +201,7 @@ const LiftingModule: React.FC = () => {
                               </div>
                               <p className="text-xs text-slate-500 font-bold">{plan.loadDescription} • {plan.utilizationPercent}% Util.</p>
                           </div>
-                          <div className="text-right">
+                          <div className="text-end">
                               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Wind Limit</p>
                               <p className="text-lg font-black text-slate-800 flex items-center gap-1 justify-end"><Wind size={14} className="text-blue-400"/> {plan.windLimitSpeed} m/s</p>
                           </div>

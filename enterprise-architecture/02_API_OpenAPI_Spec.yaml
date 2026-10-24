@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Enterprise HSE AI Platform API
+  version: 1.0.0
+  description: API specifications for HSE platform, honoring multi-tenancy, RLS, and strict GCC standards.
+servers:
+  - url: https://api.hse-platform.com/v1
+    description: Production API (UAE Data Center)
+components:
+  securitySchemes:
+    saml2:
+      type: oauth2
+      description: SAML 2.0 / OAuth2 Enterprise SSO Profile
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso.hse-platform.com/oauth2/authorize
+          tokenUrl: https://sso.hse-platform.com/oauth2/token
+          scopes:
+            read: Read access
+            write: Write access
+  parameters:
+    TenantIdHeader:
+      name: X-Tenant-ID
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Strictly enforces Tenant Isolation (SACS-002 Compliance). Bound to DB Row-Level Security.
+
+security:
+  - saml2: [read, write]
+
+paths:
+  /ptw:
+    post:
+      summary: Create Permit to Work (PTW) with SIMOPS detection
+      parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [HOT_WORK, CONFINED_SPACE, WORK_AT_HEIGHT]
+                startTime:
+                  type: string
+                  format: date-time
+                endTime:
+                  type: string
+                  format: date-time
+                workZonePolygon:
+                  type: object
+                  description: GeoJSON polygon for SIMOPS spatial conflict detection
+      responses:
+        '201':
+          description: Permit Created
+        '409':
+          description: SIMOPS Conflict Detected
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conflictCode:
+                    type: string
+                  conflictingPermits:
+                    type: array
+                    items:
+                      type: string
+
+  /incidents:
+    post:
+      summary: Report Incident (Two-Click Critical Path)
+      parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                severity:
+                  type: string
+                description:
+                  type: string
+                attachmentsBase64:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Incident Reported

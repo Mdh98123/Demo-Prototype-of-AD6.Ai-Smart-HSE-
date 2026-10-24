@@ -191,7 +191,7 @@ const MOCModule: React.FC = () => {
   const getStatusColor = (status: string) => {
       switch(status) {
           case 'Approved': return 'bg-emerald-50 text-emerald-700 border-emerald-100';
-          case 'Draft': return 'bg-slate-50 text-slate-500 border-slate-200';
+          case 'Draft': return 'glass-panel text-slate-500 border-slate-200';
           case 'Rejected': return 'bg-red-50 text-red-700 border-red-100';
           default: return 'bg-orange-50 text-orange-700 border-orange-100';
       }
@@ -200,13 +200,13 @@ const MOCModule: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center gap-x-5">
             <div className="bg-sky-600 p-5 rounded-[2rem] text-white shadow-2xl shadow-sky-500/20">
                 <GitPullRequest size={32} />
             </div>
             <div>
                 <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">Change Mgmt</h2>
-                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-l-2 border-sky-500 pl-4">MOC Protocol & Technical Review</p>
+                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-2 border-sky-500 ps-4">MOC Protocol & Technical Review</p>
             </div>
           </div>
           <button onClick={() => setShowNewModal(true)} className="bg-slate-900 text-white px-8 py-4 rounded-[2rem] flex items-center gap-3 font-black uppercase tracking-[0.2em] text-[10px] shadow-3xl hover:bg-slate-800 transition active:scale-95">
@@ -214,8 +214,8 @@ const MOCModule: React.FC = () => {
           </button>
       </div>
 
-      <div className="bg-white rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden min-h-[500px]">
-          <div className="p-8 border-b border-slate-50 bg-slate-50/30 flex justify-between items-center">
+      <div className="glass-card rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden min-h-[500px]">
+          <div className="p-8 border-b border-slate-50 glass-panel/30 flex justify-between items-center">
               <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">Change Register</h3>
               <div className="flex gap-2">
                   <button className="p-2 text-slate-400 hover:text-sky-600 transition"><Filter size={18}/></button>
@@ -223,7 +223,7 @@ const MOCModule: React.FC = () => {
           </div>
           <div className="p-8 grid gap-6">
               {requests.map(moc => (
-                  <div key={moc.id} className="p-6 rounded-[2.5rem] border-2 border-slate-50 hover:border-sky-200 bg-white hover:shadow-lg transition-all group">
+                  <div key={moc.id} className="p-6 rounded-[2.5rem] border-2 border-slate-50 hover:border-sky-200 glass-card hover:shadow-lg transition-all group">
                       <div className="flex justify-between items-start mb-4">
                           <div className="flex items-center gap-4">
                               <div className="p-3 rounded-2xl bg-sky-50 text-sky-600">
@@ -269,7 +269,7 @@ const MOCModule: React.FC = () => {
 
       {showNewModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-              <div className="bg-white w-full max-w-lg rounded-[2.5rem] shadow-3xl p-10 border-4 border-white animate-in zoom-in-95">
+              <div className="glass-card w-full max-w-lg rounded-[2.5rem] shadow-3xl p-10 border-4 border-white animate-in zoom-in-95">
                   <div className="flex justify-between items-center mb-8">
                       <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">New Change Request</h3>
                       <button onClick={() => setShowNewModal(false)} className="p-2 hover:bg-slate-100 rounded-full"><X size={24} className="text-slate-400"/></button>
@@ -280,7 +280,7 @@ const MOCModule: React.FC = () => {
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Change Title <span className="text-red-500">*</span></label>
                           <input 
                               type="text" 
-                              className={`w-full p-4 bg-slate-50 border-2 rounded-2xl font-bold text-sm outline-none transition-all ${errors.title ? 'border-red-500 focus:border-red-500 bg-red-50/10' : touched.title && newMOC.title ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5' : 'border-slate-50 focus:border-sky-500'}`}
+                              className={`w-full p-4 glass-panel border-2 rounded-2xl font-bold text-sm outline-none transition-all ${errors.title ? 'border-red-500 focus:border-red-500 bg-red-50/10' : touched.title && newMOC.title ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5' : 'border-slate-50 focus:border-sky-500'}`}
                               placeholder="e.g. Pump Specification Change"
                               value={newMOC.title}
                               onChange={(e) => {
@@ -296,7 +296,7 @@ const MOCModule: React.FC = () => {
                           <div>
                               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Type</label>
                               <select 
-                                  className="w-full p-4 bg-slate-50 border-2 border-slate-50 rounded-2xl font-bold text-sm outline-none focus:border-sky-500 transition-all"
+                                  className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl font-bold text-sm outline-none focus:border-sky-500 transition-all"
                                   value={newMOC.type}
                                   onChange={(e) => setNewMOC({...newMOC, type: e.target.value as any})}
                               >
@@ -308,7 +308,7 @@ const MOCModule: React.FC = () => {
                           <div>
                               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Category</label>
                               <select 
-                                  className="w-full p-4 bg-slate-50 border-2 border-slate-50 rounded-2xl font-bold text-sm outline-none focus:border-sky-500 transition-all"
+                                  className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl font-bold text-sm outline-none focus:border-sky-500 transition-all"
                                   value={newMOC.category}
                                   onChange={(e) => setNewMOC({...newMOC, category: e.target.value as any})}
                               >
@@ -323,7 +323,7 @@ const MOCModule: React.FC = () => {
                       <div>
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Description & Justification <span className="text-red-500">*</span></label>
                           <textarea 
-                              className={`w-full p-4 bg-slate-50 border-2 rounded-2xl font-bold text-sm outline-none transition-all h-32 resize-none ${errors.description ? 'border-red-500 focus:border-red-500 bg-red-50/10' : touched.description && newMOC.description ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5' : 'border-slate-50 focus:border-sky-500'}`}
+                              className={`w-full p-4 glass-panel border-2 rounded-2xl font-bold text-sm outline-none transition-all h-32 resize-none ${errors.description ? 'border-red-500 focus:border-red-500 bg-red-50/10' : touched.description && newMOC.description ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5' : 'border-slate-50 focus:border-sky-500'}`}
                               placeholder="Describe the change and why it is needed..."
                               value={newMOC.description}
                               onChange={(e) => {

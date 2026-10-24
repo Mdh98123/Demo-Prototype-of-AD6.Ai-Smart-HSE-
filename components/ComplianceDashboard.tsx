@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-  LineChart, Line, Legend, AreaChart, Area, Cell, PieChart, Pie
+  LineChart, Line, Legend, AreaChart, Area, Cell, PieChart, Pie, LabelList
 } from 'recharts';
 import { 
   Gavel, ShieldAlert, CheckCircle, AlertTriangle, Clock, Landmark, 
@@ -15,11 +15,18 @@ import { View } from '../types';
 
 // Updated Mock Data to match specific UAE Frameworks (ADNOC, OSHAD, DM, MoHRE)
 const authorityCompliance = [
-  { name: 'ADNOC COP', compliance: 94, ncrCount: 1, status: 'Compliant', color: '#0066CC' }, // Brand Blue
-  { name: 'OSHAD SF', compliance: 96, ncrCount: 2, status: 'Compliant', color: '#14b8a6' }, // Teal
-  { name: 'DM Code', compliance: 88, ncrCount: 5, status: 'Correction Pending', color: '#f59e0b' }, // Amber
-  { name: 'MoHRE', compliance: 100, ncrCount: 0, status: 'Verified', color: '#10b981' }, // Emerald
+  { name: 'ADNOC COP', compliance: 94, ncrCount: 1, status: 'Compliant' },
+  { name: 'OSHAD SF', compliance: 96, ncrCount: 2, status: 'Compliant' },
+  { name: 'DM Code', compliance: 88, ncrCount: 5, status: 'Correction Pending' },
+  { name: 'MoHRE', compliance: 100, ncrCount: 0, status: 'Verified' },
 ];
+
+const getPerformanceColor = (score: number) => {
+  if (score >= 95) return '#10b981'; // emerald-500
+  if (score >= 90) return '#6366f1'; // indigo-500
+  if (score >= 80) return '#f59e0b'; // amber-500
+  return '#ef4444'; // red-500
+};
 
 const complianceTrend = [
   { month: 'Jan', overall: 85, oshad: 82, dm: 88, adnoc: 80 },
@@ -72,7 +79,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
             <h2 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">Regulatory Adherence Hub</h2>
-            <p className="text-sm text-slate-500 mt-2 font-medium border-l-4 border-indigo-500 pl-4">Multi-Authority UAE Compliance Matrix</p>
+            <p className="text-sm text-slate-500 mt-2 font-medium border-s-4 border-indigo-500 ps-4">Multi-Authority UAE Compliance Matrix</p>
         </div>
         <div className="flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl">
             <Landmark size={16} className="text-indigo-400"/>
@@ -84,7 +91,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div 
             onClick={() => onNavigate(View.AUDITS)}
-            className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-emerald-500/30 transition-all active:scale-95 group"
+            className="glass-card p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-emerald-500/30 transition-all active:scale-95 group"
           >
               <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
@@ -97,14 +104,14 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                       <span className="text-[9px] font-bold uppercase">+2.4% MoM</span>
                   </div>
               </div>
-              <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl ml-4">
+              <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl ms-4">
                   <ShieldCheck size={24}/>
               </div>
           </div>
 
           <div 
             onClick={() => onNavigate(View.AUDITS)}
-            className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-red-500/30 transition-all active:scale-95 group"
+            className="glass-card p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-red-500/30 transition-all active:scale-95 group"
           >
               <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
@@ -114,14 +121,14 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                   <h3 className="text-3xl font-black text-red-600">{activeNCRs}</h3>
                   <p className="text-[9px] font-bold text-slate-400 mt-2 uppercase tracking-tight">Across all Authorities</p>
               </div>
-              <div className="p-3 bg-red-50 text-red-600 rounded-2xl ml-4">
+              <div className="p-3 bg-red-50 text-red-600 rounded-2xl ms-4">
                   <ShieldAlert size={24}/>
               </div>
           </div>
 
           <div 
             onClick={() => onNavigate(View.PLANNING)}
-            className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-indigo-500/30 transition-all active:scale-95 group"
+            className="glass-card p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between cursor-pointer hover:shadow-xl hover:border-indigo-500/30 transition-all active:scale-95 group"
           >
               <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
@@ -131,7 +138,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                   <h3 className="text-3xl font-black text-indigo-600">{deadlineData.length}</h3>
                   <p className="text-[9px] font-bold text-slate-400 mt-2 uppercase tracking-tight">Next 30 Days</p>
               </div>
-              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl ml-4">
+              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl ms-4">
                   <Clock size={24}/>
               </div>
           </div>
@@ -151,7 +158,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                       <span className="text-[9px] text-teal-400 uppercase font-black">AI Verified Posture</span>
                   </div>
               </div>
-              <div className="p-3 bg-white/10 rounded-2xl ml-4">
+              <div className="p-3 glass-card/10 rounded-2xl ms-4">
                   <Scale size={24} className="text-white"/>
               </div>
           </div>
@@ -161,7 +168,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
           {/* Authority adherence comparison */}
           <div className="lg:col-span-7 space-y-8">
               {/* Detailed Regulatory Breakdown Section */}
-              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+              <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                       <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                           <BookOpen size={20} className="text-indigo-600"/> Regulatory Detail Matrix
@@ -169,13 +176,13 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                       <div className="flex bg-slate-100 p-1 rounded-xl">
                           <button 
                             onClick={() => setActiveRegTab('ADNOC')}
-                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'ADNOC' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'ADNOC' ? 'glass-card text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                           >
                               ADNOC COP
                           </button>
                           <button 
                             onClick={() => setActiveRegTab('OSHAD')}
-                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'OSHAD' ? 'bg-white text-teal-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            className={`px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeRegTab === 'OSHAD' ? 'glass-card text-teal-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                           >
                               OSHAD SF
                           </button>
@@ -187,7 +194,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                           <div key={el.id} className="border border-slate-100 rounded-2xl overflow-hidden transition-all hover:border-indigo-100">
                               <button 
                                 onClick={() => toggleSection(el.id)}
-                                className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 transition-colors"
+                                className="w-full flex items-center justify-between p-5 glass-card hover:glass-button transition-colors"
                               >
                                   <div className="flex items-center gap-4">
                                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs ${
@@ -197,7 +204,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                                       }`}>
                                           {el.score}%
                                       </div>
-                                      <div className="text-left">
+                                      <div className="text-start">
                                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{el.id}</p>
                                           <h5 className="text-sm font-black text-slate-800 uppercase tracking-tight">{el.title}</h5>
                                       </div>
@@ -215,7 +222,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                               </button>
                               
                               {expandedSection === el.id && (
-                                  <div className="p-6 bg-slate-50 border-t border-slate-100 animate-in slide-in-from-top-2 duration-200">
+                                  <div className="p-6 glass-panel border-t border-slate-100 animate-in slide-in-from-top-2 duration-200">
                                       <div className="space-y-4">
                                           <div>
                                               <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Compliance Status</p>
@@ -233,7 +240,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                                                   </p>
                                                   <ul className="space-y-2">
                                                       {el.gaps.map((gap, i) => (
-                                                          <li key={i} className="text-xs font-bold text-slate-600 bg-white p-3 rounded-xl border border-red-100 flex items-center gap-3">
+                                                          <li key={i} className="text-xs font-bold text-slate-600 glass-card p-3 rounded-xl border border-red-100 flex items-center gap-3">
                                                               <div className="w-1 h-1 rounded-full bg-red-400"></div>
                                                               {gap}
                                                           </li>
@@ -242,7 +249,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                                               </div>
                                           )}
                                           <div className="flex gap-3 pt-2">
-                                              <button className="flex-1 bg-white border border-slate-200 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-100 transition-all">View Evidence</button>
+                                              <button className="flex-1 glass-card border border-slate-200 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-100 transition-all">View Evidence</button>
                                               <button className="flex-1 bg-slate-900 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-white hover:bg-slate-800 transition-all">Remediate Gap</button>
                                           </div>
                                       </div>
@@ -253,12 +260,12 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                   </div>
               </div>
 
-              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+              <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                   <div className="flex items-center justify-between mb-10">
                       <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                           <Landmark size={20} className="text-indigo-600"/> Authority Adherence Matrix
                       </h3>
-                      <button className="p-2 bg-slate-50 rounded-xl text-slate-400 hover:text-indigo-600 transition-colors">
+                      <button className="p-2 glass-panel rounded-xl text-slate-400 hover:text-indigo-600 transition-colors">
                           <Filter size={18}/>
                       </button>
                   </div>
@@ -269,17 +276,18 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 11, fontWeight: 'bold'}} />
                               <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} domain={[0, 100]} />
                               <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}} />
-                              <Bar dataKey="compliance" name="Compliance %" radius={[10, 10, 0, 0]} barSize={40}>
+                              <Bar dataKey="compliance" name="Compliance %" radius={[10, 10, 0, 0]} barSize={50}>
                                   {authorityCompliance.map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={entry.color} />
+                                      <Cell key={`cell-${index}`} fill={getPerformanceColor(entry.compliance)} />
                                   ))}
+                                  <LabelList dataKey="compliance" position="top" formatter={(val: number) => `${val}%`} style={{ fill: '#64748b', fontSize: 12, fontWeight: 'bold' }} />
                               </Bar>
                           </BarChart>
                       </ResponsiveContainer>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                       {authorityCompliance.map((auth, i) => (
-                          <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                          <div key={i} className="p-4 glass-panel rounded-2xl border border-slate-100">
                               <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{auth.name}</p>
                               <div className="flex items-center gap-2 mt-1">
                                   <span className={`w-2 h-2 rounded-full ${auth.ncrCount > 0 ? 'bg-orange-500' : 'bg-emerald-500'}`}></span>
@@ -291,7 +299,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
               </div>
 
               {/* Compliance Trajectory */}
-              <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+              <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                   <div className="flex items-center justify-between mb-8">
                       <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                           <Activity size={20} className="text-teal-600"/> Compliance Trajectory (H1 2024)
@@ -337,7 +345,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
           {/* Side: Critical Gaps & Deadlines */}
           <div className="lg:col-span-5 space-y-8">
               {/* Submission Deadline Tracker */}
-              <div className="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-100">
+              <div className="glass-card p-8 rounded-[3rem] shadow-xl border border-slate-100">
                   <div className="flex items-center justify-between mb-8">
                       <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
                           <Calendar size={20} className="text-indigo-600"/> Regulatory Calendar
@@ -345,7 +353,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                   </div>
                   <div className="space-y-4">
                       {deadlineData.map((d, i) => (
-                          <div key={i} className="p-5 bg-white border-2 border-slate-50 rounded-2xl hover:border-indigo-100 transition-all group">
+                          <div key={i} className="p-5 glass-card border-2 border-slate-50 rounded-2xl hover:border-indigo-100 transition-all group">
                               <div className="flex justify-between items-start mb-3">
                                   <div>
                                       <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${
@@ -353,7 +361,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                                       }`}>{d.priority} Priority</span>
                                       <h5 className="font-black text-slate-800 text-sm uppercase tracking-tight mt-1">{d.title}</h5>
                                   </div>
-                                  <div className="text-right">
+                                  <div className="text-end">
                                       <p className="text-[10px] font-black text-slate-800">{d.date}</p>
                                       <p className="text-[8px] font-bold text-slate-400 uppercase mt-1">{d.authority}</p>
                                   </div>
@@ -383,7 +391,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
 
               {/* AI COMPLIANCE ANALYSIS */}
               <div className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden flex flex-col shadow-3xl">
-                  <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none transform translate-x-4 -translate-y-4">
+                  <div className="absolute top-0 end-0 p-8 opacity-10 pointer-events-none transform translate-x-4 -translate-y-4">
                       <Gavel size={220} />
                   </div>
                   
@@ -398,7 +406,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                   </div>
 
                   <div className="space-y-6 relative z-10 flex-1">
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                      <div className="glass-card/5 border border-white/10 rounded-2xl p-6">
                           <div className="flex items-center gap-3 mb-3">
                               <Target size={16} className="text-teal-400" />
                               <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">High Probability Exposure</p>
@@ -408,7 +416,7 @@ const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ onNavigate })
                           </p>
                       </div>
 
-                      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                      <div className="glass-card/5 border border-white/10 rounded-2xl p-6">
                           <div className="flex items-center gap-3 mb-3">
                               <ShieldCheck size={16} className="text-teal-400" />
                               <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">Recommended Strategic Shift</p>

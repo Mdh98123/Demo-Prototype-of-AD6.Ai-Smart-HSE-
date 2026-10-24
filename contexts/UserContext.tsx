@@ -1,8 +1,12 @@
 
-import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
-import { UserProfile, ComplianceFramework, Equipment, SafetyObservation, Language, SecureUser } from '../types';
-import { AuthService } from '../services/authService';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback, useMemo } from 'react';
+import { UserProfile, ComplianceFramework, Equipment, SafetyObservation, SecureUser, UserRole } from '../types';
+import { AuthService, AuthMode, getAuthMode, setAuthModeSetting, isDemoModeFeatureEnabled } from '../services/authService';
 import { SecureStorage } from '../services/storageService';
+import { GULF_ENERGY_USERS } from '../services/demoDataLoader';
+import { UserProfileService } from '../services/userProfileService';
+import { calculateEffectivePermissions } from '../services/permissionService';
+import { SEED_OMANI_USERS } from '../services/omanCentralDataStore';
 
 // Helper to generate dynamic dates
 const getDate = (daysToAdd: number) => {
@@ -12,19 +16,14 @@ const getDate = (daysToAdd: number) => {
 };
 
 export const MOCK_USERS: UserProfile[] = [
-  { id: 'demo_user', name: 'Demo User', role: 'ADMIN', department: 'System Demo Environment', safetyScore: 0, recentIncidents: [], observations: [], certifications: [], achievements: [] },
-  { id: 'admin', name: 'System Admin', role: 'ADMIN', department: 'Digital Infrastructure', safetyScore: 2500, recentIncidents: [], observations: [], certifications: [{ name: 'Full System Authority', status: 'Valid', expiryDate: getDate(3650) }], achievements: [{ id: 'admin-0', title: 'Grandmaster', description: 'Complete system oversight enabled', dateEarned: getDate(-365), icon: 'Shield', tier: 'Gold' }] },
-  { id: 'u0', name: 'H.E. Sheikh Ahmed', role: 'Board_Director', department: 'Board of Directors', safetyScore: 120, recentIncidents: [], observations: [], certifications: [], achievements: [] },
-  { id: 'u1', name: 'James Sterling', role: 'CEO', department: 'Executive Office', safetyScore: 150, recentIncidents: [], observations: [], certifications: [], achievements: [] },
-  { id: 'u2', name: 'Dr. Layla Hassan', role: 'Head_Group_HSE', department: 'Group HSE HQ', safetyScore: 400, recentIncidents: [], observations: [], certifications: [{ name: 'Certified Safety Professional (CSP)', status: 'Valid', expiryDate: getDate(700) }], achievements: [{ id: 'a0', title: 'Visionary', description: 'Implemented AI Safety Strategy', dateEarned: getDate(-10), icon: 'Trophy', tier: 'Gold' }] },
-  { id: 'u3', name: 'Ahmed Al-Mansoori', role: 'Regional_HSE_Director', department: 'Abu Dhabi Region', safetyScore: 350, recentIncidents: [], observations: [], certifications: [{ name: 'NEBOSH Diploma', status: 'Valid', expiryDate: getDate(365) }], achievements: [] },
-  { id: 'u4', name: 'Sarah Jones', role: 'Site_HSE_Manager', department: 'Ruwais Operations', safetyScore: 950, recentIncidents: ['Reviewed chemical spill in Zone C'], observations: [], certifications: [{ name: 'Lead Auditor ISO 45001', status: 'Valid', expiryDate: getDate(120) }], achievements: [{ id: 'a1', title: 'Zero Incidents', description: 'Managed site with 0 LTIs for 1 year', dateEarned: getDate(-30), icon: 'Trophy', tier: 'Gold' }] },
-  { id: 'u5', name: 'Fatima Al-Kaabi', role: 'HSE_Officer', department: 'Field Ops - Zone B', safetyScore: 1100, recentIncidents: ['Reported gas leak in Sector 4'], observations: [], certifications: [{ name: 'NEBOSH IGC', status: 'Valid', expiryDate: getDate(200) }], achievements: [] },
-  { id: 'u10', name: 'Khalid Al-Dhaheri', role: 'Environmental_Officer', department: 'Sustainability & Compliance', safetyScore: 420, recentIncidents: [], observations: [], certifications: [{ name: 'ISO 14001 Lead Auditor', status: 'Valid', expiryDate: getDate(400) }], achievements: [] },
-  { id: 'u11', name: 'John Doe', role: 'Project_Manager', department: 'Civil Infrastructure', safetyScore: 310, recentIncidents: [], observations: [], certifications: [], achievements: [] },
-  { id: 'u12', name: 'Alice Smith', role: 'Internal_Auditor', department: 'Quality Assurance', safetyScore: 280, recentIncidents: [], observations: [], certifications: [], achievements: [] },
-  { id: 'u7', name: 'Marcus Chen', role: 'Site_Supervisor', department: 'Infrastructure & Power', safetyScore: 820, recentIncidents: ['Supervised high-voltage line maintenance'], observations: [], certifications: [{ name: 'Advanced First Aid', status: 'Valid', expiryDate: getDate(300) }], achievements: [{ id: 'a7', title: 'Eagle Eye', description: 'Zero violations in supervised zones for 6 months', dateEarned: getDate(-45), icon: 'Shield', tier: 'Silver' }] },
-  { id: 'u6', name: 'Rahul Gupta', role: 'Worker', department: 'Mechanical Maintenance', safetyScore: 450, recentIncidents: ['Near miss involving rotating machinery'], observations: [], certifications: [{ name: 'H2S Awareness', status: 'Valid', expiryDate: getDate(180) }], achievements: [] }
+  ...SEED_OMANI_USERS,
+  { id: 'demo_user', name: 'Demo User', role: 'ADMIN', jobTitle: 'Platform Demo Administrator', siteLocation: 'Muscat Corporate HQ', assignedSites: ['Sohar Complex', 'Duqm Terminal', 'Fahud Plant'], department: 'System Demo Environment', safetyScore: 0, recentIncidents: [], observations: [], certifications: [], achievements: [] },
+  { id: 'admin', name: 'System Admin', role: 'ADMIN', jobTitle: 'Lead Enterprise HSE Platform Architect', siteLocation: 'Corporate Command Center · Muscat', assignedSites: ['All Concessions (Sohar, Duqm, Fahud, Salalah)', 'Muscat HQ'], department: 'Digital Safety Infrastructure & Security', safetyScore: 2500, recentIncidents: [], observations: [], certifications: [{ name: 'Full System Authority', status: 'Valid', expiryDate: getDate(3650) }], achievements: [{ id: 'admin-0', title: 'Grandmaster', description: 'Complete system oversight enabled', dateEarned: getDate(-365), icon: 'Shield', tier: 'Gold' }] },
+  { id: 'u0', name: 'H.E. Sheikh Hilal Al-Maamari', role: 'Board_Director', jobTitle: 'Board Director & Safety Oversight Chair', siteLocation: 'Al Hajar Corporate HQ', assignedSites: ['Muscat HQ', 'All Concessions'], department: 'Board of Directors', safetyScore: 120, recentIncidents: [], observations: [], certifications: [], achievements: [] },
+  { id: 'u2', name: 'Dr. Tariq Al-Busaidi', role: 'Head_Group_HSE', jobTitle: 'Corporate QHSE & ESG Director', siteLocation: 'Muscat Corporate HQ · Knowledge Oasis', assignedSites: ['Muscat HQ', 'Sohar Operations', 'Duqm Terminal', 'Fahud Concession'], department: 'Corporate QHSE Directorate', safetyScore: 400, recentIncidents: [], observations: [], certifications: [{ name: 'Certified Safety Professional (CSP)', status: 'Valid', expiryDate: getDate(700) }], achievements: [{ id: 'a0', title: 'Visionary', description: 'Implemented AI Safety Strategy', dateEarned: getDate(-10), icon: 'Trophy', tier: 'Gold' }] },
+  { id: 'u4', name: 'Salim Al-Harthy', role: 'Site_HSE_Manager', jobTitle: 'Sohar Complex HSE Manager & Level 3 PTW Authority', siteLocation: 'Sohar Industrial Port Petrochemical Complex', assignedSites: ['Sohar Industrial Port Petrochemical Complex'], department: 'Sohar Operations', safetyScore: 950, recentIncidents: ['Investigated flare knock-out drum level anomaly'], observations: [], certifications: [{ name: 'Lead Auditor ISO 45001', status: 'Valid', expiryDate: getDate(120) }], achievements: [{ id: 'a1', title: 'Zero Incidents', description: 'Managed site with 0 LTIs for 1 year', dateEarned: getDate(-30), icon: 'Trophy', tier: 'Gold' }] },
+  { id: 'u7', name: 'Khalfan Al-Shehi', role: 'Site_Supervisor', jobTitle: 'Duqm Field Safety Supervisor', siteLocation: 'Duqm Heavy Refining Terminal', assignedSites: ['Duqm Heavy Refining & Bunkering Terminal'], department: 'Duqm Operations Support', safetyScore: 820, recentIncidents: ['Triggered Stop Work Authority for heat stress'], observations: [], certifications: [{ name: 'Advanced First Aid', status: 'Valid', expiryDate: getDate(300) }], achievements: [{ id: 'a7', title: 'Eagle Eye', description: 'Zero violations in supervised zones for 6 months', dateEarned: getDate(-45), icon: 'Shield', tier: 'Silver' }] },
+  ...GULF_ENERGY_USERS
 ];
 
 export const MOCK_EQUIPMENT: Equipment[] = [
@@ -45,249 +44,17 @@ export const MOCK_EQUIPMENT: Equipment[] = [
   { id: 'EQ-015', name: 'Compressor CP-55', type: 'Pneumatics', location: 'Maintenance Shop', lastMaintenanceDate: getDate(-90), operationalHours: 6700, sensors: { temperature: 82, vibration: 5.5, pressure: 110 }, status: 'Critical', relatedIncidents: ['High vibration alarm'] }
 ];
 
-const TRANSLATIONS: Record<Language, Record<string, string>> = {
-  en: {
-    dashboard: 'Dashboard',
-    inspections: 'Inspections',
-    incidents: 'Incident Reports',
-    rams: 'Risk Assessments',
-    observations: 'Safety Monitoring',
-    permits: 'Permits',
-    training: 'Training',
-    
-    compliance: 'Compliance Hub',
-    planning: 'HSE Planning',
-    audits: 'Audits',
-    contractors: 'Contractors',
-    toolbox: 'Toolbox Talks',
-    environmental: 'Environmental',
-    maintenance: 'Predictive Maint.',
-    health: 'Health Monitoring',
-    emergency: 'Emergency Hub',
-    dms: 'Documents',
-    governance: 'System Governance',
-    
-    // Group Labels
-    core: 'Core Operations',
-    management: 'Management',
-    specialized: 'Specialized',
-    
-    roleSwitcher: 'Role Switcher',
-    framework: 'Framework',
-    integrityCore: 'AI Integrity Core',
-    syncActive: 'Site Synchronized',
-    strategicIntel: '2025 Strategic HSE Intelligence',
-    regulatoryDef: 'UAE Regulatory Defensibility & Portfolio Governance',
-    activeSession: 'Active session',
-    auditing: 'Auditing',
-    userProfile: 'User Profile',
-    registry: 'Workforce Registry',
-    summary: 'Summary',
-    directory: 'Workforce Directory',
-    trainingHistory: 'Training History',
-    orgMetrics: 'Org Metrics',
-    backToProfile: 'Back to My Profile',
-    searchRegistry: 'Search by name, role or dept...',
-    employeeDir: 'Employee Directory',
-    crossProfile: 'Cross-Profile Safety History Access',
-    employee: 'Employee',
-    department: 'Department',
-    safetyScore: 'Safety Score',
-    contributionCount: 'Contribution Count',
-    access: 'Access',
-    records: 'Records',
-    safetyNotice: 'Immediate Safety Notice',
-    broadcastReport: 'Broadcast Field Report',
-    narrative: 'Incident Narrative',
-    evidence: 'Field Evidence capture',
-    location: 'Incident Sector',
-    save: 'Save',
-    cancel: 'Cancel',
-    submit: 'Submit',
-    delete: 'Delete',
-    edit: 'Edit',
-    view: 'View',
-    approve: 'Approve',
-    reject: 'Reject',
-    close: 'Close',
-    export: 'Export',
-    search: 'Search',
-    active: 'Active',
-    pending: 'Pending',
-    approved: 'Approved',
-    rejected: 'Rejected',
-    closed: 'Closed',
-    open: 'Open',
-    completed: 'Completed',
-    inProgress: 'In Progress',
-    valid: 'Valid',
-    expired: 'Expired',
-    expiringSoon: 'Expiring Soon',
-    trir: 'Total Recordable Incident Rate',
-    ltif: 'Lost Time Injury Frequency',
-    siteNavigator: 'Site Navigator',
-    crewOnline: 'Crew Online',
-    gisSync: 'GIS Live Sync Active',
-    opsCommand: 'Ops Command Center',
-    rapidIncident: 'Rapid Incident Entry',
-    safetyObservation: 'Safety Observation',
-    auditChecklist: 'Audit Checklist',
-    telemetryTrend: 'Real-time Telemetry Trend',
-    severity: 'Severity',
-    reportedBy: 'Reported By',
-    timestamp: 'Timestamp',
-    investigation: 'Investigation',
-    rootCause: 'Root Cause Analysis',
-    correctiveAction: 'Corrective Action',
-    ptw: 'Permit to Work',
-    workType: 'Work Type',
-    description: 'Description',
-    duration: 'Duration (Hours)',
-    riskAssessment: 'Risk Assessment',
-    hazards: 'Hazards',
-    controls: 'Controls',
-    ppe: 'Personal Protective Equipment',
-    standard: 'Standard',
-    scheduledDate: 'Scheduled Date',
-    findings: 'Findings Registry',
-    executiveSummary: 'Executive Summary',
-    prediction: 'AI Prediction',
-    failureProb: 'Failure Probability',
-    predictedDate: 'Predicted Date',
-    sensors: 'Sensors',
-    vault: 'Document Vault',
-    portals: 'Authority Portals',
-    version: 'Version',
-    criticality: 'Criticality',
-    authority: 'Authority',
-    retention: 'Retention Years'
-  },
-  ar: {
-    dashboard: 'لوحة القيادة',
-    inspections: 'عمليات التفتيش',
-    incidents: 'تقارير الحوادث',
-    rams: 'تقييم المخاطر',
-    observations: 'مراقبة السلامة',
-    permits: 'التصاريح',
-    training: 'التدريب',
-    
-    compliance: 'مركز الامتثال',
-    planning: 'تخطيط الصحة والسلامة',
-    audits: 'التدقيق',
-    contractors: 'المقاولين',
-    toolbox: 'محادثات صندوق الأدوات',
-    environmental: 'بيئي',
-    maintenance: 'الصيانة التنبؤية',
-    health: 'مراقبة الصحة',
-    emergency: 'مركز الطوارئ',
-    dms: 'الوثائق',
-    governance: 'الحوكمة',
-    
-    // Group Labels
-    core: 'العمليات الأساسية',
-    management: 'الإدارة',
-    specialized: 'متخصص',
-
-    roleSwitcher: 'مبدل الأدوار',
-    framework: 'الإطار التنظيمي',
-    integrityCore: 'جوهر نزاهة الذكاء الاصطناعي',
-    syncActive: 'تمت مزامنة الموقع',
-    strategicIntel: 'الذكاء الاستراتيجي للصحة والسلامة والبيئة 2025',
-    regulatoryDef: 'الدفاع التنظيمي في الإمارات وحوكمة المحفظة',
-    activeSession: 'الجلسة النشطة',
-    auditing: 'تدقيق',
-    userProfile: 'ملف المستخدم',
-    registry: 'سجل القوى العاملة',
-    summary: 'ملخص',
-    directory: 'دليل الموظفين',
-    trainingHistory: 'سجل التدريب',
-    orgMetrics: 'مقاييس المؤسسة',
-    backToProfile: 'العودة لملفي الشخصي',
-    searchRegistry: 'ابحث بالاسم، الدور أو القسم...',
-    employeeDir: 'دليل الموظفين',
-    crossProfile: 'الوصول إلى سجل سلامة الملفات الشخصية',
-    employee: 'الموظف',
-    department: 'القسم',
-    safetyScore: 'درجة السلامة',
-    contributionCount: 'عدد المساهمات',
-    access: 'الوصول',
-    records: 'سجلات',
-    safetyNotice: 'إشعار سلامة فوري',
-    broadcastReport: 'بث تقرير ميداني',
-    narrative: 'وصف الحادث',
-    evidence: 'التقاط أدلة ميدانية',
-    location: 'قطاع الحادث',
-    save: 'حفظ',
-    cancel: 'إلغاء',
-    submit: 'إرسال',
-    delete: 'حذف',
-    edit: 'تعديل',
-    view: 'عرض',
-    approve: 'موافقة',
-    reject: 'رفض',
-    close: 'إغلاق',
-    export: 'تصدير',
-    search: 'بحث',
-    active: 'نشط',
-    pending: 'قيد الانتظار',
-    approved: 'تمت الموافقة',
-    rejected: 'مرفوض',
-    closed: 'مغلق',
-    open: 'مفتوح',
-    completed: 'مكتمل',
-    inProgress: 'قيد التنفيذ',
-    valid: 'سارٍ',
-    expired: 'منتهي الصلاحية',
-    expiringSoon: 'تنتهي صلاحيته قريباً',
-    trir: 'معدل الحوادث القابلة للتسجيل',
-    ltif: 'تكرار إصابات الوقت الضائع',
-    siteNavigator: 'ملاح الموقع',
-    crewOnline: 'الطاقم المتصل',
-    gisSync: 'مزامنة نظم المعلومات الجغرافية نشطة',
-    opsCommand: 'مركز قيادة العمليات',
-    rapidIncident: 'إدخال حادث سريع',
-    safetyObservation: 'ملاحظة سلامة',
-    auditChecklist: 'قائمة تدقيق',
-    telemetryTrend: 'اتجاه القياس عن بعد الفوري',
-    severity: 'الخطورة',
-    reportedBy: 'أبلغ عنه',
-    timestamp: 'الطابع الزمني',
-    investigation: 'التحقيق',
-    rootCause: 'تحليل الأسباب الجذرية',
-    correctiveAction: 'الإجراء التصحيحي',
-    ptw: 'تصريح عمل',
-    workType: 'نوع العمل',
-    description: 'الوصف',
-    duration: 'المدة (ساعات)',
-    riskAssessment: 'تقييم المخاطر',
-    hazards: 'المخاطر',
-    controls: 'الضوابط',
-    ppe: 'معدات الوقاية الشخصية',
-    standard: 'المعيار',
-    scheduledDate: 'التاريخ المجدول',
-    findings: 'سجل النتائج',
-    executiveSummary: 'الملخص التنفيذي',
-    prediction: 'تنبؤ الذكاء الاصطناعي',
-    failureProb: 'احتمالية الفشل',
-    predictedDate: 'التاريخ المتوقع',
-    sensors: 'أجهزة الاستشعار',
-    vault: 'خزانة الوثائق',
-    portals: 'بوابات السلطات',
-    version: 'الإصدار',
-    criticality: 'الأهمية القصوى',
-    authority: 'السلطة',
-    retention: 'سنوات الاحتفاظ'
-  }
-};
-
 interface UserContextType {
-  currentUser: UserProfile;
+  currentUser: UserProfile | null;
   login: (username: string, rememberMe?: boolean) => Promise<boolean>;
+  loginDemo: (demoUserId?: string) => Promise<boolean>;
   register: (email: string, name: string, department: string) => Promise<boolean>;
   logout: () => void;
   switchUser: (userId: string) => void;
   isDemoMode: boolean;
   isLoadingAuth: boolean;
+  authMode: AuthMode;
+  setAuthMode: (mode: AuthMode) => void;
   users: UserProfile[];
   activeFramework: ComplianceFramework;
   setActiveFramework: (framework: ComplianceFramework) => void;
@@ -296,9 +63,10 @@ interface UserContextType {
   allObservations: SafetyObservation[];
   addObservation: (obs: SafetyObservation) => void;
   updateObservation: (obs: SafetyObservation) => void;
-  language: Language;
-  toggleLanguage: () => void;
-  t: (key: string) => string;
+  effectivePermissions: string[];
+  updateUserPermissions: (userId: string, granted: string[], denied: string[]) => Promise<void>;
+  updateUserRoles: (userId: string, roles: UserRole[]) => Promise<void>;
+  setUserSuspension: (userId: string, isSuspended: boolean) => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -307,50 +75,129 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [authMode, setAuthModeState] = useState<AuthMode>(getAuthMode());
+  
+  const setAuthMode = (mode: AuthMode) => {
+    setAuthModeState(mode);
+    setAuthModeSetting(mode);
+  };
   
   const [activeFramework, setActiveFramework] = useState<ComplianceFramework>('ADNOC_COP');
   const [equipment, setEquipment] = useState<Equipment[]>(MOCK_EQUIPMENT);
   const [allObservations, setAllObservations] = useState<SafetyObservation[]>([]);
-  const [language, setLanguage] = useState<Language>('en');
+  const [usersList, setUsersList] = useState<UserProfile[]>(MOCK_USERS);
 
   // Async Hydration
   useEffect(() => {
     const hydrate = async () => {
+      // 0. Load enriched enterprise users
+      try {
+        const enrichedAll = await UserProfileService.getAllUsers();
+        if (enrichedAll && enrichedAll.length > 0) {
+          const enrichedMap = new Map(
+            enrichedAll.map(e => [e.id, { ...e, statistics: UserProfileService.calculateLiveStats(e) }])
+          );
+          const merged = MOCK_USERS.map(mockU => enrichedMap.get(mockU.id) || mockU);
+          // Include any enriched users not in MOCK_USERS
+          for (const enriched of enrichedAll) {
+            if (!merged.some(m => m.id === enriched.id)) {
+              merged.push(enrichedMap.get(enriched.id)!);
+            }
+          }
+          setUsersList(merged);
+        }
+      } catch (err) {
+        console.warn('Failed to hydrate enriched users:', err);
+      }
       // 1. Restore Session securely
       const sessionUser = await AuthService.getCurrentUser();
       const demoFlag = await AuthService.isDemoSession();
       
       if (sessionUser) {
-        // Try to find the user in mocks, otherwise construct visitor profile
-        const mockProfile = MOCK_USERS.find(u => u.id === sessionUser.id);
-        if (mockProfile) {
-            setCurrentUser(mockProfile);
+        // Try to find the user in enriched store or mocks
+        const enriched = await UserProfileService.getUserById(sessionUser.id);
+        if (enriched) {
+          const liveStats = UserProfileService.calculateLiveStats(enriched);
+          setCurrentUser({ ...enriched, statistics: liveStats });
         } else {
-            setCurrentUser({
-                id: sessionUser.id,
-                name: sessionUser.name,
-                email: sessionUser.username,
-                role: sessionUser.role,
-                department: sessionUser.department,
-                safetyScore: 0,
-                recentIncidents: [],
-                observations: [],
-                certifications: [],
-                achievements: []
-            });
+          const mockProfile = MOCK_USERS.find(u => u.id === sessionUser.id);
+          if (mockProfile) {
+              setCurrentUser(mockProfile);
+          } else {
+              setCurrentUser({
+                  id: sessionUser.id,
+                  name: sessionUser.name,
+                  email: sessionUser.username,
+                  role: sessionUser.role,
+                  department: sessionUser.department,
+                  safetyScore: 0,
+                  recentIncidents: [],
+                  observations: [],
+                  certifications: [],
+                  achievements: []
+              });
+          }
         }
         setIsDemoMode(demoFlag);
+      } else {
+        // Unauthenticated session on fresh browser: strictly null currentUser, NO automatic admin fallback!
+        setCurrentUser(null);
+        setIsDemoMode(false);
       }
 
       const savedObs = await SecureStorage.getItem<SafetyObservation[]>('hse_observations');
-      if (savedObs) setAllObservations(savedObs);
-
+      if (savedObs && savedObs.length > 0) {
+          setAllObservations(savedObs);
+      } else {
+          const initialObs: SafetyObservation[] = [
+              { id: 'OBS-101', type: 'Positive', description: 'Workers using proper full-body harness and 100% double-tie off during Cuplok scaffold erection at height.', location: 'Ruwais Industrial Complex · Reactor 2', timestamp: new Date(Date.now() - 3600000).toISOString(), status: 'Submitted', isAnonymous: false, reportedBy: 'Fatima Al-Kaabi', history: [] },
+              { id: 'OBS-102', type: 'Improvement', description: 'Fire extinguisher access temporarily obstructed by delivery pallets near gate 3.', location: 'Jebel Ali Logistics Hub · Warehouse B', timestamp: new Date(Date.now() - 86400000).toISOString(), status: 'Submitted', isAnonymous: false, reportedBy: 'Rahul Gupta', history: [] },
+              { id: 'OBS-103', type: 'Positive', description: 'Exemplary tool tagging and segregation in the mechanical prefabrication shop after night shift handover.', location: 'Habshan Gas Complex · Fabrication Shop', timestamp: new Date(Date.now() - 172800000).toISOString(), status: 'Submitted', isAnonymous: false, reportedBy: 'Marcus Chen', history: [] },
+              { id: 'OBS-104', type: 'Improvement', description: 'Extension cord crossing primary personnel access walkway without rubber ramp cable protector.', location: 'Mina Zayed Terminal · Berth 4 Office Corridor', timestamp: new Date(Date.now() - 259200000).toISOString(), status: 'Actioned', isAnonymous: true, reportedBy: undefined, history: [] },
+              { id: 'OBS-105', type: 'Positive', description: 'Supervisor proactively conducted a toolbox talk on heat stress hydration and WBGT break schedules before morning shift start.', location: 'Fahud Field Operation · Well Cluster 14', timestamp: new Date(Date.now() - 345600000).toISOString(), status: 'Submitted', isAnonymous: false, reportedBy: 'Sarah Jones', history: [] },
+              { id: 'OBS-2026-0412', type: 'Positive', description: 'Pre-Shift Heat Stress Hydration & WBGT Color Flag Check proactively executed by morning crew.', location: 'Ruwais Industrial Complex · Berth 1 Staging Area', timestamp: '2026-10-06T06:30:00Z', status: 'Actioned', isAnonymous: false, reportedBy: 'Rahul Gupta', history: [] },
+              { id: 'OBS-2026-0413', type: 'Positive', description: 'Banksman stopped concrete mixer reversing maneuver when unauthorized delivery courier walked into blind zone.', location: 'NEOM Sindalah Island Base · Batching Plant 1', timestamp: '2026-10-06T09:15:00Z', status: 'Submitted', isAnonymous: false, reportedBy: 'Chloe Martin', history: [] },
+              { id: 'OBS-2026-0414', type: 'Improvement', description: 'Secondary chemical container for degreaser solvent missing GHS hazard pictogram label.', location: 'Ras Al Khair Maritime Yard · Drydock Workshop 2', timestamp: '2026-10-06T11:45:00Z', status: 'Submitted', isAnonymous: false, reportedBy: 'Hamad Al-Dosari', history: [] },
+              { id: 'OBS-2026-0415', type: 'Positive', description: 'Heavy lift rigger inspected synthetic web sling serial numbers and rejected sling showing core yarn fraying.', location: 'Ruwais Industrial Complex · Heavy Rigging Yard', timestamp: '2026-10-06T14:20:00Z', status: 'Actioned', isAnonymous: false, reportedBy: 'Tariq Al-Hashemi', history: [] },
+              { id: 'OBS-2026-0416', type: 'Improvement', description: 'Eye wash station inspection tag expired by 4 days in battery charging bay.', location: 'Habshan Gas Complex · Substation 33kV Bay', timestamp: '2026-10-06T16:00:00Z', status: 'Submitted', isAnonymous: false, reportedBy: 'Hassan Mahmoud', history: [] },
+              { id: 'OBS-2026-0417', type: 'Positive', description: 'Trench shoring daily inspection recorded in logbook before workers entered 3.5m culvert trench.', location: 'Mina Zayed Terminal · South Access Corridor', timestamp: '2026-10-07T07:10:00Z', status: 'Submitted', isAnonymous: false, reportedBy: 'Jassem Al-Mehairbi', history: [] },
+              { id: 'OBS-2026-0418', type: 'Improvement', description: 'Scaffolding toe-board dislodged on cantilever platform Level 4 during wind squall.', location: 'Fahud Field Operation · Flare Header Tower', timestamp: '2026-10-07T08:30:00Z', status: 'Submitted', isAnonymous: true, reportedBy: undefined, history: [] }
+          ];
+          setAllObservations(initialObs);
+          await SecureStorage.setItem('hse_observations', initialObs);
+      }
       setIsLoadingAuth(false);
     };
     hydrate();
   }, []);
 
   const login = async (username: string, rememberMe: boolean = false) => {
+    // If username is empty or special string, trigger Google SSO
+    if (username === 'SSO_LOGIN') {
+      const result = await AuthService.loginWithGoogle();
+      if (result) {
+        const mockProfile = MOCK_USERS.find(u => u.id === result.user.id);
+        if (mockProfile) setCurrentUser(mockProfile);
+        else {
+          setCurrentUser({
+            id: result.user.id,
+            name: result.user.name,
+            email: result.user.username,
+            role: result.user.role,
+            department: result.user.department,
+            safetyScore: 0,
+            recentIncidents: [],
+            observations: [],
+            certifications: [],
+            achievements: []
+          });
+        }
+        setIsDemoMode(result.isDemo);
+        return true;
+      }
+      return false;
+    }
+
     const result = await AuthService.login(username, rememberMe);
     if (result) {
         // Try to find the user in mocks, otherwise construct visitor profile
@@ -398,6 +245,38 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return false;
   };
 
+  const loginDemo = async (demoUserId: string = 'admin') => {
+    const result = await AuthService.loginDemo(demoUserId);
+    if (result) {
+      const enriched = await UserProfileService.getUserById(result.user.id);
+      if (enriched) {
+        const liveStats = UserProfileService.calculateLiveStats(enriched);
+        setCurrentUser({ ...enriched, statistics: liveStats });
+      } else {
+        const mockProfile = MOCK_USERS.find(u => u.id === result.user.id);
+        if (mockProfile) {
+          setCurrentUser(mockProfile);
+        } else {
+          setCurrentUser({
+            id: result.user.id,
+            name: result.user.name,
+            email: result.user.username,
+            role: result.user.role,
+            department: result.user.department,
+            safetyScore: 0,
+            recentIncidents: [],
+            observations: [],
+            certifications: [],
+            achievements: []
+          });
+        }
+      }
+      setIsDemoMode(true);
+      return true;
+    }
+    return false;
+  };
+
   const logout = () => {
     AuthService.logout();
     setCurrentUser(null);
@@ -406,6 +285,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const switchUser = async (userId: string) => {
       if (!isDemoMode) return; // Strict guard
+      const enriched = await UserProfileService.getUserById(userId);
+      if (enriched) {
+          const liveStats = UserProfileService.calculateLiveStats(enriched);
+          const fullUser = { ...enriched, statistics: liveStats };
+          setCurrentUser(fullUser);
+          const secureUser: SecureUser = {
+              id: fullUser.id,
+              username: fullUser.email || fullUser.name.toLowerCase().replace(/\s+/g, '.'),
+              name: fullUser.name,
+              role: fullUser.role,
+              department: fullUser.department,
+              permissions: []
+          };
+          await SecureStorage.setItem('hse_current_user', secureUser);
+          return;
+      }
+
       const targetUser = MOCK_USERS.find(u => u.id === userId);
       if (targetUser) {
           setCurrentUser(targetUser);
@@ -424,8 +320,16 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const updateEquipment = (updatedEq: Equipment) => {
-    const updatedList = equipment.map(e => e.id === updatedEq.id ? updatedEq : e);
+    const exists = equipment.some(e => e.id === updatedEq.id);
+    const updatedList = exists 
+      ? equipment.map(e => e.id === updatedEq.id ? updatedEq : e)
+      : [updatedEq, ...equipment];
     setEquipment(updatedList);
+    try {
+      SecureStorage.setItem('hse_equipment', updatedList);
+    } catch (err) {
+      console.warn('Storage sync for equipment warning:', err);
+    }
   };
 
   const addObservation = (obs: SafetyObservation) => {
@@ -445,30 +349,114 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     SecureStorage.setItem('hse_observations', updatedList);
   };
 
-  const toggleLanguage = useCallback(() => {
-    setLanguage(prev => (prev === 'en' ? 'ar' : 'en'));
-  }, []);
-
-  const t = useCallback((key: string) => {
-    return TRANSLATIONS[language][key] || key;
-  }, [language]);
-
+  // Sync active user with live activity mutations across the application
   useEffect(() => {
-    document.dir = language === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-    document.documentElement.style.setProperty('--app-direction', language === 'ar' ? 'rtl' : 'ltr');
-  }, [language]);
+    const handleActivityUpdated = async (e: any) => {
+      const activeId = currentUser?.id;
+      if (activeId && e.detail?.userId === activeId) {
+        const enriched = await UserProfileService.getUserById(activeId);
+        if (enriched) {
+          const liveStats = UserProfileService.calculateLiveStats(enriched);
+          setCurrentUser({ ...enriched, statistics: liveStats });
+        }
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('ad6-user-activity-updated', handleActivityUpdated);
+      return () => {
+        window.removeEventListener('ad6-user-activity-updated', handleActivityUpdated);
+      };
+    }
+  }, [currentUser?.id]);
+
+  const effectivePermissions = useMemo(() => {
+    return Array.from(calculateEffectivePermissions(currentUser));
+  }, [currentUser]);
+
+  const updateUserPermissions = async (userId: string, granted: string[], denied: string[]) => {
+    if (!currentUser) return;
+    const updatedUser: UserProfile = {
+      ...currentUser,
+      permissions: granted,
+      deniedPermissions: denied
+    };
+    setCurrentUser(updatedUser);
+    setUsersList(prev => prev.map(u => u.id === userId ? { ...u, permissions: granted, deniedPermissions: denied } : u));
+    const secureUser: SecureUser = {
+      id: updatedUser.id,
+      username: updatedUser.email || updatedUser.name.toLowerCase().replace(/\s+/g, '.'),
+      name: updatedUser.name,
+      role: updatedUser.role,
+      roles: updatedUser.roles,
+      department: updatedUser.department,
+      permissions: granted,
+      deniedPermissions: denied,
+      isSuspended: updatedUser.isSuspended
+    };
+    await SecureStorage.setItem('hse_current_user', secureUser);
+  };
+
+  const updateUserRoles = async (userId: string, roles: UserRole[]) => {
+    if (!currentUser) return;
+    const primaryRole = roles[0] || currentUser.role;
+    const updatedUser: UserProfile = {
+      ...currentUser,
+      role: primaryRole,
+      roles
+    };
+    setCurrentUser(updatedUser);
+    setUsersList(prev => prev.map(u => u.id === userId ? { ...u, role: primaryRole, roles } : u));
+    const secureUser: SecureUser = {
+      id: updatedUser.id,
+      username: updatedUser.email || updatedUser.name.toLowerCase().replace(/\s+/g, '.'),
+      name: updatedUser.name,
+      role: primaryRole,
+      roles,
+      department: updatedUser.department,
+      permissions: updatedUser.permissions || [],
+      deniedPermissions: updatedUser.deniedPermissions || [],
+      isSuspended: updatedUser.isSuspended
+    };
+    await SecureStorage.setItem('hse_current_user', secureUser);
+  };
+
+  const setUserSuspension = async (userId: string, isSuspended: boolean) => {
+    if (!currentUser) return;
+    const updatedUser: UserProfile = {
+      ...currentUser,
+      isSuspended,
+      employmentStatus: isSuspended ? 'Suspended' : 'Active'
+    };
+    setCurrentUser(updatedUser);
+    setUsersList(prev => prev.map(u => u.id === userId ? { ...u, isSuspended, employmentStatus: isSuspended ? 'Suspended' : 'Active' } : u));
+    const secureUser: SecureUser = {
+      id: updatedUser.id,
+      username: updatedUser.email || updatedUser.name.toLowerCase().replace(/\s+/g, '.'),
+      name: updatedUser.name,
+      role: updatedUser.role,
+      roles: updatedUser.roles,
+      department: updatedUser.department,
+      permissions: updatedUser.permissions || [],
+      deniedPermissions: updatedUser.deniedPermissions || [],
+      isSuspended
+    };
+    await SecureStorage.setItem('hse_current_user', secureUser);
+  };
 
   return (
     <UserContext.Provider value={{ 
-        currentUser: currentUser as UserProfile, 
+        currentUser: currentUser, 
         login,
+        loginDemo,
         register,
         logout,
         switchUser,
         isDemoMode,
         isLoadingAuth,
-        users: MOCK_USERS, 
+        authMode,
+        setAuthMode,
+        users: usersList, 
         activeFramework, 
         setActiveFramework, 
         equipment, 
@@ -476,9 +464,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         allObservations, 
         addObservation, 
         updateObservation,
-        language,
-        toggleLanguage,
-        t
+        effectivePermissions,
+        updateUserPermissions,
+        updateUserRoles,
+        setUserSuspension
     }}>
       {children}
     </UserContext.Provider>

@@ -1,4 +1,5 @@
 
+import { AITag } from './AITag';
 import React, { useState } from "react";
 import { useUser } from '../contexts/UserContext';
 import { LeadCaptureService } from '../services/leadCaptureService';
@@ -127,48 +128,48 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
   return (
     <div className="min-h-screen w-full flex bg-slate-50 font-sans text-slate-900 overflow-hidden">
        {/* Left Panel */}
-       <div className="hidden lg:flex w-5/12 bg-slate-950 relative flex-col justify-between p-16 text-white overflow-hidden isolate">
+       <div className="hidden lg:flex w-5/12 bg-slate-50 relative flex-col justify-between p-16 text-slate-900 overflow-hidden isolate">
           {/* Background */}
           <div className="absolute inset-0 z-0">
-              <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-indigo-900/20 rounded-full blur-[120px] mix-blend-screen" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-emerald-900/30 rounded-full blur-[100px] mix-blend-screen" />
+              <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-indigo-500/10 rounded-full blur-[120px] mix-blend-multiply" />
+              <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-emerald-500/10 rounded-full blur-[100px] mix-blend-multiply" />
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
           </div>
 
-          <div className="relative z-10 flex flex-col h-full justify-between animate-in fade-in slide-in-from-left-8 duration-1000">
+          <div className="relative z-10 flex flex-col h-full justify-between animate-in fade-in slide-in-from-start-8 duration-1000">
              <div>
                  <div className="flex items-center gap-4 mb-10">
                     <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 ring-1 ring-white/10">
-                        <Hexagon size={28} strokeWidth={2.5} className="fill-white/10" />
+                        <Hexagon size={28} strokeWidth={2.5} className="fill-white/20" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-black tracking-tight leading-none text-white">AD6.Ai</h2>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-indigo-400 mt-1.5">Smart HSE Suite</p>
+                        <h2 className="text-2xl font-black tracking-tight leading-none text-brand-900">AD6.Ai</h2>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brand-600 mt-1.5">Smart HSE Suite</p>
                     </div>
                  </div>
                  
                  <div className="space-y-8 max-w-lg">
                      <h1 className="text-5xl font-black leading-[1.1] tracking-tight">
-                        <span className="text-white">Join the Future</span><br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-emerald-200 to-white">of Safety Ops.</span>
+                        <span className="text-slate-900">Join the Future</span><br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-500">of Safety Ops.</span>
                      </h1>
-                     <p className="text-lg text-slate-400 leading-relaxed font-medium">
+                     <p className="text-lg text-slate-600 leading-relaxed font-medium">
                         Create your account to unlock predictive intelligence, automated compliance reporting, and real-time risk management tools.
                      </p>
                  </div>
              </div>
 
              <div className="grid grid-cols-1 gap-4">
-                  <div className="group bg-white/5 backdrop-blur-sm border border-white/5 p-5 rounded-2xl flex items-center gap-5 hover:bg-white/10 hover:border-white/10 transition-all duration-300 cursor-default">
-                      <div className="p-3 bg-gradient-to-br from-indigo-500/10 to-indigo-500/5 rounded-xl text-indigo-400 ring-1 ring-indigo-500/20 group-hover:scale-110 transition-transform"><ShieldCheck size={20}/></div>
+                  <div className="bg-white border border-slate-200 shadow-sm p-5 rounded-2xl flex items-center gap-5 hover:shadow-md hover:border-slate-300 transition-all duration-300 cursor-default">
+                      <div className="p-3 bg-gradient-to-br from-indigo-500/10 to-indigo-500/5 rounded-xl text-brand-600 ring-1 ring-indigo-500/20 group-hover:scale-110 transition-transform"><ShieldCheck size={20}/></div>
                       <div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-200/70 mb-0.5">Secure Access</p>
-                          <p className="font-bold text-white text-sm">Role-Based Permission Matrix</p>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-brand-600/70 mb-0.5">Secure Access</p>
+                          <p className="font-bold text-slate-900 text-sm">Role-Based Permission Matrix</p>
                       </div>
                   </div>
              </div>
              
-             <div className="mt-8 pt-8 border-t border-white/5 flex justify-between items-center text-xs font-medium text-slate-500">
+             <div className="mt-8 pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-medium text-slate-500">
                   <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div> Registration Open</span>
                   <span>v2.4.0</span>
              </div>
@@ -176,20 +177,20 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
        </div>
 
        {/* Right Panel - Sign Up Form */}
-       <div className="w-full lg:w-7/12 flex items-center justify-center p-8 lg:p-24 bg-white relative overflow-y-auto">
+       <div className="w-full lg:w-7/12 flex items-center justify-center p-8 lg:p-24 bg-white lg:rounded-l-3xl shadow-2xl z-10 relative overflow-y-auto">
           <div className="w-full max-w-md space-y-10 animate-in fade-in zoom-in-95 duration-500 delay-150 py-10">
               
-              <div className="text-center lg:text-left space-y-2">
+              <div className="text-center lg:text-start space-y-2">
                   <h2 className="text-4xl font-black text-slate-900 tracking-tighter">Create Account</h2>
-                  <p className="text-slate-500 font-medium text-lg">Enter your details to provision a new workspace.</p>
+                  <p className="text-slate-600 font-medium text-lg">Enter your details to provision a new workspace.</p>
               </div>
 
               {/* Form */}
               <form onSubmit={handleRegisterSubmit} className="space-y-6">
                   <div className="space-y-2">
-                      <Label>Full Name <span className="text-red-500">*</span></Label>
+                      <Label className="text-slate-700">Full Name <span className="text-red-500">*</span></Label>
                       <div className="relative group">
-                          <div className={`absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none transition-colors ${fieldErrors.name ? 'text-red-400' : 'text-slate-300 group-focus-within:text-indigo-600'}`}>
+                          <div className={`absolute inset-y-0 start-0 ps-5 flex items-center pointer-events-none transition-colors ${fieldErrors.name ? 'text-red-400' : 'text-slate-400 group-focus-within:text-brand-600'}`}>
                               <User size={20} />
                           </div>
                           <Input 
@@ -198,22 +199,22 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
                               value={formData.name}
                               onChange={handleInputChange}
                               onBlur={handleBlur}
-                              className={`pl-14 ${fieldErrors.name ? 'border-red-500 focus-visible:ring-red-500 bg-red-50/10' : touched.name && !fieldErrors.name ? 'border-emerald-200 bg-emerald-50/10 focus-visible:ring-emerald-500' : ''}`}
+                              className={`bg-slate-50 border-slate-200 text-slate-900 ps-14 ${fieldErrors.name ? 'border-red-500 focus-visible:ring-red-500 bg-red-50' : touched.name && !fieldErrors.name ? 'border-emerald-500 focus-visible:ring-emerald-500 bg-emerald-50' : ''}`}
                               placeholder="Jane Doe"
                               disabled={status === 'loading' || status === 'success'}
                           />
-                          <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                          <div className="absolute inset-y-0 end-3 flex items-center pointer-events-none">
                               {fieldErrors.name && <AlertCircle size={16} className="text-red-500" />}
                               {touched.name && !fieldErrors.name && <CheckCircle2 size={16} className="text-emerald-500" />}
                           </div>
                       </div>
-                      {fieldErrors.name && <p className="text-red-500 text-xs font-bold ml-1">{fieldErrors.name}</p>}
+                      {fieldErrors.name && <p className="text-red-500 text-xs font-bold ms-1">{fieldErrors.name}</p>}
                   </div>
 
                   <div className="space-y-2">
-                      <Label>Work Email <span className="text-red-500">*</span></Label>
+                      <Label className="text-slate-700">Work Email <span className="text-red-500">*</span></Label>
                       <div className="relative group">
-                          <div className={`absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none transition-colors ${fieldErrors.email ? 'text-red-400' : 'text-slate-300 group-focus-within:text-indigo-600'}`}>
+                          <div className={`absolute inset-y-0 start-0 ps-5 flex items-center pointer-events-none transition-colors ${fieldErrors.email ? 'text-red-400' : 'text-slate-400 group-focus-within:text-brand-600'}`}>
                               <Mail size={20} />
                           </div>
                           <Input 
@@ -222,22 +223,22 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
                               value={formData.email}
                               onChange={handleInputChange}
                               onBlur={handleBlur}
-                              className={`pl-14 ${fieldErrors.email ? 'border-red-500 focus-visible:ring-red-500 bg-red-50/10' : touched.email && !fieldErrors.email ? 'border-emerald-200 bg-emerald-50/10 focus-visible:ring-emerald-500' : ''}`}
+                              className={`bg-slate-50 border-slate-200 text-slate-900 ps-14 ${fieldErrors.email ? 'border-red-500 focus-visible:ring-red-500 bg-red-50' : touched.email && !fieldErrors.email ? 'border-emerald-500 focus-visible:ring-emerald-500 bg-emerald-50' : ''}`}
                               placeholder="name@company.com"
                               disabled={status === 'loading' || status === 'success'}
                           />
-                          <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                          <div className="absolute inset-y-0 end-3 flex items-center pointer-events-none">
                               {fieldErrors.email && <AlertCircle size={16} className="text-red-500" />}
                               {touched.email && !fieldErrors.email && <CheckCircle2 size={16} className="text-emerald-500" />}
                           </div>
                       </div>
-                      {fieldErrors.email && <p className="text-red-500 text-xs font-bold ml-1">{fieldErrors.email}</p>}
+                      {fieldErrors.email && <p className="text-red-500 text-xs font-bold ms-1">{fieldErrors.email}</p>}
                   </div>
 
                   <div className="space-y-2">
-                      <Label>Department <span className="text-red-500">*</span></Label>
+                      <Label className="text-slate-700">Department <span className="text-red-500">*</span></Label>
                       <div className="relative group">
-                          <div className={`absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none transition-colors ${fieldErrors.department ? 'text-red-400' : 'text-slate-300 group-focus-within:text-indigo-600'}`}>
+                          <div className={`absolute inset-y-0 start-0 ps-5 flex items-center pointer-events-none transition-colors ${fieldErrors.department ? 'text-red-400' : 'text-slate-400 group-focus-within:text-brand-600'}`}>
                               <Building size={20} />
                           </div>
                           <select 
@@ -245,13 +246,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
                               value={formData.department}
                               onChange={handleInputChange}
                               onBlur={handleBlur}
-                              className={`w-full pl-14 pr-6 py-5 bg-slate-50 border-2 rounded-2xl outline-none transition-all font-bold text-sm text-slate-800 placeholder:text-slate-300 placeholder:font-semibold appearance-none cursor-pointer ${
-                                  fieldErrors.department 
-                                  ? 'border-red-500 focus:border-red-500 bg-red-50/10' 
-                                  : touched.department && !fieldErrors.department
-                                    ? 'border-emerald-200 bg-emerald-50/10 focus:border-emerald-500'
-                                    : 'border-slate-100 focus:border-indigo-600 focus:bg-white hover:border-slate-200'
-                              }`}
+                              className={`w-full ps-14 pe-6 py-3.5 bg-slate-50 border border-slate-200 rounded-lg outline-none transition-all font-bold text-sm text-slate-900 placeholder:text-slate-400 placeholder:font-semibold appearance-none cursor-pointer hover:border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 ${fieldErrors.department ? 'border-red-500 focus:ring-red-500/20 bg-red-50' : touched.department && !fieldErrors.department ? 'border-emerald-500 focus:ring-emerald-500/20 bg-emerald-50' : ''}`}
                               disabled={status === 'loading' || status === 'success'}
                           >
                               <option value="">Select Department...</option>
@@ -260,12 +255,12 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
                               <option value="Engineering">Engineering</option>
                               <option value="Admin">Administration</option>
                           </select>
-                          <div className="absolute inset-y-0 right-8 flex items-center pointer-events-none">
+                          <div className="absolute inset-y-0 end-8 flex items-center pointer-events-none">
                               {fieldErrors.department && <AlertCircle size={16} className="text-red-500" />}
                               {touched.department && !fieldErrors.department && <CheckCircle2 size={16} className="text-emerald-500" />}
                           </div>
                       </div>
-                      {fieldErrors.department && <p className="text-red-500 text-xs font-bold ml-1">{fieldErrors.department}</p>}
+                      {fieldErrors.department && <p className="text-red-500 text-xs font-bold ms-1">{fieldErrors.department}</p>}
                   </div>
 
                   <AnimatePresence>
@@ -285,7 +280,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
                   <Button 
                       type="submit" 
                       disabled={status === 'loading' || status === 'success' || Object.keys(fieldErrors).length > 0 && Object.values(fieldErrors).some(Boolean)}
-                      className="w-full gap-3"
+                      className="w-full gap-3 py-6 text-sm bg-blue-600 text-white shadow-lg"
                       variant={status === 'success' ? 'success' : 'default'}
                   >
                       {status === 'loading' ? (
@@ -309,7 +304,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onLoginClick }) => {
               <div className="pt-6 border-t border-slate-100 text-center">
                   <p className="text-sm font-medium text-slate-500">
                       Already have an account? {' '}
-                      <button onClick={onLoginClick} className="text-indigo-600 font-bold hover:underline">
+                      <button onClick={onLoginClick} className="text-brand-700 font-bold hover:underline">
                           Sign In
                       </button>
                   </p>

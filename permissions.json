@@ -1,0 +1,9 @@
+{
+  "iam": {
+    "roles": {
+      "admin": ["owner", "editor"],
+      "supervisor": ["editor"],
+      "viewer": ["read"]
+    }
+  }
+}

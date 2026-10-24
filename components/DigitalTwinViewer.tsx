@@ -1,4 +1,5 @@
 
+import { AITag } from './AITag';
 import React, { useState } from 'react';
 import { DigitalTwinSensor } from '../types';
 import { simulateDigitalTwinScenario } from '../services/geminiService';
@@ -11,7 +12,9 @@ const DigitalTwinViewer: React.FC = () => {
   const [sensors] = useState<DigitalTwinSensor[]>([
       { id: 'S1', type: 'Gas', label: 'H2S Sensor 01', value: 0.0, unit: 'ppm', status: 'Normal', coordinates: { x: 20, y: 30, z: 0 } },
       { id: 'S2', type: 'Temp', label: 'Pump A Temp', value: 65, unit: '°C', status: 'Warning', coordinates: { x: 50, y: 60, z: 0 } },
-      { id: 'S3', type: 'Vibration', label: 'Turbine Vib', value: 2.1, unit: 'mm/s', status: 'Normal', coordinates: { x: 70, y: 20, z: 0 } }
+      { id: 'S3', type: 'Vibration', label: 'Turbine Vib', value: 2.1, unit: 'mm/s', status: 'Normal', coordinates: { x: 70, y: 20, z: 0 } },
+      { id: 'S4', type: 'Flow', label: 'Main Line P1', value: 120, unit: 'PSI', status: 'Normal', coordinates: { x: 30, y: 80, z: 0 } },
+      { id: 'S5', type: 'Gas', label: 'LEL Sensor 04', value: 15, unit: '%', status: 'Warning', coordinates: { x: 80, y: 50, z: 0 } }
   ]);
   const [simulating, setSimulating] = useState(false);
   const [simulationResult, setSimulationResult] = useState<{
@@ -32,7 +35,7 @@ const DigitalTwinViewer: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col space-y-6 animate-in fade-in duration-500">
-        <div className="flex justify-between items-center bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100">
+        <div className="flex justify-between items-center glass-card p-6 rounded-[2.5rem] shadow-xl border border-slate-100">
             <div>
                 <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Digital Twin</h2>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time Facility Replica</p>
@@ -61,7 +64,7 @@ const DigitalTwinViewer: React.FC = () => {
                         className="absolute p-4 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl transform hover:scale-110 transition-all cursor-pointer group/sensor"
                         style={{ top: `${sensor.coordinates.y}%`, left: `${sensor.coordinates.x}%` }}
                     >
-                        <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${sensor.status === 'Normal' ? 'bg-emerald-500' : sensor.status === 'Warning' ? 'bg-orange-500' : 'bg-red-500'} animate-pulse`}></div>
+                        <div className={`absolute -top-1 -end-1 w-3 h-3 rounded-full ${sensor.status === 'Normal' ? 'bg-emerald-500' : sensor.status === 'Warning' ? 'bg-orange-500' : 'bg-red-500'} animate-pulse`}></div>
                         <div className="flex items-center gap-3">
                             <div className="text-indigo-400">
                                 {sensor.type === 'Gas' ? <Wind size={16}/> : sensor.type === 'Temp' ? <Thermometer size={16}/> : <Activity size={16}/>}
@@ -76,7 +79,7 @@ const DigitalTwinViewer: React.FC = () => {
 
                 {/* Simulation Overlay */}
                 {simulationResult && (
-                    <div className="absolute bottom-8 left-8 right-8 bg-red-900/90 backdrop-blur-xl p-6 rounded-[2rem] border border-red-500/30 animate-in slide-in-from-bottom-10">
+                    <div className="absolute bottom-8 start-8 end-8 bg-red-900/90 backdrop-blur-xl p-6 rounded-[2rem] border border-red-500/30 animate-in slide-in-from-bottom-10">
                         <div className="flex items-start gap-6">
                             <div className="bg-red-500 p-4 rounded-2xl text-white animate-pulse">
                                 <AlertTriangle size={32}/>
@@ -95,13 +98,13 @@ const DigitalTwinViewer: React.FC = () => {
             </div>
 
             <div className="space-y-6">
-                <div className="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 h-full flex flex-col">
+                <div className="glass-card p-6 rounded-[2.5rem] shadow-xl border border-slate-100 h-full flex flex-col">
                     <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
                         <Layers size={16} className="text-indigo-600"/> Layer Control
                     </h3>
                     <div className="space-y-3">
                         {['Gas Detection', 'Thermal Map', 'Personnel', 'Evacuation Paths'].map(layer => (
-                            <label key={layer} className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors border border-transparent hover:border-slate-100">
+                            <label key={layer} className="flex items-center gap-3 p-3 rounded-xl hover:glass-button cursor-pointer transition-colors border border-transparent hover:border-slate-100">
                                 <input type="checkbox" defaultChecked className="rounded text-indigo-600 focus:ring-indigo-500"/>
                                 <span className="text-xs font-bold text-slate-700 uppercase">{layer}</span>
                             </label>

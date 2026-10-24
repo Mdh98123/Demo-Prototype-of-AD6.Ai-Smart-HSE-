@@ -40,6 +40,36 @@ const ExcavationModule: React.FC = () => {
             lastInspection: 'N/A',
             hazards: ['Cave-in', 'Water accumulation', 'Falling loads'],
             controls: ['Benching (1:1.5)', 'Dewatering pump on standby', 'Exclusion zone']
+        },
+        {
+            id: 'EXC-2024-003',
+            location: 'Site A - Pipeline Repair',
+            depth: 2.1,
+            soilType: 'Type A',
+            status: 'Active',
+            lastInspection: '2024-05-25 09:30',
+            hazards: ['Underground Utilities', 'Access/Egress'],
+            controls: ['Utility scan completed', 'Ladder every 25ft', 'Sloping']
+        },
+        {
+            id: 'EXC-2024-004',
+            location: 'Main Gate - Drainage Extension',
+            depth: 1.2,
+            soilType: 'Type B',
+            status: 'Closed',
+            lastInspection: '2024-05-20 14:00',
+            hazards: ['Traffic/Vehicles', 'Slips/Trips'],
+            controls: ['Traffic management plan', 'Barricades', 'Warning signs']
+        },
+        {
+            id: 'EXC-2024-005',
+            location: 'Zone D - Substation Grounding',
+            depth: 0.8,
+            soilType: 'Type C',
+            status: 'Pending',
+            lastInspection: 'N/A',
+            hazards: ['Underground Utilities', 'Soil instability'],
+            controls: ['Hand excavation only', 'Utility scan completed']
         }
     ]);
 
@@ -59,13 +89,13 @@ const ExcavationModule: React.FC = () => {
         <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
-                <div className="flex items-center space-x-5">
+                <div className="flex items-center gap-x-5">
                     <div className="bg-orange-600 p-5 rounded-[2rem] text-white shadow-2xl shadow-orange-500/20">
                         <Construction size={32} />
                     </div>
                     <div>
                         <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">Excavation Safety</h2>
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-l-2 border-orange-500 pl-4">Groundworks & Trenching Control</p>
+                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-2 border-orange-500 ps-4">Groundworks & Trenching Control</p>
                     </div>
                 </div>
                 <button 
@@ -84,7 +114,7 @@ const ExcavationModule: React.FC = () => {
                     { label: 'Soil Type C Sites', value: '5', icon: AlertTriangle, color: 'text-red-600' },
                     { label: 'Inspections Today', value: '8', icon: CheckCircle2, color: 'text-emerald-600' },
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100">
+                    <div key={i} className="glass-card p-6 rounded-[2rem] shadow-xl border border-slate-100">
                         <stat.icon className={`${stat.color} mb-4`} size={24} />
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
                         <p className="text-3xl font-black text-slate-800 mt-1">{stat.value}</p>
@@ -95,17 +125,17 @@ const ExcavationModule: React.FC = () => {
             {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-8 space-y-6">
-                    <div className="bg-white rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden">
+                    <div className="glass-card rounded-[3rem] shadow-xl border border-slate-100 overflow-hidden">
                         <div className="p-8 border-b border-slate-50 flex justify-between items-center">
                             <h3 className="text-xl font-black text-slate-800 uppercase tracking-tighter">Permit Registry</h3>
                             <div className="flex gap-2">
-                                <button className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-slate-600"><Search size={18}/></button>
-                                <button className="p-2 bg-slate-50 rounded-lg text-slate-400 hover:text-slate-600"><Filter size={18}/></button>
+                                <button className="p-2 glass-panel rounded-lg text-slate-400 hover:text-slate-600"><Search size={18}/></button>
+                                <button className="p-2 glass-panel rounded-lg text-slate-400 hover:text-slate-600"><Filter size={18}/></button>
                             </div>
                         </div>
                         <div className="divide-y divide-slate-50">
                             {permits.map(permit => (
-                                <div key={permit.id} className="p-8 hover:bg-slate-50 transition-all group">
+                                <div key={permit.id} className="p-8 hover:glass-button transition-all group">
                                     <div className="flex justify-between items-start mb-6">
                                         <div className="flex items-start gap-5">
                                             <div className="p-4 bg-slate-100 rounded-2xl text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-600 transition-colors">
@@ -125,18 +155,18 @@ const ExcavationModule: React.FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <button className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
+                                        <button className="p-3 glass-panel rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
                                             <Download size={20}/>
                                         </button>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-white p-4 rounded-2xl border border-slate-100">
+                                        <div className="glass-card p-4 rounded-2xl border border-slate-100">
                                             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Hazards</p>
                                             <div className="flex flex-wrap gap-1">
                                                 {permit.hazards.map((h, i) => <span key={i} className="text-[8px] font-bold bg-red-50 text-red-600 px-2 py-0.5 rounded">{h}</span>)}
                                             </div>
                                         </div>
-                                        <div className="bg-white p-4 rounded-2xl border border-slate-100">
+                                        <div className="glass-card p-4 rounded-2xl border border-slate-100">
                                             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Controls</p>
                                             <div className="flex flex-wrap gap-1">
                                                 {permit.controls.map((c, i) => <span key={i} className="text-[8px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded">{c}</span>)}
@@ -151,7 +181,7 @@ const ExcavationModule: React.FC = () => {
 
                 <div className="lg:col-span-4 space-y-8">
                     <div className="bg-slate-900 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-6 opacity-10"><BrainCircuit size={120}/></div>
+                        <div className="absolute top-0 end-0 p-6 opacity-10"><BrainCircuit size={120}/></div>
                         <h3 className="text-xs font-black text-orange-400 uppercase tracking-[0.2em] mb-6">AI Soil Analysis</h3>
                         <p className="text-xs text-slate-400 mb-6 font-medium leading-relaxed">
                             Upload a photo of the excavation face or describe soil characteristics for AI-powered soil classification and shoring recommendations.
@@ -164,20 +194,20 @@ const ExcavationModule: React.FC = () => {
                             {isAnalyzing ? <Loader2 className="animate-spin" size={18}/> : <Zap size={18}/>} Run Diagnostic
                         </button>
                         {aiInsights && (
-                            <div className="mt-6 p-5 bg-white/10 rounded-2xl border border-white/10 animate-in fade-in slide-in-from-top-2">
+                            <div className="mt-6 p-5 glass-card/10 rounded-2xl border border-white/10 animate-in fade-in slide-in-from-top-2">
                                 <p className="text-[10px] font-bold text-orange-300 leading-relaxed italic">"{aiInsights}"</p>
                             </div>
                         )}
                     </div>
 
-                    <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+                    <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
                         <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><Droplets size={16} className="text-blue-500"/> Site Conditions</h3>
                         <div className="space-y-4">
-                            <div className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
+                            <div className="flex justify-between items-center p-4 glass-panel rounded-2xl">
                                 <span className="text-[10px] font-black text-slate-500 uppercase">Water Table</span>
                                 <span className="text-xs font-black text-slate-800">2.4m Below Grade</span>
                             </div>
-                            <div className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
+                            <div className="flex justify-between items-center p-4 glass-panel rounded-2xl">
                                 <span className="text-[10px] font-black text-slate-500 uppercase">Vibration Risk</span>
                                 <span className="text-xs font-black text-red-600 uppercase">High (Nearby Traffic)</span>
                             </div>
@@ -189,7 +219,7 @@ const ExcavationModule: React.FC = () => {
             {/* Create Modal */}
             {showCreateModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 animate-in fade-in duration-200">
-                    <div className="bg-white w-full max-w-lg rounded-[2.5rem] shadow-3xl p-10 border-4 border-white animate-in zoom-in-95">
+                    <div className="glass-card w-full max-w-lg rounded-[2.5rem] shadow-3xl p-10 border-4 border-white animate-in zoom-in-95">
                         <div className="flex justify-between items-center mb-8">
                             <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">New Permit to Dig</h3>
                             <button onClick={() => setShowCreateModal(false)} className="p-2 hover:bg-slate-100 rounded-full"><X size={24} className="text-slate-400"/></button>
@@ -197,16 +227,16 @@ const ExcavationModule: React.FC = () => {
                         <div className="space-y-6">
                             <div>
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Location</label>
-                                <input type="text" className="w-full p-4 bg-slate-50 border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all" placeholder="e.g. North Perimeter Fence" />
+                                <input type="text" className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all" placeholder="e.g. North Perimeter Fence" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Max Depth (m)</label>
-                                    <input type="number" className="w-full p-4 bg-slate-50 border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all" placeholder="1.2" />
+                                    <input type="number" className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all" placeholder="1.2" />
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Soil Type</label>
-                                    <select className="w-full p-4 bg-slate-50 border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all">
+                                    <select className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl outline-none font-bold text-sm text-slate-700 focus:border-orange-500 transition-all">
                                         <option>Stable Rock</option>
                                         <option>Type A</option>
                                         <option>Type B</option>

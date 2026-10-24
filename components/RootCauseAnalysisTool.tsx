@@ -24,16 +24,16 @@ const RootCauseAnalysisTool: React.FC = () => {
             </div>
             <div>
                 <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">RCA Engine</h2>
-                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-l-4 border-orange-500 pl-4">Structured Root Cause Analysis (5-Whys)</p>
+                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-4 border-orange-500 ps-4">Structured Root Cause Analysis (5-Whys)</p>
             </div>
         </div>
 
-        <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100">
+        <div className="glass-card p-10 rounded-[3rem] shadow-xl border border-slate-100">
             <div className="mb-8">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Problem Statement</label>
                 <input 
                     type="text" 
-                    className="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold text-slate-800 outline-none focus:border-orange-500 transition-all"
+                    className="w-full p-4 glass-panel border-2 border-slate-100 rounded-2xl font-bold text-slate-800 outline-none focus:border-orange-500 transition-all"
                     placeholder="Describe the incident or failure..."
                     value={problem}
                     onChange={(e) => setProblem(e.target.value)}
@@ -41,7 +41,7 @@ const RootCauseAnalysisTool: React.FC = () => {
             </div>
 
             <div className="space-y-4 relative">
-                <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-slate-100 -z-10"></div>
+                <div className="absolute start-6 top-4 bottom-4 w-0.5 bg-slate-100 -z-10"></div>
                 {whys.map((why, i) => (
                     <div key={i} className="flex gap-6 items-start">
                         <div className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-lg shadow-lg shrink-0 border-4 border-white">
@@ -51,7 +51,7 @@ const RootCauseAnalysisTool: React.FC = () => {
                             <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Why did this happen?</label>
                             <input 
                                 type="text"
-                                className="w-full p-4 bg-white border-2 border-slate-100 rounded-2xl font-medium text-slate-700 outline-none focus:border-indigo-500 transition-all shadow-sm"
+                                className="w-full p-4 glass-card border-2 border-slate-100 rounded-2xl font-medium text-slate-700 outline-none focus:border-indigo-500 transition-all shadow-sm"
                                 placeholder="Enter cause..."
                                 value={why}
                                 onChange={(e) => updateWhy(i, e.target.value)}
@@ -66,7 +66,7 @@ const RootCauseAnalysisTool: React.FC = () => {
                     <CheckCircle2 size={16}/> Root Cause Conclusion
                 </h3>
                 <textarea 
-                    className="w-full p-4 bg-white border-2 border-emerald-100 rounded-2xl font-bold text-slate-800 outline-none h-32 resize-none"
+                    className="w-full p-4 glass-card border-2 border-emerald-100 rounded-2xl font-bold text-slate-800 outline-none h-32 resize-none"
                     placeholder="Summarize the root cause identified..."
                     value={rootCause}
                     onChange={(e) => setRootCause(e.target.value)}

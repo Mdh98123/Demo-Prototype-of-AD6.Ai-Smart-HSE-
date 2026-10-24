@@ -7,7 +7,7 @@ import {
   Globe, ShieldPlus, LockKeyhole, LogOut, Layout,
   Search, ChevronDown, Bell, HelpCircle, Truck, HardHat, ArrowUp, FlaskConical, GitPullRequest,
   Shield, Eye, Settings, ChevronRight, FileClock, Briefcase, Scale,
-  GraduationCap, Anchor, CheckSquare, Wrench, X, Command
+  GraduationCap, Anchor, CheckSquare, Wrench, X, Command, Zap, LayoutGrid
 } from 'lucide-react';
 const Dashboard = React.lazy(() => import('./Dashboard'));
 const ComplianceDashboard = React.lazy(() => import('./ComplianceDashboard'));
@@ -19,7 +19,6 @@ const InspectionModule = React.lazy(() => import('./InspectionModule'));
 const AuditModule = React.lazy(() => import('./AuditModule'));
 const PredictiveMaintenanceModule = React.lazy(() => import('./PredictiveMaintenanceModule'));
 const ToolboxTalksModule = React.lazy(() => import('./ToolboxTalksModule'));
-const ContractorPortal = React.lazy(() => import('./ContractorPortal'));
 const EnvironmentalModule = React.lazy(() => import('./EnvironmentalModule'));
 const EmergencyModule = React.lazy(() => import('./EmergencyModule'));
 const HealthMonitoringModule = React.lazy(() => import('./HealthMonitoringModule'));
@@ -27,9 +26,14 @@ const PlanningModule = React.lazy(() => import('./PlanningModule'));
 const RAMSModule = React.lazy(() => import('./RAMSModule'));
 const DMSModule = React.lazy(() => import('./DMSModule'));
 const ExcavationModule = React.lazy(() => import('./ExcavationModule'));
-const GovernanceModule = React.lazy(() => import('./GovernanceModule'));
-import ChatBot from './ChatBot';
+const JSAModule = React.lazy(() => import('./JSAModule'));
+const GISMapModule = React.lazy(() => import('./GISMapModule'));
+const LessonsLearnedModule = React.lazy(() => import('./LessonsLearnedModule'));
+const HazardRegisterModule = React.lazy(() => import('./HazardRegisterModule'));
+const CAPAModule = React.lazy(() => import('./CAPAModule'));
+const LOTOModule = React.lazy(() => import('./LOTOModule'));
 const TaskModule = React.lazy(() => import('./TaskModule'));
+const MyWorkCockpit = React.lazy(() => import('./MyWorkCockpit'));
 import NotificationCenter from './NotificationCenter';
 import UserProfileDropdown from './UserProfileDropdown';
 import LoginPage from './LoginPage';
@@ -41,13 +45,23 @@ const LiftingModule = React.lazy(() => import('./LiftingModule'));
 const SecurityModule = React.lazy(() => import('./SecurityModule'));
 const ChemicalsModule = React.lazy(() => import('./ChemicalsModule'));
 const MOCModule = React.lazy(() => import('./MOCModule'));
-const SystemLogsModule = React.lazy(() => import('./SystemLogsModule'));
 const ComplyFlowModule = React.lazy(() => import('./ComplyFlowModule'));
 const ProjectsModule = React.lazy(() => import('./ProjectsModule'));
+const ArabicComponentsDemo = React.lazy(() => import('./ArabicComponentsModule').then(m => ({ default: m.ArabicComponentsDemo })));
 import Sidebar from './Sidebar';
+import { EnterpriseGlobalHeader } from './EnterpriseGlobalHeader';
+import { GlobalCommandPalette } from './GlobalCommandPalette';
+import { AICopilotDrawer } from './ai/AICopilotDrawer';
+import { OfflineBanner } from './pwa/OfflineBanner';
+import { MobileBottomNav } from './pwa/MobileBottomNav';
 import { AD6Logo } from './AD6Logo'; 
 import { useUser } from '../contexts/UserContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useRegionalCompliance } from '../contexts/RegionalComplianceContext';
 import { UserRole, View } from '../types';
+import { GuestDemoModule } from './GuestDemoModule';
+import { canAccessView, getDefaultLandingView } from '../services/permissionService';
+import { AccessDenied } from './ui/AccessDenied';
 
 interface NavChild {
   labelKey: string;
@@ -72,11 +86,26 @@ interface NavGroup {
 // NEW MODULES
 const CarbonAccountingModule = React.lazy(() => import('./CarbonAccountingModule'));
 const PredictiveRiskDashboard = React.lazy(() => import('./PredictiveRiskDashboard'));
+const PredictiveSafetyView = React.lazy(() => import('./PredictiveSafetyView'));
 const DigitalTwinViewer = React.lazy(() => import('./DigitalTwinViewer'));
 const ConnectedWorkerDashboard = React.lazy(() => import('./ConnectedWorkerDashboard'));
+const OshadWorkflowDesigner = React.lazy(() => import('./oshad/OshadWorkflowDesigner').then(m => ({ default: m.OshadWorkflowDesigner })));
 const RootCauseAnalysisTool = React.lazy(() => import('./RootCauseAnalysisTool'));
+const BowtieAnalysisTool = React.lazy(() => import('./BowtieAnalysisTool'));
 const ARProcedureViewer = React.lazy(() => import('./ARProcedureViewer'));
+const MobileInspectionApp = React.lazy(() => import('./pwa/MobileInspectionApp').then(m => ({ default: m.MobileInspectionApp })));
 const IoTIntegrationStatus = React.lazy(() => import('./IoTIntegrationStatus'));
+const IotStatusModule = React.lazy(() => import('./IotStatusModule'));
+const DigitalFormsBuilderModule = React.lazy(() => import('./DigitalFormsBuilderModule').then(m => ({ default: m.DigitalFormsBuilderModule })));
+const BusinessContinuityModule = React.lazy(() => import('./BusinessContinuityModule').then(m => ({ default: m.BusinessContinuityModule })));
+const IAMModule = React.lazy(() => import('./system/IAMModule').then(m => ({ default: m.IAMModule })));
+const SystemLogsModule = React.lazy(() => import('./system/SystemLogsModule').then(m => ({ default: m.SystemLogsModule })));
+const GovernanceModule = React.lazy(() => import('./system/GovernanceModule').then(m => ({ default: m.GovernanceModule })));
+const ComplianceAssistant = React.lazy(() => import('./ai/ComplianceAssistant').then(m => ({ default: m.ComplianceAssistant })));
+const ContractorPortal = React.lazy(() => import('./contractors/ContractorPortal').then(m => ({ default: m.ContractorPortal })));
+const ExecutiveDashboard = React.lazy(() => import('./system/ExecutiveDashboard').then(m => ({ default: m.ExecutiveDashboard })));
+const PricingGtmModule = React.lazy(() => import('./system/PricingGtmModule').then(m => ({ default: m.PricingGtmModule })));
+const DesignSystemGallery = React.lazy(() => import('./DesignSystemGallery'));
 
 // Mock Data for Global Search Indexing
 const GLOBAL_SEARCH_INDEX = [
@@ -86,60 +115,147 @@ const GLOBAL_SEARCH_INDEX = [
   { id: 'INC-773', type: 'Incident', title: 'Scaffolding Safety Hazard', subtitle: 'High • Reported', view: View.INCIDENTS },
   { id: 'REG-001', type: 'Regulation', title: 'ADNOC COP V6.0', subtitle: 'Compliance Critical', view: View.COMPLY_FLOW },
   { id: 'REG-002', type: 'Regulation', title: 'OSHAD SF Mechanism 3.0', subtitle: 'System Framework', view: View.COMPLY_FLOW },
+  { id: 'DS-001', type: 'System', title: 'AD6 Design System', subtitle: 'Component Library & Guidelines', view: View.DESIGN_SYSTEM },
   { id: 'EQ-001', type: 'Equipment', title: 'Main Generator Alpha', subtitle: 'Zone B • Operational', view: View.MAINTENANCE },
   { id: 'EQ-003', type: 'Equipment', title: 'Tower Crane 04', subtitle: 'Site C • Critical Maintenance', view: View.MAINTENANCE },
   { id: 'PERMIT-202', type: 'Permit', title: 'Hot Work Zone B', subtitle: 'Active • Welding', view: View.PERMITS },
   { id: 'PERMIT-205', type: 'Permit', title: 'Confined Space Tank 4', subtitle: 'Pending • Inspection', view: View.PERMITS },
   { id: 'AUD-001', type: 'Audit', title: 'Q2 Compliance Audit - Zone A', subtitle: 'In Progress • ISO 45001', view: View.AUDITS },
+  { id: 'SIF-001', type: 'System', title: 'Predictive Safety (SIF Trends)', subtitle: 'Serious Injury & Fatality Analytics', view: View.PREDICTIVE_SAFETY },
+  { id: 'BI-001', type: 'System', title: 'Executive BI Analytics', subtitle: 'TRIR, LTIFR, 12M Trend, Multi-Country Scorecard', view: View.EXECUTIVE_DASHBOARD },
 ];
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
+  const [currentView, setCurrentView] = useState<View>(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname === '/control-of-work') {
+        return View.PERMIT_TO_WORK;
+      }
+      if (window.location.pathname === '/incidents') {
+        return View.INCIDENTS;
+      }
+      if (window.location.pathname === '/ai-assistant') {
+        return View.COMPLIANCE_ASSISTANT;
+      }
+      if (window.location.pathname === '/my-work') {
+        return View.TASKS;
+      }
+      if (window.location.pathname === '/predictive-safety') {
+        return View.PREDICTIVE_SAFETY;
+      }
+      if (window.location.pathname === '/analytics') {
+        return View.EXECUTIVE_DASHBOARD;
+      }
+    }
+    return View.TASKS; // Primary operational landing hub for enterprise users
+  });
   const [viewParams, setViewParams] = useState<any>({});
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [authView, setAuthView] = useState<'login' | 'signup'>('login');
+  const [isGuestDemo, setIsGuestDemo] = useState(false);
+  const [isAiCopilotOpen, setIsAiCopilotOpen] = useState(false);
   
   // Search State
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   
   const { currentUser, isLoadingAuth, logout, isDemoMode } = useUser();
+  const { language, setLanguage, t, dir } = useLanguage();
+  const { activeProfile } = useRegionalCompliance();
 
   const handleNav = (view: View, params: any = {}) => {
     setCurrentView(view);
     setViewParams(params);
+
+    // Audit log unauthorized view navigation attempts
+    if (currentUser && !canAccessView(currentUser, view)) {
+      fetch('/api/audit-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: currentUser.id,
+          operation: 'UNAUTHORIZED_VIEW_ACCESS_ATTEMPT',
+          payload: { attemptedView: view, role: currentUser.role }
+        })
+      }).catch(() => {});
+    }
+
+    if (typeof window !== 'undefined') {
+      if (view === View.TASKS) {
+        if (window.location.pathname !== '/my-work') {
+          window.history.pushState({}, '', '/my-work');
+        }
+      } else if (view === View.PERMIT_TO_WORK || view === View.PERMITS) {
+        if (window.location.pathname !== '/control-of-work') {
+          window.history.pushState({}, '', '/control-of-work');
+        }
+      } else if (view === View.INCIDENTS || view === View.INCIDENT_MANAGEMENT) {
+        if (window.location.pathname !== '/incidents') {
+          window.history.pushState({}, '', '/incidents');
+        }
+      } else if (view === View.COMPLIANCE_ASSISTANT) {
+        if (window.location.pathname !== '/ai-assistant') {
+          window.history.pushState({}, '', '/ai-assistant');
+        }
+      } else if (view === View.PREDICTIVE_SAFETY) {
+        if (window.location.pathname !== '/predictive-safety') {
+          window.history.pushState({}, '', '/predictive-safety');
+        }
+      } else if (view === View.EXECUTIVE_DASHBOARD || view === View.EXECUTIVE_COMMAND_CENTER || view === View.ANALYTICS_REPORTING) {
+        if (window.location.pathname !== '/analytics') {
+          window.history.pushState({}, '', '/analytics');
+        }
+      } else {
+        if (window.location.pathname === '/my-work' || window.location.pathname === '/control-of-work' || window.location.pathname === '/incidents' || window.location.pathname === '/ai-assistant' || window.location.pathname === '/predictive-safety' || window.location.pathname === '/analytics') {
+          window.history.pushState({}, '', '/');
+        }
+      }
+    }
     if (window.innerWidth < 1024) setSidebarOpen(false);
   };
 
-  // Close search on outside click
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    if (typeof window !== 'undefined') {
+      const syncPathWithView = () => {
+        if (window.location.pathname === '/control-of-work') {
+          setCurrentView(View.PERMIT_TO_WORK);
+        } else if (window.location.pathname === '/my-work') {
+          setCurrentView(View.TASKS);
+        } else if (window.location.pathname === '/incidents') {
+          setCurrentView(View.INCIDENTS);
+        } else if (window.location.pathname === '/ai-assistant') {
+          setCurrentView(View.COMPLIANCE_ASSISTANT);
+        } else if (window.location.pathname === '/predictive-safety') {
+          setCurrentView(View.PREDICTIVE_SAFETY);
+        } else if (window.location.pathname === '/analytics') {
+          setCurrentView(View.EXECUTIVE_DASHBOARD);
+        }
+      };
+
+      syncPathWithView();
+      window.addEventListener('popstate', syncPathWithView);
+      return () => window.removeEventListener('popstate', syncPathWithView);
+    }
   }, []);
 
-  const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const lowerQuery = searchQuery.toLowerCase();
-    return GLOBAL_SEARCH_INDEX.filter(item => 
-      item.title.toLowerCase().includes(lowerQuery) || 
-      item.id.toLowerCase().includes(lowerQuery) ||
-      item.subtitle.toLowerCase().includes(lowerQuery)
-    );
-  }, [searchQuery]);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-  const handleSearchResultClick = (item: typeof GLOBAL_SEARCH_INDEX[0]) => {
-    setSearchQuery('');
-    setIsSearchOpen(false);
-    handleNav(item.view, { highlightId: item.id });
-  };
+  // Auto-redirect if active user does not have permission for the currently active view
+  useEffect(() => {
+    if (currentUser && !canAccessView(currentUser, currentView)) {
+      const landing = getDefaultLandingView(currentUser);
+      setCurrentView(landing);
+    }
+  }, [currentUser?.id, currentUser?.role, currentUser?.permissions, currentUser?.isSuspended]);
 
   const getResultIcon = (type: string) => {
     switch(type) {
@@ -155,24 +271,37 @@ const App: React.FC = () => {
 
   if (isLoadingAuth) {
       return (
-          <div className="h-screen w-full flex items-center justify-center bg-neutral-50">
+          <div className="h-screen w-full flex items-center justify-center  ">
               <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-brand-500"></div>
           </div>
       );
   }
 
   if (!currentUser) {
+      if (isGuestDemo) {
+          return <GuestDemoModule onExit={() => setIsGuestDemo(false)} />;
+      }
       if (authView === 'signup') {
           return <SignUpPage onLoginClick={() => setAuthView('login')} />;
       }
-      return <LoginPage onSignUpClick={() => setAuthView('signup')} />;
+      return <LoginPage onSignUpClick={() => setAuthView('signup')} onDemoClick={() => setIsGuestDemo(true)} />;
   }
 
   return (
-    <div className="flex h-screen bg-neutral-100 font-sans text-neutral-800">
+    <div className={`flex h-screen bg-gradient-to-br from-slate-50 via-gray-100 to-sky-50/30 ${dir === 'rtl' ? 'font-arabic' : 'font-sans'} text-slate-900 antialiased overflow-hidden select-none`} dir={dir}>
       
+      {/* Mobile Sidebar Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 z-[29] bg-slate-900/40 backdrop-blur-xs lg:hidden animate-fade-in"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Enterprise Collapsible Primary Navigation Bar */}
       <Sidebar 
         isOpen={isSidebarOpen}
+        onClose={() => setSidebarOpen(false)}
         currentUser={currentUser}
         currentView={currentView}
         viewParams={viewParams}
@@ -180,111 +309,78 @@ const App: React.FC = () => {
         logout={logout}
       />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative bg-neutral-50/50">
-        {/* Header */}
-        <header className="h-20 px-8 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-neutral-100 shrink-0 z-40 sticky top-0">
-           <div className="flex items-center gap-4">
-              <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="lg:hidden p-2 text-neutral-500 bg-neutral-50 rounded-xl shadow-sm border border-neutral-200 active:scale-95 transition-transform">
-                <Menu size={20} />
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative bg-transparent">
+
+        {/* Visible DEMO MODE Banner (Labels environment as synthetic demonstration with exit action) */}
+        {isDemoMode && currentUser && (
+          <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-orange-600 text-white px-3 sm:px-5 py-2 shadow-sm shrink-0 flex items-center justify-between z-30 border-b border-amber-600/30 text-xs select-text">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <span className="flex h-2 w-2 relative shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+              </span>
+              <span className="font-extrabold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded text-[10px] sm:text-[11px] shrink-0 border border-white/25">
+                Synthetic Demonstration Data · DEMO MODE
+              </span>
+              <span className="hidden lg:inline truncate opacity-95 text-xs text-amber-50">
+                Simulated GCC Concession Environment — All records, workers, permits, and telemetry are synthetic demonstrations. No live industrial safety permits or real PII are stored.
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5 shrink-0 ms-2">
+              <span className="hidden sm:inline text-[11px] font-semibold text-amber-100 bg-amber-700/40 px-2 py-0.5 rounded border border-amber-500/30">
+                Persona: <strong className="text-white">{currentUser.name}</strong> ({currentUser.role?.replace(/_/g, ' ')})
+              </span>
+              <button
+                type="button"
+                onClick={logout}
+                className="px-2.5 py-1 bg-white hover:bg-amber-50 text-amber-950 rounded-md font-bold text-xs transition-all active:scale-95 shadow-xs flex items-center gap-1 cursor-pointer"
+                title="Exit Demonstration Mode and return to Sign In"
+              >
+                <span>Exit Demonstration Mode</span>
               </button>
-              
-              {/* Breadcrumb Area */}
-              <div className="hidden md:flex items-center text-sm font-bold text-neutral-400">
-                 <span className="hover:text-brand-600 cursor-pointer transition-colors">App</span>
-                 <ChevronRight size={14} className="mx-2 text-neutral-300"/>
-                 <span className="text-neutral-800 font-black animate-fade-in">{currentView.replace(/_/g, ' ')}</span>
-              </div>
-           </div>
+            </div>
+          </div>
+        )}
 
-           <div className="flex items-center gap-6">
-              {/* Enhanced Search */}
-              <div className="relative hidden md:block group z-50" ref={searchRef}>
-                 <div className="relative">
-                    <Search size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${isSearchOpen ? 'text-brand-500' : 'text-neutral-400 group-focus-within:text-brand-500'}`}/>
-                    <input 
-                      type="text" 
-                      placeholder="Search ecosystem..." 
-                      className={`pl-11 pr-12 py-2.5 w-72 bg-neutral-100/50 border border-transparent rounded-2xl text-sm text-neutral-700 font-medium placeholder:text-neutral-400 focus:outline-none focus:bg-white focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all duration-200 ${isSearchOpen ? 'bg-white border-brand-500 ring-4 ring-brand-500/10 w-96 shadow-lg' : ''}`}
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setIsSearchOpen(true);
-                      }}
-                      onFocus={() => setIsSearchOpen(true)}
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none flex items-center gap-1">
-                       {searchQuery ? (
-                         <button onClick={() => setSearchQuery('')} className="pointer-events-auto hover:text-red-500"><X size={14}/></button>
-                       ) : (
-                         <Command size={14} className="opacity-50"/>
-                       )}
-                    </div>
-                 </div>
+        {/* PWA Offline Field Execution Indicator Banner */}
+        <OfflineBanner />
 
-                 {/* Search Dropdown */}
-                 {isSearchOpen && searchQuery && (
-                   <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-2xl border border-neutral-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top">
-                      <div className="p-3">
-                        <div className="text-[10px] font-black text-neutral-400 uppercase tracking-widest px-3 py-2">Suggested Results</div>
-                        <div className="space-y-1 max-h-[300px] overflow-y-auto custom-scrollbar">
-                          {searchResults.length > 0 ? (
-                            searchResults.map((result) => (
-                              <button
-                                key={result.id}
-                                onClick={() => handleSearchResultClick(result)}
-                                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-neutral-50 transition-all group text-left border border-transparent hover:border-neutral-100"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <div className="p-2 bg-neutral-100 rounded-lg group-hover:bg-white group-hover:shadow-sm transition-all">
-                                    {getResultIcon(result.type)}
-                                  </div>
-                                  <div>
-                                    <p className="text-xs font-bold text-neutral-800 group-hover:text-brand-600 transition-colors line-clamp-1">{result.title}</p>
-                                    <div className="flex items-center gap-2 mt-0.5">
-                                      <span className="text-[9px] font-bold text-neutral-400 uppercase bg-neutral-100 px-1.5 rounded-md border border-neutral-200">{result.type}</span>
-                                      <span className="text-[9px] font-medium text-neutral-400 truncate max-w-[140px]">{result.subtitle}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <ChevronRight size={14} className="text-neutral-300 group-hover:text-brand-500 transition-transform group-hover:translate-x-1"/>
-                              </button>
-                            ))
-                          ) : (
-                            <div className="p-8 text-center text-neutral-400">
-                              <p className="text-xs font-medium italic">No matches found for "{searchQuery}"</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="bg-neutral-50 p-3 text-center border-t border-neutral-100">
-                        <p className="text-[9px] text-neutral-400 font-bold uppercase tracking-widest">Press Enter to view all results</p>
-                      </div>
-                   </div>
-                 )}
-              </div>
-
-              <div className="flex items-center gap-3">
-                 <div className="relative">
-                    <NotificationCenter />
-                 </div>
-                 <button className="p-2.5 text-neutral-400 hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-all active:scale-95">
-                    <HelpCircle size={20} />
-                 </button>
-                 
-                 {/* User Profile Dropdown */}
-                 <div className="ml-2 pl-2">
-                    <UserProfileDropdown />
-                 </div>
-              </div>
-           </div>
-        </header>
+        {/* Enterprise Global Header */}
+        <EnterpriseGlobalHeader
+          isSidebarOpen={isSidebarOpen}
+          onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenAiCopilot={() => setIsAiCopilotOpen(true)}
+          currentViewName={currentView}
+        />
 
         {/* Scrollable Content Area with Suspense and Error Boundary */}
-        <main className="flex-1 overflow-y-auto bg-neutral-50 p-8 custom-scrollbar">
-          <div className="max-w-[1600px] mx-auto h-full animate-slide-up" key={currentView + JSON.stringify(viewParams)}>
-            <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>}>
+        <main className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50/40 pb-20 lg:pb-12">
+          <div className="max-w-[1720px] w-full mx-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-5 min-h-[calc(100vh-4rem)] flex flex-col" key={currentView + JSON.stringify(viewParams)}>
+            {!canAccessView(currentUser, currentView) ? (
+              <AccessDenied
+                user={currentUser}
+                restrictedView={currentView}
+                safeView={getDefaultLandingView(currentUser)}
+                onNavigateToSafe={(safe) => handleNav(safe)}
+              />
+            ) : (
+              <React.Suspense fallback={<div className="flex-1 flex items-center justify-center min-h-[300px]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}>
                 {currentView === View.DASHBOARD && <Dashboard onNavigate={handleNav} />}
+
+                {/* BRAND NEW ENTERPRISE ARCHITECTURE VIEWS */}
+                {currentView === View.EXECUTIVE_COMMAND_CENTER && <ExecutiveDashboard />}
+                {currentView === View.HSE_OPERATIONS && <Dashboard onNavigate={handleNav} />}
+                {currentView === View.INCIDENT_MANAGEMENT && <IncidentForm />}
+                {currentView === View.SAFETY_AUDIT && <AuditModule />}
+                {currentView === View.PERMIT_TO_WORK && <PermitForm {...viewParams} />}
+                {currentView === View.VISUAL_INSPECTION && <SafetyObservationForm />}
+                {currentView === View.WORKFORCE_SAFETY && <MyWorkCockpit />}
+                {currentView === View.TRAINING_COMPETENCY && <TrainingModule />}
+                {currentView === View.COMPLIANCE_INTELLIGENCE && <ComplyFlowModule />}
+                {currentView === View.ANALYTICS_REPORTING && <ExecutiveDashboard />}
+
                 {currentView === View.COMPLIANCE && <ComplianceDashboard onNavigate={handleNav} />}
                 {currentView === View.COMPLY_FLOW && <ComplyFlowModule />}
                 {currentView === View.GOVERNANCE && <GovernanceModule />}
@@ -292,8 +388,16 @@ const App: React.FC = () => {
                 {currentView === View.SYSTEM_LOGS && <SystemLogsModule />}
                 {currentView === View.PLANNING && <PlanningModule />}
                 {currentView === View.RAMS && <RAMSModule />}
+                {currentView === View.JSA && <JSAModule />}
                 {currentView === View.EXCAVATION && <ExcavationModule />}
+                {currentView === View.HAZARDS && <HazardRegisterModule />}
+                {currentView === View.CAPA && <CAPAModule />}
+                {currentView === View.LOTO && <LOTOModule />}
                 {currentView === View.DMS && <DMSModule />}
+                {currentView === View.FORMS_BUILDER && <DigitalFormsBuilderModule />}
+                {currentView === View.BUSINESS_CONTINUITY && <BusinessContinuityModule />}
+                {currentView === View.GIS_MAP && <GISMapModule />}
+                {currentView === View.LESSONS_LEARNED && <LessonsLearnedModule />}
                 {currentView === View.INCIDENTS && <IncidentForm />}
                 {currentView === View.OBSERVATIONS && <SafetyObservationForm />}
                 {currentView === View.PERMITS && <PermitForm {...viewParams} />}
@@ -306,7 +410,7 @@ const App: React.FC = () => {
                 {currentView === View.ENVIRONMENTAL && <EnvironmentalModule />}
                 {currentView === View.EMERGENCY && <EmergencyModule />}
                 {currentView === View.HEALTH && <HealthMonitoringModule />}
-                {currentView === View.TASKS && <TaskModule />}
+                {currentView === View.TASKS && <MyWorkCockpit />}
                 {currentView === View.TRANSPORT && <TransportModule />}
                 {currentView === View.PPE && <PPEModule />}
                 {currentView === View.LIFTING && <LiftingModule />}
@@ -317,18 +421,63 @@ const App: React.FC = () => {
                 
                 {/* NEW PHASE 1/2 MODULES */}
                 {currentView === View.PREDICTIVE_RISK && <PredictiveRiskDashboard />}
+                {currentView === View.PREDICTIVE_SAFETY && <PredictiveSafetyView />}
                 {currentView === View.AR_PROCEDURES && <ARProcedureViewer />}
                 {currentView === View.INTEGRATIONS && <IoTIntegrationStatus />}
+                {currentView === View.IOT_STATUS && <IotStatusModule />}
                 {currentView === View.ESG && <CarbonAccountingModule />}
                 {currentView === View.DIGITAL_TWIN && <DigitalTwinViewer />}
                 {currentView === View.CONNECTED_WORKER && <ConnectedWorkerDashboard />}
+                {currentView === View.ADNOC_OSHAD && <OshadWorkflowDesigner />}
                 {currentView === View.RCA_TOOL && <RootCauseAnalysisTool />}
-            </React.Suspense>
+                {currentView === View.BOWTIE && <BowtieAnalysisTool />}
+                {currentView === View.RTL_DEMO && <ArabicComponentsDemo />}
+                {currentView === View.PWA_INSPECTIONS && <MobileInspectionApp />}
+                {currentView === View.IAM && <IAMModule />}
+                {currentView === View.SYSTEM_LOGS && <SystemLogsModule />}
+                {currentView === View.GOVERNANCE && <GovernanceModule />}
+                {currentView === View.COMPLIANCE_ASSISTANT && (
+                  <AICopilotDrawer isOpen={true} onClose={() => handleNav(View.TASKS)} isFullPageView={true} />
+                )}
+                {currentView === View.CONTRACTOR_PORTAL && <ContractorPortal />}
+                {currentView === View.EXECUTIVE_DASHBOARD && <ExecutiveDashboard />}
+                {currentView === View.PRICING_GTM && <PricingGtmModule />}
+                {currentView === View.DESIGN_SYSTEM && <DesignSystemGallery />}
+              </React.Suspense>
+            )}
           </div>
         </main>
       </div>
       
-      <ChatBot />
+      {/* Statutory Jurisdictional Compliance & Security Status Bar (Desktop) */}
+      <footer 
+        aria-label="Statutory Jurisdictional Status"
+        className={`hidden lg:flex fixed bottom-0 start-0 ${isSidebarOpen ? 'lg:ms-72' : 'lg:ms-20'} end-0 z-[20] px-4 py-1.5 bg-white/90 backdrop-blur-md border-t border-slate-200/90 text-[10px] text-slate-600 items-center justify-between transition-all duration-300 pointer-events-none select-none shadow-sm`}
+      >
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="font-semibold text-slate-800">
+            {activeProfile.flag} {activeProfile.label} Statutory Enforcement
+          </span>
+          <span className="text-slate-500">· {activeProfile.privacyLawName} (RLS Active)</span>
+        </div>
+        <div className="flex items-center gap-3 text-[9px] text-slate-500 font-medium">
+          <span>Multi-Tenant Concession Isolation</span>
+          <span>·</span>
+          <span>{activeProfile.governingFrameworks.slice(0, 2).join(' / ')}</span>
+        </div>
+      </footer>
+
+      {/* Mobile Field Primary Actions Bottom Navigation */}
+      <MobileBottomNav 
+        currentView={currentView} 
+        onNavigate={handleNav} 
+        onOpenAiCopilot={() => setIsAiCopilotOpen(true)}
+        isAiCopilotOpen={isAiCopilotOpen}
+      />
+
+      <GlobalCommandPalette isOpen={isCommandPaletteOpen} onClose={() => setIsCommandPaletteOpen(false)} onNavigate={handleNav} />
+      <AICopilotDrawer isOpen={isAiCopilotOpen} onClose={() => setIsAiCopilotOpen(false)} isFullPageView={false} />
       {isDemoMode && <RoleSwitcher />}
     </div>
   );

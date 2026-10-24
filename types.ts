@@ -3,9 +3,22 @@ export type UserRole = 'ADMIN' | 'Board_Director' | 'CEO' | 'Head_Group_HSE' | '
 
 export type ComplianceFramework = 'ADNOC_COP' | 'OSHAD_SF' | 'DM_CODE' | 'ISO_45001' | 'FEDERAL_MOHRE';
 
-export type Language = 'en' | 'ar';
-
 export enum View {
+  LESSONS_LEARNED = 'LESSONS_LEARNED',
+  GIS_MAP = 'GIS_MAP',
+  BUSINESS_CONTINUITY = 'BUSINESS_CONTINUITY',
+  FORMS_BUILDER = 'FORMS_BUILDER',
+  EXECUTIVE_COMMAND_CENTER = 'EXECUTIVE_COMMAND_CENTER',
+  HSE_OPERATIONS = 'HSE_OPERATIONS',
+  INCIDENT_MANAGEMENT = 'INCIDENT_MANAGEMENT',
+  SAFETY_AUDIT = 'SAFETY_AUDIT',
+  PERMIT_TO_WORK = 'PERMIT_TO_WORK',
+  VISUAL_INSPECTION = 'VISUAL_INSPECTION',
+  WORKFORCE_SAFETY = 'WORKFORCE_SAFETY',
+  TRAINING_COMPETENCY = 'TRAINING_COMPETENCY',
+  COMPLIANCE_INTELLIGENCE = 'COMPLIANCE_INTELLIGENCE',
+  ANALYTICS_REPORTING = 'ANALYTICS_REPORTING',
+
   DASHBOARD = 'DASHBOARD',
   TASKS = 'TASKS',
   COMPLIANCE = 'COMPLIANCE',
@@ -36,13 +49,29 @@ export enum View {
   COMPLY_FLOW = 'COMPLY_FLOW',
   PROJECTS = 'PROJECTS',
   PREDICTIVE_RISK = 'PREDICTIVE_RISK',
+  PREDICTIVE_SAFETY = 'PREDICTIVE_SAFETY',
   AR_PROCEDURES = 'AR_PROCEDURES',
   INTEGRATIONS = 'INTEGRATIONS',
   ESG = 'ESG',
   DIGITAL_TWIN = 'DIGITAL_TWIN',
+  HAZARDS = 'HAZARDS',
+  CAPA = 'CAPA',
+  LOTO = 'LOTO',
   CONNECTED_WORKER = 'CONNECTED_WORKER',
   RCA_TOOL = 'RCA_TOOL',
-  EXCAVATION = 'EXCAVATION'
+  EXCAVATION = 'EXCAVATION',
+  JSA = 'JSA',
+  BOWTIE = 'BOWTIE',
+  ADNOC_OSHAD = 'ADNOC_OSHAD',
+  IOT_STATUS = 'IOT_STATUS',
+  RTL_DEMO = 'RTL_DEMO',
+  PWA_INSPECTIONS = 'PWA_INSPECTIONS',
+  COMPLIANCE_ASSISTANT = 'COMPLIANCE_ASSISTANT',
+  CONTRACTOR_PORTAL = 'CONTRACTOR_PORTAL',
+  EXECUTIVE_DASHBOARD = 'EXECUTIVE_DASHBOARD',
+  PRICING_GTM = 'PRICING_GTM',
+  DESIGN_SYSTEM = 'DESIGN_SYSTEM',
+  REGULATORY_INTELLIGENCE = 'REGULATORY_INTELLIGENCE'
 }
 
 // ... (Keep existing interfaces: HSEPerformanceMetrics, UserProfile, etc. - assume they are here to save space in this diff, I will append new ones)
@@ -53,6 +82,81 @@ export interface HSEPerformanceMetrics {
   leading: { unsafeActs: number; unsafeConditions: number; tbtConducted: number; inspectionsClosed: number; drillsConducted: number };
   rates: { ltif: number; trir: number };
   actions: { total: number; closed: number; open: number; overdue: number };
+}
+
+export interface UserActivityRecord {
+  id: string;
+  timestamp: string;
+  timePeriod: 'Recent' | 'Last 7 Days' | 'Last 30 Days' | 'Last 90 Days' | 'Earlier';
+  actionType: string;
+  category: 'Incident' | 'Permit' | 'CAPA' | 'Inspection' | 'Audit' | 'Training' | 'Risk Assessment' | 'SWA' | 'Meeting' | 'Observation';
+  entityId: string;
+  entityTitle: string;
+  details: string;
+  impactResult?: string;
+  relatedUsers?: string[];
+  status?: string;
+}
+
+export interface UserPendingActionRecord {
+  id: string;
+  title: string;
+  sourceType: 'Permit' | 'CAPA' | 'Inspection' | 'Incident' | 'Audit' | 'Training' | 'Risk Assessment' | 'Meeting' | 'Observation' | 'SWA';
+  sourceId: string;
+  priority: 'P1 - Critical' | 'P2 - High' | 'P3 - Medium' | 'P4 - Routine';
+  dueDate: string;
+  daysRemaining: number;
+  isOverdue: boolean;
+  status: string;
+  requiredAction: string;
+  location: string;
+}
+
+export interface UserCompletedActionRecord {
+  id: string;
+  title: string;
+  sourceType: string;
+  sourceId: string;
+  completedDate: string;
+  outcome: string;
+  verifiedBy: string;
+  evidenceNotes: string;
+  location: string;
+}
+
+export interface UserNotificationRecord {
+  id: string;
+  timestamp: string;
+  title: string;
+  message: string;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  category: string;
+  sourceId?: string;
+  read: boolean;
+  senderName: string;
+}
+
+export interface UserCompetency {
+  competency: string;
+  level: 'Expert' | 'Proficient' | 'Authorized';
+  verifiedDate: string;
+  verifierName: string;
+}
+
+export interface UserActivityStats {
+  totalActivities: number;
+  incidentsReported: number;
+  inspectionsCompleted: number;
+  actionsAssigned: number;
+  actionsCompleted: number;
+  actionsOverdue: number;
+  approvalsCompleted: number;
+  auditsParticipated: number;
+  trainingCompleted: number;
+  observationsSubmitted: number;
+  tasksCompleted: number;
+  swaEventsTriggered: number;
+  complianceRate: number;
 }
 
 export interface UserProfile {
@@ -66,6 +170,37 @@ export interface UserProfile {
   observations: any[];
   certifications: { name: string; status: string; expiryDate: string }[];
   achievements: { id: string; title: string; description: string; dateEarned: string; icon: string; tier: string }[];
+  
+  // Enterprise Extended Profile Information
+  avatarUrl?: string;
+  employeeId?: string;
+  jobTitle?: string;
+  businessUnit?: string;
+  organization?: string;
+  siteLocation?: string;
+  managerName?: string;
+  phoneExtension?: string;
+  employmentStatus?: 'Active' | 'On Leave' | 'Rotational Offshore' | 'Suspended' | 'Inactive';
+  joiningDate?: string;
+  roles?: UserRole[];
+  permissions?: string[];
+  deniedPermissions?: string[];
+  isSuspended?: boolean;
+  responsibilities?: string[];
+  skills?: string[];
+  competencies?: UserCompetency[];
+  trainingStatus?: { totalCourses: number; completedCourses: number; overdueCount: number; complianceRate: number };
+  assignedProjects?: string[];
+  assignedSites?: string[];
+  currentWorkload?: { activeTasks: number; pendingApprovals: number; openCapas: number; utilizationRate: number };
+  approvalResponsibilities?: string[];
+  
+  // Historical & Operational Data (Minimum 10 per applicable category)
+  activities?: UserActivityRecord[];
+  pendingActions?: UserPendingActionRecord[];
+  completedActions?: UserCompletedActionRecord[];
+  notifications?: UserNotificationRecord[];
+  statistics?: UserActivityStats;
 }
 
 export interface SecureUser {
@@ -73,8 +208,11 @@ export interface SecureUser {
   username: string;
   name: string;
   role: UserRole;
+  roles?: UserRole[];
   department: string;
   permissions: string[];
+  deniedPermissions?: string[];
+  isSuspended?: boolean;
 }
 
 export interface Equipment {
@@ -98,6 +236,29 @@ export interface MaintenancePrediction {
   maintenanceSchedule: string;
 }
 
+export interface JSA {
+  id: string;
+  activity: string;
+  steps: { step: string; hazards: string[]; controls: string[]; riskLevel: string }[];
+  requiredPPE: string[];
+  regulatoryReferences: string[];
+}
+
+export interface SIFPrecursor {
+  is_sif_potential: boolean;
+  confidence: number;
+  reasoning: string;
+  exposure_factors: string[];
+  critical_controls_missing: string[];
+}
+
+export interface TrainingContent {
+  title: string;
+  objectives: string[];
+  slides: { title: string; content: string }[];
+  quiz: { question: string; options: string[]; correctAnswer: number }[];
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -105,7 +266,7 @@ export interface Task {
   assignee: string;
   priority: 'High' | 'Medium' | 'Low';
   category: 'General' | 'Inspection' | 'Audit' | 'Maintenance' | 'Permit' | 'Training';
-  status: 'ToDo' | 'InProgress' | 'Done';
+  status: 'ToDo' | 'Blocked' | 'InProgress' | 'Done';
   dueDate: string;
   reminderDate?: string;
   dependencies?: string[];
@@ -129,19 +290,68 @@ export interface AuditLog {
   details: string;
 }
 
+export interface IncidentEvidenceItem {
+  url: string;
+  caption: string;
+  timestamp: string;
+  uploadedBy?: string;
+}
+
+export interface IncidentFiveWhyItem {
+  step: number;
+  whyText: string;
+  verificationEvidence: string;
+}
+
+export interface IncidentFishboneFactors {
+  manpower: string[];
+  machine: string[];
+  method: string[];
+  material: string[];
+  measurement: string[];
+  environment: string[];
+}
+
+export interface IncidentCapaAction {
+  id: string;
+  description: string;
+  assignee: string;
+  targetDate: string;
+  priority: 'P1 - Critical' | 'P2 - High' | 'P3 - Medium' | 'P4 - Routine';
+  type: 'Corrective' | 'Preventive';
+  status: 'Open' | 'In Progress' | 'Verified_Closed';
+  createdAt?: string;
+}
+
 export interface Incident {
   id: string;
   type: string;
+  classification?: 'Near Miss' | 'First Aid' | 'Medical Treatment' | 'Lost Time Injury' | 'Fatality' | 'Process Safety Event' | 'Restricted Work Case' | 'Occupational Illness' | 'Property Damage' | 'Environmental Incident';
   description: string;
+  immediateActionsTaken?: string;
   location: string;
+  facilityCode?: string;
+  jurisdiction?: 'Abu Dhabi' | 'Oman' | 'Dubai' | 'KSA' | 'Qatar' | 'Other';
   severity: 'Low' | 'Medium' | 'High' | 'Critical';
-  status: 'Reported' | 'Review' | 'Investigation' | 'Closed';
+  potentialSeverity?: 'Low' | 'Medium' | 'High' | 'Critical';
+  status: 'Reported' | 'Under Triage' | 'Under Investigation' | 'CAPA Pending' | 'Closed' | 'Review' | 'Investigation' | 'Open';
   timestamp: string;
   reportedBy: string;
   reportedByName: string;
   reportDeadline?: string;
   images: string[];
+  evidenceItems?: IncidentEvidenceItem[];
   coordinates?: { lat: number; lng: number };
+  fiveWhys?: IncidentFiveWhyItem[];
+  rootCauseConclusion?: string;
+  fishboneFactors?: IncidentFishboneFactors;
+  capaActions?: IncidentCapaAction[];
+  statutorySubmissions?: {
+    oshadFormGSubmittedAt?: string;
+    oshadReference?: string;
+    omanMolNoticeSubmittedAt?: string;
+    omanMolReference?: string;
+  };
   auditLog: AuditLog[];
 }
 
@@ -153,6 +363,8 @@ export interface IncidentReportOptions {
   includeAuditTrail: boolean;
   includeWeather: boolean;
   includeWitness: boolean;
+  includeAiAnalysis?: boolean;
+  includeSifPrediction?: boolean;
 }
 
 export interface AIIncidentAnalysis {
@@ -192,17 +404,19 @@ export interface RAMS {
   riskLevel: 'Low' | 'Medium' | 'High' | 'Critical';
   hazards: string[];
   controls: string[];
-  briefingLogs: { workerName: string; signedAt: string; signatureHash: string }[];
+  briefingLogs: { id?: string; workerName?: string; date?: string; signedAt?: string; supervisor?: string; attendees?: number; topic?: string; signatureHash?: string; }[];
   revisionHistory: RAMSRevision[];
 }
 
 export interface RAMSRevision {
   version: string;
   date: string;
-  changedBy: string;
-  changeDescription: string;
-  previousRiskScore: number;
-  snapshot: Partial<RAMS>;
+  changedBy?: string;
+  author?: string;
+  changes?: string;
+  changeDescription?: string;
+  previousRiskScore?: number;
+  snapshot?: Partial<RAMS>;
 }
 
 export interface InspectionItem {
@@ -248,6 +462,7 @@ export interface AISafetyObservationAnalysis {
   tags: string[];
   summary: string;
   suggestedAction: string;
+  confidence?: number;
 }
 
 export interface ChatMessage {
@@ -380,6 +595,14 @@ export interface HSEPlan {
   approvals: { role: string; name: string; date: string }[];
 }
 
+export interface DocumentVersion {
+  version: string;
+  url?: string;
+  uploadedAt: string;
+  uploadedBy: string;
+  changes: string;
+}
+
 export interface HSEDocument {
   id: string;
   title: string;
@@ -394,6 +617,7 @@ export interface HSEDocument {
   regulationRef: string;
   penaltyRisk?: string;
   auditLogs: AuditLog[];
+  versions?: DocumentVersion[];
 }
 
 export interface GlobalAuditLog {
@@ -429,8 +653,15 @@ export interface JourneyPlan {
 export interface VehicleCheck {
   id: string;
   vehicleId: string;
-  date: string;
-  status: 'Pass' | 'Fail';
+  date?: string;
+  checkDate?: string;
+  inspectorName?: string;
+  odometer?: number;
+  status: 'Pass' | 'Fail' | 'Passed' | 'Defect Noted' | 'Grounded';
+  brakeTestPassed?: boolean;
+  tireCondition?: string;
+  safetyKitVerified?: boolean;
+  defectsReported?: string[];
 }
 
 export interface TrafficViolation {

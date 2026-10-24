@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------------
+// CORE TENANT & RBAC ARCHITECTURE
+// -----------------------------------------------------------------------------
+
+model Organization {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  domain      String?      @unique
+  isActive    Boolean      @default(true)
+  
+  // Relations
+  users       User[]
+  roles       Role[]
+  sites       Site[]
+  incidents   Incident[]
+
+  // Audit
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Site {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  locationCoords String?      // GeoJSON or Lat/Lng string
+  timezone       String       @default("Asia/Dubai") // GCC Focus
+  
+  // Relations
+  organizationId String       @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  users          User[]       @relation("UserSites")
+  incidents      Incident[]
+
+  // Audit
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Role {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String       // e.g., SUPER_ADMIN, HSE_DIRECTOR, SITE_MANAGER, WORKER
+  description    String?
+  
+  // Relations
+  organizationId String?      @db.Uuid // If null, it's a global system role
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  permissions    Permission[] @relation("RolePermissions")
+  users          User[]
+
+  // Audit
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([name, organizationId])
+}
+
+model Permission {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action      String   // e.g., "create", "read", "update", "delete", "approve"
+  resource    String   // e.g., "Incident", "Inspection", "PTW"
+  
+  // Relations
+  roles       Role[]   @relation("RolePermissions")
+
+  // Audit
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([action, resource])
+}
+
+model User {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email          String       @unique
+  passwordHash   String
+  firstName      String
+  lastName       String
+  jobTitle       String?
+  phone          String?
+  
+  // Security & MFA
+  isActive       Boolean      @default(true)
+  mfaEnabled     Boolean      @default(false)
+  mfaSecret      String?
+  lastLoginAt    DateTime?
+  
+  // Relations
+  roleId         String       @db.Uuid
+  role           Role         @relation(fields: [roleId], references: [id])
+  organizationId String       @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  sites          Site[]       @relation("UserSites")
+  
+  // Audit Relations
+  incidentsCreated Incident[] @relation("IncidentCreator")
+
+  // Audit
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// HSE COMPLIANCE MODULES (Phase 1)
+// -----------------------------------------------------------------------------
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IncidentStatus {
+  DRAFT
+  REPORTED
+  INVESTIGATING
+  CAPA_PENDING
+  CLOSED
+}
+
+model Incident {
+  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  referenceId    String         @unique // e.g., INC-2026-0001
+  title          String
+  description    String
+  severity       Severity
+  status         IncidentStatus @default(REPORTED)
+  dateOfIncident DateTime
+  locationDetail String?
+
+  // AI & Analytics Fields
+  aiRootCause    String?        // AI-generated RCA summary
+  aiRiskScore    Float?         // Predictive risk output
+
+  // Multi-tenancy & Relations
+  organizationId String         @db.Uuid
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  siteId         String         @db.Uuid
+  site           Site           @relation(fields: [siteId], references: [id])
+  
+  // Audit
+  createdById    String         @db.Uuid
+  createdBy      User           @relation("IncidentCreator", fields: [createdById], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}

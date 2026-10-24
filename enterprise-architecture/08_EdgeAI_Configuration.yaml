@@ -1,0 +1,51 @@
+# Edge AI Node Configuration for Real-Time Computer Vision
+# Hardware Target: NVIDIA Jetson Orin / Azure Stack Edge
+# Latency Constraint: < 300ms
+
+edge_node:
+  id: "edge-node-uae-dxb-01"
+  location: "Site Alpha - Construction Zone A"
+  tenant_id: "uuid-tenant-1234"
+
+vision_pipeline:
+  camera_streams:
+    - id: "cam-gate-01"
+      rtsp_url: "rtsp://10.0.0.50:554/stream1"
+      fps_limit: 15
+    - id: "cam-crane-02"
+      rtsp_url: "rtsp://10.0.0.51:554/stream1"
+      fps_limit: 15
+
+  models:
+    - id: "ppe-detection-v2"
+      framework: "tensorrt"
+      weights_path: "/models/yolov8_ppe_optimized.engine"
+      confidence_threshold: 0.85
+      classes: ["hard_hat", "high_vis_vest", "safety_glasses", "no_hard_hat", "no_high_vis_vest"]
+      
+    - id: "red-zone-intrusion"
+      framework: "tensorrt"
+      weights_path: "/models/yolov8_person.engine"
+      confidence_threshold: 0.80
+      # Geofencing polygons defined in camera pixel coordinates
+      exclusion_zones:
+        cam-crane-02:
+          - [[100, 200], [500, 200], [500, 800], [100, 800]]
+
+actions:
+  on_violation:
+    - type: "publish_mqtt"
+      broker: "ssl://iot.hse-platform.com:8883"
+      topic: "tenant/uuid-tenant-1234/alerts/cv"
+      qos: 1
+      # Note: Send only metadata (bounding boxes, timestamps) to comply with data privacy policies.
+      payload_template: >
+        {
+          "event": "PPE_VIOLATION",
+          "camera": "{camera_id}",
+          "missing": "{missing_classes}",
+          "timestamp": "{timestamp}"
+        }
+    - type: "local_actuator"
+      condition: "class == 'red-zone-intrusion'"
+      trigger_gpio: 12  # Trigger local siren < 50ms latency

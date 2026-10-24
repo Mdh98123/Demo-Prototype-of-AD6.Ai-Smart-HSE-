@@ -52,142 +52,170 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
     const mockProjects: Project[] = [
       {
         id: 'PRJ-2024-001',
-        name: 'Ruwais Refinery Expansion Phase 4',
-        client: 'ADNOC Refining',
+        name: 'Borouge 4 Polyolefin Complex Expansion',
+        client: 'ADNOC / Borealis JV',
         location: 'Ruwais Industrial Complex',
         startDate: '2024-01-15',
-        endDate: '2025-12-31',
+        endDate: '2026-11-30',
         status: 'Active',
-        manager: 'John Doe',
-        budget: 15000000,
-        progress: 35,
-        hseScore: 92,
-        openIncidents: 2
+        manager: 'Tariq Al-Hashemi',
+        budget: 6200000000,
+        progress: 68,
+        hseScore: 96,
+        openIncidents: 1
       },
       {
         id: 'PRJ-2024-002',
-        name: 'Fujairah Terminal Upgrade',
-        client: 'Port Authority',
-        location: 'Fujairah Port Zone',
+        name: 'Habshan High Pressure Sulfur Recovery Unit Revamp',
+        client: 'ADNOC Gas Processing',
+        location: 'Habshan Gas Complex',
         startDate: '2024-03-01',
-        endDate: '2024-11-30',
+        endDate: '2025-12-15',
         status: 'Active',
-        manager: 'Sarah Jones',
-        budget: 4500000,
-        progress: 60,
-        hseScore: 98,
+        manager: 'Khalfan Al-Zaabi',
+        budget: 450000000,
+        progress: 54,
+        hseScore: 92,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-003',
-        name: 'Habshan Pipeline Maintenance',
-        client: 'Gasco',
-        location: 'Western Region',
-        startDate: '2024-06-01',
-        endDate: '2024-08-15',
-        status: 'Planning',
-        manager: 'Ahmed Al-Mansoori',
-        budget: 2000000,
-        progress: 0,
-        hseScore: 100,
-        openIncidents: 0
+        name: 'Mina Zayed Container Berth Automation & Decarbonization',
+        client: 'Abu Dhabi Ports Group',
+        location: 'Mina Zayed Terminal',
+        startDate: '2023-09-01',
+        endDate: '2025-08-30',
+        status: 'Active',
+        manager: 'Capt. Mansoor Al-Ketbi',
+        budget: 310000000,
+        progress: 82,
+        hseScore: 94,
+        openIncidents: 2
       },
       {
         id: 'PRJ-2024-004',
-        name: 'Offshore Platform E-9 Decommissioning',
-        client: 'ADNOC Offshore',
-        location: 'Das Island',
-        startDate: '2024-09-01',
-        endDate: '2025-06-30',
-        status: 'Planning',
-        manager: 'Sarah Jones',
-        budget: 8000000,
-        progress: 0,
-        hseScore: 100,
-        openIncidents: 0
-      },
-      {
-        id: 'PRJ-2024-005',
-        name: 'Al Dhafra Solar Park HSE Oversight',
-        client: 'EWEC',
-        location: 'Al Dhafra Region',
-        startDate: '2023-11-01',
-        endDate: '2024-10-31',
+        name: 'Fahud Heavy Oil Steam Injection Facility',
+        client: 'Petroleum Development Oman (PDO)',
+        location: 'Fahud Field Operation',
+        startDate: '2024-02-10',
+        endDate: '2026-06-30',
         status: 'Active',
-        manager: 'John Doe',
-        budget: 500000,
-        progress: 75,
-        hseScore: 95,
+        manager: 'Sultan Al-Ghafri',
+        budget: 780000000,
+        progress: 41,
+        hseScore: 89,
         openIncidents: 1
       },
       {
-        id: 'PRJ-2024-006',
-        name: 'Mussafah Warehouse Construction',
-        client: 'Logistics Group',
-        location: 'ICAD 3',
-        startDate: '2024-02-15',
-        endDate: '2024-12-15',
+        id: 'PRJ-2024-005',
+        name: 'NEOM Sindalah Island Marina Infrastructure HSE Oversight',
+        client: 'NEOM Development Authority',
+        location: 'NEOM Sindalah Island Base',
+        startDate: '2023-11-01',
+        endDate: '2025-09-30',
         status: 'Active',
-        manager: 'Ahmed Al-Mansoori',
-        budget: 12000000,
-        progress: 40,
-        hseScore: 88,
-        openIncidents: 3
+        manager: 'Marcus Vance',
+        budget: 1200000000,
+        progress: 74,
+        hseScore: 91,
+        openIncidents: 2
+      },
+      {
+        id: 'PRJ-2024-006',
+        name: 'Ras Al Khair Maritime Yard Drydock Repair Crane Modernization',
+        client: 'International Maritime Industries (IMI)',
+        location: 'Ras Al Khair Maritime Yard',
+        startDate: '2024-04-01',
+        endDate: '2026-03-31',
+        status: 'Active',
+        manager: 'Hamad Al-Dosari',
+        budget: 285000000,
+        progress: 35,
+        hseScore: 95,
+        openIncidents: 0
       },
       {
         id: 'PRJ-2024-007',
-        name: 'Khalifa Port Crane Installation',
-        client: 'AD Ports',
-        location: 'Khalifa Port',
-        startDate: '2024-04-01',
-        endDate: '2024-09-30',
-        status: 'OnHold',
-        manager: 'Sarah Jones',
-        budget: 6500000,
-        progress: 20,
-        hseScore: 100,
+        name: 'Jebel Ali Hydrogen Corridor & Fueling Station Infrastructure',
+        client: 'Dubai Electricity & Water Authority (DEWA)',
+        location: 'Jebel Ali Logistics Hub',
+        startDate: '2024-01-20',
+        endDate: '2025-10-31',
+        status: 'Active',
+        manager: 'Rashid Al-Kaabi',
+        budget: 195000000,
+        progress: 60,
+        hseScore: 97,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-008',
-        name: 'Waste Management Facility Audit',
-        client: 'Tadweer',
-        location: 'Al Ain',
-        startDate: '2024-05-01',
-        endDate: '2024-05-31',
+        name: 'Etihad Rail Package D Industrial Spur & Hazmat Rail Terminal',
+        client: 'Etihad Rail Company',
+        location: 'Ruwais Industrial Complex',
+        startDate: '2023-06-15',
+        endDate: '2025-05-30',
         status: 'Completed',
-        manager: 'John Doe',
-        budget: 150000,
+        manager: 'Zayed Al-Shehhi',
+        budget: 540000000,
         progress: 100,
-        hseScore: 90,
+        hseScore: 98,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-009',
-        name: 'City Gas Network Expansion',
-        client: 'ADNOC Distribution',
-        location: 'Abu Dhabi City',
-        startDate: '2024-07-01',
-        endDate: '2025-12-31',
+        name: 'Al Dhafra 2GW Solar PV Inverter Station Fire Hardening',
+        client: 'Abu Dhabi National Energy (TAQA)',
+        location: 'Al Dhafra Solar Farm',
+        startDate: '2024-05-01',
+        endDate: '2026-04-30',
         status: 'Planning',
-        manager: 'Ahmed Al-Mansoori',
-        budget: 25000000,
-        progress: 0,
-        hseScore: 100,
+        manager: 'Eng. Layla Al-Nuaimi',
+        budget: 85000000,
+        progress: 12,
+        hseScore: 93,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-010',
-        name: 'Worker Accommodation Fire Safety Upgrade',
-        client: 'ZonesCorp',
-        location: 'Razeen',
-        startDate: '2024-01-01',
-        endDate: '2024-06-30',
+        name: 'Das Island Offshore Gas Flare Gas Recovery & Zero Routine Flaring',
+        client: 'ADNOC Offshore',
+        location: 'Das Island Offshore',
+        startDate: '2023-12-01',
+        endDate: '2025-12-31',
+        status: 'OnHold',
+        manager: 'Khalfan Al-Zaabi',
+        budget: 320000000,
+        progress: 48,
+        hseScore: 84,
+        openIncidents: 3
+      },
+      {
+        id: 'PRJ-2024-011',
+        name: 'Dubai Industrial City Central Hazardous Waste Incinerator',
+        client: 'Dubai Municipality Environment Dept',
+        location: 'Dubai Industrial City',
+        startDate: '2024-02-15',
+        endDate: '2026-08-15',
         status: 'Active',
-        manager: 'Sarah Jones',
-        budget: 3000000,
-        progress: 85,
-        hseScore: 97,
+        manager: 'Amina Al-Mansouri',
+        budget: 175000000,
+        progress: 38,
+        hseScore: 90,
+        openIncidents: 1
+      },
+      {
+        id: 'PRJ-2024-012',
+        name: 'Musaffah Steel Rolling Mill Acoustic & Vibration Mitigation',
+        client: 'Emirates Steel Arkan',
+        location: 'Musaffah Industrial Zone',
+        startDate: '2023-08-01',
+        endDate: '2025-04-15',
+        status: 'Completed',
+        manager: 'Hassan Mahmoud',
+        budget: 65000000,
+        progress: 100,
+        hseScore: 96,
         openIncidents: 0
       }
     ];
@@ -303,7 +331,7 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
       case 'Planning': return 'bg-blue-50 text-blue-700 border-blue-200';
       case 'OnHold': return 'bg-orange-50 text-orange-700 border-orange-200';
       case 'Completed': return 'bg-slate-100 text-slate-600 border-slate-200';
-      default: return 'bg-slate-50 text-slate-500 border-slate-200';
+      default: return 'glass-panel text-slate-500 border-slate-200';
     }
   };
 
@@ -335,13 +363,13 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
-        <div className="flex items-center space-x-5">
+        <div className="flex items-center gap-x-5">
           <div className="bg-indigo-600 p-5 rounded-[2rem] text-white shadow-2xl shadow-indigo-500/20">
             <Briefcase size={32} />
           </div>
           <div>
             <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">Projects</h2>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-l-2 border-indigo-500 pl-4">Portfolio Management & HSE Oversight</p>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-2 border-indigo-500 ps-4">Portfolio Management & HSE Oversight</p>
           </div>
         </div>
         
@@ -349,13 +377,13 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
           <div className="flex bg-slate-200 p-1.5 rounded-2xl w-fit shadow-inner">
             <button 
               onClick={() => setViewState('List')}
-              className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${viewState === 'List' ? 'bg-white text-slate-900 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${viewState === 'List' ? 'glass-card text-slate-900 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Project List
             </button>
             <button 
               onClick={() => setViewState('Create')}
-              className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${viewState === 'Create' ? 'bg-white text-slate-900 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${viewState === 'Create' ? 'glass-card text-slate-900 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Add New Project
             </button>
@@ -364,16 +392,16 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
       </div>
 
       {viewState === 'Detail' && selectedProject ? (
-        <div className="space-y-8 animate-in slide-in-from-right-8 duration-500">
+        <div className="space-y-8 animate-in slide-in-from-end-8 duration-500">
           <button 
             onClick={() => { setViewState('List'); setSelectedProject(null); }} 
             className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 font-bold text-xs uppercase tracking-widest transition-colors mb-4 group"
           >
-            <ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={16}/> Back to Portfolio
+            <ArrowRight className="rotate-180 rtl:group-hover:translate-x-1 group-hover:-translate-x-1 transition-transform" size={16}/> Back to Portfolio
           </button>
 
           {/* Project Header Card */}
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-100 flex flex-col md:flex-row justify-between items-start gap-6">
+          <div className="glass-card p-10 rounded-[2.5rem] shadow-xl border border-slate-100 flex flex-col md:flex-row justify-between items-start gap-6">
             <div>
               <div className="flex items-center gap-4 mb-2">
                 <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">{selectedProject.name}</h2>
@@ -387,10 +415,10 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                 {selectedProject.client}
               </p>
             </div>
-            <div className="text-right">
+            <div className="text-end">
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Project Manager</p>
               <div className="flex items-center justify-end gap-3">
-                <div className="text-right">
+                <div className="text-end">
                   <p className="text-sm font-bold text-slate-800">{selectedProject.manager}</p>
                   <p className="text-[10px] font-bold text-indigo-500 uppercase">Lead</p>
                 </div>
@@ -406,9 +434,9 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
             
             {/* Open Incidents Card */}
             <div className={`p-8 rounded-[2.5rem] shadow-xl border-2 transition-all hover:-translate-y-1 duration-300 group cursor-pointer relative overflow-hidden ${
-              selectedProject.openIncidents > 0 ? 'bg-gradient-to-br from-white to-red-50/50 border-red-100 hover:border-red-200' : 'bg-white border-emerald-100 hover:border-emerald-200'
+              selectedProject.openIncidents > 0 ? 'bg-gradient-to-br from-white to-red-50/50 border-red-100 hover:border-red-200' : 'glass-card border-emerald-100 hover:border-emerald-200'
             }`}>
-              <div className={`absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform ${selectedProject.openIncidents > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+              <div className={`absolute top-0 end-0 p-8 opacity-5 group-hover:scale-110 transition-transform ${selectedProject.openIncidents > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
                 <ShieldAlert size={120} />
               </div>
               
@@ -437,8 +465,8 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
             </div>
 
             {/* Inspection Status Card */}
-            <div className="p-8 rounded-[2.5rem] bg-white shadow-xl border-2 border-slate-100 hover:border-indigo-100 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5 text-indigo-600 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-[2.5rem] glass-card shadow-xl border-2 border-slate-100 hover:border-indigo-100 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative overflow-hidden">
+              <div className="absolute top-0 end-0 p-8 opacity-5 text-indigo-600 group-hover:scale-110 transition-transform">
                 <ClipboardCheck size={120} />
               </div>
               
@@ -473,8 +501,8 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
             </div>
 
             {/* Permit Compliance Card */}
-            <div className="p-8 rounded-[2.5rem] bg-white shadow-xl border-2 border-slate-100 hover:border-teal-100 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5 text-teal-600 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-[2.5rem] glass-card shadow-xl border-2 border-slate-100 hover:border-teal-100 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative overflow-hidden">
+              <div className="absolute top-0 end-0 p-8 opacity-5 text-teal-600 group-hover:scale-110 transition-transform">
                 <FileCheck size={120} />
               </div>
               
@@ -526,25 +554,55 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
 
           </div>
 
+          {/* Progress Section */}
+          <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+             <div className="flex justify-between items-center mb-4">
+               <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
+                 <Activity size={20} className="text-indigo-600"/> Project Completion
+               </h3>
+               <span className="text-2xl font-black text-indigo-600">{selectedProject.progress}%</span>
+             </div>
+             
+             <div className="relative w-full h-6 bg-slate-100 rounded-full overflow-hidden cursor-pointer"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const percentage = Math.round((x / rect.width) * 100);
+                    const newProgress = Math.max(0, Math.min(100, percentage));
+                    
+                    const updatedProject = { ...selectedProject, progress: newProgress };
+                    setSelectedProject(updatedProject);
+                    setProjects(projects.map(p => p.id === updatedProject.id ? updatedProject : p));
+                  }}>
+               <div 
+                 className="absolute top-0 start-0 h-full bg-indigo-500 transition-all duration-300"
+                 style={{ width: `${selectedProject.progress}%` }}
+               />
+             </div>
+             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-3 text-center">
+               Click on the bar to update progress
+             </p>
+          </div>
+
           {/* Additional Info Section */}
-          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+          <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
              <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-6 flex items-center gap-2">
                <Activity size={20} className="text-indigo-600"/> Project Health Breakdown
              </h3>
              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="p-4 glass-panel rounded-2xl border border-slate-100">
                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Budget Utilized</p>
                    <p className="text-xl font-black text-slate-800">{selectedProject.progress}%</p>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="p-4 glass-panel rounded-2xl border border-slate-100">
                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Days Remaining</p>
                    <p className="text-xl font-black text-slate-800">142</p>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="p-4 glass-panel rounded-2xl border border-slate-100">
                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Man-Hours (Safe)</p>
                    <p className="text-xl font-black text-emerald-600">45,200</p>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="p-4 glass-panel rounded-2xl border border-slate-100">
                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">HSE Score</p>
                    <p className={`text-xl font-black ${selectedProject.hseScore >= 90 ? 'text-emerald-600' : 'text-orange-500'}`}>{selectedProject.hseScore}</p>
                 </div>
@@ -556,21 +614,21 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
         <div className="space-y-6">
           {/* Filters & Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center">
+            <div className="glass-card p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-center">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Active</p>
                 <div className="flex items-end gap-2">
                     <span className="text-4xl font-black text-slate-800">{projects.filter(p => p.status === 'Active').length}</span>
-                    <span className="text-xs font-bold text-emerald-500 mb-1 flex items-center"><TrendingUp size={12} className="mr-1"/> Projects</span>
+                    <span className="text-xs font-bold text-emerald-500 mb-1 flex items-center"><TrendingUp size={12} className="me-1"/> Projects</span>
                 </div>
             </div>
             
             {/* Search Bar */}
-            <div className="md:col-span-3 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center">
-                <Search size={20} className="text-slate-400 mr-4" />
+            <div className="md:col-span-3 glass-card p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center">
+                <Search size={20} className="text-slate-400 me-4" />
                 <input 
                     type="text" 
                     placeholder="Search projects by name, client, or location..."
-                    className="flex-1 bg-transparent outline-none font-bold text-sm text-slate-700 placeholder:text-slate-300"
+                    className="flex-1   outline-none font-bold text-sm text-slate-700 placeholder:text-slate-300"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -578,11 +636,11 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
           </div>
 
           {/* Projects Table */}
-          <div className="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
+          <div className="glass-card rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-start">
                 <thead>
-                  <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">
+                  <tr className="glass-panel text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">
                     <th className="px-8 py-6">Project Details</th>
                     <th className="px-8 py-6">Timeline</th>
                     <th className="px-8 py-6">Manager</th>
@@ -598,14 +656,14 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                         {!hseSortOrder && <ArrowUpDown size={14} className="text-slate-300"/>}
                       </div>
                     </th>
-                    <th className="px-8 py-6 text-right">Action</th>
+                    <th className="px-8 py-6 text-end">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {sortedProjects.map((project) => (
                     <tr 
                       key={project.id} 
-                      className="hover:bg-slate-50/50 transition group cursor-pointer"
+                      className="hover:glass-button/50 transition group cursor-pointer"
                       onClick={() => handleViewProject(project)}
                     >
                       <td className="px-8 py-6">
@@ -652,7 +710,7 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                           )}
                         </div>
                       </td>
-                      <td className="px-8 py-6 text-right">
+                      <td className="px-8 py-6 text-end">
                         <button className="p-2 text-slate-300 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
                           <MoreVertical size={20} />
                         </button>
@@ -672,9 +730,9 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
           </div>
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto animate-in slide-in-from-right-8 duration-500">
-          <div className="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
-            <div className="p-10 border-b border-slate-50 bg-slate-50/50">
+        <div className="max-w-4xl mx-auto animate-in slide-in-from-end-8 duration-500">
+          <div className="glass-card rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
+            <div className="p-10 border-b border-slate-50 glass-panel">
               <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Initialize Project</h3>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2">Define Scope & HSE Parameters</p>
             </div>
@@ -682,83 +740,83 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
             <form onSubmit={handleSubmit} className="p-10 space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="md:col-span-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Project Name <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Project Name <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     onBlur={() => handleBlur('name', formData.name)}
-                    className={`w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
+                    className={`w-full p-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
                       errors.name 
                         ? 'border-red-500 focus:border-red-500 bg-red-50/10' 
                         : touched.name && formData.name
                           ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                          : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                          : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                     }`}
                     placeholder="e.g. Turnaround Maintenance Zone 4"
                   />
-                  {errors.name && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.name}</p>}
+                  {errors.name && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.name}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Client / Owner <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Client / Owner <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     name="client"
                     value={formData.client}
                     onChange={handleChange}
                     onBlur={() => handleBlur('client', formData.client)}
-                    className={`w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
+                    className={`w-full p-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
                       errors.client 
                         ? 'border-red-500 bg-red-50/10' 
                         : touched.client && formData.client
                           ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                          : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                          : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                     }`}
                     placeholder="e.g. ADNOC"
                   />
-                  {errors.client && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.client}</p>}
+                  {errors.client && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.client}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Location <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Location <span className="text-red-500">*</span></label>
                   <div className="relative">
-                    <MapPin size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <MapPin size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input 
                       type="text" 
                       name="location"
                       value={formData.location}
                       onChange={handleChange}
                       onBlur={() => handleBlur('location', formData.location)}
-                      className={`w-full pl-12 pr-4 py-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
+                      className={`w-full ps-12 pe-4 py-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
                         errors.location 
                           ? 'border-red-500 bg-red-50/10' 
                           : touched.location && formData.location
                             ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                            : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                            : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                       }`}
                       placeholder="Site Location"
                     />
                   </div>
-                  {errors.location && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.location}</p>}
+                  {errors.location && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.location}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Project Manager <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Project Manager <span className="text-red-500">*</span></label>
                   <div className="relative">
-                    <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <select 
                       name="manager"
                       value={formData.manager}
                       onChange={handleChange}
                       onBlur={(e) => handleBlur('manager', e.target.value)}
-                      className={`w-full pl-12 pr-4 py-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all appearance-none cursor-pointer ${
+                      className={`w-full ps-12 pe-4 py-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all appearance-none cursor-pointer ${
                         errors.manager 
                           ? 'border-red-500 bg-red-50/10' 
                           : touched.manager && formData.manager
                             ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                            : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                            : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                       }`}
                     >
                       <option value="">Select Manager...</option>
@@ -767,16 +825,16 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                       ))}
                     </select>
                   </div>
-                  {errors.manager && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.manager}</p>}
+                  {errors.manager && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.manager}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Initial Status</label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Initial Status</label>
                   <select 
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
-                    className="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all focus:border-indigo-500 focus:bg-white appearance-none cursor-pointer"
+                    className="w-full p-4 glass-panel border-2 border-slate-100 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all focus:border-indigo-500 focus:glass-card appearance-none cursor-pointer"
                   >
                     <option value="Planning">Planning</option>
                     <option value="Active">Active</option>
@@ -785,53 +843,53 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Start Date <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Start Date <span className="text-red-500">*</span></label>
                   <input 
                     type="date" 
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleChange}
                     onBlur={() => handleBlur('startDate', formData.startDate)}
-                    className={`w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
+                    className={`w-full p-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
                       errors.startDate 
                         ? 'border-red-500 bg-red-50/10' 
                         : touched.startDate && formData.startDate
                           ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                          : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                          : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                     }`}
                   />
-                  {errors.startDate && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.startDate}</p>}
+                  {errors.startDate && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.startDate}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">End Date <span className="text-red-500">*</span></label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">End Date <span className="text-red-500">*</span></label>
                   <input 
                     type="date" 
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleChange}
                     onBlur={() => handleBlur('endDate', formData.endDate)}
-                    className={`w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
+                    className={`w-full p-4 glass-panel border-2 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all ${
                       errors.endDate 
                         ? 'border-red-500 bg-red-50/10' 
                         : touched.endDate && formData.endDate
                           ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
-                          : 'border-slate-100 focus:border-indigo-500 focus:bg-white'
+                          : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                     }`}
                   />
-                  {errors.endDate && <p className="text-red-500 text-[10px] font-bold mt-1 ml-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.endDate}</p>}
+                  {errors.endDate && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.endDate}</p>}
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2 block">Budget (AED)</label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Budget (AED)</label>
                   <div className="relative">
-                    <DollarSign size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <DollarSign size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input 
                       type="number" 
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all focus:border-indigo-500 focus:bg-white"
+                      className="w-full ps-12 pe-4 py-4 glass-panel border-2 border-slate-100 rounded-2xl outline-none font-bold text-sm text-slate-700 transition-all focus:border-indigo-500 focus:glass-card"
                       placeholder="0.00"
                     />
                   </div>
@@ -842,7 +900,7 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                 <button 
                   type="button" 
                   onClick={() => setViewState('List')}
-                  className="px-10 py-4 rounded-2xl text-slate-400 font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all"
+                  className="px-10 py-4 rounded-2xl text-slate-400 font-black uppercase tracking-widest text-[10px] hover:glass-button transition-all"
                 >
                   Cancel
                 </button>

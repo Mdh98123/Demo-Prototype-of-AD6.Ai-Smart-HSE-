@@ -11,7 +11,7 @@ const IoTIntegrationStatus: React.FC = () => {
         <div className="flex items-center justify-between">
             <div>
                 <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">Integration Hub</h2>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2 border-l-4 border-indigo-600 pl-4">Enterprise Connector Health</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2 border-s-4 border-indigo-600 ps-4">Enterprise Connector Health</p>
             </div>
             <div className="flex gap-2">
                 <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase border border-emerald-100 flex items-center gap-1"><Wifi size={10}/> Mesh Online</span>
@@ -20,8 +20,8 @@ const IoTIntegrationStatus: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* SAP Connector */}
-            <div className="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Database size={80}/></div>
+            <div className="glass-card p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
+                <div className="absolute top-0 end-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Database size={80}/></div>
                 <div className="flex justify-between items-start mb-6">
                     <div className="p-3 bg-blue-50 text-blue-700 rounded-2xl"><Server size={24}/></div>
                     <span className="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg text-[9px] font-black uppercase border border-emerald-100">Connected</span>
@@ -41,8 +41,8 @@ const IoTIntegrationStatus: React.FC = () => {
             </div>
 
             {/* IoT Broker */}
-            <div className="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Activity size={80}/></div>
+            <div className="glass-card p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
+                <div className="absolute top-0 end-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><Activity size={80}/></div>
                 <div className="flex justify-between items-start mb-6">
                     <div className="p-3 bg-indigo-50 text-indigo-700 rounded-2xl"><Wifi size={24}/></div>
                     <span className="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg text-[9px] font-black uppercase border border-emerald-100">Active</span>
@@ -62,8 +62,8 @@ const IoTIntegrationStatus: React.FC = () => {
             </div>
 
             {/* Legacy System */}
-            <div className="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><ArrowRightLeft size={80}/></div>
+            <div className="glass-card p-6 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
+                <div className="absolute top-0 end-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity"><ArrowRightLeft size={80}/></div>
                 <div className="flex justify-between items-start mb-6">
                     <div className="p-3 bg-orange-50 text-orange-700 rounded-2xl"><RefreshCw size={24}/></div>
                     <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-lg text-[9px] font-black uppercase border border-orange-100">Syncing</span>
@@ -84,7 +84,7 @@ const IoTIntegrationStatus: React.FC = () => {
 
         {/* Live Stream Simulation */}
         <div className="bg-slate-900 rounded-[3rem] p-8 text-white shadow-2xl font-mono text-xs overflow-hidden h-64 relative">
-            <div className="absolute top-4 right-4 flex gap-2">
+            <div className="absolute top-4 end-4 flex gap-2">
                 <span className="w-3 h-3 rounded-full bg-red-500"></span>
                 <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
                 <span className="w-3 h-3 rounded-full bg-green-500"></span>

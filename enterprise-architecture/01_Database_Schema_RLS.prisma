@@ -1,0 +1,141 @@
+// Strategic Architecture: Database Models & Row-Level Security (RLS) Specification
+// Target: PostgreSQL 15+
+// Framework: Prisma ORM with RLS extensions
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions", "clientMetrics"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuid_ossp(map: "uuid-ossp"), postgis(map: "postgis")] // For location/GIS data
+}
+
+// -----------------------------------------------------------------------------
+// CORE MULTI-TENANCY & SECURITY
+// -----------------------------------------------------------------------------
+// NOTE: To enforce RLS at the database level in PostgreSQL:
+// 1. ALTER TABLE "Tenant" ENABLE ROW LEVEL SECURITY;
+// 2. CREATE POLICY tenant_isolation_policy ON "Incident" USING (tenant_id = current_setting('app.current_tenant_id')::uuid);
+// This guarantees strict isolation per KSA SACS-002 Data Residency & Multi-Tenancy mandates.
+
+model Tenant {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name             String
+  dataResidency    String   @default("KSA") // KSA SACS-002 Compliance
+  isActive         Boolean  @default(true)
+  
+  // Relations
+  users            User[]
+  incidents        Incident[]
+  permits          PermitToWork[]
+  esgMetrics       EsgMetric[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model User {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tenantId         String   @db.Uuid
+  tenant           Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  email            String   @unique
+  ssoSubjectId     String?  @unique // SAML 2.0 / OAuth2 Subject Identifier
+  biometricHash    String?  // Biometric integration identity
+  
+  // Relations
+  incidents        Incident[]
+  permits          PermitToWork[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([tenantId])
+}
+
+// -----------------------------------------------------------------------------
+// MODULE: INCIDENT & RISK MANAGEMENT (5-Whys / Bow-Tie)
+// -----------------------------------------------------------------------------
+model Incident {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tenantId         String   @db.Uuid
+  tenant           Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  reportedById     String   @db.Uuid
+  reportedBy       User     @relation(fields: [reportedById], references: [id])
+  
+  title            String
+  severity         String
+  description      String
+  
+  // Analytical Fields
+  fiveWhysAnalysis Json?    // Structured 5-whys
+  bowTieAnalysis   Json?    // Structured Bow-Tie risk model
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([tenantId])
+}
+
+// -----------------------------------------------------------------------------
+// MODULE: PERMIT-TO-WORK (PTW) & SIMOPS
+// -----------------------------------------------------------------------------
+model PermitToWork {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tenantId         String   @db.Uuid
+  tenant           Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  requestedById    String   @db.Uuid
+  requestedBy      User     @relation(fields: [requestedById], references: [id])
+  
+  type             String   // HOT_WORK, CONFINED_SPACE, etc.
+  status           String   // DRAFT, ACTIVE, SUSPENDED, CLOSED
+  locationCoords   Unsupported("geometry(Point, 4326)")? // Digital Twin / GIS Mapping
+  
+  // SIMOPS Conflict Detection parameters
+  startTime        DateTime
+  endTime          DateTime
+  workZonePolygon  Unsupported("geometry(Polygon, 4326)")? 
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([tenantId])
+}
+
+// -----------------------------------------------------------------------------
+// MODULE: ESG / CARBON ACCOUNTING & REGULATORY DISCLOSURES (Oman & UAE)
+// -----------------------------------------------------------------------------
+model EsgMetric {
+  id                   String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tenantId             String   @db.Uuid
+  tenant               Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  jurisdiction         String   // 'UAE' | 'OMAN'
+  facilityId           String
+  facilityName         String
+  reportingPeriod      String   // e.g. '2024-Q2', '2024-Annual'
+  scope                Int      // 1, 2, or 3
+  category             String   // Stationary_Combustion, Grid_Electricity, etc.
+  emissionSource       String
+  activityData         Float
+  unit                 String
+  emissionFactor       Float
+  emissionFactorSource String   // 'DEWA 2024', 'EWEC 2024', 'Nama Oman 2024', 'IPCC AR6'
+  co2Equivalent        Float    // Calculated Metric Tonnes CO2e
+  assuranceLevel       String   @default("INTERNAL_AUDIT_VERIFIED") // 'UNAUDITED' | 'ISAE3000_LIMITED'
+  auditVoucherRef      String?  // Manifest ID or Utility billing invoice
+  recordedAt           DateTime
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([tenantId])
+  @@index([jurisdiction])
+  @@index([reportingPeriod])
+}
+

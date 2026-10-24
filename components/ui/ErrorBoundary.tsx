@@ -30,8 +30,8 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-8 text-center">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-200 max-w-lg">
+        <div className="min-h-screen flex flex-col items-center justify-center glass-panel p-8 text-center">
+          <div className="glass-card p-10 rounded-[2.5rem] shadow-2xl border border-slate-200 max-w-lg">
             <div className="bg-red-50 p-6 rounded-full w-fit mx-auto mb-6">
                 <AlertTriangle size={48} className="text-red-500" />
             </div>
@@ -39,7 +39,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             <p className="text-slate-500 font-medium mb-8">
               The application encountered a critical error. Our engineering team has been notified.
             </p>
-            <div className="p-4 bg-slate-100 rounded-xl mb-8 text-left overflow-auto max-h-32">
+            <div className="p-4 bg-slate-100 rounded-xl mb-8 text-start overflow-auto max-h-32">
                 <code className="text-xs font-mono text-slate-600">
                     {this.state.error?.message || 'Unknown Error'}
                 </code>
@@ -53,7 +53,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
                 </button>
                 <button 
                     onClick={() => window.location.href = '/'} 
-                    className="flex items-center gap-2 bg-white border-2 border-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-slate-50 transition"
+                    className="flex items-center gap-2 glass-card border-2 border-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-widest hover:glass-button transition"
                 >
                     <Home size={16} /> Return Home
                 </button>

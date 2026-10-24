@@ -1,0 +1,1252 @@
+{
+  "name": "AD6 HSE Enterprise AI Platform",
+  "version": "1.0.0",
+  "framework": "React 19 + Vite 6 + Express 5 + Node.js (Full-stack TypeScript)",
+  "entryPoints": {
+    "backend": "server.ts",
+    "frontend": "index.tsx",
+    "html": "index.html"
+  },
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "startCommand": "npm run start",
+  "outputDirectory": "dist",
+  "runtimeRequirements": {
+    "node": ">=20.6.0",
+    "npm": ">=9.0.0"
+  },
+  "requiredEnvVars": [
+    {
+      "name": "GEMINI_API_KEY",
+      "description": "Google Gemini API Key for Safi Copilot, RCA analysis, SIF forecasting, and voice transcription",
+      "required": true
+    },
+    {
+      "name": "PORT",
+      "description": "HTTP Port for Express/Vite server (defaults to 3000 in dev, 8080 in prod)",
+      "required": false
+    },
+    {
+      "name": "NODE_ENV",
+      "description": "Environment flag (development | production)",
+      "required": false
+    }
+  ],
+  "optionalEnvVars": [
+    {
+      "name": "OSHAD_API_TOKEN",
+      "description": "Abu Dhabi OSHAD-SF API authentication token"
+    },
+    {
+      "name": "ADNOC_SAFETY_TOKEN",
+      "description": "ADNOC HSE Portal Integration token"
+    },
+    {
+      "name": "VITE_FIREBASE_API_KEY",
+      "description": "Custom Firebase Web API Key for external Firestore/Auth deployment"
+    },
+    {
+      "name": "VITE_FIREBASE_PROJECT_ID",
+      "description": "Custom Firebase Project ID"
+    }
+  ],
+  "totalFiles": 299,
+  "files": [
+    {
+      "path": ".coderabbit.yaml",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": ".dockerignore",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": ".env.example",
+      "purpose": "Environment variable specification and documentation template"
+    },
+    {
+      "path": ".github/workflows/coderabbit.yml",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": ".gitignore",
+      "purpose": "Git version control ignore rules"
+    },
+    {
+      "path": ".husky/pre-commit",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": "AGENTS.md",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": "AUDIT_REPORT.md",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": "Dockerfile",
+      "purpose": "Container build specification for Cloud Run / Docker deployment"
+    },
+    {
+      "path": "README.md",
+      "purpose": "Project documentation and installation guide"
+    },
+    {
+      "path": "add_blocked_status.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "add_nearby_logic.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "bun.lock",
+      "purpose": "Project configuration or source file"
+    },
+    {
+      "path": "clean.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "cleanup_translate.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "components/AD6Logo.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/AITag.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ARProcedureViewer.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/AdnocOshadDashboard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/App.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ArabicComponentsModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/AuditModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/BowtieAnalysisTool.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/BusinessContinuityModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/CAPAModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/CarbonAccountingModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ChatBot.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ChemicalsModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ComplianceDashboard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ComplyFlowModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ConnectedWorkerDashboard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ContractorPortal.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/DMSModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/Dashboard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/DesignSystemGallery.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/DigitalFormsBuilderModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/DigitalTwinViewer.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/DualCalendarComponent.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/EmergencyModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/EnterpriseGlobalHeader.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/EnvironmentalModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ExcavationModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/GISMapModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/GlobalCommandPalette.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/GovernanceModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/GuestDemoModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/HazardRegisterModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/HealthMonitoringModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/HijriDatePicker.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/IncidentForm.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/InspectionModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/IoTIntegrationStatus.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/IotStatusModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/JSAModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/LOTOModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/LessonsLearnedModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/LiftingModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/LocationSelector.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/LoginPage.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/MOCModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/MyWorkCockpit.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/NotificationCenter.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PPEModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PermitForm.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PlanningModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PredictiveMaintenanceLog.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PredictiveMaintenanceModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PredictiveRiskDashboard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/PredictiveSafetyView.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ProjectsModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/RAMSModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/RoleSwitcher.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/RootCauseAnalysisTool.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/SafetyObservationForm.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/SecurityModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/Sidebar.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/SignUpPage.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/SystemLogsModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/TaskModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ToolboxTalksModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/TrainingModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/TransportModule.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/UserProfileDropdown.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/UserProfileModal.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ai/AICopilotDrawer.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ai/AIGovernanceCard.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/ai/ComplianceAssistant.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/audit/AuditDashboard.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditExecution.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditFindings.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditMockData.ts",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditPlanner.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditReports.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/AuditTypes.ts",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/audit/ChecklistEngine.tsx",
+      "purpose": "Audit management sub-module component for HSE inspections and checklists"
+    },
+    {
+      "path": "components/contractors/ContractorOnboarding.tsx",
+      "purpose": "Contractor qualification and compliance management components"
+    },
+    {
+      "path": "components/contractors/ContractorPortal.tsx",
+      "purpose": "Contractor qualification and compliance management components"
+    },
+    {
+      "path": "components/controlOfWork/ControlOfWorkModule.tsx",
+      "purpose": "Permit to Work and SIMOPS barrier gating components"
+    },
+    {
+      "path": "components/controlOfWork/SimopsClashModal.tsx",
+      "purpose": "Permit to Work and SIMOPS barrier gating components"
+    },
+    {
+      "path": "components/oshad/OshadWorkflowDesigner.tsx",
+      "purpose": "Enterprise HSE application view and functional module component"
+    },
+    {
+      "path": "components/pwa/ConflictResolver.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/HeatmapLayer.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/InspectionChecklist.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/InspectionDetail.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/MobileBottomNav.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/MobileInspectionApp.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/OfflineBanner.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/PWAInstallButton.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/SyncStatusBar.tsx",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/pwa/usePWAInstall.ts",
+      "purpose": "Progressive Web App mobile field worker components"
+    },
+    {
+      "path": "components/regulatory/ComplianceScorecards.tsx",
+      "purpose": "Statutory regulatory compliance tracking components"
+    },
+    {
+      "path": "components/regulatory/EmployeeCertificationTracker.tsx",
+      "purpose": "Statutory regulatory compliance tracking components"
+    },
+    {
+      "path": "components/regulatory/LiveRegulatoryNoticeBoard.tsx",
+      "purpose": "Statutory regulatory compliance tracking components"
+    },
+    {
+      "path": "components/regulatory/OfficialGovernmentSourcesRegistry.tsx",
+      "purpose": "Statutory regulatory compliance tracking components"
+    },
+    {
+      "path": "components/system/ExecutiveDashboard.tsx",
+      "purpose": "Executive analytics, IAM, and governance dashboard components"
+    },
+    {
+      "path": "components/system/GovernanceModule.tsx",
+      "purpose": "Executive analytics, IAM, and governance dashboard components"
+    },
+    {
+      "path": "components/system/IAMModule.tsx",
+      "purpose": "Executive analytics, IAM, and governance dashboard components"
+    },
+    {
+      "path": "components/system/PricingGtmModule.tsx",
+      "purpose": "Executive analytics, IAM, and governance dashboard components"
+    },
+    {
+      "path": "components/system/SystemLogsModule.tsx",
+      "purpose": "Executive analytics, IAM, and governance dashboard components"
+    },
+    {
+      "path": "components/ui/AccessDenied.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/ErrorBoundary.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/LoadingScreen.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/badge.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/button.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/card.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/input.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/label.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/modal.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "components/ui/table.tsx",
+      "purpose": "Reusable atomic UI component library"
+    },
+    {
+      "path": "contexts/LanguageContext.tsx",
+      "purpose": "React Context providers for state, tenant, and localization"
+    },
+    {
+      "path": "contexts/RegionalComplianceContext.tsx",
+      "purpose": "React Context providers for state, tenant, and localization"
+    },
+    {
+      "path": "contexts/TenantContext.tsx",
+      "purpose": "React Context providers for state, tenant, and localization"
+    },
+    {
+      "path": "contexts/UserContext.tsx",
+      "purpose": "React Context providers for state, tenant, and localization"
+    },
+    {
+      "path": "convert_rtl.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "convert_space.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "convert_translate.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "database/oshad_schema.sql",
+      "purpose": "Database schema DDL files"
+    },
+    {
+      "path": "enterprise-architecture/00_Enterprise_HSE_Operations_Platform_Blueprint.md",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/01_Database_Schema_RLS.prisma",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/02_API_OpenAPI_Spec.yaml",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/03_Compliance_Mapping.md",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/04_AI_Architecture.md",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/05_UX_Workflows.md",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/06_Kubernetes_Orchestration.yaml",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/07_Kafka_Event_Schema.json",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/08_EdgeAI_Configuration.yaml",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-architecture/README.md",
+      "purpose": "Enterprise architectural blueprint specifications and models"
+    },
+    {
+      "path": "enterprise-export/README.md",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "enterprise-export/apps/api/src/auth/auth.controller.ts",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "enterprise-export/apps/api/src/auth/auth.service.ts",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "enterprise-export/apps/api/src/auth/guards/jwt-auth.guard.ts",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "enterprise-export/apps/api/src/auth/guards/rbac.guard.ts",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "enterprise-export/packages/database/prisma/schema.prisma",
+      "purpose": "Enterprise API and database export templates"
+    },
+    {
+      "path": "firebase-applet-config.json",
+      "purpose": "Firebase client connection configuration"
+    },
+    {
+      "path": "fix.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_all.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_app.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_app2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_app_dir.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_artifact.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_bc.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_btn.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_btn2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_chatbot_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_complyflow_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_contractor_portal.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_contractor_portal_2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_contractor_profiles.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_contractors.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_contractors_again.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_docs.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_execdash_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_gis_app.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_incident.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_incident_rca.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_incident_sif.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_input.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_jsa_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_lazy.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_lazy_gis.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_llm_app.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_login.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_login_colors.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_login_icons.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_login_light.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_mobile_nearby.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_nearby_toggle.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_permitform.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_rams_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_select.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar_dims.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar_forms.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar_imports.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sidebar_syntax.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_signup.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_sso_btn.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_toolbox_aitag.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_types.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "fix_types2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "flex.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "hooks/useAudioRecorder.ts",
+      "purpose": "Custom React hooks"
+    },
+    {
+      "path": "index.css",
+      "purpose": "Global CSS and Tailwind styles"
+    },
+    {
+      "path": "index.html",
+      "purpose": "Single Page Application HTML entry point and Tailwind CDN config"
+    },
+    {
+      "path": "index.tsx",
+      "purpose": "React client-side application bootstrap and provider mounting"
+    },
+    {
+      "path": "lib/auditClient.ts",
+      "purpose": "Core client utilities, Firebase, and Socket.io clients"
+    },
+    {
+      "path": "lib/firebase.ts",
+      "purpose": "Core client utilities, Firebase, and Socket.io clients"
+    },
+    {
+      "path": "lib/socketClient.ts",
+      "purpose": "Core client utilities, Firebase, and Socket.io clients"
+    },
+    {
+      "path": "lib/utils.ts",
+      "purpose": "Core client utilities, Firebase, and Socket.io clients"
+    },
+    {
+      "path": "metadata.json",
+      "purpose": "AI Studio application metadata and system declarations"
+    },
+    {
+      "path": "package-lock.json",
+      "purpose": "Deterministic dependency lockfile"
+    },
+    {
+      "path": "package.json",
+      "purpose": "NPM package definition with pinned dependencies and build scripts"
+    },
+    {
+      "path": "patch_comply_flow.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "permissions.json",
+      "purpose": "Application container permissions specification"
+    },
+    {
+      "path": "premiumify_dashboard.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/favicon.ico",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/icon.svg",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/manifest.json",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/pwa-192x192.png",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/pwa-512x512.png",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/pwa-maskable-512x512.png",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "public/sw.js",
+      "purpose": "Static assets, PWA service worker, and web app manifest"
+    },
+    {
+      "path": "revert_gap_y.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "revert_space.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "routes/geminiRouter.ts",
+      "purpose": "Express API route controllers for Gemini and health probes"
+    },
+    {
+      "path": "routes/healthz.ts",
+      "purpose": "Express API route controllers for Gemini and health probes"
+    },
+    {
+      "path": "routes/predictiveMaintenanceRouter.ts",
+      "purpose": "Express API route controllers for Gemini and health probes"
+    },
+    {
+      "path": "seed_data.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_data2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_data3.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_data4.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_data5.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_data6.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_rest.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "seed_rest2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "server.ts",
+      "purpose": "Express full-stack backend entry point with WebSocket & API routing"
+    },
+    {
+      "path": "services/AnalyticsTracking.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/FeatureGating.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/ProcurementExport.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/ReportEngine.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/aiAssistantService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/arabicNLPUtils.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/audit.js",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/auditLogger.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/authService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/contractorCore.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/cryptoService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/demoDataLoader.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/enterpriseAuth.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/enterpriseDataStore.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/esgDataStore.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/esgEmissionFactors.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/esgReportingService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/esgValidationService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/gccStatutoryReportingService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/geminiClientService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/geminiService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/immutableAuditLogger.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/leadCaptureService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/logger.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/notificationService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/offlineStorage.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/omanCentralDataStore.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/oshadClient.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/oshadReportGenerator.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/oshadWorkflowEngine.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/permissionService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/predictiveMaintenanceValidation.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/ragDataPipeline.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/ragOrchestrator.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/regionalComplianceService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/regulatoryIntelligenceService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/securityCompliance.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/simopsService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/storageService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/syncEngine.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/unifiedAuditTrailService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/userProfileService.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "services/userProfilesExtended.ts",
+      "purpose": "Core business logic, analytics, data store, and AI integration services"
+    },
+    {
+      "path": "src/i18n/config.ts",
+      "purpose": "Internationalization configuration"
+    },
+    {
+      "path": "src/locales/ar.json",
+      "purpose": "Localization translation resource JSON dictionaries"
+    },
+    {
+      "path": "src/locales/en.json",
+      "purpose": "Localization translation resource JSON dictionaries"
+    },
+    {
+      "path": "test/health.test.mjs",
+      "purpose": "Automated integration and health check test suites"
+    },
+    {
+      "path": "test/rbac_navigation.test.mjs",
+      "purpose": "Automated integration and health check test suites"
+    },
+    {
+      "path": "tsconfig.json",
+      "purpose": "TypeScript compiler configuration for Vite and React 19"
+    },
+    {
+      "path": "types.ts",
+      "purpose": "Central TypeScript interface definitions for HSE platform"
+    },
+    {
+      "path": "types/esg.ts",
+      "purpose": "Domain-specific TypeScript type definitions"
+    },
+    {
+      "path": "update_app.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "update_app2.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "update_chatbot.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "update_dash.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "update_dash_1.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "update_sidebar.cjs",
+      "purpose": "Automation and migration utility script"
+    },
+    {
+      "path": "utils/deviceIntegration.ts",
+      "purpose": "Hardware and device integration utilities"
+    },
+    {
+      "path": "vite.config.ts",
+      "purpose": "Vite bundler configuration with React plugin and alias resolution"
+    },
+    {
+      "path": "voicefix.cjs",
+      "purpose": "Automation and migration utility script"
+    }
+  ]
+}
