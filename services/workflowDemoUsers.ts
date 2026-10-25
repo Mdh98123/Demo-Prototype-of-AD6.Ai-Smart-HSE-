@@ -2,6 +2,96 @@ import type { UserProfile } from '../types';
 
 export const WORKFLOW_DEMO_USERS: UserProfile[] = [
   {
+    id: 'usr-workflow-worker-oman',
+    name: 'Hamad Al-Ghafri',
+    email: 'hamad.ghafri@alhajar-energy.om',
+    role: 'Worker',
+    jobTitle: 'Mechanical Technician',
+    department: 'Sohar Operations',
+    siteLocation: 'Sohar Industrial Port Terminal',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 820,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
+    id: 'usr-workflow-supervisor-oman',
+    name: 'Khalfan Al-Shehi',
+    email: 'khalfan.workflow@alhajar-energy.om',
+    role: 'Site_Supervisor',
+    jobTitle: 'Site Supervisor',
+    department: 'Sohar Operations',
+    siteLocation: 'Sohar Industrial Port Terminal',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 890,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
+    id: 'usr-workflow-hse-officer-oman',
+    name: 'Nasser Al-Ghafri',
+    email: 'nasser.workflow@alhajar-energy.om',
+    role: 'HSE_Officer',
+    jobTitle: 'HSE Officer',
+    department: 'Sohar Operations',
+    siteLocation: 'Sohar Industrial Port Terminal',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 910,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
+    id: 'usr-workflow-hse-manager-oman',
+    name: 'Salim Al-Harthy',
+    email: 'salim.workflow@alhajar-energy.om',
+    role: 'Site_HSE_Manager',
+    jobTitle: 'Site HSE Manager',
+    department: 'Sohar Operations',
+    siteLocation: 'Sohar Industrial Port Terminal',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 940,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
+    id: 'usr-workflow-ceo-oman',
+    name: 'Said Al-Maskari',
+    email: 'said.workflow@alhajar-energy.om',
+    role: 'CEO',
+    jobTitle: 'Chief Executive Officer',
+    department: 'Executive Management',
+    siteLocation: 'Muscat Corporate Headquarters',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 970,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
+    id: 'usr-workflow-hr-oman',
+    name: 'Aisha Al-Rashdi',
+    email: 'aisha.rashdi@alhajar-energy.om',
+    role: 'HR_Coordinator',
+    jobTitle: 'HR and Training Coordinator',
+    department: 'Human Resources',
+    siteLocation: 'Sohar Industrial Port Terminal',
+    assignedSites: ['Sohar Industrial Port Petrochemical Complex'],
+    safetyScore: 870,
+    recentIncidents: [],
+    observations: [],
+    certifications: [],
+    achievements: []
+  },
+  {
     id: 'usr-workflow-qa-manager-oman',
     name: 'Maha Al-Hinai',
     email: 'maha.alhinai@alhajar-energy.om',
@@ -32,3 +122,10 @@ export const WORKFLOW_DEMO_USERS: UserProfile[] = [
     achievements: []
   }
 ];
+
+export const WORKFLOW_DEMO_SUPERVISION: Record<string, string[]> = {
+  'usr-workflow-supervisor-oman': ['usr-workflow-worker-oman'],
+  'usr-workflow-hse-officer-oman': ['usr-workflow-supervisor-oman', 'usr-workflow-worker-oman'],
+  'usr-workflow-hse-manager-oman': ['usr-workflow-hse-officer-oman', 'usr-workflow-supervisor-oman', 'usr-workflow-worker-oman'],
+  'usr-workflow-qa-manager-oman': ['usr-workflow-qa-inspector-oman']
+};

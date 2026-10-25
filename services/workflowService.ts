@@ -13,13 +13,16 @@ import type {
 import type { UserRole } from '../types';
 
 export class WorkflowService {
+  private mutationQueue: Promise<void> = Promise.resolve();
+
   constructor(
     private readonly repository: WorkflowRepository,
     private readonly now: () => Date = () => new Date(),
     private readonly makeId: () => string = () => crypto.randomUUID()
   ) {}
 
-  async createForRecord(input: WorkflowRecordInput): Promise<WorkflowState> {
+  createForRecord(input: WorkflowRecordInput): Promise<WorkflowState> {
+    return this.serialize(async () => {
     const rule = WORKFLOW_RULES[input.recordType];
     if (!rule) throw new Error(`No workflow rule is configured for ${input.recordType}.`);
 
@@ -85,9 +88,11 @@ export class WorkflowService {
     }
     await this.repository.write(state);
     return state;
+    });
   }
 
-  async act(itemId: string, actor: WorkflowActor, action: WorkflowAction): Promise<WorkflowState> {
+  act(itemId: string, actor: WorkflowActor, action: WorkflowAction): Promise<WorkflowState> {
+    return this.serialize(async () => {
     const state = await this.repository.read();
     const item = state.workItems.find(candidate => candidate.id === itemId);
     if (!item) throw new Error('Workflow task was not found.');
@@ -109,9 +114,11 @@ export class WorkflowService {
     state.events.push(event);
     await this.repository.write(state);
     return state;
+    });
   }
 
-  async escalateOverdue(): Promise<WorkflowState> {
+  escalateOverdue(): Promise<WorkflowState> {
+    return this.serialize(async () => {
     const state = await this.repository.read();
     const currentTime = this.now().getTime();
     const overdue = state.workItems.filter(item =>
@@ -149,6 +156,7 @@ export class WorkflowService {
     }
     if (overdue.length > 0) await this.repository.write(state);
     return state;
+    });
   }
 
   private applyAction(item: WorkItem, actor: WorkflowActor, action: WorkflowAction, state: WorkflowState): WorkflowEvent {
@@ -382,6 +390,12 @@ export class WorkflowService {
 
   private requireReason(reason: string): void {
     if (!reason.trim()) throw new Error('A reason is required for this workflow action.');
+  }
+
+  private serialize<T>(operation: () => Promise<T>): Promise<T> {
+    const result = this.mutationQueue.then(operation, operation);
+    this.mutationQueue = result.then(() => undefined, () => undefined);
+    return result;
   }
 }
 

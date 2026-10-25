@@ -11,6 +11,7 @@ import path from "path";
 import { logAccess } from "./services/audit.js";
 import http from "http";
 import { Server } from "socket.io";
+import { createWorkflowRouter } from "./routes/workflowRouter";
 import { healthRouter } from "./routes/healthz";
 import { geminiRouter } from "./routes/geminiRouter";
 import { predictiveMaintenanceRouter } from "./routes/predictiveMaintenanceRouter";
@@ -65,6 +66,8 @@ async function startServer() {
   const app = express();
   const server = http.createServer(app);
   const io = new Server(server, { cors: { origin: "*" } });
+  const workflowNamespace = io.of('/workflow');
+  const workflowRouter = createWorkflowRouter(workflowNamespace);
   const PORT = resolvePort();
 
   // Real-time incident dashboard (multiplayer state)
@@ -80,6 +83,7 @@ async function startServer() {
 
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+  app.use("/api/workflow", workflowRouter);
 
   // Enterprise Gemini AI Suite Router (Chat, Grounding, Maps, Transcription)
   app.use("/api/gemini", geminiRouter);

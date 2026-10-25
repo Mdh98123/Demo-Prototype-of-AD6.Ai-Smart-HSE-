@@ -7,6 +7,7 @@ import { GULF_ENERGY_USERS } from '../services/demoDataLoader';
 import { UserProfileService } from '../services/userProfileService';
 import { calculateEffectivePermissions } from '../services/permissionService';
 import { SEED_OMANI_USERS } from '../services/omanCentralDataStore';
+import { WORKFLOW_DEMO_USERS } from '../services/workflowDemoUsers';
 
 // Helper to generate dynamic dates
 const getDate = (daysToAdd: number) => {
@@ -17,6 +18,7 @@ const getDate = (daysToAdd: number) => {
 
 export const MOCK_USERS: UserProfile[] = [
   ...SEED_OMANI_USERS,
+  ...WORKFLOW_DEMO_USERS,
   { id: 'demo_user', name: 'Demo User', role: 'ADMIN', jobTitle: 'Platform Demo Administrator', siteLocation: 'Muscat Corporate HQ', assignedSites: ['Sohar Complex', 'Duqm Terminal', 'Fahud Plant'], department: 'System Demo Environment', safetyScore: 0, recentIncidents: [], observations: [], certifications: [], achievements: [] },
   { id: 'admin', name: 'System Admin', role: 'ADMIN', jobTitle: 'Lead Enterprise HSE Platform Architect', siteLocation: 'Corporate Command Center · Muscat', assignedSites: ['All Concessions (Sohar, Duqm, Fahud, Salalah)', 'Muscat HQ'], department: 'Digital Safety Infrastructure & Security', safetyScore: 2500, recentIncidents: [], observations: [], certifications: [{ name: 'Full System Authority', status: 'Valid', expiryDate: getDate(3650) }], achievements: [{ id: 'admin-0', title: 'Grandmaster', description: 'Complete system oversight enabled', dateEarned: getDate(-365), icon: 'Shield', tier: 'Gold' }] },
   { id: 'u0', name: 'H.E. Sheikh Hilal Al-Maamari', role: 'Board_Director', jobTitle: 'Board Director & Safety Oversight Chair', siteLocation: 'Al Hajar Corporate HQ', assignedSites: ['Muscat HQ', 'All Concessions'], department: 'Board of Directors', safetyScore: 120, recentIncidents: [], observations: [], certifications: [], achievements: [] },
