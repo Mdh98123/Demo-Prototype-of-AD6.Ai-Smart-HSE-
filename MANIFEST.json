@@ -973,35 +973,35 @@
       "purpose": "Express API route controllers for Gemini and health probes"
     },
     {
-      "path": "seed_data.cjs",
+      "path": "scripts/seed_data.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_data2.cjs",
+      "path": "scripts/seed_data2.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_data3.cjs",
+      "path": "scripts/seed_data3.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_data4.cjs",
+      "path": "scripts/seed_data4.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_data5.cjs",
+      "path": "scripts/seed_data5.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_data6.cjs",
+      "path": "scripts/seed_data6.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_rest.cjs",
+      "path": "scripts/seed_rest.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "seed_rest2.cjs",
+      "path": "scripts/seed_rest2.cjs",
       "purpose": "Automation and migration utility script"
     },
     {
