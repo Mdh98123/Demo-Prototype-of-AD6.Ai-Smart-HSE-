@@ -16,22 +16,14 @@ export type RegionalComplianceMode = 'UAE' | 'OMAN' | 'COMBINED';
 export type JurisdictionCode = 'UAE' | 'OMAN' | 'CROSS_JURISDICTION';
 
 /**
- * Normalizes input between Jurisdiction ('UAE' | 'Oman' | 'Combined') and RegionalComplianceMode ('UAE' | 'OMAN' | 'COMBINED')
+ * Normalizes input - Locked strictly to Sultanate of Oman
  */
-export function toJurisdiction(input?: string): Jurisdiction {
-  if (!input) return 'Combined';
-  const norm = input.trim().toUpperCase();
-  if (norm === 'UAE' || norm === 'UNITED ARAB EMIRATES') return 'UAE';
-  if (norm === 'OMAN' || norm === 'SULTANATE OF OMAN') return 'Oman';
-  return 'Combined';
+export function toJurisdiction(_input?: string): Jurisdiction {
+  return 'Oman';
 }
 
-export function toRegionalMode(input?: string): RegionalComplianceMode {
-  if (!input) return 'COMBINED';
-  const norm = input.trim().toUpperCase();
-  if (norm === 'UAE' || norm === 'UNITED ARAB EMIRATES') return 'UAE';
-  if (norm === 'OMAN' || norm === 'SULTANATE OF OMAN') return 'OMAN';
-  return 'COMBINED';
+export function toRegionalMode(_input?: string): RegionalComplianceMode {
+  return 'OMAN';
 }
 
 export interface ComplianceValidationTarget {
@@ -535,9 +527,9 @@ export const COMBINED_REGULATORY_PROFILE: JurisdictionProfile = {
 };
 
 export const JURISDICTION_PROFILES: Record<RegionalComplianceMode, JurisdictionProfile> = {
-  UAE: UAE_REGULATORY_PROFILE,
+  UAE: OMAN_REGULATORY_PROFILE,
   OMAN: OMAN_REGULATORY_PROFILE,
-  COMBINED: COMBINED_REGULATORY_PROFILE
+  COMBINED: OMAN_REGULATORY_PROFILE
 };
 
 export interface JurisdictionTerminology {
@@ -571,67 +563,31 @@ export type RegionalStateListener = (state: {
   valueOf?: () => string;
 }) => void;
 
+const OMAN_TERMS: JurisdictionTerminology = {
+  primaryframework: 'Sultanate of Oman Labour Law (Royal Decree 53/2023) & MD 286/2008',
+  governingauthority: 'Ministry of Labour (MoL) & Civil Defence and Ambulance Authority (CDAA)',
+  regulatorybody: 'Ministry of Labour Directorate of Occupational Safety & Health',
+  heatstressprotocol: 'PDO SP-1170 & MD 286/2008 Thermal Stress Protocol (12:30 - 15:30 June through August; TWL <115 W/m² stop)',
+  summerresthours: '12:30 to 15:30 (June 1 – August 31)',
+  permittoworkstandard: 'Petroleum Development Oman (PDO) SP-1143 Specification for PTW',
+  incidentnoticeform: 'Ministry of Labour Annex 1 Work Injury & Occupational Disease Notice',
+  incidentsubmissionsla: '24 Hours for Fatalities, Severe Disability, or 4+ Injured Workers',
+  dataprotectionlaw: 'Sultanate of Oman Personal Data Protection Law (Royal Decree 6/2022)',
+  officialcurrency: 'Omani Rial (OMR)',
+  auditportal: 'Ministry of Labour Occupational Safety & Health Surveillance System',
+  labourlawcitation: 'Royal Decree No. 53/2023 Promulgating the Labour Law',
+  civildefenceauthority: 'Civil Defence and Ambulance Authority (CDAA Oman)',
+  ministryoflabour: 'Ministry of Labour (MoL) - Directorate General of Labour Welfare',
+  heatstressmetric: 'Thermal Work Limit (TWL in W/m² - Stoppage at <115 W/m²)',
+  gastestercertification: 'PDO-accredited Authorized Gas Tester (AGT Levels 1 & 2)',
+  isolationstandard: 'Mechanical Isolation Certificate (MIC) & Electrical Isolation Certificate (EIC)',
+  safetypassport: 'OPAL Unified HSE Competency Passport'
+};
+
 export const REGULATORY_TERMS: Record<Jurisdiction, JurisdictionTerminology> = {
-  UAE: {
-    primaryframework: 'Abu Dhabi OSHAD-SF v3.1 & UAE Federal Decree-Law No. 33/2021',
-    governingauthority: 'Abu Dhabi Public Health Centre (ADPHC) & Ministry of Human Resources and Emiratisation (MoHRE)',
-    regulatorybody: 'Abu Dhabi Public Health Centre (ADPHC)',
-    heatstressprotocol: 'MoHRE Midday Work Break (12:30 - 15:00, June 15 to Sept 15; WBGT ≥32.2°C mandatory stop)',
-    summerresthours: '12:30 to 15:00 (June 15 – September 15)',
-    permittoworkstandard: 'OSHAD-SF CoP 2.0 / ADNOC Codes of Practice Safe Systems of Work',
-    incidentnoticeform: 'OSHAD Form G Serious Incident Notification (Al-Adaa Portal)',
-    incidentsubmissionsla: '24 Hours for Class A / B Critical Incidents',
-    dataprotectionlaw: 'UAE Federal Decree-Law No. 45/2021 on Personal Data Protection (UAE PDPL)',
-    officialcurrency: 'United Arab Emirates Dirham (AED)',
-    auditportal: 'Abu Dhabi Al-Adaa Central OSH System Portal',
-    labourlawcitation: 'Federal Decree-Law No. 33/2021 on the Regulation of Labour Relations',
-    civildefenceauthority: 'General Directorate of Civil Defence (UAE Ministry of Interior)',
-    ministryoflabour: 'Ministry of Human Resources and Emiratisation (MoHRE)',
-    heatstressmetric: 'Wet Bulb Globe Temperature (WBGT Index - Stoppage at ≥32.2°C)',
-    gastestercertification: 'ADNOC-certified Authorized Gas Tester (AGT - Levels 1, 2, 3)',
-    isolationstandard: 'Positive Physical Isolation: Blind/Spade + Double Block & Bleed + LOTO Padlock',
-    safetypassport: 'OSHAD / ADNOC HSE Passport Accreditation'
-  },
-  Oman: {
-    primaryframework: 'Sultanate of Oman Labour Law (Royal Decree 53/2023) & MD 286/2008',
-    governingauthority: 'Ministry of Labour (MoL) & Civil Defence and Ambulance Authority (CDAA)',
-    regulatorybody: 'Ministry of Labour Directorate of Occupational Safety & Health',
-    heatstressprotocol: 'PDO SP-1170 & MD 286/2008 Thermal Stress Protocol (12:30 - 15:30 June through August; TWL <115 W/m² stop)',
-    summerresthours: '12:30 to 15:30 (June 1 – August 31)',
-    permittoworkstandard: 'Petroleum Development Oman (PDO) SP-1143 Specification for PTW',
-    incidentnoticeform: 'Ministry of Labour Annex 1 Work Injury & Occupational Disease Notice',
-    incidentsubmissionsla: '24 Hours for Fatalities, Severe Disability, or 4+ Injured Workers',
-    dataprotectionlaw: 'Sultanate of Oman Personal Data Protection Law (Royal Decree 6/2022)',
-    officialcurrency: 'Omani Rial (OMR)',
-    auditportal: 'Ministry of Labour Occupational Safety & Health Surveillance System',
-    labourlawcitation: 'Royal Decree No. 53/2023 Promulgating the Labour Law',
-    civildefenceauthority: 'Civil Defence and Ambulance Authority (CDAA Oman)',
-    ministryoflabour: 'Ministry of Labour (MoL) - Directorate General of Labour Welfare',
-    heatstressmetric: 'Thermal Work Limit (TWL in W/m² - Stoppage at <115 W/m²)',
-    gastestercertification: 'PDO-accredited Authorized Gas Tester (AGT Levels 1 & 2)',
-    isolationstandard: 'Mechanical Isolation Certificate (MIC) & Electrical Isolation Certificate (EIC)',
-    safetypassport: 'OPAL Unified HSE Competency Passport'
-  },
-  Combined: {
-    primaryframework: 'Unified Dual GCC Architecture: UAE OSHAD-SF v3.1 & Oman Labour Law RD 53/2023',
-    governingauthority: 'Dual Statutory Authorities: ADPHC / MoHRE (UAE) & MoL / CDAA (Oman)',
-    regulatorybody: 'Dual National Competent Authorities',
-    heatstressprotocol: 'Dual Thermal Stress Regimes: UAE MoHRE Midday Break (12:30-15:00) & Oman PDO SP-1170 (12:30-15:30, TWL)',
-    summerresthours: 'UAE: 12:30-15:00 (Jun-Sep) | Oman: 12:30-15:30 (Jun-Aug)',
-    permittoworkstandard: 'Dual Standards: UAE ADNOC CoPs / OSHAD CoP 2.0 & Oman PDO SP-1143',
-    incidentnoticeform: 'Dual Forms: OSHAD Form G (Abu Dhabi) & Oman MoL Annex 1 Schedule',
-    incidentsubmissionsla: '24-Hour Mandatory Statutory Reporting SLA (Both Jurisdictions)',
-    dataprotectionlaw: 'Cross-Jurisdictional Privacy: UAE PDPL (Decree-Law 45/2021) & Oman PDPL (RD 6/2022)',
-    officialcurrency: 'Multi-Currency Concession Clearing: AED & OMR',
-    auditportal: 'Integrated UAE Al-Adaa & Oman MoL Statutory Surveillance Portal',
-    labourlawcitation: 'UAE Federal Decree-Law No. 33/2021 & Oman Royal Decree No. 53/2023',
-    civildefenceauthority: 'UAE General Directorate of Civil Defence & Oman CDAA',
-    ministryoflabour: 'Host-Nation Ministry (MoHRE UAE / MoL Oman)',
-    heatstressmetric: 'Host-Nation Metric: WBGT Index (UAE) & TWL (Oman)',
-    gastestercertification: 'Host-Nation Standard: ADNOC-AGT (UAE) or PDO-AGT (Oman)',
-    isolationstandard: 'Unified Positive Isolation: LOTO Padlock Box + Concession Isolation Certificates',
-    safetypassport: 'Dual Recognized Passports: OSHAD/ADNOC & OPAL Passports'
-  }
+  UAE: OMAN_TERMS,
+  Oman: OMAN_TERMS,
+  Combined: OMAN_TERMS
 };
 
 export const STORAGE_KEY_MODE = 'ad6_regional_compliance_mode';
@@ -649,28 +605,14 @@ const DEFAULT_AUDIT_LOG: RegionalConfigAuditRecord[] = [
     actorId: 'admin',
     actorName: 'System Admin',
     actorRole: 'ADMIN',
-    previousMode: 'COMBINED',
-    newMode: 'COMBINED',
-    reason: 'Initial system commissioning with dual UAE & Oman enterprise concession capabilities.'
+    previousMode: 'OMAN',
+    newMode: 'OMAN',
+    reason: 'System commissioned exclusively for Sultanate of Oman statutory compliance (MoL MD 286/2008 & PDO).'
   }
 ];
 
 export class RegionalComplianceService {
-  private static inMemoryMode: RegionalComplianceMode = (() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY_JURISDICTION)
-          || localStorage.getItem(STORAGE_KEY_JURISDICTION_ALT)
-          || localStorage.getItem(STORAGE_KEY_MODE);
-        if (stored) {
-          return toRegionalMode(stored);
-        }
-      } catch (e) {
-        console.warn('Unable to read initial regional compliance from localStorage:', e);
-      }
-    }
-    return 'COMBINED';
-  })();
+  private static inMemoryMode: RegionalComplianceMode = 'OMAN';
   private static inMemoryAudit: RegionalConfigAuditRecord[] = [...DEFAULT_AUDIT_LOG];
   private static listeners: Set<RegionalStateListener> = new Set();
   private static isInitialized = false;
@@ -951,26 +893,12 @@ export class RegionalComplianceService {
    *  - Under Oman mode: UAE entities are hidden.
    *  - Under Combined mode: Both are visible.
    */
-  public static isEntityVisible(entityCountry?: string, activeMode?: RegionalComplianceMode): boolean {
-    const mode = activeMode || this.getActiveMode();
-    if (mode === 'COMBINED') return true;
+  public static isEntityVisible(entityCountry?: string, _activeMode?: RegionalComplianceMode): boolean {
     if (!entityCountry) return true;
-
     const normalized = entityCountry.toUpperCase();
-    if (mode === 'UAE') {
-      // Allow UAE, GCC wide, or international corporate; hide Oman specific
-      if (normalized.includes('OMAN') || normalized === 'OMN') return false;
-      return true;
+    if (normalized.includes('UAE') || normalized.includes('EMIRATES') || normalized.includes('ABU DHABI') || normalized.includes('DUBAI') || normalized.includes('RUWAIS') || normalized.includes('HABSHAN') || normalized.includes('KEZAD') || normalized.includes('JEBEL ALI')) {
+      return false;
     }
-
-    if (mode === 'OMAN') {
-      // Allow Oman, GCC wide, or international corporate; hide UAE specific
-      if (normalized.includes('UAE') || normalized.includes('EMIRATES') || normalized.includes('ABU DHABI') || normalized.includes('DUBAI')) {
-        return false;
-      }
-      return true;
-    }
-
     return true;
   }
 
@@ -979,13 +907,11 @@ export class RegionalComplianceService {
    */
   public static filterByActiveMode<T extends { country?: string; jurisdiction?: string }>(
     items: T[],
-    mode?: RegionalComplianceMode
+    _mode?: RegionalComplianceMode
   ): T[] {
-    const active = mode || this.getActiveMode();
-    if (active === 'COMBINED') return items;
     return items.filter(item => {
       const country = item.country || item.jurisdiction;
-      return this.isEntityVisible(country, active);
+      return this.isEntityVisible(country);
     });
   }
 
@@ -993,30 +919,28 @@ export class RegionalComplianceService {
    * Returns active configuration as a Jurisdiction type ('UAE' | 'Oman' | 'Combined')
    */
   public static getActiveJurisdiction(): Jurisdiction {
-    return toJurisdiction(this.getActiveMode());
+    return 'Oman';
   }
 
   /**
    * Updates active configuration using Jurisdiction type ('UAE' | 'Oman' | 'Combined')
    */
   public static setActiveJurisdiction(
-    jurisdiction: Jurisdiction,
+    _jurisdiction: Jurisdiction,
     user?: UserProfile,
     reason: string = 'Administrative compliance realignment'
   ): { success: boolean; error?: string } {
-    return this.setRegionalMode(toRegionalMode(jurisdiction), user, reason);
+    return this.setRegionalMode('OMAN', user, reason);
   }
 
   /**
    * Checks whether a specific regulatory rule, feature, or authority standard is available
    * under the current or specified jurisdiction mode.
-   * Can be called as isRuleAvailable(ruleId) using active jurisdiction, or isRuleAvailable(ruleId, jurisdiction).
    */
   public static isRuleAvailable(
     ruleId: string,
-    jurisdiction?: Jurisdiction | RegionalComplianceMode
+    _jurisdiction?: Jurisdiction | RegionalComplianceMode
   ): boolean {
-    const active = toRegionalMode(jurisdiction || this.getActiveMode());
     const rawKey = (ruleId || '').trim().toUpperCase();
     const key = rawKey.replace(/[-]/g, '_');
 
@@ -1028,39 +952,16 @@ export class RegionalComplianceService {
     ];
     if (universalRules.some(u => key === u || key.includes(u))) return true;
 
-    if (active === 'COMBINED') {
-      return true;
+    // UAE-only rules are strictly unavailable in Oman-only platform
+    const uaeSpecific = [
+      'OSHAD_FORM_G', 'OSHAD_FORM_G1', 'OSHAD_SF', 'ADPHC', 'MOHRE_MIDDAY_BREAK', 'MOHRE_BREAK',
+      'ADNOC_COP', 'ADNOC_COP_PERMIT', 'ADNOC_AGT', 'UAE_LABOUR_LAW', 'FEDERAL_DECREE_33_2021',
+      'UAE_PDPL', 'AED_CURRENCY', 'ADPHC_AL_ADAA', 'DUBAI_MUNICIPALITY', 'AL_ADAA_PORTAL',
+      'TAW_JEEH', 'CIVIL_DEFENCE_UAE'
+    ];
+    if (uaeSpecific.some(u => key.includes(u) || key === u)) {
+      return false;
     }
-
-    if (active === 'UAE') {
-      // Oman-only rules are unavailable in UAE mode
-      const omanSpecific = [
-        'OMAN_MOL_24H_NOTICE', 'OMAN_MOL_ANNEX_1', 'PDO_SP1170_TWL', 'PDO_SP_1170', 'PDO_SP1170',
-        'TWL_HEAT_STRESS', 'PDO_SP_1143', 'PDO_SP1143', 'PDO_SP1143_PTW', 'PDO_AGT',
-        'MIC_EIC_ISOLATION', 'OMAN_LABOUR_LAW', 'ROYAL_DECREE_53_2023', 'MINISTERIAL_DECISION_286',
-        'OMAN_PDPL', 'OMR_CURRENCY', 'CDAA_CIVIL_DEFENCE_OMAN', 'ENVIRONMENT_AUTHORITY_OMAN',
-        'OPAL_STANDARDS', 'OPAL'
-      ];
-      if (omanSpecific.some(o => key.includes(o) || key === o)) {
-        return false;
-      }
-      return true;
-    }
-
-    if (active === 'OMAN') {
-      // UAE-only rules are unavailable in Oman mode
-      const uaeSpecific = [
-        'OSHAD_FORM_G', 'OSHAD_FORM_G1', 'OSHAD_SF', 'ADPHC', 'MOHRE_MIDDAY_BREAK', 'MOHRE_BREAK',
-        'ADNOC_COP', 'ADNOC_COP_PERMIT', 'ADNOC_AGT', 'UAE_LABOUR_LAW', 'FEDERAL_DECREE_33_2021',
-        'UAE_PDPL', 'AED_CURRENCY', 'ADPHC_AL_ADAA', 'DUBAI_MUNICIPALITY', 'AL_ADAA_PORTAL',
-        'TAW_JEEH', 'CIVIL_DEFENCE_UAE'
-      ];
-      if (uaeSpecific.some(u => key.includes(u) || key === u)) {
-        return false;
-      }
-      return true;
-    }
-
     return true;
   }
 

@@ -51,7 +51,7 @@ interface AICopilotDrawerProps {
 }
 
 const ROLES: { id: GeminiRoleType; label: string; desc: string }[] = [
-  { id: 'hse_advisor', label: 'Statutory HSE Advisor', desc: 'OSHAD-SF, UAE MoHRE, ISO 45001' },
+  { id: 'hse_advisor', label: 'Statutory HSE Advisor', desc: 'Oman MoL MD 286/2008, PDO, ISO 45001' },
   { id: 'rca_expert', label: 'Incident RCA & 5-Why', desc: '5-Why, Fishbone & Causal Analysis' },
   { id: 'process_safety', label: 'Process Safety Engineer', desc: 'SIMOPS, HAZOP, LOTO & Barrier Analysis' },
   { id: 'site_supervisor', label: 'Field Safety Supervisor', desc: 'Daily PTW, TBT & Stop Work Authority' },
@@ -175,8 +175,8 @@ export const AICopilotDrawer: React.FC<AICopilotDrawerProps> = ({
       id: 'ai-' + Date.now(),
       sender: 'ai',
       text: language === 'ar'
-        ? 'تم توليد مسودة تحليل الأسباب الجذرية (5-Why) مستندة إلى معايير إدارة الصيانة PDO PR-1172 وإجراءات كود أدنوك COP V4-01. تتطلب هذه المسودة مراجعة واعتماد مسؤول السلامة المعتمد أدناه.'
-        : 'Generated Grounded 5-Why Causal Tree based on PDO PR-1172 maintenance standards and ADNOC COP V4-01. This proposal requires certified Safety Officer verification below before committing to the incident record.',
+        ? 'تم توليد مسودة تحليل الأسباب الجذرية (5-Why) مستندة إلى معايير إدارة الصيانة PDO PR-1172 ولائحة السلامة والصحة المهنية MD 286/2008. تتطلب هذه المسودة مراجعة واعتماد مسؤول السلامة المعتمد أدناه.'
+        : 'Generated Grounded 5-Why Causal Tree based on PDO PR-1172 maintenance standards and Oman Ministry of Labour MD 286/2008. This proposal requires certified Safety Officer verification below before committing to the incident record.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       modelUsed: selectedModel,
       draftFiveWhy: result,
@@ -190,7 +190,7 @@ export const AICopilotDrawer: React.FC<AICopilotDrawerProps> = ({
   // Execute Grounded Statutory Compliance Workflow
   const handleTriggerComplianceWorkflow = async () => {
     setIsGenerating(true);
-    const targetCountry = isOmanMode ? 'Oman' : isUaeMode ? 'UAE' : (currentSite?.country || 'UAE');
+    const targetCountry = 'Oman';
     const userPrompt = language === 'ar'
       ? `تحقق من الالتزامات والمهل القانونية للإبلاغ عن الحوادث الخطيرة في اختصاص: ${targetCountry}`
       : `Check statutory notification deadlines & legal exposure for Serious LTI in ${targetCountry}`;

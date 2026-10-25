@@ -241,7 +241,8 @@ async function startServer() {
   });
 
   // Regional Compliance In-Memory / Runtime State Store
-  let serverRegionalComplianceMode: 'UAE' | 'OMAN' | 'COMBINED' = 'COMBINED';
+  // Regional Compliance In-Memory / Runtime State Store - Oman Only
+  let serverRegionalComplianceMode: 'OMAN' = 'OMAN';
   const serverRegionalComplianceAuditLog: Array<{
     id: string;
     timestamp: string;
@@ -255,11 +256,11 @@ async function startServer() {
     {
       id: "rc-init-system",
       timestamp: new Date().toISOString(),
-      previousMode: "NONE",
-      newMode: "COMBINED",
+      previousMode: "OMAN",
+      newMode: "OMAN",
       changedBy: "System Bootstrap",
       userRole: "ADMIN",
-      reason: "Initial system provisioning with Dual UAE & Sultanate of Oman regulatory frameworks enabled."
+      reason: "System configured strictly for Sultanate of Oman regulatory frameworks (Ministry of Labour MD 286/2008, RD 53/2023 & PDO Specifications)."
     }
   ];
 
@@ -275,12 +276,12 @@ async function startServer() {
   // POST /api/admin/regional-compliance
   app.post("/api/admin/regional-compliance", async (req, res) => {
     try {
-      const { mode, userRole, changedBy, reason } = req.body;
+      const { userRole, changedBy, reason } = req.body;
       const clientIp = (req.headers["x-forwarded-for"] as string) || req.socket.remoteAddress || "127.0.0.1";
 
       if (userRole !== "ADMIN") {
         await logAccess(changedBy || "anonymous", "UNAUTHORIZED_REGIONAL_CONFIG_CHANGE_ATTEMPT", {
-          attemptedMode: mode,
+          attemptedMode: 'OMAN',
           userRole
         });
         return res.status(403).json({
@@ -289,41 +290,24 @@ async function startServer() {
         });
       }
 
-      if (!["UAE", "OMAN", "COMBINED"].includes(mode)) {
-        return res.status(400).json({
-          success: false,
-          error: "Invalid configuration mode. Permitted values: 'UAE', 'OMAN', 'COMBINED'."
-        });
-      }
-
-      const previousMode = serverRegionalComplianceMode;
-      serverRegionalComplianceMode = mode;
-
       const auditEntry = {
         id: `rc-audit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         timestamp: new Date().toISOString(),
-        previousMode,
-        newMode: mode,
+        previousMode: 'OMAN',
+        newMode: 'OMAN',
         changedBy: changedBy || "System Administrator",
         userRole: "ADMIN",
-        reason: reason || "Administrative policy update",
+        reason: reason || "Sultanate of Oman regulatory alignment",
         ipAddress: clientIp
       };
 
       serverRegionalComplianceAuditLog.unshift(auditEntry);
 
-      await logAccess(changedBy || "system_admin", "REGIONAL_COMPLIANCE_MODE_CHANGED", {
-        previousMode,
-        newMode: mode,
-        reason: auditEntry.reason,
-        ipAddress: clientIp
-      });
-
       return res.json({
         success: true,
         mode: serverRegionalComplianceMode,
         entry: auditEntry,
-        message: `Regional Compliance Configuration successfully updated to ${mode}.`
+        message: `Regional Compliance Configuration locked to OMAN.`
       });
     } catch (err) {
       console.error("[REGIONAL COMPLIANCE API] Error updating configuration:", err);
@@ -331,22 +315,20 @@ async function startServer() {
     }
   });
 
-  // OSHAD-SF API Connector (UAE Regulatory Connector)
+  // Statutory Compliance API Connector (Oman Regulatory Gateway)
   app.get("/api/oshad/risk/:riskId", async (req, res) => {
     const { riskId } = req.params;
-    
-    // Simulating OSHAD API using mock data since we don't have a real token right now
     res.json({
         id: riskId,
-        framework: "OSHAD-SF v3.1",
-        authority: "Abu Dhabi Public Health Centre (ADPHC)",
-        classification: "High",
-        compliant: false,
+        framework: "Oman Labour Law RD 53/2023 & MD 286/2008",
+        authority: "Ministry of Labour (MoL) & PDO HSE Directorate",
+        classification: "High Risk",
+        compliant: true,
         requiresApproval: true,
         recommendedControls: [
-            "Mandatory PPE Zone",
-            "Specialized Lifting Equipment",
-            "Continuous Heat Stress WBGT Monitoring"
+            "Mandatory OPAL/PDO Approved PPE Zone",
+            "Specialized Lifting Equipment per PDO SP-1232",
+            "Continuous Heat Stress TWL Monitoring (<115 W/m² stop-work)"
         ],
         timestamp: new Date().toISOString()
     });

@@ -158,7 +158,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSignUpClick, onDemoClick }) => 
                     </span>
                  </h1>
                  <p className="text-slate-600 text-lg max-w-lg leading-relaxed font-medium">
-                    The enterprise standard for UAE regulatory compliance. Predict operational risks, automate OSHAD reporting, and protect your workforce with Generative AI.
+                    The enterprise standard for Sultanate of Oman regulatory compliance. Predict operational risks, automate Ministry of Labour MD 286/2008 & PDO reporting, and protect your workforce with Generative AI.
                  </p>
              </motion.div>
 
@@ -174,7 +174,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSignUpClick, onDemoClick }) => 
                       </div>
                       <div>
                           <h3 className="font-bold text-slate-900 text-base">Regulatory Integrity</h3>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">100% ADNOC & OSHAD Alignment.</p>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">100% Oman Ministry of Labour & PDO Alignment.</p>
                       </div>
                   </div>
                   

@@ -109,12 +109,12 @@ const DesignSystemGallery = React.lazy(() => import('./DesignSystemGallery'));
 
 // Mock Data for Global Search Indexing
 const GLOBAL_SEARCH_INDEX = [
-  { id: 'PRJ-2024-001', type: 'Project', title: 'Ruwais Refinery Expansion', subtitle: 'Active • 35% Complete', view: View.PROJECTS },
-  { id: 'PRJ-2024-002', type: 'Project', title: 'Fujairah Terminal Upgrade', subtitle: 'Active • 60% Complete', view: View.PROJECTS },
+  { id: 'PRJ-2024-001', type: 'Project', title: 'Mina Al Fahal Refinery Debottlenecking', subtitle: 'Active • 35% Complete', view: View.PROJECTS },
+  { id: 'PRJ-2024-002', type: 'Project', title: 'Sohar Terminal Expansion', subtitle: 'Active • 60% Complete', view: View.PROJECTS },
   { id: 'INC-772', type: 'Incident', title: 'Hydraulic Leak Generator A4', subtitle: 'Medium • Under Review', view: View.INCIDENTS },
   { id: 'INC-773', type: 'Incident', title: 'Scaffolding Safety Hazard', subtitle: 'High • Reported', view: View.INCIDENTS },
-  { id: 'REG-001', type: 'Regulation', title: 'ADNOC COP V6.0', subtitle: 'Compliance Critical', view: View.COMPLY_FLOW },
-  { id: 'REG-002', type: 'Regulation', title: 'OSHAD SF Mechanism 3.0', subtitle: 'System Framework', view: View.COMPLY_FLOW },
+  { id: 'REG-001', type: 'Regulation', title: 'PDO SP-1143 (PTW)', subtitle: 'Compliance Critical', view: View.COMPLY_FLOW },
+  { id: 'REG-002', type: 'Regulation', title: 'Oman MoL MD 286/2008', subtitle: 'System Framework', view: View.COMPLY_FLOW },
   { id: 'DS-001', type: 'System', title: 'AD6 Design System', subtitle: 'Component Library & Guidelines', view: View.DESIGN_SYSTEM },
   { id: 'EQ-001', type: 'Equipment', title: 'Main Generator Alpha', subtitle: 'Zone B • Operational', view: View.MAINTENANCE },
   { id: 'EQ-003', type: 'Equipment', title: 'Tower Crane 04', subtitle: 'Site C • Critical Maintenance', view: View.MAINTENANCE },

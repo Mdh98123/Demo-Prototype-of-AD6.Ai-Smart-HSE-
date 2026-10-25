@@ -29,7 +29,7 @@ export const ComplianceAssistant: React.FC = () => {
     { 
       id: '1', 
       role: 'assistant', 
-      text: 'Welcome to the Statutory Compliance Intelligence Assistant. I am grounded in OSHAD-SF v3.1, UAE Labor Law (MoHRE), UAE Civil Defence Fire Codes, and ISO 45001.\n\nYou can query live statutory announcements with **Google Search Grounding**, switch Gemini models, or use **Microphone Audio Transcription (gemini-3.5-transcribe)**.', 
+      text: 'Welcome to the Statutory Compliance Intelligence Assistant. I am grounded in Sultanate of Oman Labour Law (RD 53/2023), Ministry of Labour Regulations (MD 286/2008), PDO HSE Specifications (SP-1143, SP-1170, SP-1231/1232, PR-1172), CDAA Fire Directives, and ISO 45001.\n\nYou can query live statutory announcements with **Google Search Grounding**, switch Gemini models, or use **Microphone Audio Transcription (gemini-3.5-transcribe)**.', 
       language: 'en',
       modelUsed: 'gemini-3.5-flash'
     }
@@ -150,7 +150,7 @@ export const ComplianceAssistant: React.FC = () => {
           <div>
             <h1 className="text-xl font-black text-slate-800 tracking-tight">AI Compliance Assistant</h1>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-              OSHAD & ADNOC Domain Knowledge (Grounded in Gemini)
+              Oman Ministry of Labour & PDO Domain Knowledge (Grounded in Gemini)
             </p>
           </div>
         </div>
@@ -312,7 +312,7 @@ export const ComplianceAssistant: React.FC = () => {
             placeholder={
               useSearchGrounding 
                 ? 'Ask statutory questions grounded in live Google Search...' 
-                : 'Ask about confined space permits, drafting CAPA plans, or AD EHS Center codes...'
+                : 'Ask about confined space permits, drafting CAPA plans, or Oman MoL / PDO specifications...'
             }
             className="flex-1 glass-panel border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-600 text-sm font-medium transition-all"
           />

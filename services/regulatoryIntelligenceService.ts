@@ -1,6 +1,6 @@
 /**
  * Enterprise Regulatory Intelligence, HSE, ESG, and Workforce Compliance Service
- * Additive module supporting UAE (OSHAD-SF, MoHRE, Civil Defence), Oman (MoL, PDO), and GCC regulations.
+ * Sultanate of Oman (Ministry of Labour MD 286/2008, RD 53/2023, PDO Specifications, CDAA, Environment Authority).
  */
 
 import { GeminiClientService, GroundingSource } from './geminiClientService';
@@ -9,7 +9,7 @@ export interface OfficialGovernmentSource {
   id: string;
   name: string;
   nameAr?: string;
-  jurisdiction: 'UAE Federal' | 'Abu Dhabi (OSHAD)' | 'Dubai' | 'Oman' | 'Saudi Arabia (HCIS)' | 'International (ISO)';
+  jurisdiction: 'Oman' | 'International (ISO)';
   code: string;
   officialPortalUrl: string;
   enforcementAuthority: string;
@@ -32,7 +32,7 @@ export interface LiveRegulatoryNotice {
   effectiveDate: string;
   gracePeriodDays: number;
   enforceabilityStatus: 'Mandatory Law' | 'Circular' | 'Advisory' | 'Inspection Focus';
-  statutoryFineAed: number;
+  statutoryFineAed: number; // Stored penalty amount in currency units (OMR in Oman context)
   summary: string;
   keyObligations: string[];
   sourceUrl?: string;
@@ -48,7 +48,7 @@ export interface EmployeeCertificationRecord {
   department: string;
   siteLocation: string;
   certificationName: string;
-  issuingBody: 'OPITO' | 'NEBOSH' | 'IOSH' | 'CISRS' | 'UAE Red Crescent' | 'MOH' | 'TUV' | 'ADNOC Certified' | 'Civil Defence';
+  issuingBody: 'OPITO' | 'NEBOSH' | 'IOSH' | 'CISRS' | 'Oman CDAA' | 'PDO Approved' | 'OPAL' | 'MOH';
   certificateNumber: string;
   issueDate: string;
   expiryDate: string;
@@ -84,7 +84,7 @@ export interface RegulatoryObligation {
   authority: string;
   obligationText: string;
   operationalCategory: 'Workforce Safety' | 'Plant & Machinery' | 'Environmental ESG' | 'Reporting & Audit';
-  penaltyExposureAed: number;
+  penaltyExposureAed: number; // Penalty exposure in OMR
   responsibleRole: string;
   assignedSite: string;
   complianceStatus: 'Fully Compliant' | 'Partially Compliant' | 'At Risk / Non-Compliant';
@@ -130,77 +130,77 @@ export interface RegulatoryAuditEvidence {
   expiryDate?: string;
 }
 
-// Initial Official Sources
+// Initial Official Sources - Sultanate of Oman
 const INITIAL_GOV_SOURCES: OfficialGovernmentSource[] = [
   {
-    id: 'SRC-OSHAD',
-    name: 'Abu Dhabi Public Health Center (ADPHC) / OSHAD-SF',
-    nameAr: 'مركز أبوظبي للصحة العامة - إطار أوشاد',
-    jurisdiction: 'Abu Dhabi (OSHAD)',
-    code: 'OSHAD-SF-v3.1',
-    officialPortalUrl: 'https://adphc.gov.ae',
-    enforcementAuthority: 'OSHAD Regulatory Authority',
-    statutoryScope: 'Mechanism 3.0, Mechanism 11.0 Incident Reporting, CoP 2.0 PPE, CoP 5.0 Work at Height, CoP 14.0 Confined Spaces',
-    activeRegulationsCount: 38,
-    lastSynchronized: '2026-10-10T08:00:00Z',
-    verificationStatus: 'Active',
-    contactHotline: '+971 800 555'
-  },
-  {
-    id: 'SRC-MOHRE',
-    name: 'UAE Ministry of Human Resources & Emiratisation (MoHRE)',
-    nameAr: 'وزارة الموارد البشرية والتوطين',
-    jurisdiction: 'UAE Federal',
-    code: 'UAE-LABOR-LAW-33-2021',
-    officialPortalUrl: 'https://mohre.gov.ae',
-    enforcementAuthority: 'Labour Inspection Affairs',
-    statutoryScope: 'Midday Summer Outdoor Work Ban, Occupational Health, Mandatory Health Insurance & Wages Protection System',
-    activeRegulationsCount: 24,
-    lastSynchronized: '2026-10-10T12:00:00Z',
-    verificationStatus: 'Active',
-    contactHotline: '600 590000'
-  },
-  {
-    id: 'SRC-CD',
-    name: 'UAE General Directorate of Civil Defence',
-    nameAr: 'القيادة العامة للدفاع المدني',
-    jurisdiction: 'UAE Federal',
-    code: 'UAE-FIRE-SAFETY-CODE-2024',
-    officialPortalUrl: 'https://moi.gov.ae',
-    enforcementAuthority: 'Ministry of Interior / Civil Defence',
-    statutoryScope: 'Fire Prevention, Combustible Cladding, Hazardous Chemical Storage & 24/7 Hassantuk Telemetry Connection',
-    activeRegulationsCount: 19,
-    lastSynchronized: '2026-10-09T14:30:00Z',
-    verificationStatus: 'Active',
-    contactHotline: '997'
-  },
-  {
-    id: 'SRC-EAD',
-    name: 'Environment Agency Abu Dhabi (EAD)',
-    nameAr: 'هيئة البيئة - أبوظبي',
-    jurisdiction: 'Abu Dhabi (OSHAD)',
-    code: 'EAD-LAW-16-2005',
-    officialPortalUrl: 'https://ead.gov.ae',
-    enforcementAuthority: 'Environmental Quality & Permitting Sector',
-    statutoryScope: 'Industrial Air Emissions, VOC Caps, Hazardous Waste Manifests & Marine Discharge Standards',
-    activeRegulationsCount: 29,
-    lastSynchronized: '2026-10-10T09:15:00Z',
-    verificationStatus: 'Active',
-    contactHotline: '+971 2 693 4444'
-  },
-  {
     id: 'SRC-OMAN-MOL',
-    name: 'Oman Ministry of Labour & Civil Defence (Sultanate of Oman)',
-    nameAr: 'وزارة العمل والدفاع المدني - سلطنة عمان',
+    name: 'Ministry of Labour (MoL) - Sultanate of Oman',
+    nameAr: 'وزارة العمل - سلطنة عمان',
     jurisdiction: 'Oman',
     code: 'OMN-MOL-RD-53-2023',
     officialPortalUrl: 'https://mol.gov.om',
-    enforcementAuthority: 'Directorate General of Labour Inspection',
-    statutoryScope: 'Ministerial Decision 286/2008 Occupational Safety, PDO PR-1172 Permit to Work, Midday Summer Heat Restrictions',
-    activeRegulationsCount: 22,
-    lastSynchronized: '2026-10-08T16:00:00Z',
+    enforcementAuthority: 'Directorate General of Labour Inspection & Occupational Health',
+    statutoryScope: 'Oman Labour Law RD 53/2023, Ministerial Decision 286/2008 OSH Regulations, Midday Summer Work Ban (12:30-15:30), 24h Serious Incident Annex 1 Notice',
+    activeRegulationsCount: 34,
+    lastSynchronized: '2026-10-10T12:00:00Z',
     verificationStatus: 'Active',
     contactHotline: '+968 2434 4444'
+  },
+  {
+    id: 'SRC-OMAN-PDO',
+    name: 'Petroleum Development Oman (PDO) Code of Practice',
+    nameAr: 'شركة تنمية نفط عمان - لائحة معايير الصحة والسلامة',
+    jurisdiction: 'Oman',
+    code: 'PDO-HSE-SP-1143',
+    officialPortalUrl: 'https://pdo.co.om',
+    enforcementAuthority: 'PDO Corporate HSE Directorate',
+    statutoryScope: 'PDO SP-1143 (PTW), SP-1170 (Heat Stress TWL), SP-1231 (LOTO), SP-1232 (Heights & Scaffolding), PR-1172 (Incident Reporting)',
+    activeRegulationsCount: 42,
+    lastSynchronized: '2026-10-10T08:00:00Z',
+    verificationStatus: 'Active',
+    contactHotline: '+968 2467 8100'
+  },
+  {
+    id: 'SRC-OMAN-CDAA',
+    name: 'Civil Defence and Ambulance Authority (CDAA)',
+    nameAr: 'هيئة الدفاع المدني والإسعاف - سلطنة عمان',
+    jurisdiction: 'Oman',
+    code: 'OMN-CDAA-FIRE-2024',
+    officialPortalUrl: 'https://cdaa.gov.om',
+    enforcementAuthority: 'CDAA Directorate of Fire Prevention',
+    statutoryScope: 'Industrial Fire Protection, Hazardous Chemical Storage Permits, Hydrocarbon Firefighting Deluge Systems, 24/7 Operations Monitoring',
+    activeRegulationsCount: 26,
+    lastSynchronized: '2026-10-09T14:30:00Z',
+    verificationStatus: 'Active',
+    contactHotline: '9999'
+  },
+  {
+    id: 'SRC-OMAN-EA',
+    name: 'Environment Authority (EA) - Sultanate of Oman',
+    nameAr: 'هيئة البيئة - سلطنة عمان',
+    jurisdiction: 'Oman',
+    code: 'OMN-EA-RD-114-2001',
+    officialPortalUrl: 'https://ea.gov.om',
+    enforcementAuthority: 'Environmental Inspection & Permitting Directorate',
+    statutoryScope: 'Royal Decree 114/2001 (Environment Protection & Pollution Control), Hazardous Waste Consignment Manifests with be\'ah, Air Emissions Quality',
+    activeRegulationsCount: 31,
+    lastSynchronized: '2026-10-10T09:15:00Z',
+    verificationStatus: 'Active',
+    contactHotline: '+968 2469 2453'
+  },
+  {
+    id: 'SRC-OMAN-OPAL',
+    name: 'Oman Society for Petroleum Services (OPAL)',
+    nameAr: 'الجمعية العمانية للخدمات النفطية - أوبال',
+    jurisdiction: 'Oman',
+    code: 'OPAL-CAMS-2024',
+    officialPortalUrl: 'https://opaloman.org',
+    enforcementAuthority: 'OPAL Standards Committee',
+    statutoryScope: 'OPAL Unified HSE Competency Framework, Defensive Driving Verification, Scaffold Inspection Passports, Contractor Pre-qualification',
+    activeRegulationsCount: 18,
+    lastSynchronized: '2026-10-08T16:00:00Z',
+    verificationStatus: 'Active',
+    contactHotline: '+968 2460 5700'
   },
   {
     id: 'SRC-ISO',
@@ -217,116 +217,119 @@ const INITIAL_GOV_SOURCES: OfficialGovernmentSource[] = [
   }
 ];
 
-// Initial Live Regulatory Notices
+// Initial Live Regulatory Notices - Sultanate of Oman
 const INITIAL_NOTICES: LiveRegulatoryNotice[] = [
   {
     id: 'NOT-2026-081',
-    title: 'MoHRE Ministerial Resolution on Summer Midday Work Ban & Heat Stress Protocols',
-    titleAr: 'قرار وزاري بشأن حظر العمل وقت الظهيرة وإجراءات الإجهاد الحراري',
-    authorityId: 'SRC-MOHRE',
-    authorityName: 'UAE Ministry of Human Resources & Emiratisation (MoHRE)',
-    jurisdiction: 'UAE Federal',
+    title: 'MoL Ministerial Decision 286/2008 Art. 16 Summer Midday Work Ban & TWL Monitoring',
+    titleAr: 'قرار وزاري رقم 286/2008 بشأن حظر العمل وقت الظهيرة وإجراءات الإجهاد الحراري',
+    authorityId: 'SRC-OMAN-MOL',
+    authorityName: 'Ministry of Labour (MoL) - Sultanate of Oman',
+    jurisdiction: 'Oman',
     category: 'Heat Stress & Environment',
     publicationDate: '2026-05-15',
-    effectiveDate: '2026-06-15',
-    gracePeriodDays: 30,
+    effectiveDate: '2026-06-01',
+    gracePeriodDays: 15,
     enforceabilityStatus: 'Mandatory Law',
-    statutoryFineAed: 50000,
-    summary: 'Strict prohibition of outdoor work between 12:30 PM and 3:00 PM during summer months. Employers must provide shaded rest areas, certified electrolyte hydration, and continuous WBGT thermal monitoring.',
+    statutoryFineAed: 5000,
+    summary: 'Strict prohibition of outdoor work between 12:30 PM and 3:30 PM during summer months (June through August) per MD 286/2008 Art. 16. Operations must deploy Thermal Work Limit (TWL) monitoring; stop outdoor work when TWL < 115 W/m².',
     keyObligations: [
-      'Cease all open-air tasks from 12:30 PM to 3:00 PM daily during the designated ban window',
-      'Provide shaded cooling shelters equipped with misting fans and certified potable cold water + electrolytes',
-      'Deploy calibrated Wet Bulb Globe Temperature (WBGT) index flags and hourly heat stress supervisor rounds',
-      'Display multilingual heat stress symptom charts (English, Arabic, Hindi, Urdu) across all project gates'
+      'Cease all open-air tasks from 12:30 PM to 3:30 PM daily during June, July, and August',
+      'Provide shaded cooling shelters equipped with misting fans and certified potable cold water with electrolytes',
+      'Deploy calibrated Thermal Work Limit (TWL in W/m²) monitors per PDO SP-1170 and enforce work-rest cycles',
+      'Display multilingual heat stress symptom charts (Arabic, English, Hindi, Urdu) across all project gates'
     ],
-    sourceUrl: 'https://mohre.gov.ae/en/laws-and-regulations.aspx'
+    sourceUrl: 'https://mol.gov.om'
   },
   {
     id: 'NOT-2026-074',
-    title: 'OSHAD-SF Technical Bulletin: Revised Working at Height & Fall Arrest Verification',
-    titleAr: 'نشرة أوشاد الفنية: تحديث معايير العمل على الارتفاع وأنظمة الحماية من السقوط',
-    authorityId: 'SRC-OSHAD',
-    authorityName: 'Abu Dhabi Public Health Center (ADPHC) / OSHAD-SF',
-    jurisdiction: 'Abu Dhabi (OSHAD)',
+    title: 'PDO SP-1232 Specification: Revised Working at Height & Scaffold Tagging Verification',
+    titleAr: 'المواصفة الفنية SP-1232: تحديث معايير العمل على الارتفاع وأنظمة ترخيص السقالات',
+    authorityId: 'SRC-OMAN-PDO',
+    authorityName: 'Petroleum Development Oman (PDO) Code of Practice',
+    jurisdiction: 'Oman',
     category: 'Labor & Workforce',
     publicationDate: '2026-06-01',
     effectiveDate: '2026-07-01',
     gracePeriodDays: 30,
     enforceabilityStatus: 'Mandatory Law',
-    statutoryFineAed: 75000,
-    summary: 'Updated CoP 5.0 requiring dual-lanyard 100% tie-off above 1.8 meters, certified scaffold inspection tags renewed every 7 days, and mandatory drop-prevention tethering for all hand tools.',
+    statutoryFineAed: 7500,
+    summary: 'Updated PDO SP-1232 requiring 100% tie-off above 1.8 meters, certified OPAL/CISRS scaffold inspection tags renewed every 7 days, and mandatory drop-prevention tool tethering on all elevated platforms.',
     keyObligations: [
-      'Enforce certified scaffold inspection tagging (Green/Red) by certified competent Scaffold Inspectors every 7 days',
+      'Enforce certified scaffold inspection tagging (Green/Red) by certified OPAL/CISRS Scaffold Inspectors every 7 days',
       'Mandatory secondary shock-absorbing fall arrest harnesses for all work platforms above 1.8m',
-      'Implement 100% tool tethering (anti-drop lanyards) on structural pipe racks and offshore towers',
+      'Implement 100% tool tethering (anti-drop lanyards) on structural pipe racks and hydrocarbon towers',
       'Submit third-party load test certificates for all suspended personnel cradles'
     ],
-    sourceUrl: 'https://adphc.gov.ae/en/oshad'
+    sourceUrl: 'https://pdo.co.om'
   },
   {
     id: 'NOT-2026-069',
-    title: 'UAE Civil Defence 2026 Fire Safety Directive: Hassantuk IoT Telemetry Mandatory Link',
-    titleAr: 'توجيهات الدفاع المدني 2026: إلزامية ربط أنظمة الإنذار بمنظومة حصنتك الذكية',
-    authorityId: 'SRC-CD',
-    authorityName: 'UAE General Directorate of Civil Defence',
-    jurisdiction: 'UAE Federal',
+    title: 'CDAA 2026 Industrial Fire Directive: Hazardous Material Storage & Fire Protection Approval',
+    titleAr: 'توجيهات هيئة الدفاع المدني والإسعاف 2026: اشتراطات تخزين المواد الخطرة وحماية المنشآت',
+    authorityId: 'SRC-OMAN-CDAA',
+    authorityName: 'Civil Defence and Ambulance Authority (CDAA)',
+    jurisdiction: 'Oman',
     category: 'Process Safety & Fire',
     publicationDate: '2026-04-20',
     effectiveDate: '2026-05-30',
     gracePeriodDays: 40,
     enforceabilityStatus: 'Mandatory Law',
-    statutoryFineAed: 100000,
-    summary: 'All Class-A industrial chemical warehouses and refinery offsite facilities must establish 24/7 direct telemetry connection to Hassantuk Civil Defence central monitoring.',
+    statutoryFineAed: 10000,
+    summary: 'All Class-A industrial chemical warehouses and refinery offsite facilities must maintain valid CDAA Fire Safety Approval and direct connection to industrial emergency command.',
     keyObligations: [
-      'Maintain certified 24/7 operational link to Civil Defence Hassantuk smart alarm backbone',
+      'Maintain certified 24/7 operational link to CDAA industrial fire alarm dispatch center',
       'Conduct bi-annual hydrostatic testing on all stationary foam deluge and hydrants',
       'Maintain maximum 50m separation between class-1 flammable storage tanks and administrative offices',
-      'Validate fire wardens training certifications with Civil Defence Academy every 24 months'
-    ]
+      'Validate fire wardens training certifications with CDAA Academy every 24 months'
+    ],
+    sourceUrl: 'https://cdaa.gov.om'
   },
   {
     id: 'NOT-2026-062',
-    title: 'Environment Agency Abu Dhabi: VOC Emissions Cap & Hazardous Waste Consignment Notes',
-    titleAr: 'هيئة البيئة - أبوظبي: الحد الأقصى للمركبات العضوية المتطايرة وإدارة النفايات الخطرة',
-    authorityId: 'SRC-EAD',
-    authorityName: 'Environment Agency Abu Dhabi (EAD)',
-    jurisdiction: 'Abu Dhabi (OSHAD)',
+    title: 'Environment Authority (EA): Royal Decree 114/2001 Hazardous Waste Manifests & be\'ah Consignment',
+    titleAr: 'هيئة البيئة: المرسوم السلطاني 114/2001 بشأن إدارة النفايات الخطرة ومنظومة بيئة',
+    authorityId: 'SRC-OMAN-EA',
+    authorityName: 'Environment Authority (EA) - Sultanate of Oman',
+    jurisdiction: 'Oman',
     category: 'Hazardous Chemicals & Waste',
     publicationDate: '2026-05-02',
     effectiveDate: '2026-06-01',
     gracePeriodDays: 30,
     enforceabilityStatus: 'Inspection Focus',
-    statutoryFineAed: 150000,
-    summary: 'Requires digital consignment tracking for all industrial chemical waste transported within Abu Dhabi. VOC emission monitors must log 15-minute averages with automated exceedance alarms.',
+    statutoryFineAed: 15000,
+    summary: 'Requires digital consignment tracking for all industrial chemical waste transported within Oman via authorized be\'ah hazardous waste treatment facilities per RD 114/2001.',
     keyObligations: [
-      'Upload electronic waste manifest consignment notes into EAD portal prior to tanker dispatch',
+      'Upload electronic waste manifest consignment notes into EA portal prior to tanker dispatch',
       'Equip vapor recovery units (VRU) on all hydrocarbon loading racks with continuous FID monitoring',
       'Secondary containment bunding required for 110% of largest chemical storage tank volume'
-    ]
+    ],
+    sourceUrl: 'https://ea.gov.om'
   },
   {
     id: 'NOT-2026-055',
-    title: 'Oman Ministry of Labour: Ministerial Decision on Industrial Gas Testing & Confined Spaces',
-    titleAr: 'وزارة العمل العمانية: القرار الوزاري بشأن فحص الغازات ودخول الأماكن المغلقة',
-    authorityId: 'SRC-OMAN-MOL',
-    authorityName: 'Oman Ministry of Labour & Civil Defence',
+    title: 'PDO SP-1143 & MoL: Industrial Gas Testing & Authorized Gas Tester (AGT) Certification',
+    titleAr: 'المواصفة SP-1143 ووزارة العمل: فحص الغازات الصناعية واعتماد فاحصي الغازات',
+    authorityId: 'SRC-OMAN-PDO',
+    authorityName: 'Petroleum Development Oman (PDO) Code of Practice',
     jurisdiction: 'Oman',
     category: 'Process Safety & Fire',
     publicationDate: '2026-03-10',
     effectiveDate: '2026-04-01',
     gracePeriodDays: 20,
     enforceabilityStatus: 'Mandatory Law',
-    statutoryFineAed: 45000,
+    statutoryFineAed: 4500,
     summary: 'Mandates OPITO/PDO certified Authorized Gas Tester (AGT) clearance before opening manways on hydrocarbon vessels. Daily bump-test calibration logs must be archived for 5 years.',
     keyObligations: [
       'Pre-entry continuous 4-gas testing (O2, LEL, H2S, CO) signed off by AGT Level 1/2',
       'Dedicated standby rescue sentry equipped with positive-pressure SCBA at all vessel entry points',
       'Calibrate gas detectors with certified calibration gas mixtures every 30 days'
-    ]
+    ],
+    sourceUrl: 'https://pdo.co.om'
   }
 ];
 
-// Initial Employee Certification Records
+// Initial Employee Certification Records - Oman Operations
 const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
   {
     id: 'CERT-001',
@@ -334,8 +337,8 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Rahul Gupta',
     employeeRole: 'Mechanical Technician / Frontline Worker',
     department: 'Mechanical Maintenance',
-    siteLocation: 'Al-Ruwais Polyolefin Asset',
-    certificationName: 'H2S Awareness & Escape Breathing Apparatus (OPITO)',
+    siteLocation: 'Mina Al Fahal Refinery Complex (Muscat)',
+    certificationName: 'H2S Awareness & Escape Breathing Apparatus (OPITO / PDO)',
     issuingBody: 'OPITO',
     certificateNumber: 'OPITO-H2S-88219',
     issueDate: '2025-05-10',
@@ -352,8 +355,8 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Rahul Gupta',
     employeeRole: 'Mechanical Technician / Frontline Worker',
     department: 'Mechanical Maintenance',
-    siteLocation: 'Al-Ruwais Polyolefin Asset',
-    certificationName: 'Working at Heights & Fall Arrest Level 2',
+    siteLocation: 'Mina Al Fahal Refinery Complex (Muscat)',
+    certificationName: 'Working at Heights & Fall Arrest Level 2 (OPAL Certified)',
     issuingBody: 'CISRS',
     certificateNumber: 'CISRS-WAH-44102',
     issueDate: '2024-11-05',
@@ -370,10 +373,10 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Marcus Chen',
     employeeRole: 'Site Supervisor / Permit Issuer',
     department: 'Infrastructure & Power',
-    siteLocation: 'Al-Ruwais Polyolefin Asset',
-    certificationName: 'Authorized Gas Tester Level 1 & 2 (AGT)',
-    issuingBody: 'ADNOC Certified',
-    certificateNumber: 'AGT-ADNOC-77192',
+    siteLocation: 'Fahud Field - Gathering Station Block 6',
+    certificationName: 'Authorized Gas Tester Level 1 & 2 (PDO SP-1143)',
+    issuingBody: 'PDO Approved',
+    certificateNumber: 'AGT-PDO-77192',
     issueDate: '2025-01-15',
     expiryDate: '2027-01-15',
     daysRemaining: 96,
@@ -388,10 +391,10 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Marcus Chen',
     employeeRole: 'Site Supervisor / Permit Issuer',
     department: 'Infrastructure & Power',
-    siteLocation: 'Al-Ruwais Polyolefin Asset',
-    certificationName: 'First Aid at Work & CPR (UAE Red Crescent)',
-    issuingBody: 'UAE Red Crescent',
-    certificateNumber: 'RC-FA-99023',
+    siteLocation: 'Fahud Field - Gathering Station Block 6',
+    certificationName: 'First Aid at Work & Industrial Trauma Response',
+    issuingBody: 'Oman CDAA',
+    certificateNumber: 'CDAA-FA-99023',
     issueDate: '2024-10-12',
     expiryDate: '2026-10-12',
     daysRemaining: 1,
@@ -406,7 +409,7 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Fatima Al-Kaabi',
     employeeRole: 'Site HSE Officer',
     department: 'Field Safety Inspection',
-    siteLocation: 'Habshan Gas Complex',
+    siteLocation: 'Khazzan Gas Processing Complex (Block 61)',
     certificationName: 'NEBOSH International General Certificate (IGC)',
     issuingBody: 'NEBOSH',
     certificateNumber: 'NEBOSH-IGC-009182',
@@ -424,9 +427,9 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Sarah Jones',
     employeeRole: 'Site HSE Manager',
     department: 'HSE Management',
-    siteLocation: 'Al-Ruwais Polyolefin Asset',
+    siteLocation: 'Mina Al Fahal Refinery Complex (Muscat)',
     certificationName: 'ISO 45001:2018 Lead Auditor (IRCA Certified)',
-    issuingBody: 'ADNOC Certified',
+    issuingBody: 'PDO Approved',
     certificateNumber: 'IRCA-OHS-33291',
     issueDate: '2023-09-14',
     expiryDate: '2026-09-14',
@@ -442,9 +445,9 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Khalid Al-Dhaheri',
     employeeRole: 'Environmental Officer',
     department: 'Sustainability & ESG',
-    siteLocation: 'Musaffah Industrial Hub',
+    siteLocation: 'Sohar Industrial Port Terminal',
     certificationName: 'ISO 14001:2015 Lead Environmental Auditor',
-    issuingBody: 'ADNOC Certified',
+    issuingBody: 'PDO Approved',
     certificateNumber: 'IRCA-ENV-55102',
     issueDate: '2024-08-10',
     expiryDate: '2027-08-10',
@@ -460,10 +463,10 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     employeeName: 'Alice Smith',
     employeeRole: 'Lead Internal Auditor',
     department: 'Quality & Compliance',
-    siteLocation: 'Group Corporate HQ',
-    certificationName: 'OSHAD-SF Certified General Safety Practitioner',
-    issuingBody: 'Civil Defence',
-    certificateNumber: 'OSHAD-PRAC-1192',
+    siteLocation: 'Group Corporate HQ (Muscat)',
+    certificationName: 'Oman MoL / PDO Certified OSH Practitioner',
+    issuingBody: 'OPAL',
+    certificateNumber: 'OPAL-PRAC-1192',
     issueDate: '2025-02-18',
     expiryDate: '2027-02-18',
     daysRemaining: 130,
@@ -474,12 +477,12 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
   }
 ];
 
-// Initial ESG Metrics Records
+// Initial ESG Metrics Records - Sultanate of Oman
 const INITIAL_ESG_RECORDS: HseEsgMetricRecord[] = [
   {
-    id: 'ESG-RUW-2026',
-    facilityId: 'FAC-RUW-01',
-    facilityName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    id: 'ESG-MAF-2026',
+    facilityId: 'FAC-MAF-01',
+    facilityName: 'Mina Al Fahal Refinery & Terminal (Oman)',
     reportingPeriod: 'Q3 2026',
     scope1EmissionsTons: 14250,
     scope2EmissionsTons: 6840,
@@ -494,9 +497,9 @@ const INITIAL_ESG_RECORDS: HseEsgMetricRecord[] = [
     lastAuditDate: '2026-09-18'
   },
   {
-    id: 'ESG-HBS-2026',
-    facilityId: 'FAC-HBS-02',
-    facilityName: 'Habshan Gas Sweetening Complex',
+    id: 'ESG-KHZ-2026',
+    facilityId: 'FAC-KHZ-02',
+    facilityName: 'Khazzan Gas Processing Complex (Block 61)',
     reportingPeriod: 'Q3 2026',
     scope1EmissionsTons: 31200,
     scope2EmissionsTons: 11400,
@@ -511,9 +514,9 @@ const INITIAL_ESG_RECORDS: HseEsgMetricRecord[] = [
     lastAuditDate: '2026-08-25'
   },
   {
-    id: 'ESG-MSF-2026',
-    facilityId: 'FAC-MSF-03',
-    facilityName: 'Musaffah Industrial Logistics Hub',
+    id: 'ESG-SOH-2026',
+    facilityId: 'FAC-SOH-03',
+    facilityName: 'Sohar Industrial Port Terminal',
     reportingPeriod: 'Q3 2026',
     scope1EmissionsTons: 5400,
     scope2EmissionsTons: 4100,
@@ -546,32 +549,32 @@ const INITIAL_ESG_RECORDS: HseEsgMetricRecord[] = [
   }
 ];
 
-// Initial Regulatory Obligations
+// Initial Regulatory Obligations - Sultanate of Oman
 const INITIAL_OBLIGATIONS: RegulatoryObligation[] = [
   {
     id: 'OBL-001',
     regulationId: 'NOT-2026-081',
-    regulationTitle: 'MoHRE Midday Work Ban & Heat Stress Monitoring',
-    authority: 'UAE MoHRE',
-    obligationText: 'Deploy calibrated WBGT heat stress flags, shaded hydration stations, and cease outdoor lifting between 12:30 PM - 3:00 PM.',
+    regulationTitle: 'Oman MoL Midday Work Ban & TWL Heat Stress Monitoring',
+    authority: 'Oman Ministry of Labour',
+    obligationText: 'Deploy calibrated TWL heat stress monitors, shaded hydration stations, and cease outdoor work between 12:30 PM - 3:30 PM.',
     operationalCategory: 'Workforce Safety',
-    penaltyExposureAed: 50000,
+    penaltyExposureAed: 5000,
     responsibleRole: 'Site HSE Officer / Supervisor',
-    assignedSite: 'Al-Ruwais Polyolefin Asset',
+    assignedSite: 'Mina Al Fahal Refinery & Terminal',
     complianceStatus: 'Fully Compliant',
-    verificationEvidenceId: 'EVD-WBGT-01',
+    verificationEvidenceId: 'EVD-TWL-01',
     nextAuditDueDate: '2026-10-25'
   },
   {
     id: 'OBL-002',
     regulationId: 'NOT-2026-074',
-    regulationTitle: 'OSHAD-SF CoP 5.0 Scaffold Inspection Cycle',
-    authority: 'Abu Dhabi OSHAD',
-    obligationText: 'All access scaffolding must have green tagging renewed every 7 calendar days by certified CISRS/OSHA scaffold inspector.',
+    regulationTitle: 'PDO SP-1232 Scaffold Inspection Cycle (7 Days)',
+    authority: 'Petroleum Development Oman (PDO)',
+    obligationText: 'All access scaffolding must have green tagging renewed every 7 calendar days by certified OPAL/CISRS scaffold inspector.',
     operationalCategory: 'Plant & Machinery',
-    penaltyExposureAed: 75000,
+    penaltyExposureAed: 7500,
     responsibleRole: 'Scaffolding Supervisor',
-    assignedSite: 'Habshan Gas Complex',
+    assignedSite: 'Khazzan Gas Processing Complex',
     complianceStatus: 'Partially Compliant',
     verificationEvidenceId: 'EVD-SCAF-04',
     nextAuditDueDate: '2026-10-18',
@@ -580,39 +583,39 @@ const INITIAL_OBLIGATIONS: RegulatoryObligation[] = [
   {
     id: 'OBL-003',
     regulationId: 'NOT-2026-069',
-    regulationTitle: 'Civil Defence Hassantuk Industrial Fire Alarm Link',
-    authority: 'UAE Civil Defence',
-    obligationText: 'Maintain uninterrupted IoT tele-monitoring linkage between central master alarm panel and Civil Defence Operations Command.',
+    regulationTitle: 'CDAA Industrial Fire Alarm & Emergency Telemetry Link',
+    authority: 'Civil Defence and Ambulance Authority (CDAA)',
+    obligationText: 'Maintain uninterrupted alarm panel linkage with CDAA industrial emergency command.',
     operationalCategory: 'Plant & Machinery',
-    penaltyExposureAed: 100000,
+    penaltyExposureAed: 10000,
     responsibleRole: 'Maintenance Lead / HSE Manager',
-    assignedSite: 'Musaffah Industrial Logistics Hub',
+    assignedSite: 'Sohar Industrial Port Terminal',
     complianceStatus: 'Fully Compliant',
-    verificationEvidenceId: 'EVD-CD-99',
+    verificationEvidenceId: 'EVD-CDAA-99',
     nextAuditDueDate: '2026-11-15'
   },
   {
     id: 'OBL-004',
     regulationId: 'NOT-2026-062',
-    regulationTitle: 'EAD Hazardous Chemical Waste Consignment Manifests',
-    authority: 'Environment Agency Abu Dhabi (EAD)',
-    obligationText: 'Consignment manifest codes for chemical sludge and oily residue must be verified prior to transportation off-site.',
+    regulationTitle: 'Environment Authority Hazardous Waste Manifests & be\'ah Consignment',
+    authority: 'Environment Authority (Oman)',
+    obligationText: 'Consignment manifest codes for chemical sludge and oily residue must be verified with be\'ah prior to transportation.',
     operationalCategory: 'Environmental ESG',
-    penaltyExposureAed: 150000,
+    penaltyExposureAed: 15000,
     responsibleRole: 'Environmental Officer',
-    assignedSite: 'Al-Ruwais Polyolefin Asset',
+    assignedSite: 'Duqm Special Economic Zone (SEZAD)',
     complianceStatus: 'Fully Compliant',
-    verificationEvidenceId: 'EVD-EAD-31',
+    verificationEvidenceId: 'EVD-EA-31',
     nextAuditDueDate: '2026-11-01'
   },
   {
     id: 'OBL-005',
     regulationId: 'NOT-2026-055',
-    regulationTitle: 'Oman MoL Ministerial Decision 286/2008 Gas Testing Sentry',
-    authority: 'Oman Ministry of Labour',
+    regulationTitle: 'PDO SP-1143 & MoL MD 286/2008 Gas Testing Sentry',
+    authority: 'Petroleum Development Oman (PDO)',
     obligationText: 'Confined space entry permits must feature verified AGT atmospheric test sheet and constant entry sentry with SCBA pack.',
     operationalCategory: 'Workforce Safety',
-    penaltyExposureAed: 45000,
+    penaltyExposureAed: 4500,
     responsibleRole: 'Site Supervisor',
     assignedSite: 'Fahud Concession Field Block 6',
     complianceStatus: 'At Risk / Non-Compliant',
@@ -622,11 +625,11 @@ const INITIAL_OBLIGATIONS: RegulatoryObligation[] = [
   }
 ];
 
-// Initial Site Scorecards
+// Initial Site Scorecards - Sultanate of Oman
 const INITIAL_SCORECARDS: ComplianceScorecard[] = [
   {
-    facilityId: 'FAC-RUW-01',
-    facilityName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    facilityId: 'FAC-MAF-01',
+    facilityName: 'Mina Al Fahal Refinery & Terminal (Oman)',
     overallScore: 98.4,
     laborScore: 99.0,
     fireSafetyScore: 97.5,
@@ -638,8 +641,8 @@ const INITIAL_SCORECARDS: ComplianceScorecard[] = [
     unresolvedGaps: 1
   },
   {
-    facilityId: 'FAC-MSF-03',
-    facilityName: 'Musaffah Industrial Logistics Hub (UAE)',
+    facilityId: 'FAC-SOH-03',
+    facilityName: 'Sohar Industrial Port Terminal (Oman)',
     overallScore: 97.2,
     laborScore: 98.5,
     fireSafetyScore: 96.8,
@@ -651,8 +654,8 @@ const INITIAL_SCORECARDS: ComplianceScorecard[] = [
     unresolvedGaps: 2
   },
   {
-    facilityId: 'FAC-HBS-02',
-    facilityName: 'Habshan Gas Sweetening Complex (UAE)',
+    facilityId: 'FAC-KHZ-02',
+    facilityName: 'Khazzan Gas Processing Complex (Oman)',
     overallScore: 94.8,
     laborScore: 95.0,
     fireSafetyScore: 95.2,
@@ -718,49 +721,49 @@ const INITIAL_ESCALATION_RULES: ComplianceEscalationRule[] = [
   }
 ];
 
-// Initial Audit Evidence
+// Initial Audit Evidence - Sultanate of Oman
 const INITIAL_AUDIT_EVIDENCE: RegulatoryAuditEvidence[] = [
   {
-    id: 'EVD-WBGT-01',
+    id: 'EVD-TWL-01',
     obligationId: 'OBL-001',
-    title: 'MoHRE Midday Heat Stress WBGT Calibrated Flag Log - Ruwais Berth 1',
+    title: 'MoL Midday Heat Stress TWL Calibrated Monitoring Log - Mina Al Fahal Berth 1',
     documentType: 'Bump Test Log',
-    fileUrl: '/evidence/wbgt-oct-2026.pdf',
+    fileUrl: '/evidence/twl-oct-2026.pdf',
     uploadDate: '2026-10-10',
-    certifiedBy: 'Marcus Chen (Site Supervisor)',
+    certifiedBy: 'Rashid Al-Kharusi (HSE Lead)',
     verifiedStatus: 'Approved',
     expiryDate: '2026-11-10'
   },
   {
     id: 'EVD-SCAF-04',
     obligationId: 'OBL-002',
-    title: '7-Day Scaffold Inspection Certificate - Flare Line Header Platform',
+    title: '7-Day Scaffold Inspection Certificate - Khazzan Flare Line Header Platform',
     documentType: 'Third-Party Inspection',
-    fileUrl: '/evidence/scaffold-tag-hbs-04.pdf',
+    fileUrl: '/evidence/scaffold-tag-khz-04.pdf',
     uploadDate: '2026-10-09',
-    certifiedBy: 'Fatima Al-Kaabi (HSE Officer)',
+    certifiedBy: 'Salim Al-Busaidi (HSE Officer)',
     verifiedStatus: 'Approved',
     expiryDate: '2026-10-16'
   },
   {
-    id: 'EVD-CD-99',
+    id: 'EVD-CDAA-99',
     obligationId: 'OBL-003',
-    title: 'Civil Defence Hassantuk 24/7 Smart Telemetry Compliance Certificate',
+    title: 'Civil Defence & Ambulance Authority (CDAA) Fire Safety Compliance Certificate',
     documentType: 'Civil Defence Certificate',
-    fileUrl: '/evidence/hassantuk-cert-2026.pdf',
+    fileUrl: '/evidence/cdaa-cert-2026.pdf',
     uploadDate: '2026-09-01',
-    certifiedBy: 'General Directorate of Civil Defence',
+    certifiedBy: 'CDAA Directorate of Fire Prevention',
     verifiedStatus: 'Approved',
     expiryDate: '2027-09-01'
   },
   {
-    id: 'EVD-EAD-31',
+    id: 'EVD-EA-31',
     obligationId: 'OBL-004',
-    title: 'EAD Hazardous Chemical Waste Transport Electronic Manifest #WM-99120',
+    title: 'Environment Authority Hazardous Chemical Waste Transport Manifest #WM-99120',
     documentType: 'Statutory Permit',
-    fileUrl: '/evidence/ead-manifest-99120.pdf',
+    fileUrl: '/evidence/ea-manifest-99120.pdf',
     uploadDate: '2026-10-08',
-    certifiedBy: 'Khalid Al-Dhaheri (Environmental Officer)',
+    certifiedBy: 'Nasser Al-Harthy (Environmental Officer)',
     verifiedStatus: 'Approved'
   }
 ];
@@ -815,12 +818,12 @@ export class RegulatoryIntelligenceService {
   }
 
   // Live Grounded Search for Real-Time Statutory Updates using Gemini
-  static async searchLiveStatutoryUpdates(query: string, jurisdiction = 'United Arab Emirates / GCC'): Promise<{
+  static async searchLiveStatutoryUpdates(query: string, jurisdiction = 'Sultanate of Oman'): Promise<{
     text: string;
     sources: GroundingSource[];
   }> {
     const res = await GeminiClientService.querySearchGrounding({
-      query: `${query} (Official UAE MoHRE, Abu Dhabi OSHAD, UAE Civil Defence, or Oman Ministry of Labour regulatory circulars)`,
+      query: `${query} (Official Sultanate of Oman Ministry of Labour, PDO Specifications, CDAA, or Environment Authority regulatory decrees)`,
       jurisdiction
     });
     return {

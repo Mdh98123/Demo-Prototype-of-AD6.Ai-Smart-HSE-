@@ -27,70 +27,81 @@ export interface PredefinedLocation {
 
 export const PREDEFINED_LOCATIONS: PredefinedLocation[] = [
   { 
-    id: 'ruwais-a', 
-    name: 'Ruwais Refinery Zone A', 
-    coords: '24.1302, 52.7306', 
+    id: 'mina-alfahal-a', 
+    name: 'Mina Al Fahal Refinery Zone A (Muscat)', 
+    coords: '23.6300, 58.5100', 
     type: 'Industrial', 
     status: 'High Risk', 
-    description: 'Main refining sector. High pressure steam and chemical hazards present.',
-    hazards: ['H2S Gas', 'Thermal', 'High Pressure'],
-    safetyRating: 92,
-    telemetry: { windSpeed: '12 km/h', h2sLevel: '0.2 ppm', temp: '42°C' }
+    description: 'Central crude distillation, marine loading bunkering, and PDO central terminal.',
+    hazards: ['H2S Gas', 'Thermal Stress (TWL)', 'High Pressure Lines'],
+    safetyRating: 94,
+    telemetry: { windSpeed: '11 km/h', h2sLevel: '0.2 ppm', temp: '36°C' }
   },
   { 
-    id: 'ruwais-b', 
-    name: 'Ruwais Refinery Zone B', 
-    coords: '24.1310, 52.7320', 
+    id: 'sohar-port', 
+    name: 'Sohar Port & Petrochemical Cluster', 
+    coords: '24.4980, 56.6340', 
     type: 'Industrial', 
     status: 'Normal', 
-    description: 'Storage hub and secondary processing units.',
-    hazards: ['Flammable Vapors', 'Vehicle Traffic'],
+    description: 'Deepwater logistics, aromatics plant, and Liwa Plastics industrial complex.',
+    hazards: ['Flammable Vapors', 'Vehicle Traffic', 'Heavy Machinery'],
     safetyRating: 98,
-    telemetry: { windSpeed: '8 km/h', h2sLevel: '0.0 ppm', temp: '40°C' }
+    telemetry: { windSpeed: '9 km/h', h2sLevel: '0.0 ppm', temp: '34°C' }
   },
   { 
-    id: 'habshan', 
-    name: 'Habshan Gas Complex', 
-    coords: '23.7500, 53.5000', 
+    id: 'khazzan-gas', 
+    name: 'Khazzan Gas Processing Complex (Block 61)', 
+    coords: '21.5000, 56.0000', 
     type: 'Gas', 
     status: 'High Risk', 
-    description: 'Critical sour gas processing facility. Specialized PPE mandatory.',
-    hazards: ['Sour Gas (H2S)', 'High Temperature', 'Remote Work'],
-    safetyRating: 88,
-    telemetry: { windSpeed: '22 km/h', h2sLevel: '1.4 ppm', temp: '45°C' }
+    description: 'Critical tight gas processing facility. High-pressure sour gas conditioning.',
+    hazards: ['Sour Gas (H2S)', 'Extreme Heat', 'Remote Desert Operations'],
+    safetyRating: 91,
+    telemetry: { windSpeed: '18 km/h', h2sLevel: '0.8 ppm', temp: '42°C' }
   },
   { 
-    id: 'jebel-ali-c', 
-    name: 'Jebel Ali Site C', 
-    coords: '25.0409, 55.1187', 
-    type: 'Construction', 
+    id: 'duqm-sezad', 
+    name: 'Duqm Special Economic Zone (SEZAD / OQ8)', 
+    coords: '19.6738, 57.7042', 
+    type: 'Terminal', 
     status: 'Normal', 
-    description: 'Civil works for phase 4 expansion project.',
-    hazards: ['Dropped Objects', 'Dust', 'Noise'],
-    safetyRating: 85,
-    telemetry: { windSpeed: '15 km/h', h2sLevel: '0.0 ppm', temp: '38°C' }
+    description: 'OQ8 230k BPD Refinery, commercial drydock and bulk liquid marine terminal.',
+    hazards: ['Work Over Water', 'Heavy Rigging', 'Confined Spaces'],
+    safetyRating: 96,
+    telemetry: { windSpeed: '16 km/h', h2sLevel: '0.0 ppm', temp: '32°C' }
   },
   { 
-    id: 'fujairah', 
-    name: 'Fujairah Oil Terminal', 
-    coords: '25.1288, 56.3265', 
+    id: 'fahud-hub', 
+    name: 'Fahud Concession Hub (Block 6)', 
+    coords: '22.3167, 56.4833', 
+    type: 'Industrial', 
+    status: 'High Risk', 
+    description: 'PDO Main Oil Line gathering manifold, gas compressor trains, and well clusters.',
+    hazards: ['H2S Gas', 'Extreme Heat (TWL < 115 W/m²)', 'High Voltage'],
+    safetyRating: 89,
+    telemetry: { windSpeed: '14 km/h', h2sLevel: '0.6 ppm', temp: '44°C' }
+  },
+  { 
+    id: 'salalah-fz', 
+    name: 'Salalah Free Zone & Chemical Terminal', 
+    coords: '16.9500, 54.0000', 
     type: 'Terminal', 
     status: 'Maintenance', 
-    description: 'Marine terminal and storage tank farm.',
-    hazards: ['Confined Spaces', 'Work Over Water'],
-    safetyRating: 94,
-    telemetry: { windSpeed: '18 km/h', h2sLevel: '0.1 ppm', temp: '36°C' }
+    description: 'Methanol & ammonia marine export terminal and Port of Salalah container berths.',
+    hazards: ['Chemical Toxicity', 'Marine Loading', 'Vessel SIMOPS'],
+    safetyRating: 95,
+    telemetry: { windSpeed: '12 km/h', h2sLevel: '0.0 ppm', temp: '29°C' }
   },
   { 
-    id: 'hq-ad', 
-    name: 'Abu Dhabi HQ', 
-    coords: '24.4539, 54.3773', 
+    id: 'hq-muscat', 
+    name: 'Muscat Corporate HQ (Mina Al Fahal)', 
+    coords: '23.6143, 58.5453', 
     type: 'Office', 
     status: 'Normal', 
-    description: 'Corporate headquarters and training center.',
+    description: 'Corporate headquarters, regulatory compliance liaison, and central crisis control.',
     hazards: ['Ergonomics'],
     safetyRating: 100,
-    telemetry: { windSpeed: '5 km/h', h2sLevel: '0.0 ppm', temp: '24°C' }
+    telemetry: { windSpeed: '6 km/h', h2sLevel: '0.0 ppm', temp: '26°C' }
   }
 ];
 

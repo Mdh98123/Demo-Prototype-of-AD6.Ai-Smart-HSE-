@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   Building2, MapPin, Search, Globe, ChevronDown, Command, 
   Menu, X, Bell, Shield, AlertTriangle, Thermometer, Radio, 
-  Check, Flame, User, LogOut, Settings, HelpCircle, ExternalLink, Activity, Sparkles,
-  Users, Briefcase, HardHat
+  Check, Flame, User, LogOut, Settings, HelpCircle, ExternalLink, Activity, Sparkles
 } from 'lucide-react';
 import { useTenant } from '../contexts/TenantContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -38,13 +37,11 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
   const [isSiteMenuOpen, setIsSiteMenuOpen] = useState(false);
   const [isJurisdictionMenuOpen, setIsJurisdictionMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isPersonaMenuOpen, setIsPersonaMenuOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const tenantRef = useRef<HTMLDivElement>(null);
   const siteRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  const personaRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -58,112 +55,12 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setIsProfileMenuOpen(false);
       }
-      if (personaRef.current && !personaRef.current.contains(e.target as Node)) {
-        setIsPersonaMenuOpen(false);
-      }
     };
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
-  // Standard Sales Pitch Personas as specified in Task 2 & Task 6
-  const PITCH_PERSONAS = [
-    {
-      roleCategory: 'Frontline Worker',
-      userId: 'u6', // Rahul Gupta
-      name: 'Rahul Gupta',
-      roleTitle: 'Frontline Worker (Mechanical)',
-      icon: HardHat,
-      description: 'Field tasks, near miss reporting, toolbox briefings, Stop Work Authority'
-    },
-    {
-      roleCategory: 'Permit Issuer / Supervisor',
-      userId: 'u7', // Marcus Chen
-      name: 'Marcus Chen',
-      roleTitle: 'Site Supervisor (Permit Issuer)',
-      icon: Briefcase,
-      description: 'Permit approvals (PTW), active SIMOPS map, field inspections, shift handover'
-    },
-    {
-      roleCategory: 'Site HSE Officer',
-      userId: 'u5', // Fatima Al-Kaabi
-      name: 'Fatima Al-Kaabi',
-      roleTitle: 'Field HSE Officer & Lead Investigator',
-      icon: Shield,
-      description: 'Incident triage, audits & field checks, CAPA actions, contractor vetting'
-    },
-    {
-      roleCategory: 'Site HSE Manager',
-      userId: 'u4', // Sarah Jones
-      name: 'Sarah Jones',
-      roleTitle: 'Site HSE Manager',
-      icon: Shield,
-      description: 'Statutory compliance, Level 3 PTW approvals, investigation sign-off, OSHAD return'
-    },
-    {
-      roleCategory: 'Regional HSE Director',
-      userId: 'u3', // Ahmed Al-Mansoori
-      name: 'Ahmed Al-Mansoori',
-      roleTitle: 'Regional HSE Director',
-      icon: Activity,
-      description: 'Multi-site Abu Dhabi governance, ADPHC liaison, capital risk investments'
-    },
-    {
-      roleCategory: 'Group Head of HSE',
-      userId: 'u2', // Dr. Layla Hassan
-      name: 'Dr. Layla Hassan',
-      roleTitle: 'Head of Group HSE',
-      icon: Activity,
-      description: 'Executive analytics, multi-asset compliance scorecard, audit logs, board pack'
-    },
-    {
-      roleCategory: 'Group CEO',
-      userId: 'u1', // James Sterling
-      name: 'James Sterling',
-      roleTitle: 'Chief Executive Officer',
-      icon: Users,
-      description: 'Board HSE governance, executive safety culture, zero-harm capital allocation'
-    },
-    {
-      roleCategory: 'Environmental Specialist',
-      userId: 'u10', // Khalid Al-Dhaheri
-      name: 'Khalid Al-Dhaheri',
-      roleTitle: 'Senior Environmental Officer',
-      icon: Thermometer,
-      description: 'CEMS emissions monitoring, WBGT heat flags, ISO 14001, chemical spills'
-    },
-    {
-      roleCategory: 'Lead Internal Auditor',
-      userId: 'u12', // Alice Smith
-      name: 'Alice Smith',
-      roleTitle: 'Lead Quality & Safety Auditor',
-      icon: Shield,
-      description: 'ISO 45001 / 14001 surveillance audits, non-conformance closeout, audit vault'
-    },
-    {
-      roleCategory: 'System Admin',
-      userId: 'admin', // System Admin
-      name: 'System Admin',
-      roleTitle: 'System Administrator',
-      icon: Settings,
-      description: 'Full platform access, tenant configuration, RBAC matrix, API integrations'
-    }
-  ];
 
-  // Current persona category name
-  const currentPersonaLabel = (() => {
-    if (currentUser?.role === 'Worker') return 'Frontline Worker';
-    if (currentUser?.role === 'Site_Supervisor') return 'Permit Issuer';
-    if (currentUser?.role === 'HSE_Officer') return 'HSE Officer';
-    if (currentUser?.role === 'Site_HSE_Manager') return 'Site HSE Manager';
-    if (currentUser?.role === 'Regional_HSE_Director') return 'Regional HSE Director';
-    if (currentUser?.role === 'Head_Group_HSE') return 'Head of Group HSE';
-    if (currentUser?.role === 'CEO') return 'Group CEO';
-    if (currentUser?.role === 'Environmental_Officer') return 'Environmental Specialist';
-    if (currentUser?.role === 'Internal_Auditor') return 'Lead Internal Auditor';
-    if (currentUser?.role === 'ADMIN') return 'System Admin';
-    return currentUser?.role?.replace(/_/g, ' ') || 'HSE User';
-  })();
 
   // Current View Breadcrumb / Spatial Context
   const currentViewDetails = (() => {
@@ -199,7 +96,7 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
         return { section: 'Workforce', title: 'Training & Competency', badge: 'OPITO' };
       case 'compliance-intelligence':
       case 'comply-flow':
-        return { section: 'Regulatory', title: 'Comply-Flow Regulations', badge: 'OSHAD SF' };
+        return { section: 'Regulatory', title: 'Comply-Flow Regulations', badge: 'MD 286 / PDO' };
       case 'predictive-safety':
         return { section: 'AI Analytics', title: 'Predictive Safety (SIF)', badge: 'Leading KPI' };
       case 'projects':
@@ -239,7 +136,6 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
                 setIsSiteMenuOpen(false);
                 setIsJurisdictionMenuOpen(false);
                 setIsProfileMenuOpen(false);
-                setIsPersonaMenuOpen(false);
               }}
               className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-start transition-all hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               title="Switch Tenant Organization"
@@ -291,7 +187,7 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
                           className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 font-bold text-xs shadow-sm"
                           style={{ backgroundColor: tenant.brandColor }}
                         >
-                          {tenant.country === 'Oman' ? 'OM' : 'AE'}
+                          OM
                         </div>
                         <div className="min-w-0">
                           <p className="text-xs font-bold text-slate-900 truncate">{tenant.name}</p>
@@ -316,7 +212,6 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
                 setIsTenantMenuOpen(false);
                 setIsJurisdictionMenuOpen(false);
                 setIsProfileMenuOpen(false);
-                setIsPersonaMenuOpen(false);
               }}
               className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-start transition-all hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               title="Select Active Operational Site"
@@ -403,7 +298,6 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
               setIsJurisdictionMenuOpen(!isJurisdictionMenuOpen);
               setIsTenantMenuOpen(false);
               setIsSiteMenuOpen(false);
-              setIsPersonaMenuOpen(false);
               setIsProfileMenuOpen(false);
             }}
             onClose={() => setIsJurisdictionMenuOpen(false)}
@@ -426,23 +320,7 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
 
         </div>
 
-        {/* Center: Global Search Command Palette Trigger */}
-        <div className="hidden xl:flex flex-1 max-w-xs 2xl:max-w-md mx-2">
-          <button
-            onClick={onOpenCommandPalette}
-            className="w-full flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-xs text-slate-500 hover:text-slate-800 transition-all shadow-xs group"
-          >
-            <div className="flex items-center gap-2.5">
-              <Search size={14} className="text-slate-400 group-hover:text-blue-600 transition-colors" />
-              <span className="font-medium truncate text-slate-600">Search permits, incidents, hazards...</span>
-            </div>
-            <kbd className="hidden sm:inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-md border border-slate-200 text-[10px] font-mono text-slate-500 font-bold shadow-xs">
-              <Command size={10} /> K
-            </kbd>
-          </button>
-        </div>
-
-        {/* Right Section: Persona Switcher, Bilingual Switcher, AI Copilot, Notifications, Profile */}
+        {/* Right Section: Bilingual Switcher, AI Copilot, Notifications, Profile */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           
           {/* Quick Search Button for Viewports without full search bar */}
@@ -454,90 +332,6 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
           >
             <Search size={16} />
           </button>
-
-          {/* Quick Active Persona Switcher Pill (Required for Executive Sales Pitch Demonstration) */}
-          <div className="relative" ref={personaRef}>
-            <button
-              onClick={() => {
-                setIsPersonaMenuOpen(!isPersonaMenuOpen);
-                setIsTenantMenuOpen(false);
-                setIsSiteMenuOpen(false);
-                setIsJurisdictionMenuOpen(false);
-                setIsProfileMenuOpen(false);
-              }}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50/90 hover:bg-blue-100/90 border border-blue-200 text-xs font-bold text-blue-800 transition-all active:scale-95 shadow-xs"
-              title="Active Persona: Switch Role Profile for Sales Pitch Demo"
-            >
-              <Users size={14} className="text-blue-600 shrink-0" />
-              <span className="hidden sm:inline font-bold">Role:</span>
-              <span className="font-extrabold text-blue-900 truncate max-w-[100px] sm:max-w-[140px] md:max-w-none">{currentPersonaLabel}</span>
-              <ChevronDown size={13} className={`text-blue-600 transition-transform shrink-0 ${isPersonaMenuOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {/* Persona Switcher Dropdown */}
-            {isPersonaMenuOpen && (
-              <div className="absolute end-0 mt-2 w-80 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-2.5 py-2 border-b border-slate-100 flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                      RBAC Persona Simulator
-                    </p>
-                    <p className="text-xs font-bold text-slate-900">
-                      Select Role for Pitch Demonstration
-                    </p>
-                  </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-                    Live Filter
-                  </span>
-                </div>
-
-                <div className="py-1.5 space-y-1 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {PITCH_PERSONAS.map(p => {
-                    const Icon = p.icon;
-                    const isSelected = currentUser?.id === p.userId || 
-                      (p.roleCategory === 'Frontline Worker' && currentUser?.role === 'Worker') ||
-                      (p.roleCategory === 'Permit Issuer / Supervisor' && currentUser?.role === 'Site_Supervisor') ||
-                      (p.roleCategory === 'Site HSE Officer' && currentUser?.role === 'HSE_Officer') ||
-                      (p.roleCategory === 'Executive / HSE Director' && currentUser?.role === 'Head_Group_HSE') ||
-                      (p.roleCategory === 'System Admin' && currentUser?.role === 'ADMIN');
-
-                    return (
-                      <button
-                        key={p.userId}
-                        onClick={() => {
-                          switchUser(p.userId);
-                          setIsPersonaMenuOpen(false);
-                        }}
-                        className={`w-full flex items-start gap-2.5 p-2 rounded-xl text-start transition-all ${
-                          isSelected
-                            ? 'bg-blue-600 text-white shadow-sm'
-                            : 'hover:bg-slate-100 text-slate-700'
-                        }`}
-                      >
-                        <div className={`p-2 rounded-lg shrink-0 ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700'}`}>
-                          <Icon size={16} />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between">
-                            <p className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-slate-900'}`}>
-                              {p.roleCategory}
-                            </p>
-                            {isSelected && <Check size={14} className="text-white shrink-0" />}
-                          </div>
-                          <p className={`text-[11px] font-medium truncate ${isSelected ? 'text-blue-100' : 'text-slate-500'}`}>
-                            {p.name} · {p.roleTitle}
-                          </p>
-                          <p className={`text-[10px] line-clamp-1 mt-0.5 ${isSelected ? 'text-blue-200' : 'text-slate-400'}`}>
-                            {p.description}
-                          </p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Bilingual Language Switcher (EN / AR) */}
           <button
@@ -577,7 +371,6 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
                 setIsTenantMenuOpen(false);
                 setIsSiteMenuOpen(false);
                 setIsJurisdictionMenuOpen(false);
-                setIsPersonaMenuOpen(false);
               }}
               className="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100/80 border border-transparent hover:border-slate-200 transition-all focus:outline-none"
             >

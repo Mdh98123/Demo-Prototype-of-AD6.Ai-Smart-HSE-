@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafetyAudit, AuditTemplate } from './AuditTypes';
 import { Mic, Camera, FileText, CheckCircle2, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { VoiceDictationButton } from '../media/VoiceDictationButton';
 
 interface Props {
     audit: SafetyAudit;
@@ -12,17 +13,13 @@ export const AuditExecution: React.FC<Props> = ({ audit, template, onBack }) => 
     const [isRecording, setIsRecording] = useState(false);
     const [aiProcessing, setAiProcessing] = useState(false);
     const [showAiResult, setShowAiResult] = useState(false);
+    const [voiceDraftFinding, setVoiceDraftFinding] = useState('');
 
-    const simulateAiVoice = () => {
-        setIsRecording(true);
-        setTimeout(() => {
-            setIsRecording(false);
-            setAiProcessing(true);
-            setTimeout(() => {
-                setAiProcessing(false);
-                setShowAiResult(true);
-            }, 1500);
-        }, 3000);
+    const handleVoiceTranscript = (text: string) => {
+        setVoiceDraftFinding(text);
+        if (text.trim().length > 5) {
+            setShowAiResult(true);
+        }
     };
 
     return (
@@ -86,18 +83,23 @@ export const AuditExecution: React.FC<Props> = ({ audit, template, onBack }) => 
                         <p className="text-slate-400 text-sm mb-6">Capture findings instantly via voice or image analysis.</p>
                         
                         <div className="space-y-3 relative z-10">
-                            <button 
-                                onClick={simulateAiVoice}
-                                disabled={isRecording || aiProcessing}
-                                className={`w-full py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : aiProcessing ? 'bg-indigo-500 text-white' : 'glass-card text-slate-900 hover:bg-slate-100'}`}
-                            >
-                                <Mic size={18} />
-                                {isRecording ? 'Listening...' : aiProcessing ? 'Processing AI...' : 'Voice Entry'}
-                            </button>
-                            <button className="w-full py-3 rounded-lg flex items-center justify-center gap-2 font-medium bg-slate-800 text-white hover:bg-slate-700 transition-colors border border-slate-700">
-                                <Camera size={18} />
-                                Image Inspection
-                            </button>
+                            <div className="flex items-center justify-between p-2.5 bg-slate-800/80 rounded-xl border border-slate-700">
+                                <span className="text-xs font-semibold text-slate-300 flex items-center gap-2">
+                                    <Mic size={14} className="text-emerald-400" />
+                                    Voice Observation
+                                </span>
+                                <VoiceDictationButton 
+                                    value={voiceDraftFinding}
+                                    onTranscript={handleVoiceTranscript}
+                                    size="sm"
+                                    mode="append"
+                                />
+                            </div>
+                            {voiceDraftFinding && (
+                                <p className="text-[11px] text-emerald-300 bg-slate-950/60 p-2.5 rounded-lg border border-emerald-500/30">
+                                    "{voiceDraftFinding}"
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -107,7 +109,7 @@ export const AuditExecution: React.FC<Props> = ({ audit, template, onBack }) => 
                                 <CheckCircle2 className="text-emerald-600 shrink-0 mt-0.5" size={20} />
                                 <div>
                                     <h4 className="font-semibold text-emerald-800 text-sm">AI Finding Generated</h4>
-                                    <p className="text-xs text-emerald-700 mt-1">"Three workers are not wearing helmets near the excavation area."</p>
+                                    <p className="text-xs text-emerald-700 mt-1">"{voiceDraftFinding || 'Three workers are not wearing helmets near the excavation area.'}"</p>
                                     <div className="mt-3 glass-card p-3 rounded-lg border border-emerald-100 text-xs space-y-1.5">
                                         <div className="flex justify-between"><span className="text-slate-500">Category:</span><span className="font-medium">PPE Violation</span></div>
                                         <div className="flex justify-between"><span className="text-slate-500">Risk:</span><span className="font-medium text-red-600">High</span></div>

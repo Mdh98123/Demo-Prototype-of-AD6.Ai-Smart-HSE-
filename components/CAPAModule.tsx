@@ -8,6 +8,7 @@ import {
 import { DemoDataLoader, EnterpriseCapa, GULF_ENERGY_CAPAS } from '../services/demoDataLoader';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useUser } from '../contexts/UserContext';
+import { VoiceDictationButton } from './media/VoiceDictationButton';
 
 export const CAPAModule: React.FC = () => {
   const { t, language } = useLanguage();
@@ -22,8 +23,14 @@ export const CAPAModule: React.FC = () => {
   const [priorityFilter, setPriorityFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCapa, setSelectedCapa] = useState<EnterpriseCapa | null>(null);
+  const [closureNotes, setClosureNotes] = useState('');
   const [isResetting, setIsResetting] = useState(false);
   const [resetSuccessNotice, setResetSuccessNotice] = useState<string | null>(null);
+
+  const openCapa = (capa: EnterpriseCapa) => {
+    setSelectedCapa(capa);
+    setClosureNotes(capa.closureEvidence || '');
+  };
 
   useEffect(() => {
     const handleReset = () => {
@@ -50,12 +57,13 @@ export const CAPAModule: React.FC = () => {
       alert('⚠️ Access Denied: Only designated HSE Officers, Supervisors, or Administrators can formally close and verify CAPAs.');
       return;
     }
+    const updatedEvidence = closureNotes.trim() || (newStatus === 'Closed' ? 'Verified closed by Lead Safety Specialist.' : undefined);
     const updated = capas.map(c => {
       if (c.id === capaId) {
         return {
           ...c,
           status: newStatus,
-          closureEvidence: newStatus === 'Closed' ? (c.closureEvidence || 'Verified closed by Lead Safety Specialist.') : c.closureEvidence
+          closureEvidence: updatedEvidence || c.closureEvidence
         };
       }
       return c;
@@ -63,7 +71,11 @@ export const CAPAModule: React.FC = () => {
     setCapas(updated);
     localStorage.setItem('ad6_enterprise_capas', JSON.stringify(updated));
     if (selectedCapa && selectedCapa.id === capaId) {
-      setSelectedCapa({ ...selectedCapa, status: newStatus });
+      setSelectedCapa({ 
+        ...selectedCapa, 
+        status: newStatus, 
+        closureEvidence: updatedEvidence || selectedCapa.closureEvidence 
+      });
     }
   };
 
@@ -359,7 +371,7 @@ export const CAPAModule: React.FC = () => {
 
                     <td className="px-4 py-3 text-end whitespace-nowrap">
                       <button
-                        onClick={() => setSelectedCapa(capa)}
+                        onClick={() => openCapa(capa)}
                         className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition"
                       >
                         Inspect
@@ -422,18 +434,31 @@ export const CAPAModule: React.FC = () => {
                 </p>
               </div>
 
-              {selectedCapa.closureEvidence && (
-                <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                  <span className="text-[10px] font-bold uppercase text-emerald-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Auditable Closure Evidence:
+              {/* Field Verification & Closure Evidence with Voice Dictation */}
+              <div className="p-3 bg-slate-950/70 rounded-xl border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase text-slate-400 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    Field Verification & Closure Evidence:
                   </span>
-                  <p className="text-slate-200 mt-1">{selectedCapa.closureEvidence}</p>
-                  {selectedCapa.verifiedBy && (
-                    <p className="text-[10px] text-slate-400 mt-1">Verified by: {selectedCapa.verifiedBy}</p>
-                  )}
+                  <VoiceDictationButton
+                    value={closureNotes}
+                    onTranscript={(val) => setClosureNotes(val)}
+                    size="sm"
+                    mode="append"
+                  />
                 </div>
-              )}
+                <textarea
+                  value={closureNotes}
+                  onChange={(e) => setClosureNotes(e.target.value)}
+                  placeholder="Dictate with mic or type field verification notes & auditable evidence..."
+                  rows={2}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 resize-none"
+                />
+                {selectedCapa.verifiedBy && (
+                  <p className="text-[10px] text-slate-400">Verified by: {selectedCapa.verifiedBy}</p>
+                )}
+              </div>
             </div>
 
             {/* Workflow Action Buttons */}

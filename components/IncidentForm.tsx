@@ -20,7 +20,7 @@ import {
   IncidentFishboneFactors, 
   IncidentCapaAction 
 } from '../types';
-import { exportOshadFormGPdf, exportOmanMolNoticePdf, EntityContext } from '../services/gccStatutoryReportingService';
+import { exportOmanMolNoticePdf, EntityContext } from '../services/gccStatutoryReportingService';
 import { classifyIncident, generateIncidentRCA } from '../services/geminiService';
 import { offlineStorage } from '../services/offlineStorage';
 import { SyncEngine } from '../services/syncEngine';
@@ -35,11 +35,12 @@ import {
 } from '../services/aiAssistantService';
 
 const GCC_PRESET_SITES = [
-  { name: 'Habshan Gas Complex - Train 2', jurisdiction: 'Abu Dhabi', country: 'UAE', code: 'UAE-HBS-01', lat: 23.7500, lng: 53.5000 },
+  { name: 'Mina Al Fahal Refinery Complex (Muscat)', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-MAF-01', lat: 23.6300, lng: 58.5100 },
   { name: 'Fahud Field - Gathering Station Block 6', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-FHD-01', lat: 22.3167, lng: 56.4833 },
-  { name: 'Ruwais Refinery Complex - Unit 42 Offsites', jurisdiction: 'Abu Dhabi', country: 'UAE', code: 'UAE-RUW-02', lat: 24.1107, lng: 52.7306 },
   { name: 'Sohar Industrial Port Terminal', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-SOH-01', lat: 24.4980, lng: 56.6340 },
-  { name: 'KEZAD Industrial Logistics City', jurisdiction: 'Abu Dhabi', country: 'UAE', code: 'UAE-KZD-03', lat: 24.7869, lng: 54.6854 }
+  { name: 'Duqm Special Economic Zone (SEZAD / OQ8)', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-DQM-02', lat: 19.6738, lng: 57.7042 },
+  { name: 'Nimr Production Station (Block 6 South)', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-NMR-03', lat: 18.6667, lng: 55.7500 },
+  { name: 'Khazzan Gas Processing Complex (Block 61)', jurisdiction: 'Oman', country: 'Oman', code: 'OMN-KHZ-01', lat: 21.5000, lng: 56.0000 }
 ];
 
 const INITIAL_INCIDENTS: Incident[] = [
@@ -125,9 +126,9 @@ const INITIAL_INCIDENTS: Incident[] = [
     classification: 'Process Safety Event',
     description: 'Scaffolding pipe dropped from 14-meter elevation during pipe-rack modification. Dropped object landed inside barricaded red zone 2.5 meters from active gas manifold line. No personnel struck.',
     immediateActionsTaken: 'Work stopped immediately on overhead pipe rack. Rigger work permits suspended pending scaffold tethering inspection. Tethering audit conducted.',
-    location: 'Habshan Gas Complex - Train 2',
-    facilityCode: 'UAE-HBS-01',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Khazzan Gas Processing Complex - Train 2',
+    facilityCode: 'OMN-KHZ-01',
+    jurisdiction: 'Oman',
     severity: 'Medium',
     potentialSeverity: 'Critical',
     status: 'Reported',
@@ -396,7 +397,7 @@ export const IncidentForm: React.FC = () => {
     }
     setIsAiClassifying(true);
     try {
-      const result = await classifyIncident(formDescription, formSite, 'OSHAD-SF');
+      const result = await classifyIncident(formDescription, formSite, 'OMAN_MOL_MD286' as any);
       if (result) {
         setFormActualSeverity(result.severity as any);
         if (result.type.includes('Injury')) {
@@ -668,53 +669,17 @@ export const IncidentForm: React.FC = () => {
     });
   }, [incidents, filterSeverity, filterStatus, searchQuery, isUaeMode, isOmanMode]);
 
-  // Determine Statutory Jurisdictions based on Active Mode & Record Context
-  const isAbuDhabi = useMemo(() => {
-    if (isOmanMode) return false;
-    if (isUaeMode) return true;
-    if (!currentIncident) return true;
-    const loc = currentIncident.location.toLowerCase();
-    const jur = currentIncident.jurisdiction?.toLowerCase() || '';
-    return loc.includes('habshan') || loc.includes('ruwais') || loc.includes('abu dhabi') || jur.includes('abu dhabi');
-  }, [currentIncident, isUaeMode, isOmanMode]);
+  // Determine Statutory Jurisdictions based on Active Mode & Record Context - Sultanate of Oman Only
+  const isAbuDhabi = false;
+  const isOman = true;
 
-  const isOman = useMemo(() => {
-    if (isUaeMode) return false;
-    if (isOmanMode) return true;
-    if (!currentIncident) return false;
-    const loc = currentIncident.location.toLowerCase();
-    const jur = currentIncident.jurisdiction?.toLowerCase() || '';
-    return loc.includes('fahud') || loc.includes('sohar') || loc.includes('oman') || jur.includes('oman');
-  }, [currentIncident, isUaeMode, isOmanMode]);
-
-  // Available Presets filtered by Regional Compliance Mode
+  // Available Presets filtered by Regional Compliance Mode (Sultanate of Oman)
   const availablePresetSites = useMemo(() => {
-    if (isUaeMode) return GCC_PRESET_SITES.filter(s => s.country === 'UAE');
-    if (isOmanMode) return GCC_PRESET_SITES.filter(s => s.country === 'Oman');
     return GCC_PRESET_SITES;
-  }, [isUaeMode, isOmanMode]);
+  }, []);
 
   // RBAC permission for statutory reporting submission
   const isAuthorizedStatutorySubmitter = currentUser?.role !== 'Worker';
-
-  // Trigger Statutory PDF Exports
-  const handleExportOshadPdf = () => {
-    if (!currentIncident) return;
-    if (!isAuthorizedStatutorySubmitter) {
-      alert('⚠️ Access Denied: Statutory Form G submission to OSHAD / Al-Adaa requires an HSE Officer, Supervisor, or Director profile.');
-      return;
-    }
-    const entity: EntityContext = {
-      orgName: currentTenant?.name || 'ADNOC Group (Abu Dhabi National Oil Co)',
-      shortName: currentTenant?.shortName || 'ADNOC Gas',
-      sector: 'Energy, Oil & Gas Processing',
-      tradeLicenseOrCR: 'CN-1004829',
-      oshadClass: 'Class A (High Risk Primary Facility)',
-      contactOfficer: currentUser?.name || 'Fatima Al-Hameli',
-      contactPhone: '+971 2 707 0000'
-    };
-    exportOshadFormGPdf(currentIncident, entity);
-  };
 
   const handleExportOmanMolPdf = () => {
     if (!currentIncident) return;
@@ -772,10 +737,10 @@ export const IncidentForm: React.FC = () => {
         <div>
           <div className="flex items-center gap-2.5 flex-wrap">
             <h1 className="text-xl font-black text-white tracking-tight">
-              Incident Management & GCC Statutory Reporting
+              Incident Management & Statutory Reporting
             </h1>
-            <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/60 border border-cyan-800 px-2 py-0.5 rounded-full">
-              OSHAD Mechanism 11.0 · Oman MD 286/2008
+            <span className="text-[10px] font-mono font-bold text-red-300 bg-red-950/60 border border-red-800 px-2 py-0.5 rounded-full">
+              Oman MD 286/2008 · PDO PR-1172 · RD 53/2023
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
@@ -1572,59 +1537,6 @@ export const IncidentForm: React.FC = () => {
                   />
                 )}
                 
-                {/* Abu Dhabi OSHAD-SF Card */}
-                {isAbuDhabi && (
-                  <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 border border-emerald-500/40 shadow-xl space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
-                          <Building2 size={20} />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                            Abu Dhabi Public Health Centre (ADPHC) · OSHAD-SF Form G
-                          </h3>
-                          <p className="text-xs text-slate-400">
-                            Mechanism 11.0: Serious Incident Notification (Mandatory 24-Hour Statutory Filing)
-                          </p>
-                        </div>
-                      </div>
-                      <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                        OSHAD Compliant
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300">
-                      <div>
-                        <span className="text-[10px] text-slate-500 font-bold uppercase">SRA Sector:</span>
-                        <p className="font-semibold text-white">Oil & Gas / Petrochemicals</p>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-slate-500 font-bold uppercase">Entity Classification:</span>
-                        <p className="font-semibold text-white">Class A High Risk</p>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-slate-500 font-bold uppercase">Statutory Deadline:</span>
-                        <p className="font-semibold text-emerald-400">Within 24 Hours</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-2">
-                      <span className="text-[11px] text-slate-400">
-                        Generates official pre-formatted Form G PDF document ready for Al-Adaa portal submission.
-                      </span>
-                      <button
-                        disabled={!isAuthorizedStatutorySubmitter}
-                        onClick={handleExportOshadPdf}
-                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2"
-                        title={!isAuthorizedStatutorySubmitter ? 'Restricted: HSE Officer / Director role required' : undefined}
-                      >
-                        <Download size={14} />
-                        <span>{isAuthorizedStatutorySubmitter ? 'Export OSHAD-SF Form G (PDF)' : 'Form G Export Restricted'}</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
 
                 {/* Sultanate of Oman Ministry of Labour Card */}
                 {isOman && (

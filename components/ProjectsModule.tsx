@@ -48,175 +48,147 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
   }, [initialView]);
 
   useEffect(() => {
-    // Initialize with mock data
+    // Initialize with mock data (Sultanate of Oman Industrial Operations)
     const mockProjects: Project[] = [
       {
         id: 'PRJ-2024-001',
-        name: 'Borouge 4 Polyolefin Complex Expansion',
-        client: 'ADNOC / Borealis JV',
-        location: 'Ruwais Industrial Complex',
+        name: 'Mina Al Fahal Refinery Clean Fuels Revamp',
+        client: 'OQ / PDO',
+        location: 'Mina Al Fahal Terminal, Muscat',
         startDate: '2024-01-15',
         endDate: '2026-11-30',
         status: 'Active',
-        manager: 'Tariq Al-Hashemi',
-        budget: 6200000000,
+        manager: 'Rashid Al-Kharusi',
+        budget: 145000000,
         progress: 68,
         hseScore: 96,
         openIncidents: 1
       },
       {
         id: 'PRJ-2024-002',
-        name: 'Habshan High Pressure Sulfur Recovery Unit Revamp',
-        client: 'ADNOC Gas Processing',
-        location: 'Habshan Gas Complex',
+        name: 'Khazzan Tight Gas Central Processing Expansion',
+        client: 'BP Oman / OQ Gas',
+        location: 'Khazzan Field Block 61',
         startDate: '2024-03-01',
         endDate: '2025-12-15',
         status: 'Active',
-        manager: 'Khalfan Al-Zaabi',
-        budget: 450000000,
+        manager: 'Salim Al-Busaidi',
+        budget: 280000000,
         progress: 54,
         hseScore: 92,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-003',
-        name: 'Mina Zayed Container Berth Automation & Decarbonization',
-        client: 'Abu Dhabi Ports Group',
-        location: 'Mina Zayed Terminal',
+        name: 'Duqm Crude Oil Storage Terminal (Ras Markaz)',
+        client: 'OTTCO / SEZAD',
+        location: 'Ras Markaz / Duqm',
         startDate: '2023-09-01',
         endDate: '2025-08-30',
         status: 'Active',
-        manager: 'Capt. Mansoor Al-Ketbi',
-        budget: 310000000,
+        manager: 'Nasser Al-Harthy',
+        budget: 390000000,
         progress: 82,
         hseScore: 94,
-        openIncidents: 2
+        openIncidents: 0
       },
       {
         id: 'PRJ-2024-004',
         name: 'Fahud Heavy Oil Steam Injection Facility',
         client: 'Petroleum Development Oman (PDO)',
-        location: 'Fahud Field Operation',
+        location: 'Fahud Field Operation Block 6',
         startDate: '2024-02-10',
         endDate: '2026-06-30',
         status: 'Active',
         manager: 'Sultan Al-Ghafri',
-        budget: 780000000,
+        budget: 180000000,
         progress: 41,
         hseScore: 89,
         openIncidents: 1
       },
       {
         id: 'PRJ-2024-005',
-        name: 'NEOM Sindalah Island Marina Infrastructure HSE Oversight',
-        client: 'NEOM Development Authority',
-        location: 'NEOM Sindalah Island Base',
+        name: 'Sohar Industrial Port Green Hydrogen Bunker Facility',
+        client: 'Sohar Port & Freezone',
+        location: 'Sohar Industrial Port Terminal',
         startDate: '2023-11-01',
         endDate: '2025-09-30',
         status: 'Active',
-        manager: 'Marcus Vance',
-        budget: 1200000000,
+        manager: 'Tariq Al-Mamari',
+        budget: 95000000,
         progress: 74,
         hseScore: 91,
         openIncidents: 2
       },
       {
         id: 'PRJ-2024-006',
-        name: 'Ras Al Khair Maritime Yard Drydock Repair Crane Modernization',
-        client: 'International Maritime Industries (IMI)',
-        location: 'Ras Al Khair Maritime Yard',
+        name: 'Nimr Reed Beds Industrial Produced Water Treatment',
+        client: 'Petroleum Development Oman (PDO)',
+        location: 'Nimr Production Station',
         startDate: '2024-04-01',
         endDate: '2026-03-31',
         status: 'Active',
-        manager: 'Hamad Al-Dosari',
-        budget: 285000000,
+        manager: 'Hamad Al-Amri',
+        budget: 65000000,
         progress: 35,
         hseScore: 95,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-007',
-        name: 'Jebel Ali Hydrogen Corridor & Fueling Station Infrastructure',
-        client: 'Dubai Electricity & Water Authority (DEWA)',
-        location: 'Jebel Ali Logistics Hub',
+        name: 'Salalah Ammonia & Methanol Export Jetty Upgrade',
+        client: 'OQ Chemicals',
+        location: 'Port of Salalah Free Zone',
         startDate: '2024-01-20',
         endDate: '2025-10-31',
         status: 'Active',
-        manager: 'Rashid Al-Kaabi',
-        budget: 195000000,
+        manager: 'Ahmed Al-Shanfari',
+        budget: 45000000,
         progress: 60,
         hseScore: 97,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-008',
-        name: 'Etihad Rail Package D Industrial Spur & Hazmat Rail Terminal',
-        client: 'Etihad Rail Company',
-        location: 'Ruwais Industrial Complex',
+        name: 'Ibri 500MW Solar IPP Transformer Yard Hardening',
+        client: 'Nama Holding',
+        location: 'Ibri Solar Station',
         startDate: '2023-06-15',
         endDate: '2025-05-30',
         status: 'Completed',
-        manager: 'Zayed Al-Shehhi',
-        budget: 540000000,
+        manager: 'Mazen Al-Ghafri',
+        budget: 32000000,
         progress: 100,
         hseScore: 98,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-009',
-        name: 'Al Dhafra 2GW Solar PV Inverter Station Fire Hardening',
-        client: 'Abu Dhabi National Energy (TAQA)',
-        location: 'Al Dhafra Solar Farm',
+        name: 'Qalhat LNG Train 4 Debottlenecking & Flare Recovery',
+        client: 'Oman LNG LLC',
+        location: 'Sur Complex, Qalhat',
         startDate: '2024-05-01',
         endDate: '2026-04-30',
         status: 'Planning',
-        manager: 'Eng. Layla Al-Nuaimi',
-        budget: 85000000,
+        manager: 'Khalid Al-Alawi',
+        budget: 110000000,
         progress: 12,
         hseScore: 93,
         openIncidents: 0
       },
       {
         id: 'PRJ-2024-010',
-        name: 'Das Island Offshore Gas Flare Gas Recovery & Zero Routine Flaring',
-        client: 'ADNOC Offshore',
-        location: 'Das Island Offshore',
+        name: 'Yibal Khuff Sour Gas & Crude Mega-Facility',
+        client: 'Petroleum Development Oman (PDO)',
+        location: 'Yibal Khuff Concession',
         startDate: '2023-12-01',
         endDate: '2025-12-31',
-        status: 'OnHold',
-        manager: 'Khalfan Al-Zaabi',
-        budget: 320000000,
-        progress: 48,
-        hseScore: 84,
-        openIncidents: 3
-      },
-      {
-        id: 'PRJ-2024-011',
-        name: 'Dubai Industrial City Central Hazardous Waste Incinerator',
-        client: 'Dubai Municipality Environment Dept',
-        location: 'Dubai Industrial City',
-        startDate: '2024-02-15',
-        endDate: '2026-08-15',
         status: 'Active',
-        manager: 'Amina Al-Mansouri',
-        budget: 175000000,
-        progress: 38,
-        hseScore: 90,
+        manager: 'Abdullah Al-Riyami',
+        budget: 220000000,
+        progress: 48,
+        hseScore: 88,
         openIncidents: 1
-      },
-      {
-        id: 'PRJ-2024-012',
-        name: 'Musaffah Steel Rolling Mill Acoustic & Vibration Mitigation',
-        client: 'Emirates Steel Arkan',
-        location: 'Musaffah Industrial Zone',
-        startDate: '2023-08-01',
-        endDate: '2025-04-15',
-        status: 'Completed',
-        manager: 'Hassan Mahmoud',
-        budget: 65000000,
-        progress: 100,
-        hseScore: 96,
-        openIncidents: 0
       }
     ];
     
@@ -774,7 +746,7 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                           ? 'border-emerald-500 focus:border-emerald-500 bg-emerald-50/5'
                           : 'border-slate-100 focus:border-indigo-500 focus:glass-card'
                     }`}
-                    placeholder="e.g. ADNOC"
+                    placeholder="e.g. PDO / OQ"
                   />
                   {errors.client && <p className="text-red-500 text-[10px] font-bold mt-1 ms-1 flex items-center gap-1"><AlertCircle size={10}/> {errors.client}</p>}
                 </div>
@@ -881,7 +853,7 @@ const ProjectsModule: React.FC<ProjectsModuleProps> = ({ initialView = 'List' })
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Budget (AED)</label>
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ms-1 mb-2 block">Budget (OMR)</label>
                   <div className="relative">
                     <DollarSign size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input 

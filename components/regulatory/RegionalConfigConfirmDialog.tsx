@@ -45,10 +45,10 @@ export interface RegionalConfigConfirmDialogProps {
 
 const COMMON_REASONS = [
   'Scheduled annual HSE compliance & statutory realignment',
-  'Cross-border concession expansion / multi-site operations launch',
-  'Statutory alignment with OSHAD-SF v3.1 / MoHRE mandates',
-  'Alignment with Oman Labour Law RD 53/2023 & PDO SP-1170 standards',
-  'External multi-jurisdictional compliance audit preparation'
+  'Concession expansion / Sultanate of Oman multi-site operations launch',
+  'Statutory alignment with Oman Ministry of Labour MD 286/2008 & CDAA mandates',
+  'Alignment with Oman Labour Law RD 53/2023 & PDO SP-1170 / SP-1143 standards',
+  'External Ministry of Labour & PDO compliance audit preparation'
 ];
 
 export const RegionalConfigConfirmDialog: React.FC<RegionalConfigConfirmDialogProps> = ({

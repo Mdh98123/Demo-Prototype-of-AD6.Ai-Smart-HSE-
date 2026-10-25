@@ -84,7 +84,7 @@ export const LiveRegulatoryNoticeBoard: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="e.g. Latest UAE MoHRE summer midday work ban dates and mandatory penalties..."
+            placeholder="e.g. Latest Oman Ministry of Labour MD 286/2008 midday work ban dates and mandatory penalties..."
             className="flex-1 bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-slate-500 outline-none focus:border-blue-500"
           />
           <button
@@ -213,7 +213,7 @@ export const LiveRegulatoryNoticeBoard: React.FC = () => {
                       <Clock size={11} /> Effective: {notice.effectiveDate}
                     </span>
                     <span className="font-black text-red-600">
-                      Fine: AED {notice.statutoryFineAed.toLocaleString()}
+                      Fine: OMR {notice.statutoryFineAed.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export const LiveRegulatoryNoticeBoard: React.FC = () => {
                 <div className="text-end shrink-0">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Max Penalty</span>
                   <span className="text-base font-black text-red-600">
-                    AED {selectedNotice.statutoryFineAed.toLocaleString()}
+                    OMR {selectedNotice.statutoryFineAed.toLocaleString()}
                   </span>
                 </div>
               </div>

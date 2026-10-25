@@ -48,15 +48,16 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 
 ### 3.1 Automated Test Execution Results (`npm test`)
 - **Suite 1:** `/test/auth_regression.test.mjs`
-  - `[PASS]` Regression Guard: Fresh browser (unauthenticated session) has zero admin/IAM access
+  - `[PASS]` fresh unauthenticated session: session user is strictly null with zero admin access
+  - `[PASS]` explicit demo entry: sets demo flag and provisions explicit persona (admin and worker)
+  - `[PASS]` demo role switching: allows switching between personas in demo mode only
+  - `[PASS]` authenticated session restoration: restores valid sessions and safely fails corrupted tokens
   - `[PASS]` Regression Guard: `isDemoSession` strictly returns false when no storage key exists
-  - `[PASS]` Regression Guard: Default demo login assigns non-admin Worker persona (Khalid Al-Harthy)
-  - `[PASS]` Regression Guard: Admin access is strictly restricted to authenticated ADMIN users
   - `[PASS]` Segregation of Duties (SoD) Invariant: Self-authorization is strictly rejected
 - **Suite 2:** `/test/health.test.mjs`
   - `[PASS]` Health check payload validation (`status`, `version`, `timestamp`)
   - `[PASS]` Port resolution logic across Cloud Run, CLI flags, and development fallbacks
-- **Summary:** 7 tests passed, 0 failures, 0 skipped.
+- **Summary:** 8 tests passed, 0 failures, 0 skipped.
 
 ### 3.2 RBAC Persona Test Results (`npx tsx --test test/rbac_navigation.test.mjs`)
 - `[PASS]` Scenario 1: User with standard permissions (Worker)
@@ -89,6 +90,8 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 |---|---|---|---|
 | `NODE_ENV` | Non-sensitive | No | Sets runtime mode (`development` vs `production`). |
 | `PORT` | Non-sensitive | No | Port assignment override (3000 in dev, 8080 in prod). |
+| `AUTH_MODE` / `VITE_AUTH_MODE` | Non-sensitive | No | Sets authentication subsystem mode (`demo` \| `firebase` \| `enterprise`). Defined in `.env.example` and `services/authService.ts`. |
+| `DEMO_MODE` / `VITE_DEMO_MODE` | Non-sensitive | No | Toggles demonstration mode availability (`true` \| `false`). Defined in `.env.example` and `services/authService.ts`. |
 | `GEMINI_API_KEY` | **Secret** | **Yes (for AI)** | Server-side Gemini API key. Never exposed to browser. Used in `/routes/geminiRouter.ts`. |
 | `OSHAD_API_TOKEN` | Secret | No | Token for UAE statutory connector `/api/oshad/*`. |
 | `ADNOC_SAFETY_TOKEN` | Secret | No | Token for ADNOC CoP integration. |
@@ -100,14 +103,15 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 ## 5. Security & Invariant Baseline
 
 1. **Unauthenticated Session Gating:**
-   - Fresh browser sessions initialize with `currentUser = null`.
+   - Fresh browser sessions initialize with `currentUser = null` and `isDemoMode = false`.
    - Access to IAM, System Logs, Tenant Settings, and operational modules is blocked until the user signs in or explicitly launches the Demo Sandbox.
    - Automatic admin fallback has been permanently eradicated from the initialization flow.
 2. **Explicit Demo Mode:**
-   - Dedicated Demo Sandbox section on the login screen.
-   - Activates a non-admin **Frontline Worker** persona (Khalid Al-Harthy).
-   - Prominently displays a sticky amber banner: `DEMO MODE · SYNTHETIC DATA`.
-   - Immediate session exit via `Exit Demo` button.
+   - Dedicated "Synthetic Demonstration Data · DEMO MODE" card on the login screen.
+   - Supports explicit launch as **System Admin (`Sarah Connor`)**, **Frontline Worker (`Rahul Gupta`)**, or **Site Supervisor (`Marcus Chen`)**.
+   - Prominently displays a sticky banner: `Synthetic Demonstration Data · DEMO MODE`.
+   - Immediate session exit via `Exit Demonstration Mode` action.
+   - Role switching is strictly gated to active demonstration sessions only (`if (!isDemoMode) return;`).
 3. **Segregation of Duties (SoD):**
    - Permit to Work: Receiver / Performing Authority cannot self-authorize as Area Authority Issuer.
    - CAPA: Action Owner cannot self-verify and close their own action.

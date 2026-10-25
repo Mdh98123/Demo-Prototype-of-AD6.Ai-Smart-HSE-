@@ -149,10 +149,12 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 ### Verified Facts
 - **Initial Session State:** Unauthenticated browser sessions initialize with `currentUser = null` and `isDemoMode = false` (`/contexts/UserContext.tsx`). There is zero automatic admin fallback on hydration or logout.
 - **Authentication Gateway:** When `currentUser === null`, the user is gated at `/components/LoginPage.tsx` or `/components/SignUpPage.tsx`. Access to IAM, System Logs, Projects, and operational views is blocked.
-- **Demo Access:** An explicit Demo Sandbox section on the login page initiates demo mode via `loginDemo('u6')`, assigning a non-admin **Frontline Worker** persona (Khalid Al-Harthy). When demo mode is active:
+- **Demo Access:** An explicit "Synthetic Demonstration Data · DEMO MODE" card on the login page initiates demonstration mode via `loginDemo(personaId)`. Supports explicit launch as **System Admin (`Sarah Connor`)**, **Frontline Worker (`Rahul Gupta`)**, or **Site Supervisor (`Marcus Chen`)**. When demo mode is active:
   - `isDemoMode === true`.
-  - A prominent sticky **DEMO MODE · SYNTHETIC DATA** banner is displayed across the top of the application.
-  - An **Exit Demo** button allows immediate logout and session reset.
+  - Configured via `AUTH_MODE=demo` and `DEMO_MODE=true` flags in `.env.example` and `services/authService.ts`.
+  - A prominent sticky **Synthetic Demonstration Data · DEMO MODE** banner is displayed across the top of the application with persona badge.
+  - An **Exit Demonstration Mode** button allows immediate session termination and reset to sign-in.
+  - The interactive `RoleSwitcher` drawer is rendered strictly during active demonstration mode sessions (`isDemoMode === true`).
 - **Role-Based Access Control (RBAC):** Codified in `/services/permissionService.ts`:
   - 18 distinct `UserRole` personas (ADMIN, Board Director, CEO, Head of Group HSE, Regional HSE Director, Site HSE Manager, HSE Officer, Site Supervisor, Worker, etc.).
   - 60+ granular permissions.

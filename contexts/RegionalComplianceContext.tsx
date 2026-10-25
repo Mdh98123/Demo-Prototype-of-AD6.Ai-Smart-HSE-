@@ -167,11 +167,11 @@ export const RegionalComplianceProvider: React.FC<{ children: ReactNode }> = ({ 
   return (
     <RegionalComplianceContext.Provider
       value={{
-        regionalMode,
-        activeJurisdiction: toJurisdiction(regionalMode),
-        isUaeMode: regionalMode === 'UAE',
-        isOmanMode: regionalMode === 'OMAN',
-        isCombinedMode: regionalMode === 'COMBINED',
+        regionalMode: 'OMAN',
+        activeJurisdiction: 'Oman',
+        isUaeMode: false,
+        isOmanMode: true,
+        isCombinedMode: false,
         activeProfile,
         setRegionalMode,
         setActiveJurisdiction,
@@ -214,12 +214,12 @@ export const useRegionalCompliance = (): RegionalComplianceContextType => {
   if (!context) {
     console.warn('useRegionalCompliance was called outside of RegionalComplianceProvider. Returning default fallback.');
     return {
-      regionalMode: 'COMBINED',
-      activeJurisdiction: 'Combined',
+      regionalMode: 'OMAN',
+      activeJurisdiction: 'Oman',
       isUaeMode: false,
-      isOmanMode: false,
-      isCombinedMode: true,
-      activeProfile: JURISDICTION_PROFILES.COMBINED,
+      isOmanMode: true,
+      isCombinedMode: false,
+      activeProfile: JURISDICTION_PROFILES.OMAN,
       setRegionalMode: async () => ({ success: false, error: 'Context not mounted' }),
       setActiveJurisdiction: async () => ({ success: false, error: 'Context not mounted' }),
       auditHistory: [],
@@ -233,11 +233,11 @@ export const useRegionalCompliance = (): RegionalComplianceContextType => {
       isEntityVisible: () => true,
       filterByActiveMode: (items) => items,
       getEntityJurisdictionDetails: () => ({
-        jurisdictionLabel: 'Combined',
-        flag: '🇦🇪🇴🇲',
-        badgeClass: 'bg-indigo-50 text-indigo-900 border-indigo-300',
-        authorityName: 'Dual Authorities',
-        primaryReg: 'UAE & Oman Frameworks'
+        jurisdictionLabel: 'Oman',
+        flag: '🇴🇲',
+        badgeClass: 'bg-emerald-50 text-emerald-900 border-emerald-300',
+        authorityName: 'Ministry of Labour (MoL) & CDAA',
+        primaryReg: 'Oman Labour Law RD 53/2023 & MD 286/2008'
       })
     };
   }

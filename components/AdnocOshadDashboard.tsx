@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   ShieldCheck, ShieldAlert, AlertTriangle, Clock, Landmark, 
@@ -13,57 +12,57 @@ import {
 } from 'recharts';
 
 const AdnocOshadDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'ADNOC' | 'OSHAD'>('ADNOC');
+  const [activeTab, setActiveTab] = useState<'PDO' | 'MOL'>('PDO');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
-  // ADNOC COP Compliance Data
-  const adnocData = {
-    overall: 94.2,
+  // Petroleum Development Oman (PDO) HSE Specifications Data
+  const pdoData = {
+    overall: 95.8,
     trend: +1.8,
     ncrCount: 1,
     lastAudit: '2024-02-15',
     nextAudit: '2024-08-20',
     elements: [
-      { id: 'COP-1', title: 'HSE Administration', status: 'Compliant', score: 100, color: 'emerald' },
-      { id: 'COP-2', title: 'Risk Management', status: 'Compliant', score: 96, color: 'emerald' },
-      { id: 'COP-3', title: 'Occupational Health', status: 'Compliant', score: 92, color: 'emerald' },
-      { id: 'COP-4', title: 'Environment Protection', status: 'Compliant', score: 95, color: 'emerald' },
-      { id: 'COP-5', title: 'Emergency Response', status: 'Partial', score: 82, color: 'orange', gaps: ['Zone B evacuation drill overdue'] },
-      { id: 'COP-6', title: 'Incident Investigation', status: 'Compliant', score: 100, color: 'emerald' },
-      { id: 'COP-7', title: 'Audit & Inspection', status: 'Compliant', score: 98, color: 'emerald' },
-      { id: 'COP-8', title: 'Contractor Management', status: 'Partial', score: 75, color: 'orange', gaps: ['Sub-contractor pre-qualification records incomplete'] },
+      { id: 'SP-1143', title: 'Permit to Work (PTW) System', status: 'Compliant', score: 98, color: 'emerald' },
+      { id: 'SP-1170', title: 'Heat Stress Management & TWL Monitoring', status: 'Compliant', score: 96, color: 'emerald' },
+      { id: 'SP-1231', title: 'Lockout / Tagout (LOTO) Isolation', status: 'Compliant', score: 100, color: 'emerald' },
+      { id: 'SP-1232', title: 'Working at Heights & Fall Protection', status: 'Compliant', score: 92, color: 'emerald' },
+      { id: 'PR-1172', title: 'Incident Notification (24-Hour SLA)', status: 'Compliant', score: 98, color: 'emerald' },
+      { id: 'SP-1230', title: 'Confined Space Entry & Gas Testing', status: 'Partial', score: 85, color: 'orange', gaps: ['Continuous atmospheric gas detector calibration check overdue at Mina Al Fahal'] },
+      { id: 'SP-1009', title: 'Waste Management & Environment Authority Compliance', status: 'Compliant', score: 97, color: 'emerald' },
+      { id: 'SP-1157', title: 'Contractor HSE Management & OPAL Pre-Qualification', status: 'Partial', score: 82, color: 'orange', gaps: ['Contractor OPAL HSE passport compliance missing for 4 scaffolders'] },
     ]
   };
 
-  // OSHAD SF Compliance Data
-  const oshadData = {
-    overall: 96.5,
-    trend: +0.5,
-    ncrCount: 2,
+  // Oman Ministry of Labour (MD 286/2008 & RD 53/2023) Compliance Data
+  const molData = {
+    overall: 97.2,
+    trend: +0.8,
+    ncrCount: 1,
     lastAudit: '2024-01-10',
     nextAudit: '2024-07-15',
     elements: [
-      { id: 'SF-1', title: 'Leadership & Commitment', status: 'Compliant', score: 100, color: 'emerald' },
-      { id: 'SF-2', title: 'Risk Management', status: 'Compliant', score: 98, color: 'emerald' },
-      { id: 'SF-3', title: 'Competence & Training', status: 'Partial', score: 88, color: 'orange', gaps: ['First aid certification expired for 3 staff'] },
-      { id: 'SF-4', title: 'Audit & Inspection', status: 'Compliant', score: 94, color: 'emerald' },
-      { id: 'SF-5', title: 'Management Review', status: 'Compliant', score: 100, color: 'emerald' },
-      { id: 'SF-6', title: 'Emergency Management', status: 'Compliant', score: 96, color: 'emerald' },
-      { id: 'SF-7', title: 'Performance Monitoring', status: 'Compliant', score: 92, color: 'emerald' },
-      { id: 'SF-8', title: 'Legal Compliance', status: 'Compliant', score: 100, color: 'emerald' },
+      { id: 'MD-286-Art4', title: 'Occupational Health Clinic & First Aid Facilities', status: 'Compliant', score: 100, color: 'emerald' },
+      { id: 'MD-286-Art16', title: 'Midday Summer Work Ban (12:30 - 15:30 June-August)', status: 'Compliant', score: 98, color: 'emerald' },
+      { id: 'MD-286-Art22', title: 'Hazardous Machinery Guarding & PPE Provision', status: 'Compliant', score: 96, color: 'emerald' },
+      { id: 'RD-53-2023', title: 'Oman Labour Law Statutory OSH Standards', status: 'Compliant', score: 100, color: 'emerald' },
+      { id: 'CDAA-Fire', title: 'Civil Defence & Ambulance Authority Fire Safety Approval', status: 'Compliant', score: 94, color: 'emerald' },
+      { id: 'PASI-Notice', title: 'PASI Occupational Injury Notice (Annex 1 Schedule)', status: 'Compliant', score: 98, color: 'emerald' },
+      { id: 'EA-RD-114', title: 'Environment Authority Hazardous Material Handling', status: 'Compliant', score: 92, color: 'emerald' },
+      { id: 'OPAL-Std', title: 'OPAL Unified HSE Competency Standards', status: 'Partial', score: 88, color: 'orange', gaps: ['Refresher defensive driving certification overdue for 2 light vehicle operators'] },
     ]
   };
 
   const trendData = [
-    { month: 'Jan', adnoc: 88, oshad: 92 },
-    { month: 'Feb', adnoc: 90, oshad: 93 },
-    { month: 'Mar', adnoc: 92, oshad: 95 },
-    { month: 'Apr', adnoc: 91, oshad: 94 },
-    { month: 'May', adnoc: 94, oshad: 96 },
-    { month: 'Jun', adnoc: 94.2, oshad: 96.5 },
+    { month: 'Jan', pdo: 89, mol: 93 },
+    { month: 'Feb', pdo: 91, mol: 94 },
+    { month: 'Mar', pdo: 93, mol: 95 },
+    { month: 'Apr', pdo: 92, mol: 95 },
+    { month: 'May', pdo: 95, mol: 97 },
+    { month: 'Jun', pdo: 95.8, mol: 97.2 },
   ];
 
-  const currentData = activeTab === 'ADNOC' ? adnocData : oshadData;
+  const currentData = activeTab === 'PDO' ? pdoData : molData;
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-700 pb-20">
@@ -75,22 +74,24 @@ const AdnocOshadDashboard: React.FC = () => {
           </div>
           <div>
             <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">Strategic Compliance Hub</h2>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-4 border-indigo-500 ps-4">ADNOC COP & OSHAD SF Frameworks</p>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-4 border-indigo-500 ps-4">
+              PDO HSE Specifications & Oman Ministry of Labour (MD 286/2008)
+            </p>
           </div>
         </div>
         
         <div className="flex bg-slate-100 p-1.5 rounded-[2rem] shadow-inner">
           <button 
-            onClick={() => setActiveTab('ADNOC')}
-            className={`px-8 py-3 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeTab === 'ADNOC' ? 'glass-card text-indigo-600 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
+            onClick={() => setActiveTab('PDO')}
+            className={`px-8 py-3 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeTab === 'PDO' ? 'glass-card text-indigo-600 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
           >
-            ADNOC COP
+            PDO HSE SPECS
           </button>
           <button 
-            onClick={() => setActiveTab('OSHAD')}
-            className={`px-8 py-3 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeTab === 'OSHAD' ? 'glass-card text-teal-600 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
+            onClick={() => setActiveTab('MOL')}
+            className={`px-8 py-3 rounded-[1.8rem] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeTab === 'MOL' ? 'glass-card text-teal-600 shadow-xl' : 'text-slate-500 hover:text-slate-700'}`}
           >
-            OSHAD SF
+            OMAN MOL MD 286
           </button>
         </div>
       </div>
@@ -98,12 +99,12 @@ const AdnocOshadDashboard: React.FC = () => {
       {/* Top KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100 relative overflow-hidden group">
-          <div className={`absolute top-0 end-0 w-24 h-24 -me-8 -mt-8 opacity-5 transition-transform group-hover:scale-110 ${activeTab === 'ADNOC' ? 'text-indigo-600' : 'text-teal-600'}`}>
+          <div className={`absolute top-0 end-0 w-24 h-24 -me-8 -mt-8 opacity-5 transition-transform group-hover:scale-110 ${activeTab === 'PDO' ? 'text-indigo-600' : 'text-teal-600'}`}>
             <ShieldCheck size={96} />
           </div>
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Overall Compliance</p>
           <div className="flex items-end gap-2">
-            <h3 className={`text-5xl font-black tracking-tighter ${activeTab === 'ADNOC' ? 'text-indigo-600' : 'text-teal-600'}`}>
+            <h3 className={`text-5xl font-black tracking-tighter ${activeTab === 'PDO' ? 'text-indigo-600' : 'text-teal-600'}`}>
               {currentData.overall}%
             </h3>
             <div className="flex items-center gap-1 text-emerald-500 mb-2">
@@ -163,8 +164,8 @@ const AdnocOshadDashboard: React.FC = () => {
           <div className="glass-card p-10 rounded-[3rem] shadow-xl border border-slate-100">
             <div className="flex justify-between items-center mb-10">
               <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-3">
-                <LayoutGrid size={24} className={activeTab === 'ADNOC' ? 'text-indigo-600' : 'text-teal-600'} />
-                {activeTab} Framework Elements
+                <LayoutGrid size={24} className={activeTab === 'PDO' ? 'text-indigo-600' : 'text-teal-600'} />
+                {activeTab === 'PDO' ? 'PDO HSE Specifications' : 'Oman Ministry of Labour (MD 286/2008)'} Elements
               </h3>
               <div className="flex gap-2">
                 <button className="p-2 glass-panel rounded-xl text-slate-400 hover:text-indigo-600 transition-colors">
@@ -218,7 +219,7 @@ const AdnocOshadDashboard: React.FC = () => {
                               <div key={i} className="flex items-center justify-between p-3 glass-card rounded-xl border border-slate-100 group/item cursor-pointer hover:border-indigo-500 transition-all">
                                 <div className="flex items-center gap-3">
                                   <FileText size={16} className="text-slate-400 group-hover/item:text-indigo-600" />
-                                  <span className="text-xs font-bold text-slate-600">Evidence_Doc_0{i}.pdf</span>
+                                  <span className="text-xs font-bold text-slate-600">Oman_Evidence_Doc_0{i}.pdf</span>
                                 </div>
                                 <Download size={14} className="text-slate-300 group-hover/item:text-indigo-600" />
                               </div>
@@ -245,7 +246,7 @@ const AdnocOshadDashboard: React.FC = () => {
                           ) : (
                             <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100 flex flex-col items-center text-center">
                               <CheckCircle2 size={32} className="text-emerald-500 mb-3" />
-                              <p className="text-xs font-bold text-emerald-700">All requirements for this element are verified and documented.</p>
+                              <p className="text-xs font-bold text-emerald-700">All requirements for this element are verified and documented under Oman standards.</p>
                             </div>
                           )}
                         </div>
@@ -266,11 +267,11 @@ const AdnocOshadDashboard: React.FC = () => {
               <div className="flex gap-6">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-indigo-600"></div>
-                  <span className="text-[10px] font-black text-slate-400 uppercase">ADNOC</span>
+                  <span className="text-[10px] font-black text-slate-400 uppercase">PDO SPECS</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-teal-500"></div>
-                  <span className="text-[10px] font-black text-slate-400 uppercase">OSHAD</span>
+                  <span className="text-[10px] font-black text-slate-400 uppercase">OMAN MOL</span>
                 </div>
               </div>
             </div>
@@ -279,11 +280,11 @@ const AdnocOshadDashboard: React.FC = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={trendData}>
                   <defs>
-                    <linearGradient id="colorAdnoc" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorPdo" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1}/>
                       <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
                     </linearGradient>
-                    <linearGradient id="colorOshad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorMol" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.1}/>
                       <stop offset="95%" stopColor="#14b8a6" stopOpacity={0}/>
                     </linearGradient>
@@ -295,8 +296,8 @@ const AdnocOshadDashboard: React.FC = () => {
                     contentStyle={{borderRadius: '24px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)'}}
                     itemStyle={{fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase'}}
                   />
-                  <Area type="monotone" dataKey="adnoc" stroke="#4f46e5" strokeWidth={4} fillOpacity={1} fill="url(#colorAdnoc)" />
-                  <Area type="monotone" dataKey="oshad" stroke="#14b8a6" strokeWidth={4} fillOpacity={1} fill="url(#colorOshad)" />
+                  <Area type="monotone" dataKey="pdo" stroke="#4f46e5" strokeWidth={4} fillOpacity={1} fill="url(#colorPdo)" />
+                  <Area type="monotone" dataKey="mol" stroke="#14b8a6" strokeWidth={4} fillOpacity={1} fill="url(#colorMol)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -317,7 +318,7 @@ const AdnocOshadDashboard: React.FC = () => {
               </div>
               <div>
                 <h4 className="text-sm font-black uppercase tracking-[0.2em]">AI Gap Analysis</h4>
-                <p className="text-[10px] text-teal-400 font-bold uppercase tracking-widest mt-1">Strategic Audit Analysis</p>
+                <p className="text-[10px] text-teal-400 font-bold uppercase tracking-widest mt-1">Sultanate of Oman Frameworks</p>
               </div>
             </div>
 
@@ -328,7 +329,7 @@ const AdnocOshadDashboard: React.FC = () => {
                   <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">High Impact Exposure</p>
                 </div>
                 <p className="text-sm font-bold leading-relaxed text-slate-200">
-                  ADNOC COP V6.0 migration for "Ruwais Zone A" is 15% behind schedule. Failure to align by Q3 may impact preferential tender status.
+                  PDO SP-1143 PTW digital permit authorization for Mina Al Fahal Area B is 15% behind schedule. Full closure mandatory per Concession Agreement.
                 </p>
                 <div className="mt-4 flex items-center gap-2 text-teal-400 text-[10px] font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity">
                   Remediate Now <ChevronRight size={14} />
@@ -341,7 +342,7 @@ const AdnocOshadDashboard: React.FC = () => {
                   <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">Regulatory Alert</p>
                 </div>
                 <p className="text-sm font-bold leading-relaxed text-slate-200">
-                  OSHAD SF V3.1 requires updated "Heat Stress Management" evidence for all outdoor sites before June 15th.
+                  Oman Ministry of Labour MD 286/2008 requires strict adherence to the Summer Midday Break (12:30–15:30) across all outdoor concession operations (June through August).
                 </p>
                 <div className="mt-4 flex items-center gap-2 text-teal-400 text-[10px] font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity">
                   View Requirements <ChevronRight size={14} />
@@ -362,10 +363,10 @@ const AdnocOshadDashboard: React.FC = () => {
             
             <div className="space-y-6">
               {[
-                { date: 'Jun 15', title: 'Heat Stress Submission', auth: 'OSHAD', type: 'Evidence' },
-                { date: 'Jul 10', title: 'Q2 Performance Report', auth: 'ADNOC', type: 'Report' },
-                { date: 'Aug 20', title: 'External Audit V6.0', auth: 'ADNOC', type: 'Audit' },
-                { date: 'Sep 05', title: 'Management Review', auth: 'OSHAD', type: 'Meeting' },
+                { date: 'Jun 01', title: 'Midday Break Plan Filing', auth: 'MoL', type: 'Statutory' },
+                { date: 'Jul 10', title: 'Q2 Concession HSE Report', auth: 'PDO', type: 'Report' },
+                { date: 'Aug 20', title: 'SP-1143 PTW Audit', auth: 'PDO', type: 'Audit' },
+                { date: 'Sep 05', title: 'Joint MoL/CDAA Inspection', auth: 'CDAA', type: 'Inspection' },
               ].map((item, i) => (
                 <div key={i} className="flex gap-6 items-start group cursor-pointer">
                   <div className="flex flex-col items-center shrink-0">

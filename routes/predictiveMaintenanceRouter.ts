@@ -389,9 +389,9 @@ export function validateWorkOrderPayload(data: any): {
     errors.assignee = 'An authorized Maintenance Lead or Engineer must be assigned.';
   }
 
-  // 6. LOTO Mandatory Rule (OSHA 1910.147 / OSHAD CoP 14.0)
+  // 6. LOTO Mandatory Rule (PDO SP-1231 / Oman MD 286/2008 Art. 22 / OSHA 1910.147)
   if (data.requiresLotoCheck && !data.lotoRequired) {
-    errors.lotoRequired = 'HSE Mandatory Isolation Rule: Equipment is flagged Critical/Hazardous. Lockout/Tagout (LOTO) energy isolation is strictly mandatory.';
+    errors.lotoRequired = 'HSE Mandatory Isolation Rule: Equipment is flagged Critical/Hazardous. Lockout/Tagout (LOTO) energy isolation is strictly mandatory per PDO SP-1231.';
   }
 
   // 7. RAMS Reference for High-Risk / Critical Interventions
@@ -509,7 +509,7 @@ predictiveMaintenanceRouter.get('/standards', (_req: Request, res: Response) => 
     regulatoryAuthorities: [
       { code: 'ISO-10816-3', name: 'Mechanical vibration - Evaluation of machine vibration by measurements on non-rotating parts' },
       { code: 'API-670', name: 'Machinery Protection Systems Standard' },
-      { code: 'OSHAD-SF-CoP-14.0', name: 'Control of Hazardous Energy (Lockout / Tagout)' },
+      { code: 'PDO-SP-1231', name: 'Petroleum Development Oman Specification for Mechanical & Electrical Isolation / LOTO' },
       { code: 'OSHA-1910.147', name: 'The control of hazardous energy (lockout/tagout)' }
     ]
   });

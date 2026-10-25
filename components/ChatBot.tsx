@@ -36,7 +36,7 @@ const ROLE_DEFINITIONS: { id: GeminiRoleType; label: string; icon: any; desc: st
     id: 'hse_advisor',
     label: 'Statutory HSE Advisor',
     icon: Shield,
-    desc: 'OSHAD-SF v3.1, UAE Labor Law (MoHRE), Civil Defence & ISO 45001',
+    desc: 'Oman Labour Law (RD 53/2023), MD 286/2008, PDO Specifications & CDAA',
     badge: 'Statutory'
   },
   {
@@ -118,8 +118,8 @@ export const ChatBot: React.FC = () => {
       id: 'msg-init-1',
       role: 'model',
       text: language === 'ar'
-        ? `مرحباً بك! أنا **صافي (Safi)**، المحرك الذكي المعتمد لعمليات الصحة والسلامة والبيئة (HSE). يمكنني مساعدتك في تدقيق امتثال أوشاد (OSHAD-SF)، كود أدنوك، تشريعات وزارة الموارد البشرية والتوطين (MoHRE)، والبحث الجغرافي عن مراكز الطوارئ المعتمدة.`
-        : `Hello! I am **Safi**, your Enterprise HSE AI Platform Copilot.\n\nI am configured with multi-turn reasoning across statutory GCC codes (OSHAD-SF, UAE MoHRE, ISO 45001), real-time **Google Search Grounding**, **Google Maps Grounding**, and **Audio Transcription via gemini-3.5-transcribe**.\n\nHow can I support your safety operations today?`,
+        ? `مرحباً بك! أنا **صافي (Safi)**، المحرك الذكي المعتمد لعمليات الصحة والسلامة والبيئة (HSE). يمكنني مساعدتك في تدقيق امتثال لوائح وزارة العمل العمانية (MD 286/2008)، مواصفات شركة تنمية نفط عمان (PDO SP-1143/SP-1170)، وتوجيهات هيئة الدفاع المدني والإسعاف (CDAA).`
+        : `Hello! I am **Safi**, your Enterprise HSE AI Platform Copilot.\n\nI am configured with multi-turn reasoning across statutory Sultanate of Oman codes (Oman Labour Law RD 53/2023, MoL MD 286/2008, PDO Specifications, CDAA, ISO 45001), real-time **Google Search Grounding**, **Google Maps Grounding**, and **Audio Transcription via gemini-3.5-transcribe**.\n\nHow can I support your safety operations today?`,
       timestamp: new Date(),
       modelUsed: 'gemini-3.5-flash',
       roleUsed: 'Statutory HSE Advisor'
@@ -618,25 +618,25 @@ export const ChatBot: React.FC = () => {
       <div className="px-3 py-2 bg-slate-900/40 border-t border-slate-800/60 overflow-x-auto flex gap-1.5 no-scrollbar shrink-0">
         <button
           onClick={() => handleQuickPrompt(
-            'Check current UAE MoHRE midday heat stress summer work ban regulations & mandatory site hydration requirements.',
+            'Check current Oman Ministry of Labour MD 286/2008 midday heat stress summer work ban regulations & mandatory TWL monitoring.',
             'hse_advisor',
             'search'
           )}
           className="whitespace-nowrap px-2.5 py-1 rounded-xl bg-slate-800/70 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-700/60 transition-colors flex items-center gap-1.5"
         >
           <Search size={10} className="text-blue-400" />
-          <span>MOHRE Heat Stress Rules</span>
+          <span>MoL MD 286 Heat Stress</span>
         </button>
         <button
           onClick={() => handleQuickPrompt(
-            'Locate nearest emergency trauma hospital and civil defence fire station to Al-Ruwais Industrial Area.',
+            'Locate nearest emergency trauma hospital and CDAA fire station to Mina Al Fahal Terminal, Muscat.',
             'site_supervisor',
             'maps'
           )}
           className="whitespace-nowrap px-2.5 py-1 rounded-xl bg-slate-800/70 hover:bg-slate-800 text-[10px] text-slate-300 border border-slate-700/60 transition-colors flex items-center gap-1.5"
         >
           <MapPin size={10} className="text-emerald-400" />
-          <span>Nearest Trauma & Civil Defence</span>
+          <span>Nearest CDAA & Trauma Center</span>
         </button>
         <button
           onClick={() => handleQuickPrompt(

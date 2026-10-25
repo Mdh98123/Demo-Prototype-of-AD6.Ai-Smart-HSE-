@@ -37,26 +37,6 @@ const JURISDICTION_OPTIONS: JurisdictionOption[] = [
     desc: 'Oman Labour Law RD 53/2023 · MoL 24h Notice · TWL Heat Metric',
     currency: 'OMR (3 decimals)',
     authorities: 'MoL · PDO · MEM · CDAA'
-  },
-  {
-    id: 'UAE',
-    flag: '🇦🇪',
-    name: 'United Arab Emirates',
-    shortName: 'UAE',
-    framework: 'OSHAD-SF v3.1 & ADNOC CoPs',
-    desc: 'ADPHC Form G · MoHRE Midday Break · WBGT Heat Metric',
-    currency: 'AED',
-    authorities: 'ADPHC · MoHRE · ADNOC SRA'
-  },
-  {
-    id: 'COMBINED',
-    flag: '🇦🇪🇴🇲',
-    name: 'Dual GCC Combined',
-    shortName: 'Dual GCC',
-    framework: 'Cross-Border Harmonized Framework',
-    desc: 'Unified multi-site compliance across Oman & UAE concessions',
-    currency: 'USD / Multi',
-    authorities: 'Harmonized Regulatory Engine'
   }
 ];
 
@@ -221,11 +201,7 @@ export const JurisdictionSelectorDropdown: React.FC<JurisdictionSelectorDropdown
             )}
           </div>
           <p className="text-xs font-bold truncate">
-            {regionalMode === 'COMBINED' 
-              ? 'Dual GCC' 
-              : regionalMode === 'OMAN' 
-              ? 'Sultanate of Oman' 
-              : 'United Arab Emirates'}
+            Sultanate of Oman
           </p>
         </div>
 

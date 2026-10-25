@@ -4,6 +4,8 @@ import { useUser } from '../contexts/UserContext';
 import { generateInspectionChecklist, suggestAuditFinding } from '../services/geminiService';
 import { InspectionItem, NCR } from '../types';
 import LocationSelector, { PREDEFINED_LOCATIONS } from './LocationSelector';
+import { VoiceDictationButton } from './media/VoiceDictationButton';
+import { InspectionDetail } from './InspectionDetail';
 import { 
   ClipboardCheck, Loader2, Plus, AlertOctagon, CheckCircle2, 
   XCircle, MinusCircle, Camera, FileText, ChevronRight,
@@ -57,6 +59,7 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
   const [ncrs, setNcrs] = useState<NCR[]>([]);
   const [currentInspectionId] = useState(`INSP-${Date.now()}`);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [selectedRecordForDetail, setSelectedRecordForDetail] = useState<any | null>(null);
 
   // Validation State
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -251,6 +254,21 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
       setActiveTab('history');
   };
 
+  if (selectedRecordForDetail) {
+    return (
+      <div className="max-w-6xl mx-auto space-y-6 animate-in slide-in-from-bottom-4 duration-500 pb-20">
+        <InspectionDetail
+          record={selectedRecordForDetail}
+          onBack={() => setSelectedRecordForDetail(null)}
+          onUpdate={() => {
+            const saved = localStorage.getItem('hse_inspection_history');
+            if (saved) setHistory(JSON.parse(saved));
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
@@ -314,7 +332,15 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
                           />
 
                           <div>
-                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Context / Focus Area</label>
+                              <div className="flex items-center justify-between mb-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Context / Focus Area</label>
+                                <VoiceDictationButton 
+                                  value={context} 
+                                  onTranscript={(val) => setContext(val)} 
+                                  size="sm" 
+                                  mode="append" 
+                                />
+                              </div>
                               <textarea 
                                   className="w-full p-4 glass-panel border-2 border-slate-50 rounded-2xl font-bold text-sm text-slate-700 outline-none focus:border-indigo-500 transition-all h-24 resize-none"
                                   placeholder="e.g. Focus on hydraulic systems..."
@@ -486,7 +512,21 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
                       }).map(record => {
                           const nearby = isNearby(record.location);
                           return (
-                          <div key={record.id} className={`p-6 hover:glass-button/50 transition-all flex items-center justify-between group cursor-pointer ${nearby ? 'bg-indigo-50/50 relative overflow-hidden' : ''}`}>
+                          <div 
+                            key={record.id} 
+                            onClick={() => setSelectedRecordForDetail({
+                              ...record,
+                              templateId: record.type,
+                              data: {
+                                site: record.location,
+                                inspector: record.inspector,
+                                score: record.score,
+                                photos: (record as any).photos || [],
+                                observations: (record as any).observations || ''
+                              }
+                            })}
+                            className={`p-6 hover:glass-button/50 transition-all flex items-center justify-between group cursor-pointer ${nearby ? 'bg-indigo-50/50 relative overflow-hidden' : ''}`}
+                          >
                               {nearby && <div className="absolute start-0 top-0 bottom-0 w-1 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
                               <div className="flex items-center gap-6">
                                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center font-black text-xl shadow-inner ${

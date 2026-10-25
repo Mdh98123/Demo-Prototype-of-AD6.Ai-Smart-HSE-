@@ -461,19 +461,20 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 ### 2.27 Demo Mode & Fictional Concession Sandbox
 - **Feature Name:** Interactive Demo Sandbox & Synthetic Concession Environment
 - **File Paths:**
-  - `/components/LoginPage.tsx` (Distinct Demo Sandbox card & launch button)
-  - `/components/App.tsx` (Sticky amber DEMO MODE banner with Exit button)
+  - `/components/LoginPage.tsx` (Distinct Demo Sandbox card, System Admin / Worker / Supervisor explicit launch actions)
+  - `/components/App.tsx` (Sticky amber Synthetic Demonstration Data banner with Exit Demonstration Mode button)
   - `/components/GuestDemoModule.tsx` (Standalone walkthrough module)
-  - `/contexts/UserContext.tsx` (`loginDemo`, `isDemoMode`, `logout`)
-  - `/services/authService.ts` (`loginDemo`, `isDemoSession`)
+  - `/contexts/UserContext.tsx` (`loginDemo`, `isDemoMode`, `logout`, `authMode`)
+  - `/services/authService.ts` (`loginDemo`, `isDemoSession`, `getAuthMode`, `setAuthModeSetting`)
   - `/services/demoDataLoader.ts` (Synthetic dataset)
-- **Route / Nav Entry:** Login Page "Launch Demo Sandbox" button
+  - `/.env.example` (`AUTH_MODE=demo`, `DEMO_MODE=true`)
+- **Route / Nav Entry:** Login Page "Enter Demonstration Mode" buttons
 - **Current Data Source:** `demoDataLoader.ts`, `hse_is_demo_mode` in `localStorage`
-- **Storage Type:** Persisted in `localStorage` (`hse_is_demo_mode`)
-- **Implementation Status:** Functional (Explicit activation, assigns non-admin Worker persona, labels synthetic nature prominently, zero unauthenticated admin access)
+- **Storage Type:** Persisted in `localStorage` (`hse_is_demo_mode`, `hse_auth_mode`)
+- **Implementation Status:** Functional (Explicit activation, supports System Admin, Worker, and Supervisor entry, labels synthetic nature prominently, zero unauthenticated admin access)
 - **Dependencies:** `authService.ts`, `UserContext.tsx`, `demoDataLoader.ts`
 - **Known Limitations:** Data reset requires clearing browser storage or clicking "Reset Demo Data" in demo settings.
-- **Preservation Strategy:** Never revert to automatic admin fallback; preserve explicit demo button, sticky amber banner, and clean logout reset.
+- **Preservation Strategy:** Never revert to automatic admin fallback; preserve explicit demo buttons, sticky Synthetic Demonstration Data banner, role-switch guard, and clean logout reset.
 
 ---
 

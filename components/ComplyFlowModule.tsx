@@ -86,7 +86,7 @@ const ComplyFlowModule: React.FC = () => {
             <Scale size={32} />
           </div>
           <div>
-            <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">ComplyFlow UAE</h2>
+            <h2 className="text-4xl font-black text-slate-800 tracking-tighter uppercase leading-none">ComplyFlow Oman</h2>
             <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-4 border-teal-500 ps-4">Automated Regulatory Intelligence & Fine Prevention</p>
           </div>
         </div>
@@ -299,7 +299,7 @@ const ComplyFlowModule: React.FC = () => {
                                   </div>
                                   <div className="text-end glass-card p-4 rounded-2xl border border-red-100 shadow-sm">
                                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Potential Penalty</p>
-                                      <p className="text-2xl font-black text-slate-900">AED {risk.potentialFineAED.toLocaleString()}</p>
+                                      <p className="text-2xl font-black text-slate-900">OMR {risk.potentialFineAED.toLocaleString()}</p>
                                   </div>
                               </div>
                           ))}
@@ -313,7 +313,7 @@ const ComplyFlowModule: React.FC = () => {
                   
                   <div className="space-y-8 relative z-10">
                       <div>
-                          <p className="text-4xl font-black tracking-tighter">AED 45,000</p>
+                          <p className="text-4xl font-black tracking-tighter">OMR 45,000</p>
                           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Estimated Fines Avoided (YTD)</p>
                       </div>
                       
@@ -321,7 +321,7 @@ const ComplyFlowModule: React.FC = () => {
                       
                       <div className="space-y-4">
                           <div className="flex justify-between text-xs font-bold">
-                              <span className="text-slate-300">MoHRE Compliance</span>
+                              <span className="text-slate-300">Oman MoL MD 286</span>
                               <span className="text-emerald-400">100%</span>
                           </div>
                           <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -329,11 +329,11 @@ const ComplyFlowModule: React.FC = () => {
                           </div>
                           
                           <div className="flex justify-between text-xs font-bold mt-2">
-                              <span className="text-slate-300">DM Site Code</span>
-                              <span className="text-yellow-400">92%</span>
+                              <span className="text-slate-300">PDO SP-1143 Code</span>
+                              <span className="text-yellow-400">94%</span>
                           </div>
                           <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                              <div className="bg-yellow-500 h-full w-[92%]"></div>
+                              <div className="bg-yellow-500 h-full w-[94%]"></div>
                           </div>
                       </div>
                   </div>
