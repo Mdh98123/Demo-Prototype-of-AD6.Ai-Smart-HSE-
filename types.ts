@@ -1,5 +1,5 @@
 
-export type UserRole = 'ADMIN' | 'Board_Director' | 'CEO' | 'Head_Group_HSE' | 'Regional_HSE_Director' | 'Site_HSE_Manager' | 'HSE_Officer' | 'Environmental_Officer' | 'Project_Manager' | 'Internal_Auditor' | 'Site_Supervisor' | 'Worker' | 'HR_Coordinator' | 'Legal_Team' | 'Transport_Manager' | 'Security_Officer' | 'Store_Keeper' | 'Maintenance_Lead';
+export type UserRole = 'ADMIN' | 'Board_Director' | 'CEO' | 'Head_Group_HSE' | 'Regional_HSE_Director' | 'Site_HSE_Manager' | 'HSE_Officer' | 'Environmental_Officer' | 'Project_Manager' | 'Internal_Auditor' | 'QA_QC_Manager' | 'QA_QC_Inspector' | 'Site_Supervisor' | 'Worker' | 'HR_Coordinator' | 'Legal_Team' | 'Transport_Manager' | 'Security_Officer' | 'Store_Keeper' | 'Maintenance_Lead';
 
 export type ComplianceFramework = 'OMAN_MOL_MD286' | 'PDO_SP' | 'OMAN_CDAA' | 'ISO_45001' | 'OMAN_PASI' | 'ADNOC_COP' | 'OSHAD_SF' | 'DM_CODE' | 'FEDERAL_MOHRE';
 
