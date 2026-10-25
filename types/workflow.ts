@@ -35,6 +35,10 @@ export interface WorkflowAuditEntry {
   at: string;
   fromStatus?: WorkflowStatus;
   toStatus: WorkflowStatus;
+  fromUserId?: string;
+  toUserId?: string;
+  fromRole?: UserRole;
+  toRole?: UserRole;
   reason?: string;
 }
 
@@ -134,7 +138,7 @@ export interface WorkflowRecordInput {
 
 export type WorkflowAction =
   | { type: 'claim' }
-  | { type: 'takeover'; reason: string; ownerUnavailable?: boolean }
+  | { type: 'takeover'; reason: string }
   | { type: 'reassign'; reason: string; target: WorkflowActor }
   | { type: 'delegate'; note: string; target: WorkflowActor }
   | { type: 'complete' }

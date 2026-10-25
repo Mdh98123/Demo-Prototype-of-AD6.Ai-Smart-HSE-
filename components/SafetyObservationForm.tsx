@@ -14,9 +14,13 @@ import { useUser } from '../contexts/UserContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
 import { useAudioRecorder } from '../hooks/useAudioRecorder';
 import { GeminiClientService } from '../services/geminiClientService';
+import { useWorkflow } from '../contexts/WorkflowContext';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 
-const SafetyObservationForm: React.FC = () => {
+const SafetyObservationForm: React.FC<{ initialWorkflowRecordId?: string }> = ({ initialWorkflowRecordId }) => {
   const { currentUser, allObservations, addObservation, updateObservation } = useUser();
+  const { enabled: workflowEnabled, createForRecord } = useWorkflow();
+  const [workflowError, setWorkflowError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'Report' | 'Insights'>('Report');
 
   // Form State
@@ -88,6 +92,20 @@ const SafetyObservationForm: React.FC = () => {
       setErrors(prev => ({...prev, [field]: validate(field, value)}));
   };
 
+  const startObservationWorkflow = (recordId: string) => {
+    if (!workflowEnabled) return;
+    void createForRecord({
+      recordType: 'Observation',
+      recordId,
+      title: obsDescription.slice(0, 100),
+      priority: obsType === 'Improvement' ? 'Medium' : 'Low',
+      siteId: 'site-sohar',
+      department: currentUser.department
+    }).then(() => setWorkflowError(null)).catch(cause => {
+      setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.');
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const descErr = validate('description', obsDescription);
@@ -137,6 +155,7 @@ const SafetyObservationForm: React.FC = () => {
       
       // 3. Commit to Context
       addObservation(newObs);
+      startObservationWorkflow(newObsId);
       
       // 4. Show AI Receipt
       setSubmissionResult({ id: newObsId, analysis });
@@ -178,6 +197,7 @@ const SafetyObservationForm: React.FC = () => {
     };
     
     addObservation(newObs);
+    startObservationWorkflow(newObsId);
     setSubmissionResult({ id: newObsId, analysis: lowConfidencePrompt.analysis });
     setLowConfidencePrompt(null);
   };
@@ -203,6 +223,7 @@ const SafetyObservationForm: React.FC = () => {
       history: initialHistory,
       images: images
     });
+    startObservationWorkflow(newObsId);
     
     // Show a simplified success state or just reset
     alert("Observation submitted successfully without AI analysis.");
@@ -371,6 +392,8 @@ const SafetyObservationForm: React.FC = () => {
     const { analysis } = submissionResult;
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in zoom-in duration-500 pb-20">
+            <WorkflowRecordPanel recordType="Observation" recordId={submissionResult.id} />
+            {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">{workflowError}</p>}
             <div className="text-center space-y-4 pt-10">
                 <div className="bg-emerald-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow-xl shadow-emerald-500/20 border-4 border-white animate-bounce">
                     <CheckCircle2 size={48} className="text-emerald-600" />
@@ -466,6 +489,12 @@ const SafetyObservationForm: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in slide-in-from-bottom-4 duration-500 pb-20">
+      {initialWorkflowRecordId && (
+        <>
+          <WorkflowRecordPanel recordType="Observation" recordId={initialWorkflowRecordId} />
+          {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">{workflowError}</p>}
+        </>
+      )}
       
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
           <div className="flex items-center gap-x-3">

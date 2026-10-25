@@ -1,6 +1,6 @@
 import type { WorkflowRepository, WorkflowState } from '../types/workflow';
 
-const WORKFLOW_STORAGE_KEY = 'ad6_workflow_state_v1';
+export const WORKFLOW_STORAGE_KEY = 'ad6_workflow_state_v1';
 
 const EMPTY_STATE: WorkflowState = {
   workItems: [],
@@ -26,8 +26,32 @@ export class LocalStorageWorkflowRepository implements WorkflowRepository {
     if (typeof localStorage === 'undefined') {
       throw new Error('Workflow storage is unavailable outside a browser context.');
     }
-    localStorage.setItem(WORKFLOW_STORAGE_KEY, JSON.stringify(state));
+    const current = await this.read();
+    localStorage.setItem(WORKFLOW_STORAGE_KEY, JSON.stringify(mergeWorkflowStates(current, state)));
   }
+}
+
+export function mergeWorkflowStates(current: WorkflowState, incoming: WorkflowState): WorkflowState {
+  const workItems = new Map(current.workItems.map(item => [item.id, item]));
+  for (const item of incoming.workItems) {
+    const existing = workItems.get(item.id);
+    if (!existing || item.history.length >= existing.history.length) workItems.set(item.id, item);
+  }
+
+  const events = new Map(current.events.map(event => [event.id, event]));
+  for (const event of incoming.events) events.set(event.id, event);
+
+  const notifications = new Map(current.notifications.map(notification => [notification.id, notification]));
+  for (const notification of incoming.notifications) {
+    const existing = notifications.get(notification.id);
+    notifications.set(notification.id, existing?.read ? existing : notification);
+  }
+
+  return {
+    workItems: Array.from(workItems.values()),
+    events: Array.from(events.values()),
+    notifications: Array.from(notifications.values())
+  };
 }
 
 function isWorkflowState(value: unknown): value is WorkflowState {

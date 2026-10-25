@@ -16,6 +16,9 @@ import {
 import { UserProfileService } from '../services/userProfileService';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRegionalCompliance } from '../contexts/RegionalComplianceContext';
+import { useWorkflow } from '../contexts/WorkflowContext';
+import { useUser } from '../contexts/UserContext';
+import { WorkflowProfilePanel } from './workflow/WorkflowProfilePanel';
 import { 
   RegionalComplianceMode, 
   RegionalComplianceService, 
@@ -36,6 +39,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   user: initialUser
 }) => {
   const { dir, t } = useLanguage();
+  const { isDemoMode } = useUser();
+  const { clientConfigured: workflowConfigured, enabled: workflowEnabled } = useWorkflow();
   const { 
     regionalMode, 
     activeProfile, 
@@ -45,7 +50,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     isOmanMode, 
     isCombinedMode 
   } = useRegionalCompliance();
-  const [activeTab, setActiveTab] = useState<'overview' | 'activities' | 'pending' | 'completed' | 'notifications' | 'competencies' | 'regional_admin'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'activities' | 'pending' | 'completed' | 'workflow' | 'notifications' | 'competencies' | 'regional_admin'>('overview');
   const [userProfile, setUserProfile] = useState<UserProfile>(initialUser);
   const [activitySearch, setActivitySearch] = useState('');
   const [activityCategoryFilter, setActivityCategoryFilter] = useState<string>('ALL');
@@ -319,6 +324,20 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               {completedActions.length}
             </span>
           </button>
+
+          {workflowConfigured && isDemoMode && workflowEnabled && (
+            <button
+              onClick={() => setActiveTab('workflow')}
+              className={`px-4 py-2.5 rounded-t-xl text-xs font-bold border-b-2 transition-all flex items-center gap-2 shrink-0 ${
+                activeTab === 'workflow'
+                  ? 'border-indigo-600 text-indigo-600 bg-indigo-50/50'
+                  : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Activity size={15} />
+              <span>{t('workflow.title')}</span>
+            </button>
+          )}
 
           <button
             onClick={() => setActiveTab('notifications')}
@@ -798,6 +817,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       {action.evidenceNotes && (
                         <span className="italic text-slate-600">"{action.evidenceNotes}"</span>
                       )}
+
                       <span>Location: <strong>{action.location}</strong></span>
                     </div>
                   </div>
@@ -811,6 +831,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               ))}
             </div>
           )}
+
+          {activeTab === 'workflow' && workflowEnabled && <WorkflowProfilePanel userId={userProfile.id} />}
 
           {/* TAB 5: 10+ NOTIFICATIONS */}
           {activeTab === 'notifications' && (

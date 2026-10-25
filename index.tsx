@@ -8,6 +8,7 @@ import { UserProvider } from './contexts/UserContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { TenantProvider } from './contexts/TenantContext';
 import { DemoDataLoader } from './services/demoDataLoader';
+import { WorkflowProvider } from './contexts/WorkflowContext';
 
 // Seed realistic GCC Synthetic Enterprise Data on startup
 DemoDataLoader.seedDemoData().catch(console.error);
@@ -24,11 +25,13 @@ root.render(
   <React.StrictMode>
     <LanguageProvider>
       <UserProvider>
-        <RegionalComplianceProvider>
-          <TenantProvider>
-            <App />
-          </TenantProvider>
-        </RegionalComplianceProvider>
+        <WorkflowProvider>
+          <RegionalComplianceProvider>
+            <TenantProvider>
+              <App />
+            </TenantProvider>
+          </RegionalComplianceProvider>
+        </WorkflowProvider>
       </UserProvider>
     </LanguageProvider>
   </React.StrictMode>

@@ -1,4 +1,4 @@
-import { getRoleChain, roleRankInChain, WORKFLOW_RULES } from '../config/workflowRules';
+import { WORKFLOW_RULES } from '../config/workflowRules';
 import type {
   WorkflowAction,
   WorkflowActor,
@@ -11,6 +11,15 @@ import type {
   WorkItem
 } from '../types/workflow';
 import type { UserRole } from '../types';
+import {
+  canApproveWorkflowItem,
+  canClaimWorkflowItem,
+  canCompleteWorkflowItem,
+  canDelegateWorkflowItem,
+  canEscalateWorkflowItem,
+  canReassignWorkflowItem,
+  canTakeOverWorkflowItem
+} from './workflowPermissions';
 
 export class WorkflowService {
   private mutationQueue: Promise<void> = Promise.resolve();
@@ -27,6 +36,7 @@ export class WorkflowService {
     if (!rule) throw new Error(`No workflow rule is configured for ${input.recordType}.`);
 
     const state = await this.repository.read();
+    if (state.workItems.some(item => item.recordId === input.recordId)) return state;
     const ownerRole = input.ownerRole ?? (input.highPotential && rule.highPotentialRole
       ? rule.highPotentialRole
       : rule.ownerRole);
@@ -99,6 +109,8 @@ export class WorkflowService {
     if (item.status === 'Done' || item.status === 'Rejected') throw new Error('This workflow task is already closed.');
 
     const previousStatus = item.status;
+    const previousOwner = item.assignedToUser;
+    const previousRole = item.assignedToRole;
     const event = this.applyAction(item, actor, action, state);
     const auditAction = action.type;
     item.history.push({
@@ -109,6 +121,10 @@ export class WorkflowService {
       at: this.now().toISOString(),
       fromStatus: previousStatus,
       toStatus: item.status,
+      fromUserId: previousOwner,
+      toUserId: item.assignedToUser,
+      fromRole: previousRole,
+      toRole: item.assignedToRole,
       ...('reason' in action ? { reason: action.reason } : {})
     });
     state.events.push(event);
@@ -133,6 +149,9 @@ export class WorkflowService {
       const fromStatus = item.status;
       item.status = 'Escalated';
       item.escalatedToRole = rule.escalationRole;
+      item.assignedToUser = undefined;
+      item.assignedToRole = rule.escalationRole;
+      item.pool = rule.escalationRole;
       item.history.push({
         id: this.makeId(),
         actorId: 'workflow-system',
@@ -162,42 +181,47 @@ export class WorkflowService {
   private applyAction(item: WorkItem, actor: WorkflowActor, action: WorkflowAction, state: WorkflowState): WorkflowEvent {
     switch (action.type) {
       case 'claim':
-        if (item.pool !== actor.role || item.assignedToUser) throw new Error('Only a member of the task role pool can claim this task.');
+        requirePermission(canClaimWorkflowItem(item, actor));
         item.assignedToUser = actor.id;
         item.pool = undefined;
         item.status = 'Assigned';
         return this.makeEvent('task.claimed', actor, item, [item.assignedToRole], {});
       case 'takeover':
         this.requireReason(action.reason);
-        if (!item.assignedToUser || item.assignedToUser === actor.id) throw new Error('A different assigned owner is required for takeover.');
-        if (!this.canTakeOver(item, actor, action.ownerUnavailable ?? false)) throw new Error('Takeover is limited to a higher role in the same chain, or an overdue/unavailable same-role peer.');
+        requirePermission(canTakeOverWorkflowItem(item, actor, this.now()));
         {
           const previousOwner = item.assignedToUser;
           item.assignedToUser = actor.id;
           item.pool = undefined;
           item.status = 'InProgress';
-          return this.makeEvent('task.reassigned', actor, item, [item.assignedToRole], { previousOwner, reason: action.reason });
+          const event = this.makeEvent('task.reassigned', actor, item, [item.assignedToRole], { previousOwner, reason: action.reason });
+          if (previousOwner) event.targetUserIds.push(previousOwner);
+          return event;
         }
       case 'reassign':
         this.requireReason(action.reason);
-        if (!this.canReassign(item, actor, action.target)) throw new Error('Reassignment is limited to a same-role peer or a supervised lower role in the same chain.');
+        requirePermission(canReassignWorkflowItem(item, actor, action.target));
         {
           const previousOwner = item.assignedToUser;
           item.assignedToUser = action.target.id;
           item.assignedToRole = action.target.role;
           item.pool = undefined;
-          return this.makeEvent('task.reassigned', actor, item, [action.target.role], { previousOwner, reason: action.reason });
+          const event = this.makeEvent('task.reassigned', actor, item, [action.target.role], { previousOwner, reason: action.reason });
+          if (previousOwner) event.targetUserIds.push(previousOwner);
+          event.targetUserIds.push(action.target.id);
+          return event;
         }
       case 'delegate':
         if (!action.note.trim()) throw new Error('A delegation note is required.');
-        if (action.target.role !== item.assignedToRole && !this.isHigherInSameChain(actor.role, item.assignedToRole)) {
-          throw new Error('Delegation requires the task owner role or a higher role in the same chain.');
-        }
+        requirePermission(canDelegateWorkflowItem(item, actor, action.target));
         item.delegatedToUser = action.target.id;
-        return this.makeEvent('task.delegated', actor, item, [action.target.role], { note: action.note });
+        {
+          const event = this.makeEvent('task.delegated', actor, item, [action.target.role], { note: action.note });
+          event.targetUserIds.push(action.target.id);
+          return event;
+        }
       case 'complete':
-        if (item.createdBy === actor.id) throw new Error('Segregation of duties: the record creator cannot close their own record.');
-        this.requireCanPerform(item, actor);
+        requirePermission(canCompleteWorkflowItem(item, actor));
         if (item.approverRole) {
           item.performedByUser = actor.id;
           item.assignedToRole = item.approverRole;
@@ -244,9 +268,7 @@ export class WorkflowService {
         item.performedByUser = actor.id;
         return this.makeEvent('task.completed', actor, item, [], {});
       case 'approve':
-        if (!item.approverRole || actor.role !== item.approverRole) throw new Error('Only the configured approver role may approve this task.');
-        if (item.status !== 'PendingApproval') throw new Error('This task is not awaiting approval.');
-        if (item.createdBy === actor.id || item.performedByUser === actor.id) throw new Error('Segregation of duties: the creator or performer cannot approve their own work.');
+        requirePermission(canApproveWorkflowItem(item, actor));
         if (item.finalApproverRole && item.finalApproverRole !== item.approverRole) {
           item.approverRole = item.finalApproverRole;
           item.finalApproverRole = undefined;
@@ -264,16 +286,12 @@ export class WorkflowService {
         });
       case 'reject':
         this.requireReason(action.reason);
-        if (!item.approverRole || actor.role !== item.approverRole) throw new Error('Only the configured approver role may reject this task.');
-        if (item.status !== 'PendingApproval') throw new Error('This task is not awaiting approval.');
-        if (item.createdBy === actor.id || item.performedByUser === actor.id) throw new Error('Segregation of duties: the creator or performer cannot reject their own work.');
+        requirePermission(canApproveWorkflowItem(item, actor));
         item.status = 'Rejected';
         return this.makeEvent('approval.rejected', actor, item, [item.assignedToRole], { reason: action.reason });
       case 'return':
         this.requireReason(action.reason);
-        if (!item.approverRole || actor.role !== item.approverRole) throw new Error('Only the configured approver role may return this task.');
-        if (item.status !== 'PendingApproval') throw new Error('This task is not awaiting approval.');
-        if (item.createdBy === actor.id || item.performedByUser === actor.id) throw new Error('Segregation of duties: the creator or performer cannot return their own work.');
+        requirePermission(canApproveWorkflowItem(item, actor));
         item.status = 'Assigned';
         item.assignedToRole = roleForRecord(item.recordType);
         item.assignedToUser = undefined;
@@ -281,46 +299,18 @@ export class WorkflowService {
         return this.makeEvent('task.returned', actor, item, [item.assignedToRole], { reason: action.reason });
       case 'escalate':
         this.requireReason(action.reason);
-        if (actor.id !== item.assignedToUser && actor.role !== item.assignedToRole) {
-          throw new Error('Only the task owner or a same-role user can escalate this task.');
-        }
+        requirePermission(canEscalateWorkflowItem(item, actor));
         {
           const targetRole = WORKFLOW_RULES[item.recordType]?.escalationRole;
           if (!targetRole) throw new Error('No escalation target is configured.');
           item.status = 'Escalated';
           item.escalatedToRole = targetRole;
+          item.assignedToUser = undefined;
+          item.assignedToRole = targetRole;
+          item.pool = targetRole;
           return this.makeEvent('task.escalated', actor, item, [targetRole], { reason: action.reason });
         }
     }
-  }
-
-  private canTakeOver(item: WorkItem, actor: WorkflowActor, ownerUnavailable: boolean): boolean {
-    if (this.isHigherInSameChain(actor.role, item.assignedToRole)) return true;
-    const overdue = Date.parse(item.dueAt) <= this.now().getTime();
-    return actor.role === item.assignedToRole && (ownerUnavailable || overdue);
-  }
-
-  private canReassign(item: WorkItem, actor: WorkflowActor, target: WorkflowActor): boolean {
-    if (target.id === actor.id) return false;
-    const sameDepartment = !item.department || !target.department || item.department === target.department;
-    if (actor.role === target.role && sameDepartment) return true;
-    return Boolean(
-      actor.supervisedUserIds?.includes(target.id)
-      && target.department === actor.department
-      && this.isHigherInSameChain(actor.role, target.role)
-    );
-  }
-
-  private requireCanPerform(item: WorkItem, actor: WorkflowActor): void {
-    if (actor.id !== item.assignedToUser && !this.isHigherInSameChain(actor.role, item.assignedToRole)) {
-      throw new Error('Your role is not authorized to perform this task.');
-    }
-  }
-
-  private isHigherInSameChain(actorRole: UserRole, requiredRole: UserRole): boolean {
-    const chain = getRoleChain(requiredRole);
-    if (!chain || !chain.includes(actorRole)) return false;
-    return roleRankInChain(actorRole, chain) > roleRankInChain(requiredRole, chain);
   }
 
   private newItem(input: {
@@ -389,7 +379,7 @@ export class WorkflowService {
   }
 
   private requireReason(reason: string): void {
-    if (!reason.trim()) throw new Error('A reason is required for this workflow action.');
+    if (reason.trim().length < 3) throw new Error('A reason is required and must contain at least three characters for this workflow action.');
   }
 
   private serialize<T>(operation: () => Promise<T>): Promise<T> {
@@ -397,6 +387,10 @@ export class WorkflowService {
     this.mutationQueue = result.then(() => undefined, () => undefined);
     return result;
   }
+}
+
+function requirePermission(permission: { allowed: boolean; reason?: string }): void {
+  if (!permission.allowed) throw new Error(permission.reason ?? 'Workflow action is not permitted.');
 }
 
 function roleForRecord(recordType: WorkItem['recordType']): UserRole {

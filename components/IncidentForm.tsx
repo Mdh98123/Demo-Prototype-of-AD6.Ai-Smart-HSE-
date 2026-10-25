@@ -13,6 +13,8 @@ import { useUser } from '../contexts/UserContext';
 import { useTenant } from '../contexts/TenantContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRegionalCompliance } from '../contexts/RegionalComplianceContext';
+import { useWorkflow } from '../contexts/WorkflowContext';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 import { 
   Incident, 
   IncidentEvidenceItem, 
@@ -165,8 +167,9 @@ const INITIAL_INCIDENTS: Incident[] = [
   }
 ];
 
-export const IncidentForm: React.FC = () => {
+export const IncidentForm: React.FC<{ initialWorkflowRecordId?: string }> = ({ initialWorkflowRecordId }) => {
   const { currentUser } = useUser();
+  const { enabled: workflowEnabled, createForRecord } = useWorkflow();
   const { currentTenant, currentSite } = useTenant();
   const { t } = useLanguage();
   const { regionalMode, isUaeMode, isOmanMode, isCombinedMode, activeProfile } = useRegionalCompliance();
@@ -175,6 +178,7 @@ export const IncidentForm: React.FC = () => {
   const [incidents, setIncidents] = useState<Incident[]>(() => {
     return DemoDataLoader.getStoredIncidents();
   });
+  const [workflowError, setWorkflowError] = useState<string | null>(null);
 
   // Listen to demonstration dataset reset event
   useEffect(() => {
@@ -189,7 +193,7 @@ export const IncidentForm: React.FC = () => {
     return () => window.removeEventListener('ad6-demo-data-reset', handleReset);
   }, []);
 
-  const [selectedIncidentId, setSelectedIncidentId] = useState<string | null>(() => incidents[0]?.id || 'INC-2026-OMN-0891');
+  const [selectedIncidentId, setSelectedIncidentId] = useState<string | null>(() => initialWorkflowRecordId || incidents[0]?.id || 'INC-2026-OMN-0891');
   const [activeTab, setActiveTab] = useState<'overview' | 'investigation' | 'capa' | 'statutory'>('overview');
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [filterSeverity, setFilterSeverity] = useState<string>('ALL');
@@ -501,6 +505,20 @@ export const IncidentForm: React.FC = () => {
 
     setIncidents([newIncidentObj, ...incidents]);
     DemoDataLoader.saveIncident(newIncidentObj);
+    if (workflowEnabled) {
+      void createForRecord({
+        recordType: 'Incident',
+        recordId: newId,
+        title: formDescription.slice(0, 100),
+        priority: formActualSeverity === 'Critical' ? 'Critical' : formActualSeverity === 'High' ? 'High' : 'Medium',
+        highPotential: formPotentialSeverity === 'Critical',
+        serious: formActualSeverity === 'Critical' || /fatal|lost time/i.test(formClassification),
+        siteId: 'site-sohar',
+        department: currentUser?.department
+      }).then(() => setWorkflowError(null)).catch(cause => {
+        setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.');
+      });
+    }
     setSelectedIncidentId(newId);
     setIsReportModalOpen(false);
 
@@ -730,6 +748,7 @@ export const IncidentForm: React.FC = () => {
 
   return (
     <div className="space-y-5 animate-in fade-in duration-200">
+      {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-800">{workflowError}</p>}
       
       {/* Top Header & Actions */}
       <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -966,6 +985,8 @@ export const IncidentForm: React.FC = () => {
               </div>
 
             </div>
+
+            <WorkflowRecordPanel recordType="Incident" recordId={currentIncident.id} />
 
             {/* Navigation Tabs */}
             <div className="flex items-center gap-1 border-b border-slate-800 pb-1">

@@ -3,11 +3,15 @@ import { AITag } from './AITag';
 import React, { useState, useEffect } from 'react';
 import { Bell, AlertTriangle, ShieldAlert, FileText, GraduationCap, X, Loader2, RefreshCcw, Activity, CheckCircle, CalendarClock } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
+import { useWorkflow } from '../contexts/WorkflowContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { analyzeComplianceRisks } from '../services/geminiService';
 import { ComplianceAlert, Task } from '../types';
 
 const NotificationCenter: React.FC = () => {
   const { currentUser, activeFramework, equipment } = useUser();
+  const { t, language } = useLanguage();
+  const { enabled: workflowEnabled, notifications: workflowNotifications, events: workflowEvents, unreadCount: workflowUnreadCount, markNotificationRead } = useWorkflow();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alerts, setAlerts] = useState<ComplianceAlert[]>([]);
@@ -90,6 +94,18 @@ const NotificationCenter: React.FC = () => {
   }, [currentUser]); // Re-run if user changes
 
   const criticalCount = alerts.filter(a => a.severity === 'Critical' || a.severity === 'High').length;
+  const notificationCount = criticalCount + (workflowEnabled ? workflowUnreadCount : 0);
+
+  const openWorkflowNotification = async (notificationId: string, eventId: string) => {
+    const event = workflowEvents.find(candidate => candidate.id === eventId);
+    await markNotificationRead(notificationId);
+    setIsOpen(false);
+    if (event && typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('ad6-open-workflow-record', {
+        detail: { recordType: event.recordRef.recordType, recordId: event.recordRef.recordId }
+      }));
+    }
+  };
 
   const getIcon = (category: string, title?: string) => {
       // If title specifically mentions Task Reminder/Due
@@ -117,11 +133,12 @@ const NotificationCenter: React.FC = () => {
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={`${t('notifications.title')}${notificationCount ? ` (${notificationCount})` : ''}`}
         className="relative text-slate-500 hover:text-slate-800 transition-colors p-2 rounded-full hover:bg-slate-100"
       >
         <Bell size={20} />
-        {criticalCount > 0 && (
-            <span className="absolute top-1 end-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+        {notificationCount > 0 && (
+            <span className="absolute -top-0.5 -end-1 min-w-4 h-4 px-1 bg-red-500 text-white rounded-full border-2 border-white text-[9px] leading-3 font-bold text-center animate-pulse">{notificationCount > 99 ? '99+' : notificationCount}</span>
         )}
       </button>
 
@@ -156,7 +173,7 @@ const NotificationCenter: React.FC = () => {
             <div className="absolute end-0 mt-2 w-96 glass-card rounded-xl shadow-xl border border-slate-100 z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200">
                 <div className="p-4 border-b border-slate-100 glass-panel/80 flex justify-between items-center">
                     <div>
-                        <h3 className="font-bold text-slate-800">Compliance Alerts</h3>
+                        <h3 className="font-bold text-slate-800">{t('notifications.title')}</h3>
                         <p className="text-xs text-slate-500">
                             {lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : 'Syncing...'}
                         </p>
@@ -171,6 +188,25 @@ const NotificationCenter: React.FC = () => {
                 </div>
 
                 <div className="max-h-[400px] overflow-y-auto p-2 space-y-2">
+                    {workflowEnabled && workflowNotifications.length > 0 && (
+                      <section className="space-y-2">
+                        <h4 className="px-2 pt-1 text-[10px] font-black uppercase tracking-wide text-indigo-700">{t('workflow.title')}</h4>
+                        {workflowNotifications.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map(notification => (
+                          <button
+                            key={notification.id}
+                            type="button"
+                            onClick={() => void openWorkflowNotification(notification.id, notification.eventId)}
+                            className={`w-full rounded-lg border p-3 text-start transition-shadow hover:shadow-md ${notification.read ? 'border-slate-200 bg-white text-slate-600' : 'border-indigo-200 bg-indigo-50 text-indigo-950'}`}
+                          >
+                            <span className="flex items-start justify-between gap-2">
+                              <span className="text-xs font-bold">{language === 'ar' ? notification.message.ar : notification.message.en}</span>
+                              {!notification.read && <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-indigo-600" />}
+                            </span>
+                            <span className="mt-2 block text-[10px] opacity-70">{new Date(notification.createdAt).toLocaleString(language === 'ar' ? 'ar-OM' : 'en-GB')}</span>
+                          </button>
+                        ))}
+                      </section>
+                    )}
                     {loading && alerts.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-8 text-slate-400">
                             <Loader2 size={24} className="animate-spin mb-2" />

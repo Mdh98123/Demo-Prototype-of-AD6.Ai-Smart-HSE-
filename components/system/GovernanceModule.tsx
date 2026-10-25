@@ -6,6 +6,8 @@ import {
 import { DataResidency, PDPLCompliance } from '../../services/securityCompliance';
 import { useRegionalCompliance } from '../../contexts/RegionalComplianceContext';
 import { useUser } from '../../contexts/UserContext';
+import { useWorkflow } from '../../contexts/WorkflowContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { RegionalComplianceMode, RegionalComplianceService, Jurisdiction, regionalComplianceService } from '../../services/regionalComplianceService';
 
 export const GovernanceModule: React.FC = () => {
@@ -18,7 +20,9 @@ export const GovernanceModule: React.FC = () => {
     openChangeModal, 
     auditHistory 
   } = useRegionalCompliance();
-  const { currentUser } = useUser();
+  const { currentUser, isDemoMode } = useUser();
+  const { t } = useLanguage();
+  const { clientConfigured, settingEnabled, serverStatus, setWorkflowEnabled } = useWorkflow();
 
   const [region, setRegion] = useState(DataResidency.getRegion());
   const [dsarEmail, setDsarEmail] = useState('');
@@ -76,6 +80,25 @@ export const GovernanceModule: React.FC = () => {
            </p>
         </div>
       </div>
+
+      {isDemoMode && clientConfigured && (
+        <section className="flex flex-col gap-3 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="font-bold text-slate-900">{t('workflow.settings')}</h2>
+            <p className="mt-1 text-xs text-slate-600">{t('workflow.demoOnly')}</p>
+            {serverStatus === 'disabled' && <p className="mt-1 text-xs font-semibold text-amber-700">{t('workflow.serverDisabled')}</p>}
+          </div>
+          <label className="flex cursor-pointer items-center gap-3 text-sm font-semibold text-slate-800">
+            <input
+              type="checkbox"
+              checked={settingEnabled}
+              onChange={event => setWorkflowEnabled(event.target.checked)}
+              className="h-4 w-4 accent-indigo-600"
+            />
+            {t('workflow.enabled')}
+          </label>
+        </section>
+      )}
 
       {/* PRIMARY ADMINISTRATIVE SECTION: REGIONAL COMPLIANCE CONFIGURATION */}
       <div className="glass-card rounded-2xl shadow-sm border border-slate-300/80 overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 text-white">

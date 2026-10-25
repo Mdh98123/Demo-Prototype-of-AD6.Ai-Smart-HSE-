@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Finding, SafetyAudit } from './AuditTypes';
 import { AlertTriangle, CheckCircle2, Clock, Search, Filter, ShieldAlert, ArrowRight } from 'lucide-react';
+import { useUser } from '../../contexts/UserContext';
+import { useWorkflow } from '../../contexts/WorkflowContext';
+import { WorkflowRecordPanel } from '../workflow/WorkflowRecordPanel';
 
 interface Props {
     audits: SafetyAudit[];
 }
 
 export const AuditFindings: React.FC<Props> = ({ audits }) => {
+    const { currentUser } = useUser();
+    const { enabled: workflowEnabled, workItems, createForRecord } = useWorkflow();
+    const [workflowError, setWorkflowError] = useState<string | null>(null);
     let allFindings: Finding[] = [];
     audits.forEach(a => {
         a.findings.forEach(f => {
             allFindings.push({ ...f, auditId: a.id }); // Ensure auditId is present
         });
     });
+
+    useEffect(() => {
+        if (!workflowEnabled || !currentUser) return;
+        const openFindings = audits.flatMap(audit => audit.findings.map(finding => ({ ...finding, auditId: audit.id })))
+            .filter(finding => finding.status !== 'Closed' && finding.status !== 'Rejected');
+        openFindings.forEach(finding => {
+            if (workItems.some(item => item.recordId === finding.id)) return;
+            void createForRecord({
+                recordType: 'Audit',
+                recordId: finding.id,
+                title: finding.description.slice(0, 100),
+                priority: finding.severity,
+                siteId: 'site-sohar',
+                department: currentUser.department
+            }).catch(cause => {
+                setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.');
+            });
+        });
+    }, [audits, createForRecord, currentUser, workItems, workflowEnabled]);
 
     const getSeverityColor = (sev: string) => {
         switch (sev) {
@@ -37,6 +62,7 @@ export const AuditFindings: React.FC<Props> = ({ audits }) => {
 
     return (
         <div className="space-y-6 animate-fade-in">
+            {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">{workflowError}</p>}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h2 className="text-xl font-bold text-slate-800">Findings & Corrective Actions</h2>
@@ -84,6 +110,7 @@ export const AuditFindings: React.FC<Props> = ({ audits }) => {
                                                 <ShieldAlert size={12} /> AI RCA Available
                                             </div>
                                         )}
+                                        <WorkflowRecordPanel recordType="Audit" recordId={finding.id} />
                                     </td>
                                     <td className="px-4 py-3">
                                         <span className={`px-2.5 py-1 text-xs font-medium rounded-full border ${getSeverityColor(finding.severity)}`}>

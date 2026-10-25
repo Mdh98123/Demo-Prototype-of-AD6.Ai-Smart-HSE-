@@ -42,7 +42,7 @@ const targetActorSchema = z.object({
 }).strict();
 const actionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('claim') }).strict(),
-  z.object({ type: z.literal('takeover'), reason: z.string().trim().min(3).max(300), ownerUnavailable: z.boolean().optional() }).strict(),
+  z.object({ type: z.literal('takeover'), reason: z.string().trim().min(3).max(300) }).strict(),
   z.object({ type: z.literal('reassign'), reason: z.string().trim().min(3).max(300), target: targetActorSchema }).strict(),
   z.object({ type: z.literal('delegate'), note: z.string().trim().min(3).max(300), target: targetActorSchema }).strict(),
   z.object({ type: z.literal('complete') }).strict(),
