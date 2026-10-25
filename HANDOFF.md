@@ -43,14 +43,14 @@ Run `npm run lint`, `npm test`, `npm run build`, then `npm start`. The verified 
 - `Permit` has no trustworthy applicant user ID. Applicant closure remains unavailable unless a distinct applicant identity is added and proven different from creator and performer; do not infer identity or relax SoD.
 - The sample scenario and synthetic identities are demo-only.
 - No staging deployment or production verification was performed.
-- A prior dependency audit reported 3 low, 15 moderate, 17 high, and 4 critical findings; this workflow task did not remediate or re-audit dependencies.
+- Dependency follow-up updated compatible dependency versions, including Vite `6.4.5` and `@google-cloud/logging` `11.4.0`, and refreshed compatible lockfile transitive versions. The audit fell from 39 to 14 findings (1 low, 5 moderate, 7 high, 1 critical). Remaining direct dependencies include Firebase, jsPDF/jsPDF-AutoTable, and `xlsx`; their audit fixes require major-version changes or are unavailable. Do not force-upgrade without verifying the Firebase integration and report/export behavior.
 
 ## Verification and rollback
 
-Verified commands: `npm run lint`, `npm test` (17/17), and `npm run build`. Runtime smoke checks on port 4174 returned HTTP 200 for `/api/healthz` and `/api/workflow/status`; `/` returned HTTP 200 after an initial short-timeout failure.
+Verified commands: `npm run lint`, `npm test` (17/17), and `npm run build` after the workflow and dependency updates. Runtime smoke checks on port 4174 returned HTTP 200 for `/api/healthz` and `/api/workflow/status`; `/` returned HTTP 200 after an initial short-timeout failure.
 
 To roll back the workflow feature without rewriting history, revert the workflow client integration commit and then commits `30e7e00` and `faaf3a9` with `git revert`, one commit at a time, running the checks above after each revert. The reusable prompt commit `55db260` can remain or be reverted separately. Do not use `reset` or force-push.
 
 ## Continuation prompt
 
-> Continue the AD6 Smart HSE workflow-linking implementation from this handoff. Preserve the demo-only gates, Oman wording, tab-scoped synthetic users, and strict segregation of duties. Do not infer permit applicant identity. First inspect the current git status and commits, then address only the remaining explicitly requested workflow gaps. Run `npm run lint`, `npm test`, `npm run build`, and a local production smoke test; do not deploy without a distinct staging target.
+> Continue the AD6 Smart HSE workflow-linking implementation from this handoff. Preserve the demo-only gates, Oman wording, tab-scoped synthetic users, and strict segregation of duties. Do not infer permit applicant identity. Review the remaining 14 npm audit findings and determine whether dependencies can be upgraded without breaking Firebase, PDF, or XLSX behavior. Add durable cross-device workflow persistence only after a storage design and security rules are established. Run `npm run lint`, `npm test`, `npm run build`, and a local production smoke test; do not deploy without a distinct staging target.
