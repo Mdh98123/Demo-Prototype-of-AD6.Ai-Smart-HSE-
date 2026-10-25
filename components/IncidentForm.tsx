@@ -670,7 +670,6 @@ export const IncidentForm: React.FC = () => {
   }, [incidents, filterSeverity, filterStatus, searchQuery, isUaeMode, isOmanMode]);
 
   // Determine Statutory Jurisdictions based on Active Mode & Record Context - Sultanate of Oman Only
-  const isAbuDhabi = false;
   const isOman = true;
 
   // Available Presets filtered by Regional Compliance Mode (Sultanate of Oman)
@@ -879,17 +878,6 @@ export const IncidentForm: React.FC = () => {
 
                 {/* Statutory Quick Export Shortcuts in Header */}
                 <div className="flex items-center gap-2">
-                  {isAbuDhabi && (
-                    <button
-                      disabled={!isAuthorizedStatutorySubmitter}
-                      onClick={handleExportOshadPdf}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow transition-all flex items-center gap-1.5"
-                      title={!isAuthorizedStatutorySubmitter ? 'Restricted: HSE Officer / Director role required' : undefined}
-                    >
-                      <Download size={13} />
-                      <span>{isAuthorizedStatutorySubmitter ? 'OSHAD Form G' : 'Form G Restricted'}</span>
-                    </button>
-                  )}
                   {isOman && (
                     <button
                       disabled={!isAuthorizedStatutorySubmitter}
