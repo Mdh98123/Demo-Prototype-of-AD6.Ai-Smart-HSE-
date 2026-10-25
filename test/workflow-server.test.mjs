@@ -86,8 +86,9 @@ test('guarded workflow API and Socket.IO deliver an incident approval chain acro
     });
     assert.equal(invalidPayload.status, 400);
 
+    const incidentReportedAt = performance.now();
     const officerNotification = new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('HSE Officer did not receive the incident event.')), 1500);
+      const timeout = setTimeout(() => reject(new Error('HSE Officer did not receive the incident event within one second.')), 1000);
       officerSocket.on('workflow:event', event => {
         if (event.type === 'incident.reported') {
           clearTimeout(timeout);
@@ -113,6 +114,7 @@ test('guarded workflow API and Socket.IO deliver an incident approval chain acro
     const investigation = created.workItems.find(item => item.recordType === 'Investigation');
     assert.ok(investigation);
     const initialNotification = await officerNotification;
+    assert.ok(performance.now() - incidentReportedAt < 1000, 'Cross-user incident notification should arrive within one second.');
     assert.equal(initialNotification.recordRef.recordId, 'INC-DEMO-1');
 
     const act = async (token, itemId, action) => {
