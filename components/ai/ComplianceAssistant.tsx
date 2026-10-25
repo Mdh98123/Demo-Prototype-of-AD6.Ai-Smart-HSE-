@@ -240,7 +240,7 @@ export const ComplianceAssistant: React.FC = () => {
                   </span>
                 )}
                 <span>•</span>
-                <span className="text-emerald-600">✓ OSHAD / MoHRE Aligned</span>
+                <span className="text-emerald-600">✓ Oman MoL MD 286/2008 / Ministry of Labour (MoL) Aligned</span>
               </div>
             )}
           </div>

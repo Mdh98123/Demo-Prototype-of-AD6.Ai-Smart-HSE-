@@ -83,7 +83,7 @@ const MOCModule: React.FC = () => {
     {
         id: 'MOC-24-006',
         title: 'Contractor Change for Waste Mgmt',
-        description: 'Onboarding new vendor Emirates Bio-Waste.',
+        description: 'Onboarding new vendor Sultanate of Oman Bio-Waste.',
         type: 'Permanent',
         category: 'Organization',
         initiator: 'Khalid Al-Dhaheri',

@@ -84,7 +84,7 @@ export const RegionalConfigConfirmDialog: React.FC<RegionalConfigConfirmDialogPr
   const currentProfile: JurisdictionProfile = JURISDICTION_PROFILES[currentModeNorm] || JURISDICTION_PROFILES.COMBINED;
   const targetProfile: JurisdictionProfile = JURISDICTION_PROFILES[targetModeNorm] || JURISDICTION_PROFILES.COMBINED;
 
-  const isTransitioningToUae = targetModeNorm === 'UAE';
+  const isTransitioningToUae = targetModeNorm === 'OMAN';
   const isTransitioningToOman = targetModeNorm === 'OMAN';
   const isTransitioningToCombined = targetModeNorm === 'COMBINED';
 
@@ -404,7 +404,7 @@ export const RegionalConfigConfirmDialog: React.FC<RegionalConfigConfirmDialogPr
               rows={2}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Specify the business or legal requirement (e.g. Concession concessioning in Fahud Block 6, annual OSHAD v3.1 realignment, or executive audit)..."
+              placeholder="Specify the business or legal requirement (e.g. Concession concessioning in Fahud Block 6, annual Oman MoL MD 286/2008 v3.1 realignment, or executive audit)..."
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-medium resize-none"
             />
 

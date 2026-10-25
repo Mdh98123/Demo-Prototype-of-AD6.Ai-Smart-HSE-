@@ -46,8 +46,8 @@ PORT=3000
 # Google Gemini AI Suite (Required for Safi Copilot & Audio Analysis)
 GEMINI_API_KEY=AIzaSyYourActualApiKeyHere
 
-# Regional Compliance Default Scope (UAE | OMAN | COMBINED)
-DEFAULT_JURISDICTION=COMBINED
+# Regional Compliance Default Scope (OMAN | COMBINED)
+DEFAULT_JURISDICTION=OMAN
 
 # Client Public Flags (Vite Client Accessible)
 VITE_ENABLE_MOCK_FALLBACKS=true

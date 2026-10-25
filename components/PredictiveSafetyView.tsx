@@ -127,7 +127,7 @@ export const PredictiveSafetyView: React.FC = () => {
       }
 
       // Site normalization
-      let siteName = 'Al-Ruwais Polyolefin Asset (UAE)';
+      let siteName = 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)';
       if (inc.location.toLowerCase().includes('fahud') || inc.location.toLowerCase().includes('oman')) {
         siteName = 'Fahud-West Gas Station (Oman)';
       } else if (inc.location.toLowerCase().includes('khair') || inc.location.toLowerCase().includes('ksa')) {
@@ -284,8 +284,8 @@ export const PredictiveSafetyView: React.FC = () => {
         sifVelocityScore: 78 
       },
       { 
-        site: 'Al-Ruwais Polyolefin Asset', 
-        jurisdiction: 'UAE (Abu Dhabi OSHAD)', 
+        site: 'Mina Al Fahal Refinery Asset', 
+        jurisdiction: 'Oman (Muscat Oman MoL MD 286/2008)', 
         aSIF: 0, 
         pSIF: 1, 
         minor: 1, 
@@ -381,7 +381,7 @@ export const PredictiveSafetyView: React.FC = () => {
           <div className="flex items-center gap-2 text-xs text-slate-400 font-mono mb-1">
             <span>Enterprise Safety Intelligence</span>
             <span aria-hidden="true">·</span>
-            <span>Campbell Institute & OSHAD SIF Framework</span>
+            <span>Campbell Institute & Oman MoL MD 286/2008 SIF Framework</span>
             <span aria-hidden="true">·</span>
             <span className="text-emerald-400 font-semibold">Gulf Energy & Infrastructure Group</span>
           </div>
@@ -392,7 +392,7 @@ export const PredictiveSafetyView: React.FC = () => {
             </span>
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-3xl">
-            Real-time multi-site Serious Injury & Fatality (SIF) precursor detection, high-energy hazard trajectory modeling, and forward predictive risk velocity across Oman, UAE, and KSA industrial concessions.
+            Real-time multi-site Serious Injury & Fatality (SIF) precursor detection, high-energy hazard trajectory modeling, and forward predictive risk velocity across Oman, Oman, and KSA industrial concessions.
           </p>
         </div>
 
@@ -453,7 +453,7 @@ export const PredictiveSafetyView: React.FC = () => {
           {[
             { id: 'ALL', label: 'All Concessions (3)' },
             { id: 'Fahud-West', label: 'Fahud-West (Oman)' },
-            { id: 'Al-Ruwais', label: 'Al-Ruwais (UAE)' },
+            { id: 'Mina Al Fahal', label: 'Mina Al Fahal (Oman)' },
             { id: 'Ras Al-Khair', label: 'Ras Al-Khair (KSA)' }
           ].map(s => (
             <button
@@ -826,7 +826,7 @@ export const PredictiveSafetyView: React.FC = () => {
               Concession Exposure & SIF Velocity
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
-              Cross-site benchmarking for Abu Dhabi, Oman, and KSA operating assets
+              Cross-site benchmarking for Muscat, Oman, and KSA operating assets
             </p>
           </div>
 
@@ -873,7 +873,7 @@ export const PredictiveSafetyView: React.FC = () => {
           <div className="p-3 bg-emerald-950/20 border border-emerald-800/40 rounded-xl text-[11px] text-emerald-300 flex items-center justify-between">
             <span className="flex items-center gap-1.5 font-medium">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>PDO Block 6 & OSHAD Mechanistic Alignments Active</span>
+              <span>PDO Block 6 & Oman MoL MD 286/2008 Mechanistic Alignments Active</span>
             </span>
             <span className="font-mono font-bold text-emerald-400">100% Monitored</span>
           </div>
@@ -1028,7 +1028,7 @@ export const PredictiveSafetyView: React.FC = () => {
               <span className="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
                 Decision Priority #1: Life Safety Risk
               </span>
-              <span className="text-xs text-slate-400 font-mono">ADNOC COP & OSHAD M11.0 Causal Directives</span>
+              <span className="text-xs text-slate-400 font-mono">PDO SP-1143 Specification & Oman MoL MD 286/2008 M11.0 Causal Directives</span>
             </div>
             <h3 className="text-xl font-black text-white tracking-tight">
               Executive SIF Prevention Intervention Framework

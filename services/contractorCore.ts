@@ -17,7 +17,7 @@ export interface ContractorProfile {
   id: string;
   companyName: string;
   registrationNumber: string; // Trade License
-  adnocIcvNumber?: string; // Integration field
+  pdoIcvNumber?: string; // Integration field
   contactPerson: {
     name: string;
     email: string;
@@ -87,10 +87,10 @@ export class ContractorRiskEngine {
   }
 }
 
-// Stub for MOHRE API Integration
-export class MohreIntegrationStub {
-  static async verifyLaborCard(emiratesId: string, cardNumber: string): Promise<{ valid: boolean; status: string; expiry?: string }> {
-    console.log(`[MOHRE MOCK] Verifying Labor Card: EID=${emiratesId}, Card=${cardNumber}`);
+// Stub for Oman Ministry of Labour API Integration
+export class omanMoLIntegrationStub {
+  static async verifyLaborCard(OmanId: string, cardNumber: string): Promise<{ valid: boolean; status: string; expiry?: string }> {
+    console.log(`[Oman Ministry of Labour MOCK] Verifying Labor Card: EID=${OmanId}, Card=${cardNumber}`);
     return new Promise(resolve => setTimeout(() => {
       // Mock validation
       const valid = cardNumber.length > 5;
@@ -109,7 +109,7 @@ export class ERPIntegrationService {
     // Generate SAP IDoc or generic XML/CSV format
     const lines = ['LIFNR,NAME1,STRAS,ORT01,LAND1,TELF1,STCD1'];
     contractors.forEach(c => {
-      lines.push(`${c.id},${c.companyName},-,Dubai,AE,${c.contactPerson.phone},${c.registrationNumber}`);
+      lines.push(`${c.id},${c.companyName},-,Sohar,AE,${c.contactPerson.phone},${c.registrationNumber}`);
     });
     return 'SAP_EXPORT_CSV\n' + lines.join('\n');
   }

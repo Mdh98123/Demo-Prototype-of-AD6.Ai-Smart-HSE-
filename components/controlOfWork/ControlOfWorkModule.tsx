@@ -380,7 +380,7 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
           signed: true,
           signatoryName: currentUser?.name || 'Eng. Tariq Al-Hashmi',
           signatoryRole: 'Area Authority / Shift Superintendent',
-          signatoryOrg: currentTenant?.shortName || 'ADNOC Operations',
+          signatoryOrg: currentTenant?.shortName || 'PDO Operations',
           certNumber: 'AA-CERT-9942',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' GST',
           digestHash: hash,
@@ -1801,7 +1801,7 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
           {/* SIMOPS Rules Reference Card */}
           <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2 text-xs text-slate-300">
             <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">
-              GCC Industrial SIMOPS Deconfliction Policy (ADNOC CoP / PDO PR-1172):
+              GCC Industrial SIMOPS Deconfliction Policy (PDO SP-1143 Specification / PDO PR-1172):
             </span>
             <ul className="list-disc list-inside space-y-1 text-slate-400 text-[11px]">
               <li>Hot Work is prohibited within 50 meters of any open vessel, vent, or tank entry where flammable hydrocarbon vapors may escape.</li>

@@ -127,8 +127,8 @@ export const EmployeeCertificationTracker: React.FC = () => {
             className="bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 font-bold text-slate-700 outline-none"
           >
             <option value="ALL">All Concession Sites</option>
-            <option value="Ruwais">Al-Ruwais</option>
-            <option value="Habshan">Habshan</option>
+            <option value="Mina Al Fahal">Mina Al Fahal</option>
+            <option value="Khazzan Gas Asset">Khazzan Gas Asset</option>
             <option value="Musaffah">Musaffah</option>
           </select>
         </div>

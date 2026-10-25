@@ -59,14 +59,14 @@ export const INITIAL_NOTIFICATIONS: EnterpriseNotification[] = [
   },
   {
     id: 'NOTIF-2026-004',
-    title: 'Statutory Export Ready: Abu Dhabi OSHAD Form G',
-    description: 'Incident INC-2026-UAE-0419 Form G ready for formal sign-off and upload to Al-Adaa digital portal within 24hr statutory SLA.',
+    title: 'Statutory Export Ready: Muscat Oman MoL Form MD 286',
+    description: 'Incident INC-2026-OMN-0419 Form G ready for formal sign-off and upload to Al-Adaa digital portal within 24hr statutory SLA.',
     severity: 'Medium',
     category: 'Incident',
     targetUserId: 'u5',
     targetRole: 'HSE_Officer',
     senderName: 'System Engine',
-    sourceId: 'INC-2026-UAE-0419',
+    sourceId: 'INC-2026-OMN-0419',
     actionView: 'INCIDENT_MANAGEMENT',
     timestamp: '2026-10-06T11:00:00Z',
     read: false
@@ -113,7 +113,7 @@ export const INITIAL_NOTIFICATIONS: EnterpriseNotification[] = [
   {
     id: 'NOTIF-2026-008',
     title: 'Contractor Suspension Warning: Expired Third Party Insurance',
-    description: 'Gulf Technical Services commercial liability policy lapsed on 2026-10-01. Gate pass issuance automatically blocked at Ruwais Gate 3.',
+    description: 'Gulf Technical Services commercial liability policy lapsed on 2026-10-01. Gate pass issuance automatically blocked at Mina Al Fahal Gate 3.',
     severity: 'High',
     category: 'System',
     targetRole: 'Site_HSE_Manager',
@@ -164,8 +164,8 @@ export const INITIAL_NOTIFICATIONS: EnterpriseNotification[] = [
   },
   {
     id: 'NOTIF-2026-012',
-    title: 'Emergency Response Drill Scheduled: Ruwais Fire Response',
-    description: 'Unannounced Tier 2 mutual aid hydrocarbon tank fire drill scheduled for tomorrow morning 09:00 with Abu Dhabi Civil Defence.',
+    title: 'Emergency Response Drill Scheduled: Mina Al Fahal Fire Response',
+    description: 'Unannounced Tier 2 mutual aid hydrocarbon tank fire drill scheduled for tomorrow morning 09:00 with Civil Defence and Ambulance Authority (CDAA Oman).',
     severity: 'Medium',
     category: 'Training',
     targetRole: 'Site_Supervisor',

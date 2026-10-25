@@ -1,7 +1,7 @@
 export interface RegulatoryDocument {
   id: string;
   name: string;
-  jurisdiction: 'OSHAD' | 'ADNOC' | 'UAE_FEDERAL' | 'MOHRE';
+  jurisdiction: 'Oman MoL MD 286/2008' | 'PDO' | 'Oman Ministry of Labour';
   articleNumber: string;
   contentEng: string;
   contentAr: string;
@@ -10,31 +10,31 @@ export interface RegulatoryDocument {
 
 export const MOCK_REGULATORY_DB: RegulatoryDocument[] = [
   {
-    id: 'oshad-m7',
-    name: 'OSHAD-SF Mechanism 7',
-    jurisdiction: 'OSHAD',
+    id: 'omanMoL-m7',
+    name: 'Oman MoL MD 286/2008 & PDO Specifications Mechanism 7',
+    jurisdiction: 'Oman MoL MD 286/2008',
     articleNumber: '7.1.2',
     contentEng: 'All incidents must be reported immediately and investigated using a Root Cause Analysis methodology. A CAPA plan must be drafted within 48 hours for High Potential incidents.',
     contentAr: 'يجب الإبلاغ عن جميع الحوادث على الفور والتحقيق فيها باستخدام منهجية تحليل السبب الجذري. يجب صياغة خطة العمل التصحيحية والوقائية (CAPA) في غضون 48 ساعة للحوادث ذات الاحتمالية العالية.',
     effectiveDate: '2023-01-01'
   },
   {
-    id: 'adnoc-cop-v3',
-    name: 'ADNOC Code of Practice',
-    jurisdiction: 'ADNOC',
+    id: 'pdo-cop-v3',
+    name: 'PDO HSE Code of Practice (SP-1143)',
+    jurisdiction: 'PDO',
     articleNumber: 'V3-4.5',
     contentEng: 'A Permit to Work (PTW) is strictly required for any confined space entry. The atmospheric testing must be conducted by a certified gas tester.',
     contentAr: 'تصريح العمل (PTW) مطلوب بصرامة لأي دخول إلى مكان محصور. يجب إجراء اختبار الغلاف الجوي بواسطة مختبر غاز معتمد.',
     effectiveDate: '2022-05-15'
   },
   {
-    id: 'uae-fed-labour',
-    name: 'UAE Federal Labor Law',
-    jurisdiction: 'UAE_FEDERAL',
+    id: 'oman-mol-rd53',
+    name: 'Oman Labour Law (Royal Decree No. 53/2023)',
+    jurisdiction: 'Oman Ministry of Labour',
     articleNumber: 'Article 14',
-    contentEng: 'Employers must provide workers with adequate protection against hazards of occupational injuries and diseases that may occur during work.',
-    contentAr: 'يجب على أصحاب العمل تزويد العمال بالحماية الكافية ضد مخاطر الإصابات والأمراض المهنية التي قد تحدث أثناء العمل.',
-    effectiveDate: '2022-02-02'
+    contentEng: 'Employers must provide workers with adequate protection against hazards of occupational injuries and diseases that may occur during work per RD 53/2023.',
+    contentAr: 'يجب على أصحاب العمل تزويد العمال بالحماية الكافية ضد مخاطر الإصابات والأمراض المهنية التي قد تحدث أثناء العمل وفق المرسوم السلطاني 53/2023.',
+    effectiveDate: '2023-07-25'
   }
 ];
 

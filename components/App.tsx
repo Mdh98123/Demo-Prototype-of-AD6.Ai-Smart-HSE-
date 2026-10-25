@@ -89,7 +89,7 @@ const PredictiveRiskDashboard = React.lazy(() => import('./PredictiveRiskDashboa
 const PredictiveSafetyView = React.lazy(() => import('./PredictiveSafetyView'));
 const DigitalTwinViewer = React.lazy(() => import('./DigitalTwinViewer'));
 const ConnectedWorkerDashboard = React.lazy(() => import('./ConnectedWorkerDashboard'));
-const OshadWorkflowDesigner = React.lazy(() => import('./oshad/OshadWorkflowDesigner').then(m => ({ default: m.OshadWorkflowDesigner })));
+const OmanWorkflowDesigner = React.lazy(() => import('./workflow/OmanWorkflowDesigner').then(m => ({ default: m.OmanWorkflowDesigner })));
 const RootCauseAnalysisTool = React.lazy(() => import('./RootCauseAnalysisTool'));
 const BowtieAnalysisTool = React.lazy(() => import('./BowtieAnalysisTool'));
 const ARProcedureViewer = React.lazy(() => import('./ARProcedureViewer'));
@@ -428,7 +428,7 @@ const App: React.FC = () => {
                 {currentView === View.ESG && <CarbonAccountingModule />}
                 {currentView === View.DIGITAL_TWIN && <DigitalTwinViewer />}
                 {currentView === View.CONNECTED_WORKER && <ConnectedWorkerDashboard />}
-                {currentView === View.ADNOC_OSHAD && <OshadWorkflowDesigner />}
+                {currentView === View.PDO_MOL_WORKFLOW && <OmanWorkflowDesigner />}
                 {currentView === View.RCA_TOOL && <RootCauseAnalysisTool />}
                 {currentView === View.BOWTIE && <BowtieAnalysisTool />}
                 {currentView === View.RTL_DEMO && <ArabicComponentsDemo />}

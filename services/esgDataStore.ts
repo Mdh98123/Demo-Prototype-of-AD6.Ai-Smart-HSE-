@@ -1,4 +1,4 @@
-// Authoritative ESG Data Store for UAE & Oman Operations
+// Authoritative ESG Data Store for Sultanate of Oman Operations
 // High-fidelity industrial HSE and Sustainability datasets
 
 import { 
@@ -16,60 +16,60 @@ import {
 
 export const INITIAL_ESG_FACILITIES: ESGFacility[] = [
   {
-    id: 'FAC-UAE-01',
-    name: 'Abu Dhabi Corporate HQ & Tech Hub',
-    code: 'AUH-HQ-01',
-    jurisdiction: 'UAE',
-    location: 'Al Maryah Island, Abu Dhabi',
-    emirateOrGovernorate: 'Abu Dhabi',
+    id: 'FAC-OMN-01',
+    name: 'Muscat Corporate HQ & Technology Center',
+    code: 'MCT-HQ-01',
+    jurisdiction: 'OMAN',
+    location: 'Mina Al Fahal Industrial Area, Muscat',
+    emirateOrGovernorate: 'Muscat',
     sector: 'Commercial/Facilities' as any,
     coordinates: [24.4988, 54.3891],
     grossFloorAreaM2: 45000,
     workforceCount: 850,
-    nationalQuotaTargetPct: 12.0, // Emiratisation quota
-    gridProvider: 'EWEC'
+    nationalQuotaTargetPct: 12.0, // Omanisation quota
+    gridProvider: 'Nama Power'
   },
   {
-    id: 'FAC-UAE-02',
-    name: 'Ruwais Refinery & Chemical Complex',
-    code: 'RUW-REF-02',
-    jurisdiction: 'UAE',
-    location: 'Al Dhafra Region, Abu Dhabi',
-    emirateOrGovernorate: 'Abu Dhabi',
+    id: 'FAC-OMN-02',
+    name: 'Mina Al Fahal Refinery & Chemical Complex',
+    code: 'MAF-REF-02',
+    jurisdiction: 'OMAN',
+    location: 'Al Dhafra Region, Muscat',
+    emirateOrGovernorate: 'Muscat',
     sector: 'Oil_and_Gas',
     coordinates: [24.1107, 52.7306],
     grossFloorAreaM2: 480000,
     workforceCount: 3200,
     nationalQuotaTargetPct: 15.0,
-    gridProvider: 'EWEC'
+    gridProvider: 'Nama Power'
   },
   {
-    id: 'FAC-UAE-03',
-    name: 'KEZAD Industrial Logistics Hub',
-    code: 'KZD-LOG-03',
-    jurisdiction: 'UAE',
-    location: 'Khalifa Economic Zones Abu Dhabi (KEZAD)',
-    emirateOrGovernorate: 'Abu Dhabi',
+    id: 'FAC-OMN-03',
+    name: 'Sohar Freezone Industrial Logistics Hub',
+    code: 'SOH-LOG-03',
+    jurisdiction: 'OMAN',
+    location: 'Khalifa Economic Zones Muscat (Sohar Freezone)',
+    emirateOrGovernorate: 'Muscat',
     sector: 'Logistics_Ports',
     coordinates: [24.7869, 54.6854],
     grossFloorAreaM2: 185000,
     workforceCount: 940,
     nationalQuotaTargetPct: 10.0,
-    gridProvider: 'EWEC'
+    gridProvider: 'Nama Power'
   },
   {
-    id: 'FAC-UAE-04',
-    name: 'Jebel Ali Marine & Heavy Fabrication Yard',
-    code: 'DXB-JAFZA-04',
-    jurisdiction: 'UAE',
-    location: 'Jebel Ali Free Zone, Dubai',
-    emirateOrGovernorate: 'Dubai',
+    id: 'FAC-OMN-04',
+    name: 'Duqm Industrial Port Marine & Heavy Fabrication Yard',
+    code: 'SOH-JAFZA-04',
+    jurisdiction: 'OMAN',
+    location: 'Duqm Industrial Port Free Zone, Sohar',
+    emirateOrGovernorate: 'Sohar',
     sector: 'Manufacturing',
     coordinates: [25.0112, 55.0617],
     grossFloorAreaM2: 220000,
     workforceCount: 1650,
     nationalQuotaTargetPct: 8.0,
-    gridProvider: 'DEWA'
+    gridProvider: 'Nama Power'
   },
   {
     id: 'FAC-OMN-01',
@@ -116,12 +116,12 @@ export const INITIAL_ESG_FACILITIES: ESGFacility[] = [
 ];
 
 export const INITIAL_EMISSIONS_RECORDS: DetailedEmissionRecord[] = [
-  // --- UAE Scope 1 ---
+  // --- Oman Scope 1 ---
   {
-    id: 'EM-UAE-001',
-    facilityId: 'FAC-UAE-02',
-    facilityName: 'Ruwais Refinery & Chemical Complex',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-001',
+    facilityId: 'FAC-OMN-02',
+    facilityName: 'Mina Al Fahal Refinery & Chemical Complex',
+    jurisdiction: 'OMAN',
     date: '2024-06-15',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 1',
@@ -130,17 +130,17 @@ export const INITIAL_EMISSIONS_RECORDS: DetailedEmissionRecord[] = [
     activityData: 420000,
     unit: 'm3',
     emissionFactor: 2.02,
-    emissionFactorSource: 'IPCC AR6 / UAE MOCCAE Guidelines',
+    emissionFactorSource: 'IPCC AR6 / Oman MOCCAE Guidelines',
     calculatedCO2eTonnes: 848.4,
     verificationStatus: 'VALIDATED',
-    manifestOrInvoiceRef: 'ADNOC-GAS-INV-2024-8841',
+    manifestOrInvoiceRef: 'PDO-GAS-INV-2024-8841',
     notes: 'Primary heating furnace fuel metering certified by third-party calibration.'
   },
   {
-    id: 'EM-UAE-002',
-    facilityId: 'FAC-UAE-03',
-    facilityName: 'KEZAD Industrial Logistics Hub',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-002',
+    facilityId: 'FAC-OMN-03',
+    facilityName: 'Sohar Freezone Industrial Logistics Hub',
+    jurisdiction: 'OMAN',
     date: '2024-06-18',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 1',
@@ -152,14 +152,14 @@ export const INITIAL_EMISSIONS_RECORDS: DetailedEmissionRecord[] = [
     emissionFactorSource: 'DEFRA 2024 Commercial Transport',
     calculatedCO2eTonnes: 171.97,
     verificationStatus: 'VALIDATED',
-    manifestOrInvoiceRef: 'ADNOC-DIST-FUEL-0914',
+    manifestOrInvoiceRef: 'PDO-DIST-FUEL-0914',
     notes: 'Telematics fleet fuel log verified across 42 logistics prime movers.'
   },
   {
-    id: 'EM-UAE-003',
-    facilityId: 'FAC-UAE-04',
-    facilityName: 'Jebel Ali Marine & Heavy Fabrication Yard',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-003',
+    facilityId: 'FAC-OMN-04',
+    facilityName: 'Duqm Industrial Port Marine & Heavy Fabrication Yard',
+    jurisdiction: 'OMAN',
     date: '2024-05-22',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 1',
@@ -175,50 +175,50 @@ export const INITIAL_EMISSIONS_RECORDS: DetailedEmissionRecord[] = [
     notes: 'Annual HVAC gas servicing top-up following compressor seal replacement.'
   },
 
-  // --- UAE Scope 2 ---
+  // --- Oman Scope 2 ---
   {
-    id: 'EM-UAE-004',
-    facilityId: 'FAC-UAE-01',
-    facilityName: 'Abu Dhabi Corporate HQ & Tech Hub',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-004',
+    facilityId: 'FAC-OMN-01',
+    facilityName: 'Muscat Corporate HQ & Technology Center',
+    jurisdiction: 'OMAN',
     date: '2024-06-30',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 2',
     category: 'Grid_Electricity',
-    source: 'EWEC Clean Grid Electricity (Barakah Nuclear + Al Dhafra Solar Mix)',
+    source: 'Nama Power Clean Grid Electricity (Barakah Nuclear + Al Dhafra Solar Mix)',
     activityData: 280000,
     unit: 'kWh',
     emissionFactor: 0.395,
-    emissionFactorSource: 'EWEC Clean Energy Grid Factor 2024',
+    emissionFactorSource: 'Nama Power Clean Energy Grid Factor 2024',
     calculatedCO2eTonnes: 110.6,
     verificationStatus: 'VALIDATED',
     manifestOrInvoiceRef: 'TAQA-ADDC-INV-0624-9102',
     notes: 'Smart meter telemetry integrated into AD6 EMS platform.'
   },
   {
-    id: 'EM-UAE-005',
-    facilityId: 'FAC-UAE-04',
-    facilityName: 'Jebel Ali Marine & Heavy Fabrication Yard',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-005',
+    facilityId: 'FAC-OMN-04',
+    facilityName: 'Duqm Industrial Port Marine & Heavy Fabrication Yard',
+    jurisdiction: 'OMAN',
     date: '2024-06-30',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 2',
     category: 'Grid_Electricity',
-    source: 'DEWA Grid Electricity (Dubai)',
+    source: 'Nama Power Grid Electricity (Sohar)',
     activityData: 520000,
     unit: 'kWh',
     emissionFactor: 0.416,
-    emissionFactorSource: 'DEWA Sustainability Report 2024',
+    emissionFactorSource: 'Nama Power Sustainability Report 2024',
     calculatedCO2eTonnes: 216.32,
     verificationStatus: 'VALIDATED',
-    manifestOrInvoiceRef: 'DEWA-ACCT-0091823-Q2',
+    manifestOrInvoiceRef: 'Nama Power-ACCT-0091823-Q2',
     notes: 'Includes fabrication gantry crane peak usage cycles.'
   },
   {
-    id: 'EM-UAE-006',
-    facilityId: 'FAC-UAE-01',
-    facilityName: 'Abu Dhabi Corporate HQ & Tech Hub',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-006',
+    facilityId: 'FAC-OMN-01',
+    facilityName: 'Muscat Corporate HQ & Technology Center',
+    jurisdiction: 'OMAN',
     date: '2024-06-30',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 2',
@@ -234,25 +234,25 @@ export const INITIAL_EMISSIONS_RECORDS: DetailedEmissionRecord[] = [
     notes: 'Chilled water supply for corporate campus cooling.'
   },
 
-  // --- UAE Scope 3 ---
+  // --- Oman Scope 3 ---
   {
-    id: 'EM-UAE-007',
-    facilityId: 'FAC-UAE-02',
-    facilityName: 'Ruwais Refinery & Chemical Complex',
-    jurisdiction: 'UAE',
+    id: 'EM-Oman-007',
+    facilityId: 'FAC-OMN-02',
+    facilityName: 'Mina Al Fahal Refinery & Chemical Complex',
+    jurisdiction: 'OMAN',
     date: '2024-06-25',
     reportingPeriod: '2024-Q2',
     scope: 'Scope 3',
     category: 'Cat5_Waste_Operations',
-    source: 'Hazardous Chemical Sludge to Tadweer Treatment',
+    source: 'Hazardous Chemical Sludge to Beah (Oman) Treatment',
     activityData: 32000,
     unit: 'kg',
     emissionFactor: 1.84,
-    emissionFactorSource: 'Tadweer Industrial Hazardous Waste Benchmark',
+    emissionFactorSource: 'Beah (Oman) Industrial Hazardous Waste Benchmark',
     calculatedCO2eTonnes: 58.88,
     verificationStatus: 'VALIDATED',
     manifestOrInvoiceRef: 'TADWEER-BOLISAT-2024-004921',
-    notes: 'Fully manifested through Abu Dhabi Tadweer electronic tracking system.'
+    notes: 'Fully manifested through Muscat Beah (Oman) electronic tracking system.'
   },
 
   // --- OMAN Scope 1 ---
@@ -389,23 +389,7 @@ export const INITIAL_OMANISATION_METRICS: NationalisationMetrics = {
   femaleNationalEmployees: 615,
   nafisOrRiyadaParticipation: true,
   complianceStatus: 'COMPLIANT',
-  deficitPenaltyRiskAmountAEDorOMR: 0
-};
-
-export const INITIAL_EMIRATISATION_METRICS: NationalisationMetrics = {
-  jurisdiction: 'UAE',
-  frameworkName: 'Emiratisation (Tawteen, MOHRE & ADX S11)',
-  statutoryTargetPct: 10.0, // 2024 MOHRE Target for skilled private sector
-  currentActualPct: 11.8,   // Exceeds minimum requirement
-  totalHeadcount: 6640,
-  nationalEmployees: 784,
-  managementNationalPct: 14.5,
-  technicalNationalPct: 10.2,
-  operationalNationalPct: 12.1,
-  femaleNationalEmployees: 298,
-  nafisOrRiyadaParticipation: true,
-  complianceStatus: 'COMPLIANT',
-  deficitPenaltyRiskAmountAEDorOMR: 0
+  deficitPenaltyRiskAmountOMRorOMR: 0
 };
 
 export const INITIAL_ICV_OMAN: InCountryValueMetrics = {
@@ -421,22 +405,9 @@ export const INITIAL_ICV_OMAN: InCountryValueMetrics = {
   issuingCertifyingBody: 'Deloitte & Touche (M.E.) / MoEM Approved Audit'
 };
 
-export const INITIAL_ICV_UAE: InCountryValueMetrics = {
-  jurisdiction: 'UAE',
-  programName: 'National In-Country Value Program (MoIAT / ADNOC Unified ICV)',
-  certifiedScorePct: 61.2, // Certified score %
-  totalProcurementSpend: 185000000, // in AED
-  localProcurementSpend: 113220000,
-  localProcurementPct: 61.2,
-  smeSpendAllocationPct: 21.5, // Allocated to UAE National SMEs & Khalifa Fund vendors
-  localSubcontractorDevelopmentBudget: 8500000,
-  certificateExpiryDate: '2025-11-15',
-  issuingCertifyingBody: 'KPMG Lower Gulf / MoIAT Accredited ICV Certifier'
-};
-
 export const INITIAL_SOCIAL_SAFETY_METRICS: SocialSafetyMetrics = {
   reportingYear: 2024,
-  totalManHoursWorked: 23480000, // Combined UAE & Oman man-hours
+  totalManHoursWorked: 23480000, // Combined Sultanate of Oman man-hours
   fatalitiesCount: 0,            // Zero Harm target achieved
   lostTimeInjuriesCount: 2,
   ltifrRate: 0.085,              // Gold standard < 0.15
@@ -459,7 +430,7 @@ export const INITIAL_GOVERNANCE_METRICS: GovernanceMetrics = {
   boardMembersTotal: 9,
   independentDirectorsCount: 4,
   independentDirectorsPct: 44.4,     // Above 33% GCC governance minimum
-  femaleBoardDirectorsCount: 2,      // Compliant with UAE SCA mandatory min 1
+  femaleBoardDirectorsCount: 2,      // Compliant with Oman CMA mandatory min 1
   femaleBoardDirectorsPct: 22.2,
   boardEsgCommitteeExists: true,
   chiefSustainabilityOfficerReportToBoard: true,
@@ -469,7 +440,7 @@ export const INITIAL_GOVERNANCE_METRICS: GovernanceMetrics = {
   whistleblowerCasesReceived: 8,
   whistleblowerCasesResolved: 8,
   whistleblowerRetaliationIncidents: 0,
-  dataPrivacyBreachesReported: 0,     // Full compliance with UAE PDPL & Oman RD 6/2022
+  dataPrivacyBreachesReported: 0,     // Full compliance with Oman PDPL & Oman RD 6/2022
   regulatoryFinesIncurredAmount: 0,   // Zero regulatory fines
   assuranceLevel: 'LIMITED_ASSURANCE_ISAE3000',
   externalAssuranceProvider: 'KPMG ESG Assurance & Verification Services'
@@ -478,24 +449,24 @@ export const INITIAL_GOVERNANCE_METRICS: GovernanceMetrics = {
 export const INITIAL_DECARBONIZATION_INITIATIVES: DecarbonizationInitiative[] = [
   {
     id: 'DEC-01',
-    title: 'Ruwais Refinery Solar PV Rooftop & Carport PPA (15 MWp)',
-    facility: 'Ruwais Refinery Complex (UAE)',
+    title: 'Mina Al Fahal Refinery Solar PV Rooftop & Carport PPA (15 MWp)',
+    facility: 'Mina Al Fahal Refinery Complex (Oman)',
     category: 'Renewable_Energy',
-    capexInvestmentAEDorOMR: 28000000,
-    annualOpexSavingsAEDorOMR: 4200000,
+    capexInvestmentOMRorOMR: 28000000,
+    annualOpexSavingsOMRorOMR: 4200000,
     abatementCO2eTonnesPerYear: 9850,
     marginalAbatementCostPerTonne: -42.5, // Negative cost = Net economic saving
     paybackPeriodYears: 5.2,
     implementationStage: 'Commissioned',
-    alignmentWithNetZero: 'UAE Net Zero 2050'
+    alignmentWithNetZero: 'Oman Vision 2040 Decarbonization'
   },
   {
     id: 'DEC-02',
     title: 'Sohar Port Flare Gas Recovery System (FGRU Unit 4)',
     facility: 'Sohar Industrial Port Terminal (Oman)',
     category: 'Flaring_Abatement',
-    capexInvestmentAEDorOMR: 3400000, // in OMR
-    annualOpexSavingsAEDorOMR: 620000,
+    capexInvestmentOMRorOMR: 3400000, // in OMR
+    annualOpexSavingsOMRorOMR: 620000,
     abatementCO2eTonnesPerYear: 14200,
     marginalAbatementCostPerTonne: -18.2,
     paybackPeriodYears: 4.8,
@@ -504,24 +475,24 @@ export const INITIAL_DECARBONIZATION_INITIATIVES: DecarbonizationInitiative[] = 
   },
   {
     id: 'DEC-03',
-    title: 'KEZAD & Jebel Ali Logistics Fleet Electrification (40 Heavy e-Trucks)',
-    facility: 'KEZAD & Jebel Ali Yards (UAE)',
+    title: 'Sohar Freezone & Duqm Industrial Port Logistics Fleet Electrification (40 Heavy e-Trucks)',
+    facility: 'Sohar Freezone & Duqm Industrial Port Yards (Oman)',
     category: 'Fleet_Electrification',
-    capexInvestmentAEDorOMR: 19500000,
-    annualOpexSavingsAEDorOMR: 2400000,
+    capexInvestmentOMRorOMR: 19500000,
+    annualOpexSavingsOMRorOMR: 2400000,
     abatementCO2eTonnesPerYear: 3100,
     marginalAbatementCostPerTonne: 12.0,
     paybackPeriodYears: 6.5,
     implementationStage: 'Approved',
-    alignmentWithNetZero: 'UAE Net Zero 2050'
+    alignmentWithNetZero: 'Oman Vision 2040 Decarbonization'
   },
   {
     id: 'DEC-04',
     title: 'Duqm Heavy Plant Waste Heat Recovery Steam Generator (WHRSG)',
     facility: 'Duqm Heavy Plant (Oman)',
     category: 'Energy_Efficiency',
-    capexInvestmentAEDorOMR: 4800000, // in OMR
-    annualOpexSavingsAEDorOMR: 850000,
+    capexInvestmentOMRorOMR: 4800000, // in OMR
+    annualOpexSavingsOMRorOMR: 850000,
     abatementCO2eTonnesPerYear: 8900,
     marginalAbatementCostPerTonne: -22.0,
     paybackPeriodYears: 5.1,
@@ -532,9 +503,9 @@ export const INITIAL_DECARBONIZATION_INITIATIVES: DecarbonizationInitiative[] = 
 
 export const INITIAL_WATER_RECORDS: WaterEffluentRecord[] = [
   {
-    id: 'WAT-UAE-01',
-    facilityId: 'FAC-UAE-02',
-    jurisdiction: 'UAE',
+    id: 'WAT-Oman-01',
+    facilityId: 'FAC-OMN-02',
+    jurisdiction: 'OMAN',
     period: '2024-Q2',
     municipalWithdrawalM3: 45000,
     groundwaterAbstractionM3: 0, // Zero groundwater depletion policy
@@ -563,12 +534,12 @@ export const INITIAL_WATER_RECORDS: WaterEffluentRecord[] = [
 
 export const INITIAL_WASTE_RECORDS: WasteManagementRecord[] = [
   {
-    id: 'WST-UAE-01',
-    facilityId: 'FAC-UAE-02',
-    jurisdiction: 'UAE',
+    id: 'WST-Oman-01',
+    facilityId: 'FAC-OMN-02',
+    jurisdiction: 'OMAN',
     period: '2024-Q2',
     hazardousWasteTonnes: 142.5,
-    hazardousWasteManifestSystem: 'Tadweer_Bolisat_UAE',
+    hazardousWasteManifestSystem: 'Beah_Manifest_Oman',
     hazardousManifestVerified: true,
     nonHazardousWasteTonnes: 680.0,
     recycledWasteTonnes: 495.0,
@@ -592,12 +563,12 @@ export const INITIAL_WASTE_RECORDS: WasteManagementRecord[] = [
   }
 ];
 
-// Standardized Indicators mapped to ADX, DFM & MSX Oman frameworks
-export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
+// Standardized Indicators mapped to MSX, MSX & MSX Oman frameworks
+export const MSX_ESG_INDICATORS: ESGDisclosureItem[] = [
   {
     code: 'E1.1',
     title: 'GHG Emissions - Scope 1 (Direct)',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
     unit: 'tCO2e',
     fy2022Value: '14,200',
@@ -612,7 +583,7 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
   {
     code: 'E1.2',
     title: 'GHG Emissions - Scope 2 (Location-Based Electricity)',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
     unit: 'tCO2e',
     fy2022Value: '6,450',
@@ -622,12 +593,12 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
     griReference: 'GRI 305-2',
     sdgAlignment: ['SDG 7 Clean Energy', 'SDG 13 Climate Action'],
     status: 'DISCLOSED',
-    explanationNotes: 'Includes EWEC (Abu Dhabi) and DEWA (Dubai) verified utility grid factors.'
+    explanationNotes: 'Includes Nama Power (Muscat) and Nama Electricity (Oman) verified utility grid factors.'
   },
   {
     code: 'E1.3',
     title: 'GHG Emissions - Scope 3 (Value Chain)',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
     unit: 'tCO2e',
     fy2022Value: '8,900',
@@ -642,9 +613,9 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
   {
     code: 'E2.1',
     title: 'Emissions Intensity Ratio',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
-    unit: 'tCO2e / million AED revenue',
+    unit: 'tCO2e / million OMR revenue',
     fy2022Value: '18.4',
     fy2023Value: '15.2',
     fy2024Value: '12.8',
@@ -657,7 +628,7 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
   {
     code: 'E3.1',
     title: 'Renewable Energy Consumption Ratio',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
     unit: '%',
     fy2022Value: '8.5%',
@@ -667,12 +638,12 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
     griReference: 'GRI 302-1',
     sdgAlignment: ['SDG 7 Clean Energy'],
     status: 'DISCLOSED',
-    explanationNotes: 'Driven by Ruwais on-site solar PPA and EWEC clean energy certificates.'
+    explanationNotes: 'Driven by Mina Al Fahal on-site solar PPA and Nama Power clean energy certificates.'
   },
   {
     code: 'E5.1',
     title: 'Water Withdrawal & Recycled TSE Ratio',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Environmental',
     unit: '% TSE Reused',
     fy2022Value: '22.0%',
@@ -687,7 +658,7 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
   {
     code: 'S7.1',
     title: 'Workforce Safety - Lost Time Injury Frequency Rate (LTIFR)',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Social',
     unit: 'Per 1M man-hours',
     fy2022Value: '0.14',
@@ -697,12 +668,12 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
     griReference: 'GRI 403-9',
     sdgAlignment: ['SDG 8 Decent Work & Economic Growth', 'SDG 3 Good Health'],
     status: 'DISCLOSED',
-    explanationNotes: 'Governed under OSHAD-SF v4.0 framework with mandatory Life-Saving Rules.'
+    explanationNotes: 'Governed under Oman MoL MD 286/2008 & PDO Specifications v4.0 framework with mandatory Life-Saving Rules.'
   },
   {
     code: 'S11.1',
-    title: 'Emiratisation / National Workforce Ratio',
-    standard: 'ADX_UAE',
+    title: 'Omanisation / National Workforce Ratio',
+    standard: 'MSX_OMAN',
     pillar: 'Social',
     unit: '% of workforce',
     fy2022Value: '8.4%',
@@ -712,12 +683,12 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
     griReference: 'Local Nationalisation Index',
     sdgAlignment: ['SDG 8 Decent Work'],
     status: 'DISCLOSED',
-    explanationNotes: 'Fully aligned with MOHRE Tawteen and UAE Nafis national talent program.'
+    explanationNotes: 'Fully aligned with Oman Ministry of Labour Omanisation and Oman Nafis national talent program.'
   },
   {
     code: 'G1.1',
     title: 'Board Diversity - Female Directors',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Governance',
     unit: 'Count / %',
     fy2022Value: '1 (11.1%)',
@@ -727,12 +698,12 @@ export const ADX_ESG_INDICATORS: ESGDisclosureItem[] = [
     griReference: 'GRI 2-9',
     sdgAlignment: ['SDG 5 Gender Equality', 'SDG 16 Peace, Justice, Strong Institutions'],
     status: 'DISCLOSED',
-    explanationNotes: 'Exceeds UAE SCA statutory mandate requiring minimum one female director.'
+    explanationNotes: 'Exceeds Oman CMA statutory mandate requiring minimum one female director.'
   },
   {
     code: 'G8.1',
     title: 'Sustainability External Assurance',
-    standard: 'ADX_UAE',
+    standard: 'MSX_OMAN',
     pillar: 'Governance',
     unit: 'Standard',
     fy2022Value: 'Internal Audit',

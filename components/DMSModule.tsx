@@ -15,9 +15,9 @@ import {
 } from 'lucide-react';
 
 const PORTAL_MAPPING = [
-    { portal: 'DM iService', authority: 'Dubai Municipality', function: 'NOCs, HSE Plans, Phase Approvals', frequency: 'Per Phase', criticality: 'High' },
-    { portal: 'OSHAD eSubmission', authority: 'Abu Dhabi OSHAD', function: 'Incidents, Performance Data, Audit Reports', frequency: 'Monthly/Quarterly', criticality: 'High' },
-    { portal: 'MoHRE Digital', authority: 'Federal Labour', function: 'Worker Safety Records, Training Logs', frequency: 'Ongoing/Audit-based', criticality: 'Medium' },
+    { portal: 'DM iService', authority: 'Muscat Municipality', function: 'NOCs, HSE Plans, Phase Approvals', frequency: 'Per Phase', criticality: 'High' },
+    { portal: 'Oman MoL MD 286/2008 eSubmission', authority: 'Muscat Oman MoL MD 286/2008', function: 'Incidents, Performance Data, Audit Reports', frequency: 'Monthly/Quarterly', criticality: 'High' },
+    { portal: 'Ministry of Labour (MoL) Digital', authority: 'Federal Labour', function: 'Worker Safety Records, Training Logs', frequency: 'Ongoing/Audit-based', criticality: 'Medium' },
     { portal: 'Trakhees eServices', authority: 'PCFC / EHS', function: 'Operational Permits, Inspection Reports', frequency: 'Activity-based', criticality: 'High' }
 ];
 
@@ -42,10 +42,10 @@ const DMSModule: React.FC = () => {
 
   const [docs, setDocs] = useState<HSEDocument[]>([
     { 
-        id: 'HSE-MP-001', title: 'Corporate HSE Management Plan', category: 'Plan', version: '2024.1', status: 'Active', author: 'Dr. Layla Hassan', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'OSHAD', portal: 'eSubmission', regulationRef: 'OSHAD SF Code of Practice v4.0', penaltyRisk: 'AED 5,000–50,000 / Work Stoppage',
+        id: 'HSE-MP-001', title: 'Corporate HSE Management Plan', category: 'Plan', version: '2024.1', status: 'Active', author: 'Dr. Layla Hassan', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'Oman MoL MD 286/2008', portal: 'eSubmission', regulationRef: 'Oman MoL MD 286/2008 Code of Practice v4.0', penaltyRisk: 'OMR 5,000–50,000 / Work Stoppage',
         auditLogs: [
             { timestamp: '2024-01-10T09:00:00Z', actorId: 'u2', actorName: 'Dr. Layla Hassan', action: 'Created', details: 'Annual governance alignment update.' },
-            { timestamp: '2024-01-20T14:00:00Z', actorId: 'reg-01', actorName: 'OSHAD Inspector', action: 'Verification', details: 'Authorized via eSubmission portal.' }
+            { timestamp: '2024-01-20T14:00:00Z', actorId: 'reg-01', actorName: 'Oman MoL MD 286/2008 Inspector', action: 'Verification', details: 'Authorized via eSubmission portal.' }
         ],
         versions: [
             { version: '2024.1', uploadedAt: '2024-01-10T09:00:00Z', uploadedBy: 'Dr. Layla Hassan', changes: 'Annual governance alignment update.' },
@@ -54,7 +54,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'RAMS-WAH-102', title: 'Work at Height Method Statement', category: 'RAMS', version: '1.4', status: 'Active', author: 'Marcus Chen', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'DM', portal: 'iService', regulationRef: 'Dubai Municipality Code of Safety Practice Part 2', penaltyRisk: 'AED 10,000+ / Criminal Liability for breaches',
+        id: 'RAMS-WAH-102', title: 'Work at Height Method Statement', category: 'RAMS', version: '1.4', status: 'Active', author: 'Marcus Chen', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'DM', portal: 'iService', regulationRef: 'Muscat Municipality Code of Safety Practice Part 2', penaltyRisk: 'OMR 10,000+ / Criminal Liability for breaches',
         auditLogs: [
             { timestamp: '2024-02-12T11:00:00Z', actorId: 'u5', actorName: 'Marcus Chen', action: 'Update', details: 'Integrated self-retracting lifeline protocol.' }
         ],
@@ -64,7 +64,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'DOC-ENV-003', title: 'Environmental Impact Assessment - Ruwais Expansion', category: 'Report', version: '1.0', status: 'Active', author: 'Khalid Al-Dhaheri', retentionYears: '10', criticality: 'High', authority: 'EAD', portal: 'Digital', regulationRef: 'EAD Law No. 16/2005 Environmental Protection', penaltyRisk: 'AED 50,000',
+        id: 'DOC-ENV-003', title: 'Environmental Impact Assessment - Mina Al Fahal Expansion', category: 'Report', version: '1.0', status: 'Active', author: 'Khalid Al-Dhaheri', retentionYears: '10', criticality: 'High', authority: 'EAD', portal: 'Digital', regulationRef: 'EAD Law No. 16/2005 Environmental Protection', penaltyRisk: 'OMR 5,000',
         auditLogs: [
             { timestamp: '2023-09-01T09:15:00Z', actorId: 'u6', actorName: 'Khalid Al-Dhaheri', action: 'Created', details: 'Original approved baseline submission.' }
         ],
@@ -83,7 +83,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'ERP-HAB-2026', title: 'Habshan Gas Complex Emergency Response Plan', category: 'Plan', version: '3.2', status: 'Active', author: 'Tariq Al-Hashemi', retentionYears: 'Permanent', criticality: 'High', authority: 'Civil Defence', portal: 'MOI Hassantuk', regulationRef: 'UAE Civil Defence Fire & Life Safety Code 2018', penaltyRisk: 'AED 100,000 / Site Cease Order',
+        id: 'ERP-HAB-2026', title: 'Khazzan Tight Gas Complex Block 61 Emergency Response Plan', category: 'Plan', version: '3.2', status: 'Active', author: 'Tariq Al-Hashemi', retentionYears: 'Permanent', criticality: 'High', authority: 'Civil Defence', portal: 'MOI Hassantuk', regulationRef: 'Civil Defence and Ambulance Authority (CDAA Oman) Fire & Life Safety Code 2018', penaltyRisk: 'OMR 10,000 / Site Cease Order',
         auditLogs: [
             { timestamp: '2024-03-01T10:00:00Z', actorId: 'u1', actorName: 'Tariq Al-Hashemi', action: 'Approved', details: 'Annual drill review and mutual aid coordination.' }
         ],
@@ -93,7 +93,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'SOP-LIFT-008', title: 'Critical & Heavy Lifting Operations Standard', category: 'RAMS', version: '2.1', status: 'Active', author: 'Hamad Al-Dosari', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'ADNOC', portal: 'ADNOC Vendor Hub', regulationRef: 'ADNOC CoP Lifting & Rigging Operations v3', penaltyRisk: 'Suspension of crane operators / AED 25,000',
+        id: 'SOP-LIFT-008', title: 'Critical & Heavy Lifting Operations Standard', category: 'RAMS', version: '2.1', status: 'Active', author: 'Hamad Al-Dosari', retentionYears: 'Project Life + 5', criticality: 'High', authority: 'PDO', portal: 'PDO Vendor Hub', regulationRef: 'PDO SP-1143 Specification Lifting & Rigging Operations v3', penaltyRisk: 'Suspension of crane operators / OMR 2,500',
         auditLogs: [
             { timestamp: '2024-02-18T14:30:00Z', actorId: 'u7', actorName: 'Hamad Al-Dosari', action: 'Approved', details: 'Mandated dual tagline verification.' }
         ],
@@ -111,7 +111,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'HAZCOM-CHM-04', title: 'Hazardous Chemical Management & COSHH Manual', category: 'Plan', version: '4.0', status: 'Active', author: 'Dr. Sarah Jenkins', retentionYears: '30 Years', criticality: 'High', authority: 'MoHRE', portal: 'MoHRE Digital', regulationRef: 'Federal Law No. 8/1980 Occupational Safety Orders', penaltyRisk: 'AED 30,000 / Ministry blacklisting',
+        id: 'HAZCOM-CHM-04', title: 'Hazardous Chemical Management & COSHH Manual', category: 'Plan', version: '4.0', status: 'Active', author: 'Dr. Sarah Jenkins', retentionYears: '30 Years', criticality: 'High', authority: 'Ministry of Labour (MoL)', portal: 'Ministry of Labour (MoL) Digital', regulationRef: 'Federal Law No. 8/1980 Occupational Safety Orders', penaltyRisk: 'OMR 30,000 / Ministry blacklisting',
         auditLogs: [
             { timestamp: '2024-01-25T08:00:00Z', actorId: 'u8', actorName: 'Dr. Sarah Jenkins', action: 'Updated', details: 'Incorporated GHS Rev 9 SDS standards.' }
         ],
@@ -120,7 +120,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'HOT-PTW-PROC', title: 'Permit-to-Work Hot Work Operations Protocol', category: 'Permit', version: '5.2', status: 'Active', author: 'Sultan Al-Ghafri', retentionYears: '7 Years', criticality: 'High', authority: 'OSHAD', portal: 'eSubmission', regulationRef: 'OSHAD SF CoP 21.0 - Hot Work and Flame Burning', penaltyRisk: 'AED 40,000',
+        id: 'HOT-PTW-PROC', title: 'Permit-to-Work Hot Work Operations Protocol', category: 'Permit', version: '5.2', status: 'Active', author: 'Sultan Al-Ghafri', retentionYears: '7 Years', criticality: 'High', authority: 'Oman MoL MD 286/2008', portal: 'eSubmission', regulationRef: 'Oman MoL MD 286/2008 CoP 21.0 - Hot Work and Flame Burning', penaltyRisk: 'OMR 40,000',
         auditLogs: [
             { timestamp: '2024-03-11T13:00:00Z', actorId: 'u9', actorName: 'Sultan Al-Ghafri', action: 'Approved', details: 'Continuous LEL gas monitoring mandated.' }
         ],
@@ -138,7 +138,7 @@ const DMSModule: React.FC = () => {
         ]
     },
     { 
-        id: 'HEAT-STR-2026', title: 'GCC Summer Heat Stress & Midday Break Protocol', category: 'Plan', version: '2026.0', status: 'Active', author: 'Zainab Al-Mutawa', retentionYears: '5 Years', criticality: 'High', authority: 'MoHRE', portal: 'MoHRE Digital', regulationRef: 'Ministerial Resolution No. 518 on Midday Outdoor Work', penaltyRisk: 'AED 50,000 fine per violating worker',
+        id: 'HEAT-STR-2026', title: 'GCC Summer Heat Stress & Midday Break Protocol', category: 'Plan', version: '2026.0', status: 'Active', author: 'Zainab Al-Mutawa', retentionYears: '5 Years', criticality: 'High', authority: 'Ministry of Labour (MoL)', portal: 'Ministry of Labour (MoL) Digital', regulationRef: 'Ministerial Resolution No. 518 on Midday Outdoor Work', penaltyRisk: 'OMR 5,000 fine per violating worker',
         auditLogs: [
             { timestamp: '2024-04-01T09:00:00Z', actorId: 'u4', actorName: 'Zainab Al-Mutawa', action: 'Approved', details: 'Early rollout ahead of June enforcement.' }
         ],
@@ -177,7 +177,7 @@ const DMSModule: React.FC = () => {
                   setExtractedData(data || { 
                       title: file.name.split('.')[0], 
                       expiry: '2025-12-31', 
-                      authority: 'Detected: OSHAD'
+                      authority: 'Detected: Oman MoL MD 286/2008'
                   });
               } catch (err) {
                   setExtractedData({ title: file.name, expiry: 'Unknown', authority: 'Manual Entry Required' });
@@ -397,12 +397,12 @@ const DMSModule: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[
                         { title: 'Chemical Handling & Storage', code: 'SOP-HSE-001', authority: 'ISO 45001', risk: 'High' },
-                        { title: 'Arc Welding & Hot Work Procedure', code: 'SOP-HSE-002', authority: 'ADNOC COP', risk: 'High' },
+                        { title: 'Arc Welding & Hot Work Procedure', code: 'SOP-HSE-002', authority: 'PDO SP-1143 Specification', risk: 'High' },
                         { title: 'Management Review & KPI Governance', code: 'SOP-HSE-003', authority: 'ISO 14001', risk: 'Medium' },
-                        { title: 'Excavation & Trenching Safety Standard', code: 'SOP-HSE-004', authority: 'DM Code', risk: 'Critical' },
-                        { title: 'Confined Space Entry & Rescue Protocol', code: 'SOP-HSE-005', authority: 'OSHAD SF', risk: 'Critical' },
+                        { title: 'Excavation & Trenching Safety Standard', code: 'SOP-HSE-004', authority: 'Oman Environment Authority', risk: 'Critical' },
+                        { title: 'Confined Space Entry & Rescue Protocol', code: 'SOP-HSE-005', authority: 'Oman MoL MD 286/2008', risk: 'Critical' },
                         { title: 'Hazardous Waste & Effluent Disposal Plan', code: 'SOP-HSE-006', authority: 'EAD Guidelines', risk: 'Medium' },
-                        { title: 'Scaffold Erection & Dismantling Standard', code: 'SOP-HSE-007', authority: 'BS EN 12811 / OSHAD', risk: 'High' },
+                        { title: 'Scaffold Erection & Dismantling Standard', code: 'SOP-HSE-007', authority: 'BS EN 12811 / Oman MoL MD 286/2008', risk: 'High' },
                         { title: 'Lockout/Tagout (LOTO) Energy Isolation', code: 'SOP-HSE-008', authority: 'OSHA 1910.147 / Aramco', risk: 'Critical' },
                         { title: 'Work Over Water & Marine Berth Safety', code: 'SOP-HSE-009', authority: 'Trakhees / IMO', risk: 'High' },
                         { title: 'Contractor Onboarding & Safety Pre-Qual', code: 'SOP-HSE-010', authority: 'ISO 45001 Clause 8.1.4', risk: 'Medium' }

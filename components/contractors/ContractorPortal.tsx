@@ -8,10 +8,10 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-001',
     companyName: 'Al Jaber Heavy Lifting & Transport W.L.L.',
     registrationNumber: 'CN-1049281',
-    contactPerson: { name: 'Eng. Tariq Al-Jaber', email: 'tariq.jaber@aljaber.ae', phone: '+971 2 555 4321' },
+    contactPerson: { name: 'Eng. Tariq Al-Jaber', email: 'tariq.jaber@aljaber.ae', phone: '+968 2 555 4321' },
     status: 'ACTIVE',
     documents: [
-      { id: 'DOC-AJ-01', title: 'Abu Dhabi DED Commercial License', filename: 'ded_license_aljaber.pdf', url: '#', version: 2, uploadDate: '2026-01-10', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-09' },
+      { id: 'DOC-AJ-01', title: 'Muscat DED Commercial License', filename: 'ded_license_aljaber.pdf', url: '#', version: 2, uploadDate: '2026-01-10', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-09' },
       { id: 'DOC-AJ-02', title: 'Workmen Compensation & Third Party Liability', filename: 'oman_insurance_aj.pdf', url: '#', version: 1, uploadDate: '2026-02-15', type: 'INSURANCE', status: 'VERIFIED', expiryDate: '2027-02-14' },
       { id: 'DOC-AJ-03', title: 'ISO 45001:2018 Certificate by DNV', filename: 'dnv_iso45001_aj.pdf', url: '#', version: 1, uploadDate: '2025-06-20', type: 'ISO_CERT', status: 'VERIFIED', expiryDate: '2028-06-19' }
     ],
@@ -21,7 +21,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-002',
     companyName: 'Target Engineering Construction Co. LLC',
     registrationNumber: 'CN-2083944',
-    contactPerson: { name: 'Ziad Mansour', email: 'ziad.m@target.ae', phone: '+971 2 671 2200' },
+    contactPerson: { name: 'Ziad Mansour', email: 'ziad.m@target.ae', phone: '+968 2 671 2200' },
     status: 'ACTIVE',
     documents: [
       { id: 'DOC-TG-01', title: 'Commercial Registration Certificate', filename: 'cr_target.pdf', url: '#', version: 3, uploadDate: '2026-01-05', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2026-12-31' },
@@ -34,7 +34,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-003',
     companyName: 'Consolidated Contractors Company (CCC)',
     registrationNumber: 'CN-1829301',
-    contactPerson: { name: 'Elias Khoury', email: 'ekhoury@ccc.net', phone: '+971 2 633 4455' },
+    contactPerson: { name: 'Elias Khoury', email: 'ekhoury@ccc.net', phone: '+968 2 633 4455' },
     status: 'ACTIVE',
     documents: [
       { id: 'DOC-CC-01', title: 'Commercial License Grade Special', filename: 'ccc_trade_license.pdf', url: '#', version: 2, uploadDate: '2025-11-20', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2026-11-19' },
@@ -47,10 +47,10 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-004',
     companyName: 'Dodsal Hydrocarbons & Industrial EPC LLC',
     registrationNumber: 'CN-3948271',
-    contactPerson: { name: 'Rajeev Sharma', email: 'rsharma@dodsal.com', phone: '+971 4 332 9988' },
+    contactPerson: { name: 'Rajeev Sharma', email: 'rsharma@dodsal.com', phone: '+968 4 332 9988' },
     status: 'PENDING_REVIEW',
     documents: [
-      { id: 'DOC-DS-01', title: 'Dubai DED Commercial License', filename: 'dodsal_license.pdf', url: '#', version: 1, uploadDate: '2026-03-10', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-03-09' },
+      { id: 'DOC-DS-01', title: 'Sohar DED Commercial License', filename: 'dodsal_license.pdf', url: '#', version: 1, uploadDate: '2026-03-10', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-03-09' },
       { id: 'DOC-DS-02', title: 'Employer Liability Certificate', filename: 'dodsal_insurance.pdf', url: '#', version: 1, uploadDate: '2026-03-12', type: 'INSURANCE', status: 'PENDING', expiryDate: '2026-09-30' },
       { id: 'DOC-DS-03', title: 'ISO 45001 Surveillance Audit Due', filename: 'dodsal_iso.pdf', url: '#', version: 1, uploadDate: '2026-03-15', type: 'ISO_CERT', status: 'PENDING', expiryDate: '2026-06-30' }
     ],
@@ -60,10 +60,10 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-005',
     companyName: 'Petrofac Facilities Management Middle East',
     registrationNumber: 'CN-9081234',
-    contactPerson: { name: 'Kieran Scott', email: 'kieran.scott@petrofac.com', phone: '+971 6 574 3300' },
+    contactPerson: { name: 'Kieran Scott', email: 'kieran.scott@petrofac.com', phone: '+968 6 574 3300' },
     status: 'ACTIVE',
     documents: [
-      { id: 'DOC-PF-01', title: 'Sharjah Chamber & DED License', filename: 'petrofac_license.pdf', url: '#', version: 3, uploadDate: '2026-02-01', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-31' },
+      { id: 'DOC-PF-01', title: 'Salalah Chamber & DED License', filename: 'petrofac_license.pdf', url: '#', version: 3, uploadDate: '2026-02-01', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-31' },
       { id: 'DOC-PF-02', title: 'Marsh Third Party Excess Insurance', filename: 'petrofac_marsh_cov.pdf', url: '#', version: 2, uploadDate: '2026-01-10', type: 'INSURANCE', status: 'VERIFIED', expiryDate: '2027-01-09' },
       { id: 'DOC-PF-03', title: 'Lloyds Register ISO 45001 / 14001', filename: 'lloyds_petrofac.pdf', url: '#', version: 1, uploadDate: '2025-05-18', type: 'ISO_CERT', status: 'VERIFIED', expiryDate: '2028-05-17' }
     ],
@@ -73,7 +73,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-006',
     companyName: 'Archirodon Marine Contractors N.V.',
     registrationNumber: 'CN-4728190',
-    contactPerson: { name: 'Nikolaos Voulgaris', email: 'nvoulgaris@archirodon.net', phone: '+971 2 644 8822' },
+    contactPerson: { name: 'Nikolaos Voulgaris', email: 'nvoulgaris@archirodon.net', phone: '+968 2 644 8822' },
     status: 'ACTIVE',
     documents: [
       { id: 'DOC-AR-01', title: 'Offshore & Marine Operations License', filename: 'archirodon_lic.pdf', url: '#', version: 2, uploadDate: '2026-01-18', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-17' },
@@ -86,7 +86,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-007',
     companyName: 'Six Construct Engineering (BESIX Group)',
     registrationNumber: 'CN-5819203',
-    contactPerson: { name: 'Francois Dubois', email: 'fdubois@besix.com', phone: '+971 4 509 2222' },
+    contactPerson: { name: 'Francois Dubois', email: 'fdubois@besix.com', phone: '+968 4 509 2222' },
     status: 'ACTIVE',
     documents: [
       { id: 'DOC-SC-01', title: 'Engineering & General Contracting License', filename: 'sixco_license.pdf', url: '#', version: 2, uploadDate: '2026-01-22', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-01-21' },
@@ -99,7 +99,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-008',
     companyName: 'Larsen & Toubro Hydrocarbon Engineering',
     registrationNumber: 'CN-6829104',
-    contactPerson: { name: 'Subramanian Natarajan', email: 'snatarajan@lntenc.com', phone: '+971 6 513 1111' },
+    contactPerson: { name: 'Subramanian Natarajan', email: 'snatarajan@lntenc.com', phone: '+968 6 513 1111' },
     status: 'ACTIVE',
     documents: [
       { id: 'DOC-LT-01', title: 'Commercial EPC License', filename: 'lnt_trade_license.pdf', url: '#', version: 3, uploadDate: '2026-02-05', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2027-02-04' },
@@ -112,10 +112,10 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-009',
     companyName: 'Arabian Rigging & Heavy Scaffolding Services',
     registrationNumber: 'CN-7492810',
-    contactPerson: { name: 'Majid Al-Balushi', email: 'majid@arabianrigging.com', phone: '+971 2 550 9988' },
+    contactPerson: { name: 'Majid Al-Balushi', email: 'majid@arabianrigging.com', phone: '+968 2 550 9988' },
     status: 'SUSPENDED',
     documents: [
-      { id: 'DOC-AR-01', title: 'Abu Dhabi Municipality Scaffolding Contractor', filename: 'adm_license_ar.pdf', url: '#', version: 1, uploadDate: '2025-10-14', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2026-10-13' },
+      { id: 'DOC-AR-01', title: 'Muscat Municipality Scaffolding Contractor', filename: 'adm_license_ar.pdf', url: '#', version: 1, uploadDate: '2025-10-14', type: 'TRADE_LICENSE', status: 'VERIFIED', expiryDate: '2026-10-13' },
       { id: 'DOC-AR-02', title: 'Third Party Liability Insurance (Lapsed)', filename: 'ar_insurance_lapsed.pdf', url: '#', version: 1, uploadDate: '2025-03-01', type: 'INSURANCE', status: 'REJECTED', expiryDate: '2026-03-01' },
       { id: 'DOC-AR-03', title: 'LEEA Association Membership Cert', filename: 'leea_ar.pdf', url: '#', version: 1, uploadDate: '2025-06-01', type: 'ISO_CERT', status: 'VERIFIED', expiryDate: '2026-06-01' }
     ],
@@ -125,7 +125,7 @@ const MOCK_CONTRACTORS: ContractorProfile[] = [
     id: 'C-010',
     companyName: 'Apex Scaffolding Contracting LLC',
     registrationNumber: 'CN-8392019',
-    contactPerson: { name: 'M. Rafiq', email: 'rafiq@apexscaff.com', phone: '+971 4 883 4567' },
+    contactPerson: { name: 'M. Rafiq', email: 'rafiq@apexscaff.com', phone: '+968 4 883 4567' },
     status: 'BLACKLISTED',
     documents: [
       { id: 'DOC-AP-01', title: 'Commercial Registration (Suspended)', filename: 'apex_cr.pdf', url: '#', version: 1, uploadDate: '2025-01-01', type: 'TRADE_LICENSE', status: 'REJECTED', expiryDate: '2025-12-31' },
@@ -226,7 +226,7 @@ export const ContractorPortal: React.FC = () => {
                         <tr key={vendor.id} className="border-b border-slate-100 hover:glass-button cursor-pointer transition-colors" onClick={() => setSelectedContractor(vendor)}>
                             <td className="px-6 py-4">
                                <div className="font-bold text-slate-800">{vendor.companyName}</div>
-                               <div className="text-xs text-slate-500 font-mono mt-1">TRN: {vendor.registrationNumber} {vendor.adnocIcvNumber && `• ${vendor.adnocIcvNumber}`}</div>
+                               <div className="text-xs text-slate-500 font-mono mt-1">TRN: {vendor.registrationNumber} {vendor.pdoIcvNumber && `• ${vendor.pdoIcvNumber}`}</div>
                             </td>
                             <td className="px-6 py-4">
                                {renderStatusBadge(vendor.status)}

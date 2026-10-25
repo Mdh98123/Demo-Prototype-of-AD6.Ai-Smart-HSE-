@@ -67,7 +67,7 @@ const ToolboxTalksModule: React.FC = () => {
                   <Wand2 size={16} className="text-indigo-600"/> Briefing Planner
               </h3>
               <p className="text-sm text-slate-600 mb-8 font-medium leading-relaxed">
-                  Use the AD6.Ai Intelligence engine to generate a briefing topic tailored to current site hazards and seasonal UAE alerts.
+                  Use the AD6.Ai Intelligence engine to generate a briefing topic tailored to current site hazards and seasonal Oman alerts.
               </p>
               <button 
                   onClick={handleGenerate}

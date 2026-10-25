@@ -16,8 +16,8 @@ const SecurityModule: React.FC = () => {
   // Mock Data
   const [passes, setPasses] = useState<GatePass[]>([
     { id: 'GP-9021', visitorName: 'John Smith', company: 'TechSol', hostId: 'u4', entryTime: '2024-05-20T08:30:00', type: 'Visitor', status: 'Active', purpose: 'Site Survey' },
-    { id: 'GP-9022', visitorName: 'Delivery Driver', company: 'DHL', hostId: 'u7', entryTime: '2024-05-20T09:15:00', vehicleReg: 'DXB-55291', type: 'Delivery', status: 'Active', purpose: 'Material Drop-off' },
-    { id: 'GP-9018', visitorName: 'Audit Team', company: 'OSHAD', hostId: 'u2', entryTime: '2024-05-19T10:00:00', exitTime: '2024-05-19T16:00:00', type: 'Visitor', status: 'Closed', purpose: 'Annual Audit' }
+    { id: 'GP-9022', visitorName: 'Delivery Driver', company: 'DHL', hostId: 'u7', entryTime: '2024-05-20T09:15:00', vehicleReg: 'SOH-55291', type: 'Delivery', status: 'Active', purpose: 'Material Drop-off' },
+    { id: 'GP-9018', visitorName: 'Audit Team', company: 'Oman MoL MD 286/2008', hostId: 'u2', entryTime: '2024-05-19T10:00:00', exitTime: '2024-05-19T16:00:00', type: 'Visitor', status: 'Closed', purpose: 'Annual Audit' }
   ]);
 
   const [newPass, setNewPass] = useState<Partial<GatePass>>({ type: 'Visitor', status: 'Active' });

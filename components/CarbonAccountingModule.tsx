@@ -23,15 +23,13 @@ import {
   INITIAL_ESG_FACILITIES, 
   INITIAL_EMISSIONS_RECORDS, 
   INITIAL_OMANISATION_METRICS, 
-  INITIAL_EMIRATISATION_METRICS, 
   INITIAL_ICV_OMAN, 
-  INITIAL_ICV_UAE, 
   INITIAL_SOCIAL_SAFETY_METRICS, 
   INITIAL_GOVERNANCE_METRICS, 
   INITIAL_DECARBONIZATION_INITIATIVES, 
   INITIAL_WATER_RECORDS, 
   INITIAL_WASTE_RECORDS, 
-  ADX_ESG_INDICATORS, 
+  MSX_ESG_INDICATORS, 
   MSX_OMAN_ESG_INDICATORS 
 } from '../services/esgDataStore';
 import { REGIONAL_EMISSION_FACTORS, calculateEmissionCO2eTonnes } from '../services/esgEmissionFactors';
@@ -59,16 +57,14 @@ export const CarbonAccountingModule: React.FC = () => {
   // Navigation & Jurisdiction Filters
   const [activeTab, setActiveTab] = useState<TabView>('OVERVIEW');
   const [jurisdiction, setJurisdiction] = useState<ESGJurisdiction>('GCC_CONSOLIDATED');
-  const [standard, setStandard] = useState<ESGStandard>('ADX_UAE');
+  const [standard, setStandard] = useState<ESGStandard>('MSX_OMAN');
   const [selectedFacilityId, setSelectedFacilityId] = useState<string>('ALL');
 
   // Core ESG State
   const [facilities] = useState<ESGFacility[]>(INITIAL_ESG_FACILITIES);
   const [emissions, setEmissions] = useState<DetailedEmissionRecord[]>(INITIAL_EMISSIONS_RECORDS);
   const [omanisation, setOmanisation] = useState(INITIAL_OMANISATION_METRICS);
-  const [emiratisation, setEmiratisation] = useState(INITIAL_EMIRATISATION_METRICS);
   const [icvOman] = useState(INITIAL_ICV_OMAN);
-  const [icvUAE] = useState(INITIAL_ICV_UAE);
   const [socialSafety] = useState(INITIAL_SOCIAL_SAFETY_METRICS);
   const [governance, setGovernance] = useState(INITIAL_GOVERNANCE_METRICS);
   const [initiatives] = useState<DecarbonizationInitiative[]>(INITIAL_DECARBONIZATION_INITIATIVES);
@@ -96,11 +92,7 @@ export const CarbonAccountingModule: React.FC = () => {
   // Sync Standard when Jurisdiction switches
   const handleJurisdictionChange = (newJur: ESGJurisdiction) => {
     setJurisdiction(newJur);
-    if (newJur === 'OMAN') {
-      setStandard('MSX_OMAN');
-    } else if (newJur === 'UAE') {
-      setStandard('ADX_UAE');
-    }
+    setStandard('MSX_OMAN');
   };
 
   // Filtered Emissions
@@ -142,22 +134,20 @@ export const CarbonAccountingModule: React.FC = () => {
       emissions,
       facilities,
       omanisation,
-      emiratisation,
       icvOman,
-      icvUAE,
       socialSafety,
       governance,
       wasteRecords,
       waterRecords
     });
-  }, [emissions, facilities, omanisation, emiratisation, icvOman, icvUAE, socialSafety, governance, wasteRecords, waterRecords]);
+  }, [emissions, facilities, omanisation, icvOman, socialSafety, governance, wasteRecords, waterRecords]);
 
   // Current active standard disclosure items
   const activeDisclosures: ESGDisclosureItem[] = useMemo(() => {
     if (standard === 'MSX_OMAN') {
       return MSX_OMAN_ESG_INDICATORS;
     }
-    return ADX_ESG_INDICATORS;
+    return MSX_ESG_INDICATORS;
   }, [standard]);
 
   // Handle Adding New Emission Record
@@ -199,9 +189,7 @@ export const CarbonAccountingModule: React.FC = () => {
     facilities,
     emissions: filteredEmissions,
     omanisation,
-    emiratisation,
     icvOman,
-    icvUAE,
     socialSafety,
     governance,
     disclosures: activeDisclosures,
@@ -223,9 +211,7 @@ export const CarbonAccountingModule: React.FC = () => {
           scope2: scope2Total,
           scope3: scope3Total,
           omanisationPct: omanisation.currentActualPct,
-          emiratisationPct: emiratisation.currentActualPct,
           icvOmanPct: icvOman.certifiedScorePct,
-          icvUAEPct: icvUAE.certifiedScorePct,
           ltifr: socialSafety.ltifrRate,
           fatalities: socialSafety.fatalitiesCount,
           boardFemaleDirectors: governance.femaleBoardDirectorsCount,
@@ -272,7 +258,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div className="flex items-center gap-3">
                 <h1 className="text-3xl font-black tracking-tight uppercase">ESG & Net Zero Command</h1>
                 <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-widest">
-                  Oman & UAE Standard
+                  Sultanate of Oman Standard
                 </span>
                 <span className="bg-blue-500/20 text-blue-300 border border-blue-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
                   ISAE 3000 Assured
@@ -322,7 +308,7 @@ export const CarbonAccountingModule: React.FC = () => {
           {/* Jurisdiction Toggle */}
           <div className="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-2xl border border-slate-800">
             <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 px-2">Jurisdiction:</span>
-            {(['GCC_CONSOLIDATED', 'UAE', 'OMAN'] as ESGJurisdiction[]).map(jur => (
+            {(['GCC_CONSOLIDATED', 'OMAN'] as ESGJurisdiction[]).map(jur => (
               <button
                 key={jur}
                 onClick={() => handleJurisdictionChange(jur)}
@@ -332,7 +318,7 @@ export const CarbonAccountingModule: React.FC = () => {
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                {jur === 'GCC_CONSOLIDATED' ? 'GCC Group' : jur === 'UAE' ? 'UAE (ADX/DFM)' : 'Oman (MSX)'}
+                {jur === 'GCC_CONSOLIDATED' ? 'GCC Group' : 'Sultanate of Oman (MSX)'}
               </button>
             ))}
           </div>
@@ -340,7 +326,7 @@ export const CarbonAccountingModule: React.FC = () => {
           {/* Standard Selector */}
           <div className="flex items-center gap-2 bg-slate-950/60 p-1.5 rounded-2xl border border-slate-800">
             <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 px-2">Standard:</span>
-            {(['ADX_UAE', 'DFM_UAE', 'MSX_OMAN', 'GRI_UNIVERSAL', 'ISSB_IFRS'] as ESGStandard[]).map(std => (
+            {(['MSX_OMAN', 'GRI_UNIVERSAL', 'ISSB_IFRS'] as ESGStandard[]).map(std => (
               <button
                 key={std}
                 onClick={() => setStandard(std)}
@@ -350,7 +336,7 @@ export const CarbonAccountingModule: React.FC = () => {
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                {std.replace('_', ' ')}
+                {std === 'MSX_OMAN' ? 'MSX Oman' : std.replace('_', ' ')}
               </button>
             ))}
           </div>
@@ -380,12 +366,12 @@ export const CarbonAccountingModule: React.FC = () => {
         {[
           { id: 'OVERVIEW', label: 'Executive Dashboard', icon: BarChart3 },
           { id: 'GHG_ACCOUNTING', label: 'GHG Protocol (Scope 1, 2, 3)', icon: Cloud },
-          { id: 'NATIONALISATION_ICV', label: 'Omanisation & Emiratisation (ICV)', icon: Users },
+          { id: 'NATIONALISATION_ICV', label: 'Omanisation (Ministry of Labour) (ICV)', icon: Users },
           { id: 'SOCIAL_SAFETY', label: 'Workforce Safety & Welfare', icon: ShieldCheck },
           { id: 'GOVERNANCE', label: 'Governance & Board Ethics', icon: Scale },
           { id: 'VALIDATION_AUDIT', label: 'Audit Validation & Integrity', icon: CheckCircle2, badge: validationSummary.issues.length },
           { id: 'DECARBONIZATION_MACC', label: 'Decarbonization Roadmap (MACC)', icon: TrendingDown },
-          { id: 'REGULATORY_DISCLOSURES', label: 'Official Disclosures (ADX/MSX)', icon: FileText },
+          { id: 'REGULATORY_DISCLOSURES', label: 'Official Disclosures (MSX/MSX)', icon: FileText },
           { id: 'AI_ADVISOR', label: 'ESG AI Advisor', icon: Sparkles }
         ].map(tab => {
           const Icon = tab.icon;
@@ -450,16 +436,16 @@ export const CarbonAccountingModule: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
-                    {jurisdiction === 'OMAN' ? 'Omanisation Ratio' : 'Emiratisation Ratio'}
+                    {jurisdiction === 'OMAN' ? 'Omanisation Ratio' : 'Omanisation Ratio'}
                   </span>
                   <div className="p-2 bg-blue-50 rounded-xl text-blue-600"><Users size={18}/></div>
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-black text-slate-900 tracking-tight">
-                    {jurisdiction === 'OMAN' ? `${omanisation.currentActualPct}%` : `${emiratisation.currentActualPct}%`}
+                    {jurisdiction === 'OMAN' ? `${omanisation.currentActualPct}%` : `${omanisation.currentActualPct}%`}
                   </span>
                   <span className="text-xs font-bold text-emerald-600 uppercase">
-                    Target: {jurisdiction === 'OMAN' ? `${omanisation.statutoryTargetPct}%` : `${emiratisation.statutoryTargetPct}%`}
+                    Target: {jurisdiction === 'OMAN' ? `${omanisation.statutoryTargetPct}%` : `${omanisation.statutoryTargetPct}%`}
                   </span>
                 </div>
               </div>
@@ -478,20 +464,20 @@ export const CarbonAccountingModule: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
-                    {jurisdiction === 'OMAN' ? 'ICV Oman Score' : 'National ICV (UAE)'}
+                    {jurisdiction === 'OMAN' ? 'ICV Oman Score' : 'Oman ICV Score (MEM / OIA)'}
                   </span>
                   <div className="p-2 bg-amber-50 rounded-xl text-amber-600"><Award size={18}/></div>
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-black text-slate-900 tracking-tight">
-                    {jurisdiction === 'OMAN' ? `${icvOman.certifiedScorePct}%` : `${icvUAE.certifiedScorePct}%`}
+                    {jurisdiction === 'OMAN' ? `${icvOman.certifiedScorePct}%` : `${icvOman.certifiedScorePct}%`}
                   </span>
                   <span className="text-xs font-bold text-slate-500 uppercase">Certified</span>
                 </div>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
                 <span className="text-slate-600 font-semibold">
-                  Local Spend: {jurisdiction === 'OMAN' ? '23.29M OMR' : '113.2M AED'}
+                  Local Spend: {jurisdiction === 'OMAN' ? '23.29M OMR' : '11.8M OMR'}
                 </span>
                 <span className="text-amber-600 font-bold">Tier 1 Certified</span>
               </div>
@@ -515,7 +501,7 @@ export const CarbonAccountingModule: React.FC = () => {
                 <span className="text-emerald-600 font-bold flex items-center gap-1">
                   <CheckCircle2 size={14} /> 0 Fatalities
                 </span>
-                <span className="text-slate-400 font-medium">OSHAD / ISO 45001</span>
+                <span className="text-slate-400 font-medium">Oman MoL MD 286/2008 / ISO 45001</span>
               </div>
             </div>
 
@@ -532,7 +518,7 @@ export const CarbonAccountingModule: React.FC = () => {
                     Net Zero 2050 Decarbonization Pathway
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Historical GHG trajectory against UAE Net Zero 2050 & Oman Vision 2040 science-based milestones
+                    Historical GHG trajectory against Oman Vision 2040 Decarbonization & Oman Vision 2040 science-based milestones
                   </p>
                 </div>
                 <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-xl">
@@ -680,7 +666,7 @@ export const CarbonAccountingModule: React.FC = () => {
                   <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl"><Leaf size={20}/></div>
                   <div>
                     <h4 className="text-sm font-black text-slate-900 uppercase">Circular Economy & Waste Manifests</h4>
-                    <p className="text-xs text-slate-500">Tadweer Bolisat (UAE) & Be'ah Portal (Oman) Integration</p>
+                    <p className="text-xs text-slate-500">Beah Portal (Oman) & Beah Portal (Oman) Integration</p>
                   </div>
                 </div>
                 <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-xl">
@@ -722,7 +708,7 @@ export const CarbonAccountingModule: React.FC = () => {
             <div>
               <h3 className="text-lg font-black text-slate-900 uppercase">GHG Protocol Activity Ledger</h3>
               <p className="text-xs text-slate-500">
-                Audited Scope 1, 2 and 3 emissions logs with certified regional emission factors (DEWA, EWEC, Nama Oman, IPCC AR6)
+                Audited Scope 1, 2 and 3 emissions logs with certified regional emission factors (Nama Power, Nama Power, Nama Oman, IPCC AR6)
               </p>
             </div>
             <button
@@ -799,7 +785,7 @@ export const CarbonAccountingModule: React.FC = () => {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 3: WORKFORCE NATIONALISATION & IN-COUNTRY VALUE (OMAN & UAE) */}
+      {/* TAB 3: WORKFORCE NATIONALISATION & IN-COUNTRY VALUE (OMAN & Oman) */}
       {/* ========================================================================= */}
       {activeTab === 'NATIONALISATION_ICV' && (
         <div className="space-y-6">
@@ -884,7 +870,7 @@ export const CarbonAccountingModule: React.FC = () => {
 
             </div>
 
-            {/* Emiratisation Module */}
+            {/* Omanisation Module */}
             <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-3">
@@ -892,71 +878,71 @@ export const CarbonAccountingModule: React.FC = () => {
                     AE
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-slate-900 uppercase">Emiratisation & Tawteen</h3>
-                    <p className="text-xs text-slate-500">MOHRE Private Sector Targets & ADX S11 Alignment</p>
+                    <h3 className="text-base font-black text-slate-900 uppercase">Omanisation Quotas (Ministry of Labour)</h3>
+                    <p className="text-xs text-slate-500">Oman Ministry of Labour Private Sector Targets & MSX S11 Alignment</p>
                   </div>
                 </div>
                 <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-xl">
-                  {emiratisation.complianceStatus}
+                  {omanisation.complianceStatus}
                 </span>
               </div>
 
               {/* Quota Progress Bar */}
               <div>
                 <div className="flex justify-between text-xs font-bold mb-2">
-                  <span className="text-slate-600">Current Actual Emiratisation</span>
-                  <span className="text-slate-900">{emiratisation.currentActualPct}% (MOHRE Quota: {emiratisation.statutoryTargetPct}%)</span>
+                  <span className="text-slate-600">Current Actual Omanisation</span>
+                  <span className="text-slate-900">{omanisation.currentActualPct}% (Oman Ministry of Labour Quota: {omanisation.statutoryTargetPct}%)</span>
                 </div>
                 <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
                   <div 
                     className="bg-emerald-500 h-full rounded-full transition-all duration-700"
-                    style={{ width: `${Math.min(100, (emiratisation.currentActualPct / 15) * 100)}%` }}
+                    style={{ width: `${Math.min(100, (omanisation.currentActualPct / 15) * 100)}%` }}
                   ></div>
                 </div>
                 <p className="text-[10px] text-emerald-600 font-bold mt-1.5">
-                  +1.8% Above MOHRE 2024 skilled workforce threshold
+                  +1.8% Above Oman Ministry of Labour 2024 skilled workforce threshold
                 </p>
               </div>
 
               {/* Headcount Breakdown */}
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                  <span className="text-[10px] font-black uppercase text-slate-400">Total UAE Nationals</span>
-                  <p className="text-lg font-black text-slate-900 mt-1">{emiratisation.nationalEmployees.toLocaleString()}</p>
-                  <span className="text-[9px] text-slate-500">of {emiratisation.totalHeadcount.toLocaleString()} total</span>
+                  <span className="text-[10px] font-black uppercase text-slate-400">Total Omani nationals</span>
+                  <p className="text-lg font-black text-slate-900 mt-1">{omanisation.nationalEmployees.toLocaleString()}</p>
+                  <span className="text-[9px] text-slate-500">of {omanisation.totalHeadcount.toLocaleString()} total</span>
                 </div>
                 <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
                   <span className="text-[10px] font-black uppercase text-slate-400">Female Nationals</span>
-                  <p className="text-lg font-black text-purple-600 mt-1">{emiratisation.femaleNationalEmployees}</p>
+                  <p className="text-lg font-black text-purple-600 mt-1">{omanisation.femaleNationalEmployees}</p>
                   <span className="text-[9px] text-slate-500">38% of National pool</span>
                 </div>
                 <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
                   <span className="text-[10px] font-black uppercase text-slate-400">Management %</span>
-                  <p className="text-lg font-black text-blue-600 mt-1">{emiratisation.managementNationalPct}%</p>
+                  <p className="text-lg font-black text-blue-600 mt-1">{omanisation.managementNationalPct}%</p>
                   <span className="text-[9px] text-slate-500">Leadership Roles</span>
                 </div>
               </div>
 
-              {/* National ICV Program (MoIAT / ADNOC) */}
+              {/* National ICV Program (MoIAT / PDO) */}
               <div className="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200/60 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black uppercase tracking-wider text-emerald-900">
-                    National ICV Program (UAE MoIAT)
+                    Oman In-Country Value Program (MEM / OIA)
                   </span>
                   <span className="text-xs font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-lg">
-                    {icvUAE.certifiedScorePct}% Certified
+                    {icvOman.certifiedScorePct}% Certified
                   </span>
                 </div>
                 <div className="flex justify-between text-xs text-slate-700">
-                  <span>Local Spend (AED):</span>
-                  <span className="font-bold">{icvUAE.localProcurementSpend.toLocaleString()} AED ({icvUAE.localProcurementPct}%)</span>
+                  <span>Local Spend (OMR):</span>
+                  <span className="font-bold">{icvOman.localProcurementSpend.toLocaleString()} OMR ({icvOman.localProcurementPct}%)</span>
                 </div>
                 <div className="flex justify-between text-xs text-slate-700">
                   <span>National SME Vendors:</span>
-                  <span className="font-bold text-emerald-700">{icvUAE.smeSpendAllocationPct}% Dedicated to UAE SMEs</span>
+                  <span className="font-bold text-emerald-700">{icvOman.smeSpendAllocationPct}% Dedicated to Oman SMEs</span>
                 </div>
                 <div className="text-[10px] text-slate-500 pt-1 border-t border-emerald-200/50">
-                  Audit Verifier: {icvUAE.issuingCertifyingBody} • Valid until {icvUAE.certificateExpiryDate}
+                  Audit Verifier: {icvOman.issuingCertifyingBody} • Valid until {icvOman.certificateExpiryDate}
                 </div>
               </div>
 
@@ -1018,7 +1004,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-900 block">Worker Accommodation Audits</span>
-                  <span className="text-slate-500">Inspection compliance against UAE & Oman welfare standards</span>
+                  <span className="text-slate-500">Inspection compliance against Sultanate of Oman welfare standards</span>
                 </div>
                 <span className="bg-emerald-100 text-emerald-800 font-black px-3 py-1 rounded-xl">
                   {socialSafety.workerWelfareAccommodationAuditsPct}% Compliant
@@ -1066,7 +1052,7 @@ export const CarbonAccountingModule: React.FC = () => {
             <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm text-center">
               <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">Female Board Members</span>
               <p className="text-3xl font-black text-purple-600 mt-2">{governance.femaleBoardDirectorsCount}</p>
-              <span className="text-xs text-purple-700 font-bold">Complies with UAE SCA</span>
+              <span className="text-xs text-purple-700 font-bold">Complies with Oman CMA</span>
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm text-center">
@@ -1109,7 +1095,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-900 block">Data Privacy & Cyber Incidents</span>
-                  <span className="text-slate-500">UAE Federal Decree-Law No. 45/2021 & Oman RD 6/2022</span>
+                  <span className="text-slate-500">Oman Oman Personal Data Protection Law (Royal Decree 6/2022) & Oman RD 6/2022</span>
                 </div>
                 <span className="bg-emerald-100 text-emerald-800 font-black px-3 py-1 rounded-xl">
                   0 Breaches
@@ -1119,7 +1105,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-900 block">Regulatory Environmental & Labour Fines</span>
-                  <span className="text-slate-500">Penalties imposed by EAD, Dubai Municipality, or Oman EA</span>
+                  <span className="text-slate-500">Penalties imposed by EAD, Muscat Municipality, or Oman EA</span>
                 </div>
                 <span className="bg-emerald-100 text-emerald-800 font-black px-3 py-1 rounded-xl">
                   $0 Fines
@@ -1234,7 +1220,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div className="text-center py-10 text-slate-400 text-xs">
                 <CheckCircle2 size={40} className="mx-auto text-emerald-500 mb-2" />
                 <p className="font-bold text-slate-700">All Logical Validation Checks Passed</p>
-                <p>Data complies fully with Oman & UAE statutory requirements.</p>
+                <p>Data complies fully with Sultanate of Oman statutory requirements.</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -1292,7 +1278,7 @@ export const CarbonAccountingModule: React.FC = () => {
                 Marginal Abatement Cost Curve (MACC) & Net Zero Projects
               </h3>
               <p className="text-xs text-slate-500">
-                Prioritized mitigation initiatives across UAE & Oman assets sorted by economic payback and carbon abatement potential
+                Prioritized mitigation initiatives across Sultanate of Oman assets sorted by economic payback and carbon abatement potential
               </p>
             </div>
             <div className="flex items-center gap-2 bg-emerald-50 text-emerald-800 px-4 py-2 rounded-2xl text-xs font-black">
@@ -1343,8 +1329,8 @@ export const CarbonAccountingModule: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-slate-600 pt-2 border-t border-slate-100">
-                  <span>Capex: <strong>{(init.capexInvestmentAEDorOMR / 1000000).toFixed(1)}M</strong></span>
-                  <span>Opex Savings: <strong className="text-emerald-600">{(init.annualOpexSavingsAEDorOMR / 1000).toFixed(0)}k/yr</strong></span>
+                  <span>Capex: <strong>{(init.capexInvestmentOMRorOMR / 1000000).toFixed(1)}M</strong></span>
+                  <span>Opex Savings: <strong className="text-emerald-600">{(init.annualOpexSavingsOMRorOMR / 1000).toFixed(0)}k/yr</strong></span>
                 </div>
               </div>
             ))}
@@ -1354,7 +1340,7 @@ export const CarbonAccountingModule: React.FC = () => {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 8: OFFICIAL DISCLOSURES (ADX / MSX) */}
+      {/* TAB 8: OFFICIAL DISCLOSURES (MSX / MSX) */}
       {/* ========================================================================= */}
       {activeTab === 'REGULATORY_DISCLOSURES' && (
         <div className="space-y-6">
@@ -1363,7 +1349,7 @@ export const CarbonAccountingModule: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-black text-slate-900 uppercase">
-                  {standard === 'MSX_OMAN' ? 'Muscat Stock Exchange (MSX) ESG Disclosures' : 'Abu Dhabi Securities Exchange (ADX) Disclosures'}
+                  {standard === 'MSX_OMAN' ? 'Muscat Stock Exchange (MSX) ESG Disclosures' : 'Muscat Securities Exchange (MSX) Disclosures'}
                 </h3>
                 <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">
                   {activeDisclosures.length} Indicators Fully Mapped
@@ -1376,10 +1362,10 @@ export const CarbonAccountingModule: React.FC = () => {
             
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setStandard('ADX_UAE')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold ${standard === 'ADX_UAE' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'}`}
+                onClick={() => setStandard('MSX_OMAN')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold ${standard === 'MSX_OMAN' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'}`}
               >
-                ADX UAE (31 Metrics)
+                MSX Oman (32 Indicators)
               </button>
               <button
                 onClick={() => setStandard('MSX_OMAN')}
@@ -1453,7 +1439,7 @@ export const CarbonAccountingModule: React.FC = () => {
               <div>
                 <h3 className="text-xl font-black uppercase tracking-tight">Enterprise HSE AI ESG Advisor</h3>
                 <p className="text-xs text-slate-400">
-                  Autonomous regulatory compliance analysis adhering to OSHAD, ADX, DFM, MSX Oman, and UAE Net Zero 2050 framework
+                  Autonomous regulatory compliance analysis adhering to Oman MoL MD 286/2008, MSX, MSX, MSX Oman, and Oman Vision 2040 Decarbonization framework
                 </p>
               </div>
             </div>
@@ -1461,9 +1447,9 @@ export const CarbonAccountingModule: React.FC = () => {
             {/* Quick Prompt Trigger Buttons */}
             <div className="flex flex-wrap gap-2.5">
               {[
-                'Run Comprehensive ADX & MSX Regulatory Gap Analysis',
+                'Run Comprehensive MSX & MSX Regulatory Gap Analysis',
                 'Assess Decarbonization Pathway Alignment with Net Zero 2050',
-                'Audit Workforce Nationalisation (Omanisation & Emiratisation Quotas)',
+                'Audit Workforce Nationalisation (Omanisation (Ministry of Labour) Quotas)',
                 'Generate Board Audit Committee ESG Defense Brief'
               ].map((p, idx) => (
                 <button

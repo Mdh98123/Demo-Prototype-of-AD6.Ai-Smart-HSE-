@@ -20,7 +20,7 @@ The running prototype utilizes a dual-tier client/server persistence mechanism:
 - **Server Audit Log:** Append-only in-memory log buffer (`inMemoryAuditTrail`) exposed at `/api/audit/trail` with non-blocking Google Cloud Logging export (`services/audit.js`).
 
 ### 1.2 Target Enterprise State (Production Relational Database)
-Production requires durable, ACID-compliant relational storage with strict **Row-Level Security (RLS)** isolating tenant data between operating entities (e.g. Petroleum Development Oman vs. ADNOC Onshore vs. Aramco joint ventures).
+Production requires durable, ACID-compliant relational storage with strict **Row-Level Security (RLS)** isolating tenant data between operating entities (e.g. Petroleum Development Oman vs. Petroleum Development Oman (PDO) vs. Aramco joint ventures).
 
 ---
 
@@ -199,7 +199,7 @@ CREATE POLICY tenant_isolation_policy ON incidents
 | `status` | `VARCHAR(32)` | Not Null | Reported, Under Investigation, CAPA Pending, Closed |
 | `description` | `TEXT` | Not Null | Detailed factual narrative |
 | `reported_by` | `UUID` | FK `users(id)` | Author of the incident report |
-| `statutory_deadline`| `TIMESTAMPTZ`| Not Null | Deadline for OSHAD Form G / MoL filing |
+| `statutory_deadline`| `TIMESTAMPTZ`| Not Null | Deadline for Oman MoL Form MD 286 / MoL filing |
 
 #### Table: `permits`
 | Column | Type | Constraints | Description |
@@ -220,7 +220,7 @@ CREATE POLICY tenant_isolation_policy ON incidents
 All state alterations write to `audit_logs` with a cryptographic digest:
 $$\text{hashDigest} = \text{SHA256}(\text{previousDigest} + \text{userId} + \text{actionType} + \text{entityId} + \text{timestamp} + \text{newStateJSON})$$
 
-This creates a forward-linked blockchain-like audit trail ensuring regulatory defensibility during statutory inquiries by Abu Dhabi Public Health Centre (ADPHC) or the Oman Ministry of Labour.
+This creates a forward-linked blockchain-like audit trail ensuring regulatory defensibility during statutory inquiries by Oman Ministry of Labour Occupational Safety & Health Directorate or the Oman Ministry of Labour.
 
 ---
 
@@ -228,7 +228,7 @@ This creates a forward-linked blockchain-like audit trail ensuring regulatory de
 
 All demonstration and test fixtures utilize realistic, fictionalized Gulf industrial assets:
 - **Tenant 1 (Oman Concession):** Gulf Energy Maritime & Upstream LLC (`OMN-FHD-01`, Fahud-West Gas Gathering Station, Block 6). Currency: `OMR` (3 decimal precision).
-- **Tenant 2 (UAE Asset):** Al-Ruwais Polyolefin Asset LLC (`UAE-RUW-02`, Extrusion & Reactor Train 2). Currency: `AED`.
+- **Tenant 2 (Oman Asset):** Mina Al Fahal Refinery Asset LLC (`OMN-MAF-01`, Distillation & Cracker Unit). Currency: `OMR`.
 - **Tenant 3 (KSA Marine):** Ras Al-Khair Heavy Lift Facility (`KSA-RAK-01`). Currency: `SAR`.
 
 Zero actual corporate personal identifiable information (PII) or classified operational telemetry is contained within seed scripts.

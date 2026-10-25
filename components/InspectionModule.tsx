@@ -76,24 +76,24 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
           setHistory(JSON.parse(saved));
       } else {
           const mockHistory: InspectionRecord[] = [
-              { id: 'INSP-601', type: 'Heavy Machinery', location: 'Ruwais Refinery Complex', inspector: 'User 1', date: '2026-06-25T16:25:02.461Z', score: 68, status: 'Completed', items: [] },
-              { id: 'INSP-602', type: 'Vehicle Fleet', location: 'Abu Dhabi HQ', inspector: 'User 2', date: '2026-05-05T10:43:41.954Z', score: 94, status: 'Draft', items: [] },
-              { id: 'INSP-603', type: 'Heavy Machinery', location: 'Ruwais Refinery Complex', inspector: 'User 3', date: '2026-05-07T15:05:34.416Z', score: 64, status: 'Draft', items: [] },
-              { id: 'INSP-604', type: 'Electrical Tools', location: 'Habshan Gas Complex', inspector: 'User 4', date: '2026-06-20T11:09:28.097Z', score: 96, status: 'Completed', items: [] },
+              { id: 'INSP-601', type: 'Heavy Machinery', location: 'Mina Al Fahal Refinery Complex', inspector: 'User 1', date: '2026-06-25T16:25:02.461Z', score: 68, status: 'Completed', items: [] },
+              { id: 'INSP-602', type: 'Vehicle Fleet', location: 'Muscat HQ', inspector: 'User 2', date: '2026-05-05T10:43:41.954Z', score: 94, status: 'Draft', items: [] },
+              { id: 'INSP-603', type: 'Heavy Machinery', location: 'Mina Al Fahal Refinery Complex', inspector: 'User 3', date: '2026-05-07T15:05:34.416Z', score: 64, status: 'Draft', items: [] },
+              { id: 'INSP-604', type: 'Electrical Tools', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 4', date: '2026-06-20T11:09:28.097Z', score: 96, status: 'Completed', items: [] },
               { id: 'INSP-605', type: 'Heavy Machinery', location: 'Musaffah Industrial Zone', inspector: 'User 5', date: '2026-04-25T19:44:35.238Z', score: 94, status: 'Draft', items: [] },
-              { id: 'INSP-606', type: 'Heavy Machinery', location: 'Habshan Gas Complex', inspector: 'User 6', date: '2026-06-27T11:41:16.716Z', score: 75, status: 'Draft', items: [] },
+              { id: 'INSP-606', type: 'Heavy Machinery', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 6', date: '2026-06-27T11:41:16.716Z', score: 75, status: 'Draft', items: [] },
               { id: 'INSP-607', type: 'Electrical Tools', location: 'Musaffah Industrial Zone', inspector: 'User 7', date: '2026-05-30T03:34:23.715Z', score: 83, status: 'Draft', items: [] },
-              { id: 'INSP-608', type: 'Heavy Machinery', location: 'Abu Dhabi HQ', inspector: 'User 8', date: '2026-05-13T10:31:03.426Z', score: 70, status: 'Draft', items: [] },
-              { id: 'INSP-609', type: 'Vehicle Fleet', location: 'Ruwais Refinery Complex', inspector: 'User 9', date: '2026-05-02T06:11:39.306Z', score: 74, status: 'Completed', items: [] },
-              { id: 'INSP-610', type: 'Heavy Machinery', location: 'Habshan Gas Complex', inspector: 'User 10', date: '2026-05-06T23:54:26.098Z', score: 65, status: 'Completed', items: [] },
-              { id: 'INSP-611', type: 'Electrical Tools', location: 'Habshan Gas Complex', inspector: 'User 11', date: '2026-06-28T11:36:24.217Z', score: 62, status: 'Completed', items: [] },
-              { id: 'INSP-612', type: 'Heavy Machinery', location: 'Jebel Ali Construction Site', inspector: 'User 12', date: '2026-05-27T10:22:51.331Z', score: 98, status: 'Draft', items: [] },
-              { id: 'INSP-613', type: 'Vehicle Fleet', location: 'Habshan Gas Complex', inspector: 'User 13', date: '2026-05-11T23:14:42.036Z', score: 74, status: 'Draft', items: [] },
-              { id: 'INSP-614', type: 'Vehicle Fleet', location: 'Abu Dhabi HQ', inspector: 'User 14', date: '2026-06-11T16:07:20.421Z', score: 68, status: 'Completed', items: [] },
-              { id: 'INSP-615', type: 'Vehicle Fleet', location: 'Jebel Ali Construction Site', inspector: 'User 15', date: '2026-06-20T00:10:55.945Z', score: 75, status: 'Draft', items: [] },
-              { id: 'INSP-616', type: 'Scaffolding', location: 'Ruwais Refinery Complex', inspector: 'User 16', date: '2026-05-26T21:13:30.288Z', score: 60, status: 'Draft', items: [] },
-              { id: 'INSP-617', type: 'Electrical Tools', location: 'Jebel Ali Construction Site', inspector: 'User 17', date: '2026-06-26T03:05:37.957Z', score: 90, status: 'Draft', items: [] },
-              { id: 'INSP-618', type: 'Vehicle Fleet', location: 'Habshan Gas Complex', inspector: 'User 18', date: '2026-05-11T16:21:06.329Z', score: 95, status: 'Completed', items: [] }
+              { id: 'INSP-608', type: 'Heavy Machinery', location: 'Muscat HQ', inspector: 'User 8', date: '2026-05-13T10:31:03.426Z', score: 70, status: 'Draft', items: [] },
+              { id: 'INSP-609', type: 'Vehicle Fleet', location: 'Mina Al Fahal Refinery Complex', inspector: 'User 9', date: '2026-05-02T06:11:39.306Z', score: 74, status: 'Completed', items: [] },
+              { id: 'INSP-610', type: 'Heavy Machinery', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 10', date: '2026-05-06T23:54:26.098Z', score: 65, status: 'Completed', items: [] },
+              { id: 'INSP-611', type: 'Electrical Tools', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 11', date: '2026-06-28T11:36:24.217Z', score: 62, status: 'Completed', items: [] },
+              { id: 'INSP-612', type: 'Heavy Machinery', location: 'Duqm Industrial Port Construction Site', inspector: 'User 12', date: '2026-05-27T10:22:51.331Z', score: 98, status: 'Draft', items: [] },
+              { id: 'INSP-613', type: 'Vehicle Fleet', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 13', date: '2026-05-11T23:14:42.036Z', score: 74, status: 'Draft', items: [] },
+              { id: 'INSP-614', type: 'Vehicle Fleet', location: 'Muscat HQ', inspector: 'User 14', date: '2026-06-11T16:07:20.421Z', score: 68, status: 'Completed', items: [] },
+              { id: 'INSP-615', type: 'Vehicle Fleet', location: 'Duqm Industrial Port Construction Site', inspector: 'User 15', date: '2026-06-20T00:10:55.945Z', score: 75, status: 'Draft', items: [] },
+              { id: 'INSP-616', type: 'Scaffolding', location: 'Mina Al Fahal Refinery Complex', inspector: 'User 16', date: '2026-05-26T21:13:30.288Z', score: 60, status: 'Draft', items: [] },
+              { id: 'INSP-617', type: 'Electrical Tools', location: 'Duqm Industrial Port Construction Site', inspector: 'User 17', date: '2026-06-26T03:05:37.957Z', score: 90, status: 'Draft', items: [] },
+              { id: 'INSP-618', type: 'Vehicle Fleet', location: 'Khazzan Tight Gas Complex Block 61', inspector: 'User 18', date: '2026-05-11T16:21:06.329Z', score: 95, status: 'Completed', items: [] }
           ];
           setHistory(mockHistory);
           localStorage.setItem('hse_inspection_history', JSON.stringify(mockHistory));

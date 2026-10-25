@@ -34,7 +34,7 @@ C4Context
     System(ad6Platform, "AD6.Ai Smart HSE Platform", "Core enterprise platform for incident investigation, PTW, CAPA, risk, and ESG compliance.")
 
     System_Ext(geminiService, "Google Gemini AI Engine", "Powers Safi AI Copilot, 5-Why generation, and audio transcription.")
-    System_Ext(governmentPortals, "Statutory Portals", "Abu Dhabi OSHAD (Al-Adaa) and Oman MoL statutory compliance reporting.")
+    System_Ext(governmentPortals, "Statutory Portals", "Oman Ministry of Labour (MoL) Portal and Oman MoL statutory compliance reporting.")
     System_Ext(iotSensors, "IoT Access & Gas Detectors", "Provides turnstile telemetry, fixed gas sensors, and weather TWL limits.")
 
     Rel(fieldWorker, ad6Platform, "Submits incidents & verifies PPE", "HTTPS / PWA")

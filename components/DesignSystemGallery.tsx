@@ -84,7 +84,7 @@ export default function DesignSystemGallery() {
         <section className="space-y-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
           <div className="space-y-2 border-b border-slate-200 pb-4">
             <h2 className="text-2xl font-bold tracking-tight">2. Typography Scale</h2>
-            <p className="text-slate-500 font-medium text-sm">Dubai & Inter. Optimized for numbers and dense data reading.</p>
+            <p className="text-slate-500 font-medium text-sm">Sohar & Inter. Optimized for numbers and dense data reading.</p>
           </div>
           
           <Card>
@@ -284,13 +284,13 @@ export default function DesignSystemGallery() {
                   <TableBody>
                     <TableRow>
                       <TableCell className="font-bold">AUD-2026-001</TableCell>
-                      <TableCell>Al Ruwais Terminal</TableCell>
+                      <TableCell>Mina Al Fahal Terminal</TableCell>
                       <TableCell><Badge variant="success">Compliant</Badge></TableCell>
                       <TableCell className="text-right font-mono font-bold text-emerald-600">92/100</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="font-bold">AUD-2026-002</TableCell>
-                      <TableCell>Habshan Plant 5</TableCell>
+                      <TableCell>Khazzan Gas Asset Plant 5</TableCell>
                       <TableCell><Badge variant="warning">Requires Action</Badge></TableCell>
                       <TableCell className="text-right font-mono font-bold text-amber-600">74/100</TableCell>
                     </TableRow>

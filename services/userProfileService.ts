@@ -182,7 +182,7 @@ export class UserProfileService {
   // Generator: Realistic enterprise users with 10+ entries across each category
   public static generateRealisticEnterpriseUsers(): UserProfile[] {
     return [
-      // 1. Marcus Chen - Site Supervisor & Area Authority (UAE)
+      // 1. Marcus Chen - Site Supervisor & Area Authority (Oman)
       {
         id: 'u7',
         name: 'Marcus Chen',
@@ -191,11 +191,11 @@ export class UserProfileService {
         department: 'Operations & Area Authority',
         businessUnit: 'Upstream Gas Processing & Power',
         organization: 'Gulf Energy Maritime & Infrastructure',
-        siteLocation: 'Al-Ruwais Polyolefin Asset (UAE)',
-        employeeId: 'GE-AUH-3042',
+        siteLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
+        employeeId: 'GE-MCT-3042',
         jobTitle: 'Senior Site Operations Supervisor & Area Authority',
         managerName: 'Sarah Jones (Site HSE Manager)',
-        phoneExtension: '+971 2 602 3042',
+        phoneExtension: '+968 24 602 3042',
         employmentStatus: 'Active',
         joiningDate: '2021-04-12',
         safetyScore: 1480,
@@ -213,8 +213,8 @@ export class UserProfileService {
           { competency: 'Advanced Incident Containment', level: 'Proficient', verifiedDate: '2025-11-20', verifierName: 'Sarah Jones' }
         ],
         trainingStatus: { totalCourses: 14, completedCourses: 14, overdueCount: 0, complianceRate: 100 },
-        assignedProjects: ['Al-Ruwais Train-3 Expansion', 'Subsea Interconnector Phase II'],
-        assignedSites: ['Al-Ruwais Polyolefin Asset (UAE)', 'Fahud-West Gas Station (Oman)'],
+        assignedProjects: ['Mina Al Fahal Train-3 Expansion', 'Subsea Interconnector Phase II'],
+        assignedSites: ['Mina Al Fahal Refinery & Petrochemical Asset (Oman)', 'Fahud-West Gas Station (Oman)'],
         currentWorkload: { activeTasks: 6, pendingApprovals: 4, openCapas: 2, utilizationRate: 85 },
         approvalResponsibilities: ['PTW Level 2 & 3 Approvals', 'LOTO Mechanical Spade Removal', 'Hot Work Standby Waivers'],
         certifications: [
@@ -267,7 +267,7 @@ export class UserProfileService {
             timePeriod: 'Last 7 Days',
             actionType: 'Reviewed Incident',
             category: 'Incident',
-            entityId: 'INC-2026-UAE-0622',
+            entityId: 'INC-2026-OMN-0622',
             entityTitle: 'Dropped Scaffolding Coupler Near-Miss',
             details: 'Conducted drop containment stand-down and verified tethering pouch rollout.',
             impactResult: 'Stand-down completed with 24 scaffolders.'
@@ -290,7 +290,7 @@ export class UserProfileService {
             actionType: 'Participated in Audit',
             category: 'Audit',
             entityId: 'AUD-2026-004',
-            entityTitle: 'Abu Dhabi OSHAD-SF Mechanism 11.0 Verification',
+            entityTitle: 'Oman MoL MD 286/2008 & PDO PR-1172 Verification',
             details: 'Demonstrated confined space gas logs and hot work permit archives to lead auditor Sarah Jenkins.',
             impactResult: 'Zero major non-conformances awarded.'
           },
@@ -313,7 +313,7 @@ export class UserProfileService {
             category: 'Meeting',
             entityId: 'TBT-2026-0915',
             entityTitle: 'Midday Heat Ban & Hydration Roster Briefing',
-            details: 'Briefed 45 field technicians on UAE Ministry of Human Resources summer break rules.',
+            details: 'Briefed 45 field technicians on Oman Ministry of Labour (MoL) summer break rules.',
             impactResult: '100% attendance recorded.'
           },
           {
@@ -349,7 +349,7 @@ export class UserProfileService {
           { id: 'PND-MC-06', title: 'Attend Incident Investigation Board: INC-2026-OMN-1014', sourceType: 'Incident', sourceId: 'INC-2026-OMN-1014', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Under Investigation', requiredAction: 'Provide supervisor testimony regarding sampling cabinet maintenance', location: 'Group Virtual Teams' },
           { id: 'PND-MC-07', title: 'Complete Quarterly SCBA Equipment Inspection', sourceType: 'Inspection', sourceId: 'INSP-SCBA-Q4', priority: 'P3 - Medium', dueDate: '2026-10-12', daysRemaining: 5, isOverdue: false, status: 'Pending', requiredAction: 'Inspect 12 positive-pressure breathing apparatus sets in Muster Bay', location: 'Substation SS-02' },
           { id: 'PND-MC-08', title: 'Review SIMOPS Matrix: Dredging vs Jetty Maintenance', sourceType: 'Permit', sourceId: 'SIMOPS-2026-09', priority: 'P2 - High', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'Pending Approval', requiredAction: 'Verify 50m exclusion zone between suction dredger and fuel bunkering', location: 'Ras Al-Khair Berth 2' },
-          { id: 'PND-MC-09', title: 'Renew AGT Recertification Booking Confirmation', sourceType: 'Training', sourceId: 'TRN-AGT-2026', priority: 'P3 - Medium', dueDate: '2026-10-15', daysRemaining: 8, isOverdue: false, status: 'Upcoming', requiredAction: 'Submit logbook of 30 sour gas tests to ADNOC academy', location: 'ADNOC HQ Portal' },
+          { id: 'PND-MC-09', title: 'Renew AGT Recertification Booking Confirmation', sourceType: 'Training', sourceId: 'TRN-AGT-2026', priority: 'P3 - Medium', dueDate: '2026-10-15', daysRemaining: 8, isOverdue: false, status: 'Upcoming', requiredAction: 'Submit logbook of 30 sour gas tests to PDO academy', location: 'PDO HQ Portal' },
           { id: 'PND-MC-10', title: 'Overdue Contractor Insurance Vetting: Petrofac Crane Crew', sourceType: 'Inspection', sourceId: 'VET-PETROFAC-01', priority: 'P1 - Critical', dueDate: '2026-10-06', daysRemaining: -1, isOverdue: true, status: 'Overdue', requiredAction: 'Confirm third-party liability certificate renewal', location: 'Contractor Compliance Hub' }
         ],
         // Minimum 10 Completed Actions
@@ -363,24 +363,24 @@ export class UserProfileService {
           { id: 'CMP-MC-07', title: 'Emergency Eye Wash Station Flow Rate Test', sourceType: 'Inspection', sourceId: 'INSP-2026-009', completedDate: '2026-09-20T13:00:00Z', outcome: 'Discharge flow 78 L/min compliant with ANSI Z358.1.', verifiedBy: 'Fatima Al-Kaabi', evidenceNotes: 'Water temperature calibrated at 24°C.', location: 'Chemical Storage Area' },
           { id: 'CMP-MC-08', title: 'Confined Space Column C-102 De-Isolation', sourceType: 'Permit', sourceId: 'PTW-2026-8790', completedDate: '2026-09-18T16:00:00Z', outcome: 'Internal inspection cleared; column manways bolted.', verifiedBy: 'Marcus Chen', evidenceNotes: 'Gas test confirmed 20.9% O2, 0 ppm CO.', location: 'Column C-102' },
           { id: 'CMP-MC-09', title: 'Toolbox Briefing: Lifting Over Live Hydrocarbon Piping', sourceType: 'Meeting', sourceId: 'TBT-2026-0912', completedDate: '2026-09-12T07:00:00Z', outcome: 'Briefed 18 crane crew operators on crane load limiters.', verifiedBy: 'Marcus Chen', evidenceNotes: 'Signed attendance register uploaded.', location: 'Berth 1 Yard' },
-          { id: 'CMP-MC-10', title: 'Annual Fire Warden Practical Drill', sourceType: 'Training', sourceId: 'TRN-2026-FW', completedDate: '2026-08-25T11:00:00Z', outcome: 'Cleared building evacuation drill in 2 mins 45 secs.', verifiedBy: 'Civil Defence Abu Dhabi', evidenceNotes: 'Drill evaluation score 96/100.', location: 'Operations Admin Building' }
+          { id: 'CMP-MC-10', title: 'Annual Fire Warden Practical Drill', sourceType: 'Training', sourceId: 'TRN-2026-FW', completedDate: '2026-08-25T11:00:00Z', outcome: 'Cleared building evacuation drill in 2 mins 45 secs.', verifiedBy: 'Civil Defence and Ambulance Authority (CDAA Oman)', evidenceNotes: 'Drill evaluation score 96/100.', location: 'Operations Admin Building' }
         ],
         // Minimum 10 Notifications
         notifications: [
           { id: 'NTF-MC-01', timestamp: '2026-10-07T06:45:00Z', title: 'Permit Sign-Off Required', message: 'Pre-ignition gas test completed (0% LEL, 0 ppm H2S). Awaiting signature for PTW-2026-8848.', severity: 'High', category: 'PTW', sourceId: 'PTW-2026-8848', read: false, senderName: 'Salim Al-Harthy' },
           { id: 'NTF-MC-02', timestamp: '2026-10-06T08:15:00Z', title: '🚨 Stop Work Authority Triggered', message: 'Rahul Gupta halted lifting operations at Fahud-West due to missing scaffold toe-board.', severity: 'Critical', category: 'SWA', sourceId: 'SWA-2026-104', read: true, senderName: 'Rahul Gupta' },
           { id: 'NTF-MC-03', timestamp: '2026-10-05T14:20:00Z', title: 'CAPA Action Assigned to Team', message: 'Fatima Al-Zaabi assigned whip-check retrofit action CAPA-2026-01 to your department.', severity: 'High', category: 'CAPA', sourceId: 'CAPA-2026-01', read: true, senderName: 'Fatima Al-Zaabi' },
-          { id: 'NTF-MC-04', timestamp: '2026-10-04T11:30:00Z', title: 'Incident Report Notification', message: 'New dropped object near-miss logged (INC-2026-UAE-0622). Area authority review required.', severity: 'Medium', category: 'Incident', sourceId: 'INC-2026-UAE-0622', read: true, senderName: 'Tariq Al-Hashemi' },
+          { id: 'NTF-MC-04', timestamp: '2026-10-04T11:30:00Z', title: 'Incident Report Notification', message: 'New dropped object near-miss logged (INC-2026-OMN-0622). Area authority review required.', severity: 'Medium', category: 'Incident', sourceId: 'INC-2026-OMN-0622', read: true, senderName: 'Tariq Al-Hashemi' },
           { id: 'NTF-MC-05', timestamp: '2026-10-03T16:00:00Z', title: 'SIMOPS Conflict Cleared', message: 'Dredging vessel departed Berth 2; hot work permit restrictions lifted on Jetty Crane.', severity: 'Low', category: 'PTW', sourceId: 'SIMOPS-2026-08', read: true, senderName: 'Eng. Mansoor Al-Ketbi' },
           { id: 'NTF-MC-06', timestamp: '2026-10-02T09:10:00Z', title: 'Audit Action Verification Needed', message: 'Action CA-301 ready for supervisor closure sign-off following ISO 45001 audit.', severity: 'Medium', category: 'Audit', sourceId: 'AUD-2026-003', read: true, senderName: 'Sarah Jenkins' },
           { id: 'NTF-MC-07', timestamp: '2026-09-30T13:40:00Z', title: 'Heat Stress Advisory Level: Amber', message: 'WBGT index reached 31.8°C at 13:00. Implement mandatory 15-min rest cycles in shaded areas.', severity: 'Medium', category: 'Health', sourceId: 'ENV-HEAT-30', read: true, senderName: 'Dr. Mariam Al-Balushi' },
           { id: 'NTF-MC-08', timestamp: '2026-09-28T17:00:00Z', title: 'Field Inspection Overdue Warning', message: 'Subsea Interconnector Cable Trench weekly shoring check is due tomorrow morning.', severity: 'Medium', category: 'Inspection', sourceId: 'INSP-2026-010', read: true, senderName: 'System Scheduler' },
           { id: 'NTF-MC-09', timestamp: '2026-09-25T10:15:00Z', title: 'Gas Detector Bump Test Notice', message: 'Multi-gas monitor serial BW-GAS-9912 calibration valid through next 14 days.', severity: 'Low', category: 'Equipment', sourceId: 'EQ-BW-9912', read: true, senderName: 'Asset Integrity Bot' },
-          { id: 'NTF-MC-10', timestamp: '2026-09-20T08:00:00Z', title: 'Policy Update: OSHAD CoP 21.0 Revision', message: 'Updated Permit to Work digital signature guidelines published to document center.', severity: 'Low', category: 'Policy', sourceId: 'DMS-OSHAD-21', read: true, senderName: 'Dr. Layla Hassan' }
+          { id: 'NTF-MC-10', timestamp: '2026-09-20T08:00:00Z', title: 'Policy Update: PDO SP-1143 Revision', message: 'Updated Permit to Work digital signature guidelines published to document center.', severity: 'Low', category: 'Policy', sourceId: 'DMS-Oman MoL MD 286/2008-21', read: true, senderName: 'Dr. Layla Hassan' }
         ]
       },
 
-      // 2. Fatima Al-Zaabi / Fatima Al-Kaabi - Site HSE Officer & Auditor (UAE)
+      // 2. Fatima Al-Zaabi / Fatima Al-Kaabi - Site HSE Officer & Auditor (Oman)
       {
         id: 'u5',
         name: 'Fatima Al-Zaabi',
@@ -389,36 +389,36 @@ export class UserProfileService {
         department: 'Site HSE Assurance & Compliance',
         businessUnit: 'Downstream Refining & Chemicals',
         organization: 'Gulf Energy Maritime & Infrastructure',
-        siteLocation: 'Al-Ruwais Polyolefin Asset (UAE)',
-        employeeId: 'GE-AUH-4412',
+        siteLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
+        employeeId: 'GE-MCT-4412',
         jobTitle: 'Lead Site HSE Assurance Officer & Lead Auditor',
         managerName: 'Sarah Jones (Site HSE Manager)',
-        phoneExtension: '+971 2 602 4412',
+        phoneExtension: '+968 24 602 4412',
         employmentStatus: 'Active',
         joiningDate: '2022-01-15',
         safetyScore: 1620,
         recentIncidents: ['Investigated dropped object near-miss R-201', 'Audited confined space entry gas records'],
         observations: [],
         responsibilities: [
-          'Conducting ISO 45001 & OSHAD-SF Mechanism 11.0 compliance audits',
+          'Conducting ISO 45001 & Oman MoL MD 286/2008 & PDO PR-1172 compliance audits',
           'Leading 5-Why root cause investigations for high-potential incidents',
           'Overseeing CAPA closure evidence verification and statutory reporting'
         ],
-        skills: ['ISO 45001 Lead Auditor', 'Root Cause Investigation (5-Why)', 'OSHAD-SF Compliance', 'Chemical Hazard Assessment'],
+        skills: ['ISO 45001 Lead Auditor', 'Root Cause Investigation (5-Why)', 'Oman MoL MD 286/2008 & PDO Specifications Compliance', 'Chemical Hazard Assessment'],
         competencies: [
           { competency: 'IRCA Certified Lead Auditor ISO 45001', level: 'Expert', verifiedDate: '2026-03-01', verifierName: 'IRCA Board' },
           { competency: 'TapRooT Root Cause Team Leader', level: 'Expert', verifiedDate: '2025-10-15', verifierName: 'Dr. Vikram Malhotra' },
-          { competency: 'OSHAD General Practitioner', level: 'Expert', verifiedDate: '2025-08-20', verifierName: 'Abu Dhabi OSHAD' }
+          { competency: 'Oman MoL MD 286/2008 General Practitioner', level: 'Expert', verifiedDate: '2025-08-20', verifierName: 'Muscat Oman MoL MD 286/2008' }
         ],
         trainingStatus: { totalCourses: 16, completedCourses: 16, overdueCount: 0, complianceRate: 100 },
         assignedProjects: ['Polyolefin Plant Turnaround 2026', 'Zero SIF Safety Vanguard'],
-        assignedSites: ['Al-Ruwais Polyolefin Asset (UAE)'],
+        assignedSites: ['Mina Al Fahal Refinery & Petrochemical Asset (Oman)'],
         currentWorkload: { activeTasks: 5, pendingApprovals: 3, openCapas: 4, utilizationRate: 88 },
         approvalResponsibilities: ['Incident Investigation Sign-off', 'CAPA Verification & Closure', 'High-Risk JSA Endorsement'],
         certifications: [
           { name: 'ISO 45001:2018 Lead Auditor (IRCA Certified)', status: 'Valid', expiryDate: '2028-02-28' },
           { name: 'NEBOSH International Diploma in OHS', status: 'Valid', expiryDate: '2028-06-30' },
-          { name: 'OSHAD Certified Practitioner Grade A', status: 'Valid', expiryDate: '2027-09-30' }
+          { name: 'Oman MoL MD 286/2008 Certified Practitioner Grade A', status: 'Valid', expiryDate: '2027-09-30' }
         ],
         achievements: [
           { id: 'ach-fz-1', title: 'Inspection Ace', description: 'Logged 250+ digital field observations in mobile PWA offline mode', dateEarned: '2026-07-14', icon: 'ClipboardCheck', tier: 'Gold' },
@@ -453,7 +453,7 @@ export class UserProfileService {
             timePeriod: 'Last 7 Days',
             actionType: 'Investigated Incident',
             category: 'Incident',
-            entityId: 'INC-2026-UAE-0622',
+            entityId: 'INC-2026-OMN-0622',
             entityTitle: 'Dropped Coupler at Polyethylene Tower R-201',
             details: 'Completed 5-Why root cause tree; identified missing parts pouch during manual transfer.',
             impactResult: 'RCA submitted to Group HSE.'
@@ -475,7 +475,7 @@ export class UserProfileService {
             timePeriod: 'Last 7 Days',
             actionType: 'Created Risk Assessment',
             category: 'Risk Assessment',
-            entityId: 'HAZ-2026-UAE-102',
+            entityId: 'HAZ-2026-OMN-102',
             entityTitle: 'Confined Space Nitrogen Purging Nitrogen Line C-102',
             details: 'Calculated asphyxiation plume dispersion distance and established 10m exclusion radius.',
             impactResult: 'High-risk controls mapped in Bowtie visualizer.'
@@ -487,7 +487,7 @@ export class UserProfileService {
             actionType: 'Conducted Audit',
             category: 'Audit',
             entityId: 'AUD-2026-004',
-            entityTitle: 'Abu Dhabi OSHAD-SF Mechanism 11.0 Verification Audit',
+            entityTitle: 'Oman MoL MD 286/2008 & PDO PR-1172 Verification Audit',
             details: 'Accompanied external auditor Sarah Jenkins across Column entry documentation; achieved 99.1%.',
             impactResult: 'Full compliance verified.'
           },
@@ -530,7 +530,7 @@ export class UserProfileService {
             timePeriod: 'Last 90 Days',
             actionType: 'Closed Investigation',
             category: 'Incident',
-            entityId: 'INC-2026-UAE-0588',
+            entityId: 'INC-2026-OMN-0588',
             entityTitle: 'Nitrogen Purge Hose Minor Leak',
             details: 'Confirmed all crimped fittings replaced with Swagelok dual-ferrule connectors.',
             impactResult: 'Incident investigation signed and archived.'
@@ -538,10 +538,10 @@ export class UserProfileService {
         ],
         pendingActions: [
           { id: 'PND-FZ-01', title: 'Verify CAPA-2026-01: Stainless Whip-Check Installation', sourceType: 'CAPA', sourceId: 'CAPA-2026-01', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'In-Progress', requiredAction: 'Inspect physical cable restraints on Fahud high-pressure manifold', location: 'Fahud-West Gas Station' },
-          { id: 'PND-FZ-02', title: 'Finalize Incident Investigation: INC-2026-UAE-0622 Dropped Coupler', sourceType: 'Incident', sourceId: 'INC-2026-UAE-0622', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Under Investigation', requiredAction: 'Complete Bowtie diagram and upload witness statements', location: 'Reactor Structure R-201' },
+          { id: 'PND-FZ-02', title: 'Finalize Incident Investigation: INC-2026-OMN-0622 Dropped Coupler', sourceType: 'Incident', sourceId: 'INC-2026-OMN-0622', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Under Investigation', requiredAction: 'Complete Bowtie diagram and upload witness statements', location: 'Reactor Structure R-201' },
           { id: 'PND-FZ-03', title: 'Conduct Field Inspection: Hazardous Chemical Storage Bunds', sourceType: 'Inspection', sourceId: 'INSP-2026-006', priority: 'P2 - High', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'Scheduled', requiredAction: 'Check sump pumps and level alarms in Drum Yard B', location: 'Warehouse Bay 2' },
           { id: 'PND-FZ-04', title: 'Review Risk Assessment: Tower Crane Dismantling RAMS', sourceType: 'Risk Assessment', sourceId: 'RAMS-2026-104', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'In Review', requiredAction: 'Verify outrigger loading calculations on asphalt surface', location: 'Civil Construction Zone' },
-          { id: 'PND-FZ-05', title: 'Submit OSHAD Form G Statutory Incident Notification', sourceType: 'Incident', sourceId: 'INC-2026-UAE-0622', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'Action Required', requiredAction: 'Upload official incident report to Abu Dhabi OSHAD portal', location: 'OSHAD Portal' },
+          { id: 'PND-FZ-05', title: 'Submit Oman MoL Form MD 286 Statutory Incident Notification', sourceType: 'Incident', sourceId: 'INC-2026-OMN-0622', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'Action Required', requiredAction: 'Upload official incident report to Muscat Oman MoL MD 286/2008 portal', location: 'Oman MoL MD 286/2008 Portal' },
           { id: 'PND-FZ-06', title: 'Audit Closed CAPA Records for Q3 Internal Review', sourceType: 'Audit', sourceId: 'AUD-Q3-CAPA', priority: 'P3 - Medium', dueDate: '2026-10-15', daysRemaining: 8, isOverdue: false, status: 'Pending', requiredAction: 'Sample 20 closed actions for proof of photographic verification', location: 'Group HSE HQ' },
           { id: 'PND-FZ-07', title: 'Contractor Safety Prequalification: STS Oman', sourceType: 'Inspection', sourceId: 'VET-STS-02', priority: 'P2 - High', dueDate: '2026-10-11', daysRemaining: 4, isOverdue: false, status: 'In Review', requiredAction: 'Verify TRIR benchmark < 0.25 over preceding 3-year period', location: 'Contractor Portal' },
           { id: 'PND-FZ-08', title: 'Weekly Noise Survey in Polyethylene Extrusion Bay', sourceType: 'Inspection', sourceId: 'INSP-NOISE-42', priority: 'P3 - Medium', dueDate: '2026-10-12', daysRemaining: 5, isOverdue: false, status: 'Scheduled', requiredAction: 'Log 8-hour TWA decibel levels with calibrated dosimeter', location: 'Extrusion Building' },
@@ -549,32 +549,32 @@ export class UserProfileService {
           { id: 'PND-FZ-10', title: 'Verify Fire Water Ring Main Pressure Log', sourceType: 'Inspection', sourceId: 'INSP-FIRE-09', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Action Required', requiredAction: 'Confirm jockey pump maintains 11.5 bar standby pressure', location: 'Fire Pump Station' }
         ],
         completedActions: [
-          { id: 'CMP-FZ-01', title: 'Audit AUD-2026-004 Closed with 99.1% Compliance', sourceType: 'Audit', sourceId: 'AUD-2026-004', completedDate: '2026-09-29T16:00:00Z', outcome: 'OSHAD Mechanism 11.0 score certified.', verifiedBy: 'Sarah Jenkins', evidenceNotes: 'External audit certificate signed.', location: 'Al-Ruwais Polyolefin Asset' },
+          { id: 'CMP-FZ-01', title: 'Audit AUD-2026-004 Closed with 99.1% Compliance', sourceType: 'Audit', sourceId: 'AUD-2026-004', completedDate: '2026-09-29T16:00:00Z', outcome: 'Oman MoL MD 286/2008 & PDO PR-1172 score certified.', verifiedBy: 'Sarah Jenkins', evidenceNotes: 'External audit certificate signed.', location: 'Mina Al Fahal Refinery Asset' },
           { id: 'CMP-FZ-02', title: 'Closed CAPA-2026-02: Scaffolding Toe-Board Standard', sourceType: 'CAPA', sourceId: 'CAPA-2026-02', completedDate: '2026-10-06T16:30:00Z', outcome: 'Toolbox briefing delivered to all scaffolding teams.', verifiedBy: 'Marcus Chen', evidenceNotes: 'Signed attendance log attached.', location: 'Manifold 6 Scaffolding' },
           { id: 'CMP-FZ-03', title: 'Verified Gas Testing Log: Column C-102 Entry', sourceType: 'Permit', sourceId: 'PTW-2026-8790', completedDate: '2026-09-28T09:00:00Z', outcome: 'Zero toxic gas detected across 3 elevations.', verifiedBy: 'Fatima Al-Zaabi', evidenceNotes: 'Logbook stamped and countersigned.', location: 'Column C-102' },
           { id: 'CMP-FZ-04', title: 'Emergency Drill Evaluation: Acid Spill Simulation', sourceType: 'Training', sourceId: 'DRL-2026-ACID', completedDate: '2026-09-22T14:00:00Z', outcome: 'Response team contained mock spill in 3 mins 10 secs.', verifiedBy: 'Dr. Mariam Al-Balushi', evidenceNotes: 'Full debriefing report archived.', location: 'Chemical Storage Area' },
           { id: 'CMP-FZ-05', title: 'Third-Party Lifting Gear Certificate Inspection', sourceType: 'Inspection', sourceId: 'INSP-2026-003', completedDate: '2026-09-18T11:00:00Z', outcome: '100% of rigging hardware verified compliant with LEEA standards.', verifiedBy: 'Zaid Al-Otaibi', evidenceNotes: 'Test certificates validated in database.', location: 'Ras Al-Khair Facility' },
-          { id: 'CMP-FZ-06', title: 'Closed Investigation INC-2026-UAE-0588 Nitrogen Hose Leak', sourceType: 'Incident', sourceId: 'INC-2026-UAE-0588', completedDate: '2026-09-15T10:00:00Z', outcome: 'Replaced all flexible rubber hoses with braided stainless steel.', verifiedBy: 'Sarah Jones', evidenceNotes: 'Pressure test certified to 1.5x working pressure.', location: 'Nitrogen Skid' },
-          { id: 'CMP-FZ-07', title: 'Quarterly Environmental Noise Monitoring Report', sourceType: 'Inspection', sourceId: 'ENV-NOISE-Q3', completedDate: '2026-09-10T15:00:00Z', outcome: 'All plant boundary noise levels < 65 dBA night limit.', verifiedBy: 'Khalid Al-Dhaheri', evidenceNotes: 'Submitted to Environment Agency Abu Dhabi.', location: 'Boundary Fence' },
+          { id: 'CMP-FZ-06', title: 'Closed Investigation INC-2026-OMN-0588 Nitrogen Hose Leak', sourceType: 'Incident', sourceId: 'INC-2026-OMN-0588', completedDate: '2026-09-15T10:00:00Z', outcome: 'Replaced all flexible rubber hoses with braided stainless steel.', verifiedBy: 'Sarah Jones', evidenceNotes: 'Pressure test certified to 1.5x working pressure.', location: 'Nitrogen Skid' },
+          { id: 'CMP-FZ-07', title: 'Quarterly Environmental Noise Monitoring Report', sourceType: 'Inspection', sourceId: 'ENV-NOISE-Q3', completedDate: '2026-09-10T15:00:00Z', outcome: 'All plant boundary noise levels < 65 dBA night limit.', verifiedBy: 'Khalid Al-Dhaheri', evidenceNotes: 'Submitted to Environment Authority (Oman EA RD 114/2001).', location: 'Boundary Fence' },
           { id: 'CMP-FZ-08', title: 'Chemical Compatibility Storage Segregation Verification', sourceType: 'Inspection', sourceId: 'INSP-2026-006', completedDate: '2026-09-04T13:30:00Z', outcome: 'Organic peroxides separated by 10m from oxidizers.', verifiedBy: 'Fatima Al-Zaabi', evidenceNotes: 'Hazardous storage map updated.', location: 'Warehouse Bay 2' },
           { id: 'CMP-FZ-09', title: 'Respiratory Protective Equipment Fit Testing Session', sourceType: 'Training', sourceId: 'TRN-RPE-2026', completedDate: '2026-08-29T16:00:00Z', outcome: 'Qualitative Bitrex fit tests conducted for 30 technicians.', verifiedBy: 'Fatima Al-Zaabi', evidenceNotes: 'Fit test records logged to employee profiles.', location: 'HSE Training Room' },
-          { id: 'CMP-FZ-10', title: 'Annual Review of Hazardous Waste Consignment Notes', sourceType: 'Inspection', sourceId: 'ENV-WASTE-2026', completedDate: '2026-08-20T12:00:00Z', outcome: 'Zero manifest discrepancies with Tadweer approved carriers.', verifiedBy: 'Khalid Al-Dhaheri', evidenceNotes: 'Tadweer manifest receipts verified.', location: 'Waste Transfer Station' }
+          { id: 'CMP-FZ-10', title: 'Annual Review of Hazardous Waste Consignment Notes', sourceType: 'Inspection', sourceId: 'ENV-WASTE-2026', completedDate: '2026-08-20T12:00:00Z', outcome: 'Zero manifest discrepancies with Beah (Oman) approved carriers.', verifiedBy: 'Khalid Al-Dhaheri', evidenceNotes: 'Beah (Oman) manifest receipts verified.', location: 'Waste Transfer Station' }
         ],
         notifications: [
           { id: 'NTF-FZ-01', timestamp: '2026-10-07T05:00:00Z', title: 'CAPA Action Due Tomorrow', message: 'CAPA-2026-01: Stainless whip-check installation deadline expires in 24 hours.', severity: 'High', category: 'CAPA', sourceId: 'CAPA-2026-01', read: false, senderName: 'System Scheduler' },
           { id: 'NTF-FZ-02', timestamp: '2026-10-06T14:30:00Z', title: 'Inspection Score Logged: 98%', message: 'Electrical & LOTO isolation inspection completed with zero open non-conformances.', severity: 'Low', category: 'Inspection', sourceId: 'INSP-2026-002', read: true, senderName: 'PWA Mobile App' },
-          { id: 'NTF-FZ-03', timestamp: '2026-10-05T10:15:00Z', title: 'Root Cause Tree Ready for Review', message: '5-Why analysis for incident INC-2026-UAE-0622 has been completed and awaits sign-off.', severity: 'Medium', category: 'Incident', sourceId: 'INC-2026-UAE-0622', read: true, senderName: 'RCA Tool' },
+          { id: 'NTF-FZ-03', timestamp: '2026-10-05T10:15:00Z', title: 'Root Cause Tree Ready for Review', message: '5-Why analysis for incident INC-2026-OMN-0622 has been completed and awaits sign-off.', severity: 'Medium', category: 'Incident', sourceId: 'INC-2026-OMN-0622', read: true, senderName: 'RCA Tool' },
           { id: 'NTF-FZ-04', timestamp: '2026-10-04T12:00:00Z', title: 'Stop Work Authority Notice Broadcast', message: 'SWA triggered by Rahul Gupta on Manifold 6 scaffolding. All high-risk permits paused.', severity: 'Critical', category: 'SWA', sourceId: 'SWA-2026-104', read: true, senderName: 'Rahul Gupta' },
           { id: 'NTF-FZ-05', timestamp: '2026-10-03T16:20:00Z', title: 'Chemical Inventory Alert: Flammables', message: 'Warehouse Bay 2 solvent storage reached 85% licensed maximum threshold.', severity: 'Medium', category: 'Chemicals', sourceId: 'CHM-WH-02', read: true, senderName: 'IoT Sensor Telemetry' },
           { id: 'NTF-FZ-06', timestamp: '2026-10-01T09:00:00Z', title: 'External Audit Report Published', message: 'ISO 45001 Surveillance Audit findings published with zero Major non-conformances.', severity: 'Low', category: 'Audit', sourceId: 'AUD-2026-003', read: true, senderName: 'Dr. Layla Hassan' },
           { id: 'NTF-FZ-07', timestamp: '2026-09-28T14:00:00Z', title: 'Midday Break Heat Advisory', message: 'WBGT thermal index recorded at 32.1°C; outdoor activities suspended until 15:00.', severity: 'High', category: 'Health', sourceId: 'ENV-HEAT-28', read: true, senderName: 'Dr. Mariam Al-Balushi' },
           { id: 'NTF-FZ-08', timestamp: '2026-09-25T11:00:00Z', title: 'Contractor Training Expiring (3 Workers)', message: 'Petrofac scaffolding crew working at height certifications expire in 7 days.', severity: 'Medium', category: 'Training', sourceId: 'TRN-EXP-PETRO', read: true, senderName: 'Training Engine' },
           { id: 'NTF-FZ-09', timestamp: '2026-09-20T08:30:00Z', title: 'New Safety Observation Assigned', message: 'Uncertified electrical cord reported in Welding Bay #3. Immediate review requested.', severity: 'Low', category: 'Observation', sourceId: 'OBS-2026-441', read: true, senderName: 'Marcus Chen' },
-          { id: 'NTF-FZ-10', timestamp: '2026-09-15T15:45:00Z', title: 'Statutory Report Accepted by OSHAD', message: 'Abu Dhabi OSHAD portal confirmed receipt of Q3 environmental emissions register.', severity: 'Low', category: 'Compliance', sourceId: 'REG-OSHAD-Q3', read: true, senderName: 'Abu Dhabi OSHAD' }
+          { id: 'NTF-FZ-10', timestamp: '2026-09-15T15:45:00Z', title: 'Statutory Report Accepted by Oman MoL MD 286/2008', message: 'Muscat Oman MoL MD 286/2008 portal confirmed receipt of Q3 environmental emissions register.', severity: 'Low', category: 'Compliance', sourceId: 'REG-Oman MoL MD 286/2008-Q3', read: true, senderName: 'Muscat Oman MoL MD 286/2008' }
         ]
       },
 
-      // 3. Rahul Gupta - Lead Mechanical Technician & Field Worker (UAE / Oman)
+      // 3. Rahul Gupta - Lead Mechanical Technician & Field Worker (Oman / Oman)
       {
         id: 'u6',
         name: 'Rahul Gupta',
@@ -583,11 +583,11 @@ export class UserProfileService {
         department: 'Mechanical Maintenance & Field Execution',
         businessUnit: 'Maintenance, Turnaround & Overhaul',
         organization: 'Gulf Energy Maritime & Infrastructure',
-        siteLocation: 'Al-Ruwais Polyolefin Asset (UAE)',
-        employeeId: 'GE-AUH-8821',
+        siteLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
+        employeeId: 'GE-MCT-8821',
         jobTitle: 'Lead Mechanical Technician & Certified Permit Receiver',
         managerName: 'Marcus Chen (Site Supervisor)',
-        phoneExtension: '+971 2 602 8821',
+        phoneExtension: '+968 2 602 8821',
         employmentStatus: 'Active',
         joiningDate: '2022-08-01',
         safetyScore: 920,
@@ -605,8 +605,8 @@ export class UserProfileService {
           { competency: 'H2S Breathing Apparatus Escape', level: 'Proficient', verifiedDate: '2025-09-15', verifierName: 'Fatima Al-Zaabi' }
         ],
         trainingStatus: { totalCourses: 12, completedCourses: 12, overdueCount: 0, complianceRate: 100 },
-        assignedProjects: ['Al-Ruwais Train-3 Expansion'],
-        assignedSites: ['Al-Ruwais Polyolefin Asset (UAE)', 'Fahud-West Gas Station (Oman)'],
+        assignedProjects: ['Mina Al Fahal Train-3 Expansion'],
+        assignedSites: ['Mina Al Fahal Refinery & Petrochemical Asset (Oman)', 'Fahud-West Gas Station (Oman)'],
         currentWorkload: { activeTasks: 4, pendingApprovals: 1, openCapas: 1, utilizationRate: 80 },
         approvalResponsibilities: ['Pre-work JSA sign-off', 'Toolbox Talk Acknowledgement'],
         certifications: [
@@ -713,7 +713,7 @@ export class UserProfileService {
             timePeriod: 'Last 90 Days',
             actionType: 'Reported Near Miss',
             category: 'Incident',
-            entityId: 'INC-2026-UAE-0512',
+            entityId: 'INC-2026-OMN-0512',
             entityTitle: 'Overhead Crane Pendant Button Sticking',
             details: 'Reported hoist down button sticking on shop crane; immediate lockout applied.',
             impactResult: 'Pendant switch replaced.'
@@ -763,7 +763,7 @@ export class UserProfileService {
           { id: 'NTF-RG-06', timestamp: '2026-09-28T09:30:00Z', title: 'Training Certificate Issued: Rigging Level 2', message: 'Your LEEA Rigging certificate has been uploaded to your employee passport.', severity: 'Low', category: 'Training', sourceId: 'TRN-2026-044', read: true, senderName: 'Training Engine' },
           { id: 'NTF-RG-07', timestamp: '2026-09-24T16:00:00Z', title: 'Corrective Action Closed by Safety Officer', message: 'Fatima Al-Zaabi verified and closed your hose restraint installation task.', severity: 'Low', category: 'CAPA', sourceId: 'CAPA-2026-11', read: true, senderName: 'Fatima Al-Zaabi' },
           { id: 'NTF-RG-08', timestamp: '2026-09-20T11:00:00Z', title: 'Safety Boots Voucher Available', message: 'Annual steel-toe electrical-hazard boots allowance credited to employee account.', severity: 'Low', category: 'PPE', sourceId: 'PPE-BOOTS-2026', read: true, senderName: 'HR Logistics' },
-          { id: 'NTF-RG-09', timestamp: '2026-09-15T08:00:00Z', title: 'Reminder: Medical Audiometry Screening', message: 'Annual occupational hearing test scheduled at Ruwais Medical Centre tomorrow 10:00.', severity: 'Medium', category: 'Health', sourceId: 'MED-AUD-2026', read: true, senderName: 'Medical Centre' },
+          { id: 'NTF-RG-09', timestamp: '2026-09-15T08:00:00Z', title: 'Reminder: Medical Audiometry Screening', message: 'Annual occupational hearing test scheduled at Mina Al Fahal Medical Centre tomorrow 10:00.', severity: 'Medium', category: 'Health', sourceId: 'MED-AUD-2026', read: true, senderName: 'Medical Centre' },
           { id: 'NTF-RG-10', timestamp: '2026-09-10T14:00:00Z', title: 'New SIMOPS Restriction Notice', message: 'Berth 1 crane lifting prohibited while fuel barge is moored at jetty.', severity: 'Medium', category: 'PTW', sourceId: 'SIMOPS-BERTH-1', read: true, senderName: 'Marine Control' }
         ]
       },
@@ -777,18 +777,18 @@ export class UserProfileService {
         department: 'Group HSE & Executive Governance HQ',
         businessUnit: 'Executive Office & Enterprise Governance',
         organization: 'Gulf Energy Maritime & Infrastructure',
-        siteLocation: 'Gulf Energy Headquarters (Abu Dhabi)',
+        siteLocation: 'Gulf Energy Headquarters (Muscat)',
         employeeId: 'GE-HQ-1002',
         jobTitle: 'Head of Group HSE, ESG & Operational Risk Governance',
         managerName: 'James Sterling (Chief Executive Officer)',
-        phoneExtension: '+971 2 600 1002',
+        phoneExtension: '+968 2 600 1002',
         employmentStatus: 'Active',
         joiningDate: '2019-06-01',
         safetyScore: 2450,
         recentIncidents: ['Presented Q3 TRIR & LTIFR to Board Audit Committee', 'Chaired Group SIF Review'],
         observations: [],
         responsibilities: [
-          'Enterprise governance across UAE, Oman, and KSA industrial concessions',
+          'Enterprise governance across Sultanate of Oman, and KSA industrial concessions',
           'Executive reporting for Board of Directors and statutory regulatory bodies',
           'Strategic AI Safety & Predictive SIF reduction platform oversight'
         ],
@@ -800,7 +800,7 @@ export class UserProfileService {
         ],
         trainingStatus: { totalCourses: 20, completedCourses: 20, overdueCount: 0, complianceRate: 100 },
         assignedProjects: ['Group AI Safety Platform Transformation', 'Scope 1 & 2 Decarbonization Roadmap'],
-        assignedSites: ['All Regional Concessions (UAE, Oman, KSA)'],
+        assignedSites: ['All Regional Concessions (Sultanate of Oman)'],
         currentWorkload: { activeTasks: 7, pendingApprovals: 5, openCapas: 3, utilizationRate: 92 },
         approvalResponsibilities: ['Group Safety Policies', 'Major Incident Final Sign-off', 'High-Risk Capital Expenditure'],
         certifications: [
@@ -864,8 +864,8 @@ export class UserProfileService {
             actionType: 'Endorsed Audit Protocol',
             category: 'Audit',
             entityId: 'AUD-2026-004',
-            entityTitle: 'Abu Dhabi OSHAD-SF Mechanism 11.0 Verification',
-            details: 'Signed off on internal self-audit scoring (99.1%) submitted to Abu Dhabi authorities.',
+            entityTitle: 'Oman MoL MD 286/2008 & PDO PR-1172 Verification',
+            details: 'Signed off on internal self-audit scoring (99.1%) submitted to Muscat authorities.',
             impactResult: 'Verified compliant.'
           },
           {
@@ -897,7 +897,7 @@ export class UserProfileService {
             actionType: 'Conducted Site Walkabout',
             category: 'Inspection',
             entityId: 'WALK-2026-RUW',
-            entityTitle: 'Executive Leadership Safety Walkabout - Al-Ruwais',
+            entityTitle: 'Executive Leadership Safety Walkabout - Mina Al Fahal',
             details: 'Engaged with 25 maintenance crew workers regarding heat stress hydration and SWA authority.',
             impactResult: 'Four employee suggestions implemented.'
           },
@@ -925,14 +925,14 @@ export class UserProfileService {
           }
         ],
         pendingActions: [
-          { id: 'PND-LH-01', title: 'Sign Off Statutory OSHAD Form G: INC-2026-UAE-0622', sourceType: 'Incident', sourceId: 'INC-2026-UAE-0622', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'Pending Approval', requiredAction: 'Executive endorsement of formal government report', location: 'Group HQ' },
-          { id: 'PND-LH-02', title: 'Approve Group Safety Policy Update: Autonomous Drone Auditing', sourceType: 'Risk Assessment', sourceId: 'POL-DRONE-2026', priority: 'P2 - High', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'In Review', requiredAction: 'Review civil aviation and OSHAD compliance clauses', location: 'Executive Office' },
+          { id: 'PND-LH-01', title: 'Sign Off Statutory Oman MoL Form MD 286: INC-2026-OMN-0622', sourceType: 'Incident', sourceId: 'INC-2026-OMN-0622', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'Pending Approval', requiredAction: 'Executive endorsement of formal government report', location: 'Group HQ' },
+          { id: 'PND-LH-02', title: 'Approve Group Safety Policy Update: Autonomous Drone Auditing', sourceType: 'Risk Assessment', sourceId: 'POL-DRONE-2026', priority: 'P2 - High', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'In Review', requiredAction: 'Review civil aviation and Oman MoL MD 286/2008 compliance clauses', location: 'Executive Office' },
           { id: 'PND-LH-03', title: 'Review Board Safety Pack Q4 Preview with CEO', sourceType: 'Audit', sourceId: 'BRD-Q4-2026', priority: 'P1 - Critical', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Action Required', requiredAction: 'Verify leading indicators and SIF precursor reduction rate', location: 'CEO Suite' },
           { id: 'PND-LH-04', title: 'Verify Closure of High-Priority CAPA-2026-01', sourceType: 'CAPA', sourceId: 'CAPA-2026-01', priority: 'P1 - Critical', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'In-Progress', requiredAction: 'Review engineering test certs for all high-pressure whip checks', location: 'Fahud-West' },
           { id: 'PND-LH-05', title: 'Authorize Annual Process Safety Management Tier-1 Audit', sourceType: 'Audit', sourceId: 'AUD-2026-006', priority: 'P2 - High', dueDate: '2026-10-12', daysRemaining: 5, isOverdue: false, status: 'Scheduled', requiredAction: 'Sign terms of reference and lead auditor appointment letter', location: 'Group HQ' },
           { id: 'PND-LH-06', title: 'Review EPC Contractor Safety Prequalification Appeal', sourceType: 'Inspection', sourceId: 'CON-APP-2026', priority: 'P2 - High', dueDate: '2026-10-11', daysRemaining: 4, isOverdue: false, status: 'In Review', requiredAction: 'Review appeal regarding subcontractor LTIFR remediation plan', location: 'Contractor Hub' },
           { id: 'PND-LH-07', title: 'Approve HSE Capital Expenditure: Wireless Gas Sensor Grid', sourceType: 'Risk Assessment', sourceId: 'CAPEX-GAS-2026', priority: 'P2 - High', dueDate: '2026-10-14', daysRemaining: 7, isOverdue: false, status: 'Pending Approval', requiredAction: 'Review ROI and catastrophic gas release risk reduction model', location: 'Finance Committee' },
-          { id: 'PND-LH-08', title: 'Endorse UAE Ministry of Energy National Safety Week Agenda', sourceType: 'Meeting', sourceId: 'EVT-MOEI-2026', priority: 'P3 - Medium', dueDate: '2026-10-16', daysRemaining: 9, isOverdue: false, status: 'Upcoming', requiredAction: 'Approve keynote presentation on AI Predictive Safety', location: 'Abu Dhabi ADNEC' },
+          { id: 'PND-LH-08', title: 'Endorse Oman Ministry of Energy National Safety Week Agenda', sourceType: 'Meeting', sourceId: 'EVT-MOEI-2026', priority: 'P3 - Medium', dueDate: '2026-10-16', daysRemaining: 9, isOverdue: false, status: 'Upcoming', requiredAction: 'Approve keynote presentation on AI Predictive Safety', location: 'Muscat ADNEC' },
           { id: 'PND-LH-09', title: 'Quarterly Risk Appetite Review with Chief Risk Officer', sourceType: 'Risk Assessment', sourceId: 'RSK-CRO-Q4', priority: 'P2 - High', dueDate: '2026-10-15', daysRemaining: 8, isOverdue: false, status: 'Scheduled', requiredAction: 'Evaluate operational resilience against extreme weather events', location: 'Group HQ' },
           { id: 'PND-LH-10', title: 'Review Overdue Legal Compliance Audit Actions (Oman)', sourceType: 'CAPA', sourceId: 'CAPA-LEG-OMN', priority: 'P2 - High', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'Action Required', requiredAction: 'Issue formal directive to Oman asset manager regarding closing date', location: 'Fahud Asset' }
         ],
@@ -941,10 +941,10 @@ export class UserProfileService {
           { id: 'CMP-LH-02', title: 'Board Safety & Risk Committee Presentation Delivered', sourceType: 'Meeting', sourceId: 'MTG-BOARD-Q3', completedDate: '2026-10-05T14:00:00Z', outcome: 'TRIR 0.18 achieved; zero fatalities milestone celebrated.', verifiedBy: 'Board Secretary', evidenceNotes: 'Minutes signed by Chairman.', location: 'Board Room' },
           { id: 'CMP-LH-03', title: 'Group-Wide SWA Zero Retaliation Policy Endorsed', sourceType: 'Risk Assessment', sourceId: 'POL-2026-SWA', completedDate: '2026-10-03T11:30:00Z', outcome: 'Signed and broadcast across all 3 country operational hubs.', verifiedBy: 'Dr. Layla Hassan', evidenceNotes: 'Policy published in Arabic and English.', location: 'All Sites' },
           { id: 'CMP-LH-04', title: 'ISO 45001 Surveillance Audit Findings Signed Off', sourceType: 'Audit', sourceId: 'AUD-2026-003', completedDate: '2026-10-01T09:00:00Z', outcome: 'Finding regarding test manifolds closed satisfactorily.', verifiedBy: 'Sarah Jenkins', evidenceNotes: 'External audit report countersigned.', location: 'Fahud-West' },
-          { id: 'CMP-LH-05', title: 'OSHAD Mechanism 11.0 Submission Endorsed', sourceType: 'Audit', sourceId: 'AUD-2026-004', completedDate: '2026-09-28T15:00:00Z', outcome: 'Certified 99.1% compliance documentation.', verifiedBy: 'Abu Dhabi OSHAD', evidenceNotes: 'Government acknowledgment received.', location: 'Al-Ruwais' },
-          { id: 'CMP-LH-06', title: 'Fast-Track Procurement of Stainless Whip Checks', sourceType: 'CAPA', sourceId: 'CAPA-2026-01', completedDate: '2026-09-20T10:00:00Z', outcome: 'Approved AED 85,000 emergency procurement.', verifiedBy: 'Procurement Director', evidenceNotes: 'Purchase order issued to certified supplier.', location: 'Group HQ' },
+          { id: 'CMP-LH-05', title: 'Oman MoL MD 286/2008 & PDO PR-1172 Submission Endorsed', sourceType: 'Audit', sourceId: 'AUD-2026-004', completedDate: '2026-09-28T15:00:00Z', outcome: 'Certified 99.1% compliance documentation.', verifiedBy: 'Muscat Oman MoL MD 286/2008', evidenceNotes: 'Government acknowledgment received.', location: 'Mina Al Fahal' },
+          { id: 'CMP-LH-06', title: 'Fast-Track Procurement of Stainless Whip Checks', sourceType: 'CAPA', sourceId: 'CAPA-2026-01', completedDate: '2026-09-20T10:00:00Z', outcome: 'Approved OMR 85,000 emergency procurement.', verifiedBy: 'Procurement Director', evidenceNotes: 'Purchase order issued to certified supplier.', location: 'Group HQ' },
           { id: 'CMP-LH-07', title: 'Major Accident Hazard Bowtie Models Approved', sourceType: 'Risk Assessment', sourceId: 'RSK-GRP-Q3', completedDate: '2026-09-12T13:00:00Z', outcome: 'All 10 MAH scenarios reviewed with technical authorities.', verifiedBy: 'Technical Director', evidenceNotes: 'Models published in Bowtie viewer.', location: 'Refineries' },
-          { id: 'CMP-LH-08', title: 'Executive Safety Walkabout - Al-Ruwais Asset', sourceType: 'Inspection', sourceId: 'WALK-2026-RUW', completedDate: '2026-09-02T11:00:00Z', outcome: 'Direct engagement with workforce regarding heat stress.', verifiedBy: 'Sarah Jones', evidenceNotes: 'Walkabout findings actioned in MyWork cockpit.', location: 'Al-Ruwais' },
+          { id: 'CMP-LH-08', title: 'Executive Safety Walkabout - Mina Al Fahal Asset', sourceType: 'Inspection', sourceId: 'WALK-2026-RUW', completedDate: '2026-09-02T11:00:00Z', outcome: 'Direct engagement with workforce regarding heat stress.', verifiedBy: 'Sarah Jones', evidenceNotes: 'Walkabout findings actioned in MyWork cockpit.', location: 'Mina Al Fahal' },
           { id: 'CMP-LH-09', title: 'Enterprise Human Factors Curriculum Approved', sourceType: 'Training', sourceId: 'TRN-STRAT-2027', completedDate: '2026-08-22T09:30:00Z', outcome: 'Training contracts finalized with certified academy.', verifiedBy: 'HR Director', evidenceNotes: 'Master training calendar published.', location: 'Group HQ' },
           { id: 'CMP-LH-10', title: 'Investigation INC-2026-KSA-0188 Signed and Archived', sourceType: 'Incident', sourceId: 'INC-2026-KSA-0188', completedDate: '2026-08-10T14:00:00Z', outcome: 'Crane load limiter recalibration verified by third party.', verifiedBy: 'Abdulaziz Al-Ghamdi', evidenceNotes: 'Investigation closed.', location: 'Ras Al-Khair' }
         ],
@@ -954,7 +954,7 @@ export class UserProfileService {
           { id: 'NTF-LH-03', timestamp: '2026-10-04T09:00:00Z', title: 'SIF Precursor Prediction Alert', message: 'Predictive safety model identified 3 consecutive near-misses in crane rigging area.', severity: 'High', category: 'Predictive', sourceId: 'SIF-ALERT-04', read: true, senderName: 'AI Predictive Engine' },
           { id: 'NTF-LH-04', timestamp: '2026-10-03T10:00:00Z', title: 'Legal Register Regulatory Update', message: 'Oman Ministry of Labour issued decree regarding remote wellhead lone-worker telemetry.', severity: 'Medium', category: 'Legal', sourceId: 'LEG-OMN-2026', read: true, senderName: 'ComplyFlow Engine' },
           { id: 'NTF-LH-05', timestamp: '2026-10-01T11:00:00Z', title: 'Audit AUD-2026-003 Closed by Lead Auditor', message: 'ISO 45001 surveillance audit formal closure certificate ready for your records.', severity: 'Low', category: 'Audit', sourceId: 'AUD-2026-003', read: true, senderName: 'Sarah Jenkins' },
-          { id: 'NTF-LH-06', timestamp: '2026-09-28T16:30:00Z', title: 'OSHAD External Rating Confirmed', message: 'Abu Dhabi OSHAD confirmed Grade-A compliance status for Al-Ruwais concession.', severity: 'Low', category: 'Compliance', sourceId: 'OSHAD-GRADE-A', read: true, senderName: 'Abu Dhabi OSHAD' },
+          { id: 'NTF-LH-06', timestamp: '2026-09-28T16:30:00Z', title: 'Oman MoL MD 286/2008 External Rating Confirmed', message: 'Muscat Oman MoL MD 286/2008 confirmed Grade-A compliance status for Mina Al Fahal concession.', severity: 'Low', category: 'Compliance', sourceId: 'Oman MoL MD 286/2008-GRADE-A', read: true, senderName: 'Muscat Oman MoL MD 286/2008' },
           { id: 'NTF-LH-07', timestamp: '2026-09-24T12:00:00Z', title: 'Contractor Safety Incident Notification', message: 'Near miss reported on Petrofac civil conduit trench excavation in Ras Al-Khair.', severity: 'Medium', category: 'Incident', sourceId: 'INC-2026-KSA-0219', read: true, senderName: 'Abdulaziz Al-Ghamdi' },
           { id: 'NTF-LH-08', timestamp: '2026-09-20T08:15:00Z', title: 'Carbon Accounting Q3 Report Ready', message: 'Scope 1 emissions down 4.2% following flare gas recovery compressor overhaul.', severity: 'Low', category: 'ESG', sourceId: 'ESG-Q3-EMISSIONS', read: true, senderName: 'Khalid Al-Dhaheri' },
           { id: 'NTF-LH-09', timestamp: '2026-09-15T14:00:00Z', title: 'Group Crisis Management Drill Scheduled', message: 'Annual Tier-3 crisis simulation exercise scheduled for November 18.', severity: 'Medium', category: 'Emergency', sourceId: 'EMG-DRILL-T3', read: true, senderName: 'Emergency Response' },
@@ -971,11 +971,11 @@ export class UserProfileService {
         department: 'Digital Safety Infrastructure & Security',
         businessUnit: 'Enterprise Digital & HSE Technology Group',
         organization: 'Gulf Energy & Infrastructure Group',
-        siteLocation: 'Group Digital Command Center · Abu Dhabi HQ',
+        siteLocation: 'Group Digital Command Center · Muscat HQ',
         employeeId: 'GE-SYS-0010',
         jobTitle: 'Lead Enterprise HSE Platform Architect & Administrator',
         managerName: 'James Sterling (Chief Executive Officer)',
-        phoneExtension: '+971 2 602 0010',
+        phoneExtension: '+968 2 602 0010',
         employmentStatus: 'Active',
         joiningDate: '2020-03-01',
         safetyScore: 2500,
@@ -994,7 +994,7 @@ export class UserProfileService {
         ],
         trainingStatus: { totalCourses: 20, completedCourses: 20, overdueCount: 0, complianceRate: 100 },
         assignedProjects: ['Unified Compliance Ledger v2', 'Offline PWA Field Engine Rollout', 'IoT SIMOPS Radar'],
-        assignedSites: ['All Concessions (UAE, Oman, KSA)'],
+        assignedSites: ['All Concessions (Sultanate of Oman)'],
         currentWorkload: { activeTasks: 5, pendingApprovals: 2, openCapas: 1, utilizationRate: 80 },
         approvalResponsibilities: ['Global User Role Provisioning', 'Statutory API Gateway Key Rotation', 'Audit Ledger Purge Rejection'],
         certifications: [
@@ -1046,9 +1046,9 @@ export class UserProfileService {
             timePeriod: 'Last 7 Days',
             actionType: 'Reviewed Incident',
             category: 'Incident',
-            entityId: 'INC-2026-UAE-0622',
+            entityId: 'INC-2026-OMN-0622',
             entityTitle: 'Automated Regulatory Escalation Check',
-            details: 'Verified statutory notification dispatch to Abu Dhabi OSHAD portal within 2-hour window.',
+            details: 'Verified statutory notification dispatch to Muscat Oman MoL MD 286/2008 portal within 2-hour window.',
             impactResult: 'Legal reporting SLA verified.'
           },
           {
@@ -1070,7 +1070,7 @@ export class UserProfileService {
             category: 'Inspection',
             entityId: 'SYS-SEC-AUDIT',
             entityTitle: 'Quarterly Multi-Tenant Isolation Security Review',
-            details: 'Verified database row-level security and tenant isolation between Oman, UAE, and KSA.',
+            details: 'Verified database row-level security and tenant isolation between Oman, Oman, and KSA.',
             impactResult: 'Zero cross-tenant leakage observed.'
           },
           {
@@ -1103,7 +1103,7 @@ export class UserProfileService {
             category: 'Training',
             entityId: 'TRN-CYBER-2026',
             entityTitle: 'Critical National Infrastructure Cybersecurity Defense',
-            details: 'Completed Abu Dhabi Digital Authority industrial control system security certification.',
+            details: 'Completed Muscat Digital Authority industrial control system security certification.',
             impactResult: 'Credential renewed.'
           },
           {
@@ -1121,8 +1121,8 @@ export class UserProfileService {
         pendingActions: [
           { id: 'PND-ADM-01', title: 'Quarterly Privileged Access Review (RBAC Matrix)', sourceType: 'Audit', sourceId: 'SEC-RBAC-Q4', priority: 'P1 - Critical', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'In Review', requiredAction: 'Audit administrator rights and verify least-privilege compliance', location: 'Group Digital HQ' },
           { id: 'PND-ADM-02', title: 'Renew Hardware Security Module (HSM) Signing Certificate', sourceType: 'Risk Assessment', sourceId: 'SEC-HSM-2026', priority: 'P1 - Critical', dueDate: '2026-10-10', daysRemaining: 3, isOverdue: false, status: 'Action Required', requiredAction: 'Rotate private root key for cryptographic audit signature stamping', location: 'Security Vault' },
-          { id: 'PND-ADM-03', title: 'Verify Abu Dhabi OSHAD API Gateway Webhook Health', sourceType: 'Inspection', sourceId: 'API-OSHAD-WH', priority: 'P2 - High', dueDate: '2026-10-11', daysRemaining: 4, isOverdue: false, status: 'Scheduled', requiredAction: 'Conduct simulated incident payload delivery test with government endpoint', location: 'Cloud Gateway' },
-          { id: 'PND-ADM-04', title: 'Annual Disaster Recovery Failover Simulation', sourceType: 'Inspection', sourceId: 'DR-TEST-2026', priority: 'P2 - High', dueDate: '2026-10-12', daysRemaining: 5, isOverdue: false, status: 'Scheduled', requiredAction: 'Execute live failover from UAE North region to Oman secondary datacenter', location: 'Cloud Infrastructure' },
+          { id: 'PND-ADM-03', title: 'Verify Muscat Oman MoL MD 286/2008 API Gateway Webhook Health', sourceType: 'Inspection', sourceId: 'API-Oman MoL MD 286/2008-WH', priority: 'P2 - High', dueDate: '2026-10-11', daysRemaining: 4, isOverdue: false, status: 'Scheduled', requiredAction: 'Conduct simulated incident payload delivery test with government endpoint', location: 'Cloud Gateway' },
+          { id: 'PND-ADM-04', title: 'Annual Disaster Recovery Failover Simulation', sourceType: 'Inspection', sourceId: 'DR-TEST-2026', priority: 'P2 - High', dueDate: '2026-10-12', daysRemaining: 5, isOverdue: false, status: 'Scheduled', requiredAction: 'Execute live failover from Oman North region to Oman secondary datacenter', location: 'Cloud Infrastructure' },
           { id: 'PND-ADM-05', title: 'Review Failed Authentication Telemetry Thresholds', sourceType: 'Risk Assessment', sourceId: 'SEC-AUTH-LOG', priority: 'P2 - High', dueDate: '2026-10-08', daysRemaining: 1, isOverdue: false, status: 'Pending Approval', requiredAction: 'Inspect anomalous IP blocks reported by Cloud Armor WAF', location: 'SOC Dashboard' },
           { id: 'PND-ADM-06', title: 'Audit Multi-Tenant Storage Quotas Across Concessions', sourceType: 'Inspection', sourceId: 'STOR-QUOTA-Q4', priority: 'P3 - Medium', dueDate: '2026-10-14', daysRemaining: 7, isOverdue: false, status: 'Upcoming', requiredAction: 'Ensure 5-year compliance retention capacity allocated for all documents', location: 'Storage Engine' },
           { id: 'PND-ADM-07', title: 'Validate Automated CAPA SLA Escalation Rule', sourceType: 'CAPA', sourceId: 'SLA-CAPA-TEST', priority: 'P2 - High', dueDate: '2026-10-09', daysRemaining: 2, isOverdue: false, status: 'Action Required', requiredAction: 'Trigger mock overdue P1 CAPA and verify executive SMS delivery', location: 'Notification Hub' },
@@ -1137,7 +1137,7 @@ export class UserProfileService {
           { id: 'CMP-ADM-04', title: 'Enforced MFA on All Executive & Manager Roles', sourceType: 'Risk Assessment', sourceId: 'SEC-MFA-2026', completedDate: '2026-10-01T10:00:00Z', outcome: '100% of executive accounts protected with hardware MFA.', verifiedBy: 'Dr. Layla Hassan', evidenceNotes: 'Executive compliance confirmed.', location: 'All Sites' },
           { id: 'CMP-ADM-05', title: 'Closed ISO 27001 Surveillance Audit Finding #03', sourceType: 'Audit', sourceId: 'AUD-ISO-27001', completedDate: '2026-09-28T16:00:00Z', outcome: 'Automated backup encryption verification implemented.', verifiedBy: 'BSI Auditor', evidenceNotes: 'Closure letter issued.', location: 'Cloud Infrastructure' },
           { id: 'CMP-ADM-06', title: 'Hardened Content Security Policy & CORS Rules', sourceType: 'Inspection', sourceId: 'SEC-CSP-2026', completedDate: '2026-09-22T11:00:00Z', outcome: 'A+ rating achieved on external security header scan.', verifiedBy: 'Security Architect', evidenceNotes: 'Mozilla Observatory test passed.', location: 'Web Application' },
-          { id: 'CMP-ADM-07', title: 'Configured Abu Dhabi Civil Defence Incident Webhook', sourceType: 'Permit', sourceId: 'ADCD-WH-01', completedDate: '2026-09-18T15:30:00Z', outcome: 'Automated emergency dispatch tested and approved.', verifiedBy: 'Civil Defence Abu Dhabi', evidenceNotes: 'Government test certificate received.', location: 'Al-Ruwais' },
+          { id: 'CMP-ADM-07', title: 'Configured Civil Defence and Ambulance Authority (CDAA Oman) Incident Webhook', sourceType: 'Permit', sourceId: 'ADCD-WH-01', completedDate: '2026-09-18T15:30:00Z', outcome: 'Automated emergency dispatch tested and approved.', verifiedBy: 'Civil Defence and Ambulance Authority (CDAA Oman)', evidenceNotes: 'Government test certificate received.', location: 'Mina Al Fahal' },
           { id: 'CMP-ADM-08', title: 'Upgraded PWA IndexedDB Offline Storage Schema', sourceType: 'Inspection', sourceId: 'PWA-IDB-V2', completedDate: '2026-09-12T13:00:00Z', outcome: '500 offline inspection records synced without data conflict.', verifiedBy: 'Fatima Al-Zaabi', evidenceNotes: 'Field test passed on tablet.', location: 'Mobile PWA' },
           { id: 'CMP-ADM-09', title: 'Disaster Recovery Database Snapshot Verified', sourceType: 'Audit', sourceId: 'DR-SNAP-Q3', completedDate: '2026-09-05T08:00:00Z', outcome: 'Recovery Point Objective (RPO) verified under 60 seconds.', verifiedBy: 'Database Admin', evidenceNotes: 'Test restore completed in 4 mins.', location: 'Secondary Cloud' },
           { id: 'CMP-ADM-10', title: 'Archived Annual Compliance Logs to Cold Vault', sourceType: 'Audit', sourceId: 'ARCH-2025-HSE', completedDate: '2026-08-25T17:00:00Z', outcome: 'WORM (Write Once Read Many) compliant archive sealed.', verifiedBy: 'Legal Counsel', evidenceNotes: 'Legal seal applied.', location: 'Group Legal Vault' }
@@ -1146,12 +1146,12 @@ export class UserProfileService {
           { id: 'NTF-ADM-01', timestamp: '2026-10-07T06:05:00Z', title: 'Immutable Audit Ledger Verified', message: 'All 650+ event hashes validated with zero collisions or discrepancies.', severity: 'Low', category: 'Security', sourceId: 'AUD-HASH-LEDGER', read: false, senderName: 'Audit Integrity Watcher' },
           { id: 'NTF-ADM-02', timestamp: '2026-10-06T19:00:00Z', title: 'RBAC Policy Update Broadcasted', message: 'Area Authority digital signing privileges updated and synced to all nodes.', severity: 'Low', category: 'System', sourceId: 'SEC-RBAC-04', read: true, senderName: 'Policy Engine' },
           { id: 'NTF-ADM-03', timestamp: '2026-10-05T16:30:00Z', title: 'IoT Telemetry Mesh Connected', message: '24 Fahud-West gas sensor transmitters successfully sending 10-second beacons.', severity: 'Low', category: 'IoT', sourceId: 'IOT-GRID-FAHUD', read: true, senderName: 'IoT Gateway' },
-          { id: 'NTF-ADM-04', timestamp: '2026-10-04T12:05:00Z', title: 'Statutory Notification Delivered', message: 'Incident INC-2026-UAE-0622 successfully acknowledged by Abu Dhabi OSHAD portal.', severity: 'Low', category: 'Compliance', sourceId: 'INC-2026-UAE-0622', read: true, senderName: 'Government Gateway' },
+          { id: 'NTF-ADM-04', timestamp: '2026-10-04T12:05:00Z', title: 'Statutory Notification Delivered', message: 'Incident INC-2026-OMN-0622 successfully acknowledged by Muscat Oman MoL MD 286/2008 portal.', severity: 'Low', category: 'Compliance', sourceId: 'INC-2026-OMN-0622', read: true, senderName: 'Government Gateway' },
           { id: 'NTF-ADM-05', timestamp: '2026-10-03T10:30:00Z', title: 'High-Risk Escalation Engine Active', message: 'CAPA escalation rules activated with automatic SMS alerts for overdue P1 items.', severity: 'Medium', category: 'Workflow', sourceId: 'SYS-CAPA-ESCALATE', read: true, senderName: 'Workflow Automation' },
           { id: 'NTF-ADM-06', timestamp: '2026-10-01T10:30:00Z', title: 'Security Advisory: MFA Enforced', message: 'Multi-factor authentication mandate now enforced for all 14 enterprise roles.', severity: 'Medium', category: 'Security', sourceId: 'SEC-MFA-2026', read: true, senderName: 'IAM Service' },
           { id: 'NTF-ADM-07', timestamp: '2026-09-28T16:15:00Z', title: 'ISO 27001 Audit Finding Closed', message: 'External surveillance finding regarding backup encryption verified closed.', severity: 'Low', category: 'Audit', sourceId: 'AUD-ISO-27001', read: true, senderName: 'BSI Middle East' },
           { id: 'NTF-ADM-08', timestamp: '2026-09-22T11:30:00Z', title: 'WAF Security Policy Hardened', message: 'Cloud Armor WAF rules updated with enhanced rate limiting on authentication routes.', severity: 'Low', category: 'Security', sourceId: 'SEC-CSP-2026', read: true, senderName: 'Cloud Security' },
-          { id: 'NTF-ADM-09', timestamp: '2026-09-18T16:00:00Z', title: 'Civil Defence Webhook Test Passed', message: 'Bi-directional telemetry heartbeat confirmed with Abu Dhabi Civil Defence HQ.', severity: 'Low', category: 'Emergency', sourceId: 'ADCD-WH-01', read: true, senderName: 'Civil Defence Gateway' },
+          { id: 'NTF-ADM-09', timestamp: '2026-09-18T16:00:00Z', title: 'Civil Defence Webhook Test Passed', message: 'Bi-directional telemetry heartbeat confirmed with Civil Defence and Ambulance Authority (CDAA Oman) HQ.', severity: 'Low', category: 'Emergency', sourceId: 'ADCD-WH-01', read: true, senderName: 'Civil Defence Gateway' },
           { id: 'NTF-ADM-10', timestamp: '2026-09-12T13:30:00Z', title: 'PWA Offline Schema Synchronized', message: 'IndexedDB schema version 2 deployed with full offline sync capability for field workers.', severity: 'Low', category: 'Mobile', sourceId: 'PWA-IDB-V2', read: true, senderName: 'PWA Manager' }
         ]
       },

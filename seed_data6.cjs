@@ -44,7 +44,7 @@ if (startIdx !== -1 && endIdx !== -1) {
     status: '${status}',
     contactPerson: 'Jane Doe',
     email: 'contact@globalheavy${i}.com',
-    phone: '+971 50 123 4567',
+    phone: '+968 91 123 456',
     insuranceExpiry: '2025-11-30',
     tradeLicenseExpiry: '2026-02-15',
     activeWorkers: ${Math.floor(Math.random() * 100)},

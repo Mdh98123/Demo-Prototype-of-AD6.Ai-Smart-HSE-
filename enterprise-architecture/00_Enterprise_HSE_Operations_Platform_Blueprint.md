@@ -1,7 +1,7 @@
 # Enterprise HSE Operations Management Platform: GCC Architecture, Prototype Gap Analysis, and Engineering Transformation Blueprint
 
 ## Executive Summary
-The modernization of health, safety, and environmental (HSE) management across the Gulf Cooperation Council (GCC) demands a fundamental transition from static recording tools to an intelligent, operations-centric platform. Industrial operators across Oman, the United Arab Emirates (UAE), Saudi Arabia, Qatar, Bahrain, and Kuwait face an intricate web of statutory mandates enforced by national ministries, municipal civil defence bodies, and environmental authorities. Concurrently, premier national operators—including Petroleum Development Oman (PDO), Abu Dhabi National Oil Company (ADNOC), Saudi Aramco, Kuwait Oil Company (KOC), and QatarEnergy—impose strict Control of Work, SIMOPS deconfliction, and contractor vetting standards that exceed baseline municipal codes. High-consequence operational environments spanning upstream hydrocarbon processing, mega-infrastructure civil engineering, heavy manufacturing, logistics, and power utilities require real-time verification of operational controls, dynamic permit hierarchies, and defensible audit trails to protect human life and corporate license to operate.
+The modernization of health, safety, and environmental (HSE) management across the Gulf Cooperation Council (GCC) demands a fundamental transition from static recording tools to an intelligent, operations-centric platform. Industrial operators across Oman, the Sultanate of Oman (Oman), Saudi Arabia, Qatar, Bahrain, and Kuwait face an intricate web of statutory mandates enforced by national ministries, municipal civil defence bodies, and environmental authorities. Concurrently, premier national operators—including Petroleum Development Oman (PDO), Muscat National Oil Company (PDO), Saudi Aramco, Kuwait Oil Company (KOC), and QatarEnergy—impose strict Control of Work, SIMOPS deconfliction, and contractor vetting standards that exceed baseline municipal codes. High-consequence operational environments spanning upstream hydrocarbon processing, mega-infrastructure civil engineering, heavy manufacturing, logistics, and power utilities require real-time verification of operational controls, dynamic permit hierarchies, and defensible audit trails to protect human life and corporate license to operate.
 
 Direct automated inspection of the designated prototype URL (https://ad6-hse-enterprise-ai-platform-587139071024.us-west1.run.app/) confirms an immediate operational blocker: the public Cloud Run container is inaccessible, presenting connection failures and 502 Bad Gateway responses in the live runtime. This failure prevents direct verification of session persistence, information architecture, role-based workflows, and database integrity. For enterprise procurement committees, regional HSE directors, and institutional regulators, an ungrounded or non-operational application poses severe operational and legal risks. Transforming this prototype into a commercially viable, enterprise-grade HSE Operations Management Platform requires systematic alignment with international standards (ISO 45001:2018, ISO 14001:2015, ISO 31000:2018) paired with a configurable GCC regulatory variance architecture. This document provides the engineering architecture, localized regulatory rules engine, operational workflow specifications, and a staged Google AI Studio implementation blueprint required to transition the prototype into an enterprise platform.
 
@@ -29,7 +29,7 @@ Because live runtime testing confirms the deployed URL is unreachable, current-s
 Prototype environments typically present basic, ungrounded CRUD (Create, Read, Update, Delete) forms, flat static dashboards with mock numbers, and generic free-text fields lacking validation rules. In contrast, enterprise HSE operations demand a unified, multi-layered architecture:
 
 1. **Foundational Governance Tier**: Enforces international compliance (ISO 45001:2018, ISO 14001:2015, ISO 31000:2018), 5x5 dynamic risk assessment matrices, and structured root-cause analysis (5-Why, TapRooT, Fishbone).
-2. **GCC Compliance Tier**: Automates national reporting requirements, including Oman Ministry of Labour 24-hour notifications, Abu Dhabi OSHAD Form G/G1 exports, and ambient Wet Bulb Globe Temperature (WBGT) summer work ban triggers.
+2. **GCC Compliance Tier**: Automates national reporting requirements, including Oman Ministry of Labour 24-hour notifications, Muscat Oman MoL Form G/G1 exports, and ambient Wet Bulb Globe Temperature (WBGT) summer work ban triggers.
 3. **Frontline Execution Tier**: Provides an offline-first Progressive Web App (PWA) with client-side encrypted storage, personalized task tracking ("My Work"), and one-touch Stop Work Authority (SWA).
 4. **Assurance & Intelligence Tier**: Delivers three-tier operational analytics (Operational, Management, Executive) and retrieval-grounded AI assistance constrained by mandatory human verification gates.
 
@@ -54,7 +54,7 @@ The core application services are organized into decoupled operational engines:
 - **Contractor & Workforce Assurance Service**: Tracks contractor safety prequalification, site access gate permissions, and role-based training and competency matrices.
 
 ### Regional Compliance & AI Governance Engine
-Operating horizontally across all domain services, this engine handles localized statutory logic. It dynamically loads country-specific rules (e.g., Oman MoL, UAE OSHAD, Qatar MoL, Saudi MHRSD) and processes meteorological sensor data to calculate WBGT heat indices and automate midday work bans. Grounded AI services (utilizing models such as Gemini Pro and Flash) execute incident narrative structuring, causal drafting, and SOP semantic search within strict RAG boundaries, preventing unverified outputs from altering production records without human sign-off.
+Operating horizontally across all domain services, this engine handles localized statutory logic. It dynamically loads country-specific rules (e.g., Oman MoL, Oman Oman MoL, Qatar MoL, Saudi MHRSD) and processes meteorological sensor data to calculate WBGT heat indices and automate midday work bans. Grounded AI services (utilizing models such as Gemini Pro and Flash) execute incident narrative structuring, causal drafting, and SOP semantic search within strict RAG boundaries, preventing unverified outputs from altering production records without human sign-off.
 
 ### Persistence and Data Sovereignty Layer
 The persistence tier utilizes PostgreSQL with Row-Level Security (RLS) to enforce strict tenant isolation within a shared database architecture. Object storage for high-resolution photo evidence, safety data sheets (SDS), and signed isolation forms is encrypted at rest using AES-256. A dedicated append-only ledger records all safety-critical transactions with SHA-256 cryptographic hash chaining to maintain a tamper-evident audit log.
@@ -62,14 +62,14 @@ The persistence tier utilizes PostgreSQL with Row-Level Security (RLS) to enforc
 ---
 
 ## 4. GCC Regulatory and Compliance Architecture
-The GCC does not operate under a uniform HSE regulatory framework. Legal obligations vary significantly between sovereign states, individual emirates, and industrial free zones. The target platform must separate universal core capabilities from jurisdiction-specific rules, executing compliance via dynamic business rules rather than brittle, hardcoded logic.
+The GCC does not operate under a uniform HSE regulatory framework. Legal obligations vary significantly between sovereign states, individual Sultanate of Oman, and industrial free zones. The target platform must separate universal core capabilities from jurisdiction-specific rules, executing compliance via dynamic business rules rather than brittle, hardcoded logic.
 
 The architecture organizes operational compliance into six operational tiers:
 1. **Universal GCC Operational Baseline**: Standardized core capabilities across all deployments, including ISO 45001/14001 alignment, 5x5 dynamic risk assessment matrices, hierarchy of controls enforcement, 5-Why root cause investigations, and unified CAPA management.
 2. **Country Compliance Layer**: Configurable compliance rules per GCC member state, managing statutory reporting deadlines, national labor law requirements, civil defence guidelines, and summer midday outdoor work bans.
-3. **State, Emirate, and Municipal Layer**: Sub-national jurisdictional configurations, such as Abu Dhabi OSHAD-SF mechanisms, Dubai Municipality technical guidelines, and Ashghal project specifications.
+3. **State, Emirate, and Municipal Layer**: Sub-national jurisdictional configurations, such as Muscat Oman MoL MD 286/2008 mechanisms, Sohar Municipality technical guidelines, and Ashghal project specifications.
 4. **Industry Sector Profile Layer**: Configurable sector profiles defining process safety management (API RP 754), hydrogen sulfide ($H_2S$) classifications, heavy lifting plans, and camp accommodation standards.
-5. **Operator and Asset Owner Layer**: Operator-specific requirements, including ADNOC Control of Work and Life-Saving Rules, PDO SP-1170 standards, Saudi Aramco Safety Management System manuals, and QatarEnergy contractor frameworks.
+5. **Operator and Asset Owner Layer**: Operator-specific requirements, including PDO Control of Work and Life-Saving Rules, PDO SP-1170 standards, Saudi Aramco Safety Management System manuals, and QatarEnergy contractor frameworks.
 6. **Facility and Project Layer**: Facility-level operational metadata, including site-specific geofences, muster point locations, SIMOPS boundary matrices, and emergency contact directories.
 
 ---
@@ -85,14 +85,14 @@ The platform must support automated calculation of the summer midday ban, record
 
 ---
 
-## 6. Country Regulatory Profiles: United Arab Emirates
-The UAE enforces occupational safety through a tiered federal and emirate-level governance framework. Federal baseline obligations stem from Federal Decree-Law No. 33 of 2021 (Labour Relations Law) and Cabinet Resolution No. 33 of 2022, which mandate incident notification to the Ministry of Human Resources and Emiratisation (MOHRE) within 48 hours for occupational injuries and severe incidents.
+## 6. Country Regulatory Profiles: Sultanate of Oman
+The Oman enforces occupational safety through a tiered federal and emirate-level governance framework. Federal baseline obligations stem from Federal Decree-Law No. 33 of 2021 (Labour Relations Law) and Cabinet Resolution No. 33 of 2022, which mandate incident notification to the Ministry of Human Resources and Omanisation (MoL) within 48 hours for occupational injuries and severe incidents.
 
-At the emirate level, Abu Dhabi operates under the Abu Dhabi Occupational Safety and Health System Framework (OSHAD-SF), administered by the Abu Dhabi Public Health Centre (ADPHC). Entities officially classified as High or Medium Risk must implement an ADPHC-approved Safety Management System, report data quarterly via the Al-Adaa digital system, and adhere to OSHAD-SF Mechanism 11.0 for incident handling. Mechanism 11.0 requires fatal incident reporting within 24 hours and serious incident reporting within a maximum of 3 working days using OSHAD Form G, followed by a completed Form G1 investigation report.
+At the emirate level, Muscat operates under the Oman Ministry of Labour Occupational Safety and Health Regulations (Oman MoL MD 286/2008), administered by the Muscat Public Health Centre (ADPHC). Entities officially classified as High or Medium Risk must implement an ADPHC-approved Safety Management System, report data quarterly via the Al-Adaa digital system, and adhere to Oman MoL MD 286/2008 Mechanism 11.0 for incident handling. Mechanism 11.0 requires fatal incident reporting within 24 hours and serious incident reporting within a maximum of 3 working days using Oman MoL Form G, followed by a completed Form G1 investigation report.
 
-In Dubai, the Dubai Municipality (DM) Health and Safety Department enforces technical safety guidelines across construction and industrial facilities. Sector-specific operations within ADNOC concessions require strict compliance with ADNOC Control of Work systems and the 10 Life-Saving Rules.
+In Sohar, the Sohar Municipality (DM) Health and Safety Department enforces technical safety guidelines across construction and industrial facilities. Sector-specific operations within PDO concessions require strict compliance with PDO Control of Work systems and the 10 Life-Saving Rules.
 
-The platform must provide native export capabilities for ADPHC Form G and Form G1 schemas, dynamically integrate MOHRE midday break restrictions (typically 12:30 PM to 3:00 PM from mid-June to mid-September), and manage ADNOC-compliant permit-to-work checklists.
+The platform must provide native export capabilities for ADPHC Form G and Form G1 schemas, dynamically integrate MoL midday break restrictions (typically 12:30 PM to 3:00 PM from mid-June to mid-September), and manage PDO-compliant permit-to-work checklists.
 
 ---
 
@@ -189,7 +189,7 @@ Enterprise HSE governance requires defining precise boundaries of operational re
 | **08:00 – 11:30** | Performs physical site inspection of scaffolding in Zone B. Logs 1 unsafe condition (missing toe-board) with 2 annotated photos; assigns P1 CAPA to Scaffolding Supervisor. | Conducts physical walkthrough of active permit zones. Verifies lock-out tags on Valve V-104 and cross-signs live permit document. | Executes pipe fitting work under approved Cold Work Permit. Identifies damaged hydraulic hose on mobile crane; executes Stop Work Authority (SWA). |
 | **11:30 – 14:30** | System triggers automated Midday Heat Ban / WBGT alert ($32.5^\circ\text{C}$ threshold breached). Verifies site outdoor work cessation and checks shaded hydration rest stations. | Suspends outdoor hot work permits automatically via central dashboard. Confirms plant maintenance shifts to indoor/shaded pre-fabrication shops. | Receives push notification: "Outdoor work suspended due to WBGT limit." Moves to cooled rest tent; logs crane hydraulic leak in app as Near Miss. |
 | **14:30 – 16:30** | Triages crane leak near-miss. Assigns immediate cleanup action. Facilitates formal investigation meeting for previous day's hand laceration. | Resumes authorized work following temperature check. Receives Permit Receiver for end-of-shift permit hand-back and de-isolation verification. | Completes afternoon task list. Re-cleans workspace, checks tools back into mobile inventory, and logs end-of-shift safe completion sign-off. |
-| **16:30 – 17:30** | Finalizes and closes 3 daily field inspections. Reviews draft OSHAD Form G report for corporate submission. Verifies all personal actions in "My Work" are completed. | Formally closes 3 permits; suspends 1 multi-day permit under overnight isolation locks. Approves shift handover log for incoming night supervisor. | Departs site. Receives automated notification confirming completion of daily work hours and safety participation score increment. |
+| **16:30 – 17:30** | Finalizes and closes 3 daily field inspections. Reviews draft Oman MoL Form G report for corporate submission. Verifies all personal actions in "My Work" are completed. | Formally closes 3 permits; suspends 1 multi-day permit under overnight isolation locks. Approves shift handover log for incoming night supervisor. | Departs site. Receives automated notification confirming completion of daily work hours and safety participation score increment. |
 
 ---
 
@@ -198,7 +198,7 @@ Enterprise HSE governance requires defining precise boundaries of operational re
 ### Incident Management Lifecycle
 The incident workflow progresses through seven structured stages:
 1. **Initial Field Reporting**: Initiated by any worker via mobile PWA, desktop, or kiosk within 2 hours of occurrence. Mandatory inputs include site location, GPS coordinates, event classification (Near Miss, First Aid, Medical Treatment, Lost Time, Fatality, Process Safety Event), a narrative description, and scene photographs.
-2. **Operational Triage & Validation**: The Site HSE Officer reviews the submission within 4 hours to validate classification. If designated as a serious dangerous occurrence or fatality, the system triggers statutory timers: an immediate 24-hour statutory notification for Oman MoL, Qatar MoL, or UAE ADPHC Form G.
+2. **Operational Triage & Validation**: The Site HSE Officer reviews the submission within 4 hours to validate classification. If designated as a serious dangerous occurrence or fatality, the system triggers statutory timers: an immediate 24-hour statutory notification for Oman MoL, Qatar MoL, or Oman ADPHC Form G.
 3. **Formal Investigation & RCA**: The investigation lead convenes the inquiry team. The platform enforces structured root cause analysis (5-Why, TapRooT, or Fishbone), locking evidence attachments to maintain an immutable chain of custody.
 4. **CAPA Formulation**: Corrective and preventive actions are formulated with assigned action owners, target completion dates, and risk-weighted priorities.
 5. **Management Review & Approval**: The Facility Manager and HSE Director review investigation findings and proposed actions, either approving the findings, requesting revisions, or escalating unresolved items.
@@ -223,9 +223,9 @@ The application navigation is organized into seven functional domains, presentin
 2. **HSE Command Center (Operational Oversight)**: Live Site Operational Map (Active Permits, SIMOPS, GIS Hazards), Dynamic Heat Stress / WBGT Real-Time Monitor, Daily Shift Incident & Event Log, Emergency Muster & Evacuation Control Board.
 3. **Control of Work (PTW Engine)**: Permit Authorizations (Hot, Cold, Confined Space, Height, Excavation), Isolation Certificates & LOTO Management, Job Safety Analysis (JSA) / Method Statement Library, SIMOPS Matrix & Spatial De-confliction.
 4. **Risk & Governance**: Enterprise Hazard Register (ISO 31000 / 45001), Bowtie Risk Visualizer (Threats, Barriers, Degradation, Consequences), Management of Change (MOC) Workflow, Legal & Regulatory Compliance Register (GCC Variance Modules).
-5. **Incidents & Assurance**: Incident & Near-Miss Reporting, Investigation & Root Cause Engine (5-Why, Fishbone), Planned Field Inspections & Checklist Builder, Management System Audits (ISO 19011 / OSHAD / Civil Defence), Unified Corrective Action Tracking (CAPA).
+5. **Incidents & Assurance**: Incident & Near-Miss Reporting, Investigation & Root Cause Engine (5-Why, Fishbone), Planned Field Inspections & Checklist Builder, Management System Audits (ISO 19011 / Oman MoL / Civil Defence), Unified Corrective Action Tracking (CAPA).
 6. **Workforce & Environment**: Contractor Prequalification & Passports, Training Matrices & Competency Tracking, Occupational Health & Exposure Surveillance (NCD / Medical Records), Environmental Aspect Register, Waste Consignments, & Emissions Logs.
-7. **Enterprise Administration**: Organization Hierarchy & Facility Geofencing, RBAC Role Definitions & Permission Matrix, Country Compliance Profile Manager (Oman, UAE, KSA, Qatar, Bahrain, Kuwait), Integration Endpoints (SAP, Microsoft Entra ID, IoT Sensors), Immutable Cryptographic Audit Log Viewer.
+7. **Enterprise Administration**: Organization Hierarchy & Facility Geofencing, RBAC Role Definitions & Permission Matrix, Country Compliance Profile Manager (Oman, Oman, KSA, Qatar, Bahrain, Kuwait), Integration Endpoints (SAP, Microsoft Entra ID, IoT Sensors), Immutable Cryptographic Audit Log Viewer.
 
 ---
 
@@ -262,7 +262,7 @@ The application navigation is organized into seven functional domains, presentin
 - `incidents`: Workplace events, injuries, and near misses.
 - `investigations`: Formal root-cause analyses (5-Why, Fishbone).
 - `actions`: Unified corrective and preventive actions (CAPA).
-- `audits`: Management system assessments (ISO, OSHAD, Civil Defence).
+- `audits`: Management system assessments (ISO, Oman MoL, Civil Defence).
 
 ---
 
@@ -272,7 +272,7 @@ Enforces strict segregation across Frontline Workers, Site Supervisors, Site HSE
 ---
 
 ## 22. Notification and Automated Escalation Engine
-- Fatal Incident: 15-minute escalation to Corporate HSE Director, VP Operations, Legal Counsel; pre-fills statutory forms (OSHAD Form G, Oman MoL).
+- Fatal Incident: 15-minute escalation to Corporate HSE Director, VP Operations, Legal Counsel; pre-fills statutory forms (Oman MoL Form G, Oman MoL).
 - Overdue P1 CAPA: 24 hours past SLA escalation to Operations Department Head; restricts new permit openings.
 - SIMOPS Conflict: Immediate interactive modal alert; blocks permit authorization.
 - WBGT Heat Ban: Immediate automated site siren, SMS, and dashboard banner; updates active permits to "Suspended: Environmental Heat Ban".
@@ -291,7 +291,7 @@ Standardized mathematical formulas for:
 
 ## 24. Cybersecurity, Tenant Isolation, and GCC Data Sovereignty
 - PostgreSQL Row-Level Security (RLS) with session variable `SET LOCAL app.current_tenant_id = 'tenant_xyz'`.
-- In-country data hosting adhering to KSA PDPL, UAE Federal Decree-Law No. 45/2021, Oman RD 6/2022, Qatar Law 13/2016.
+- In-country data hosting adhering to KSA PDPL, Oman Federal Decree-Law No. 45/2021, Oman RD 6/2022, Qatar Law 13/2016.
 - Strict isolation of occupational health diagnostics from operational fitness status.
 - Cryptographically chained SHA-256 audit log for defensible judicial inquiry.
 
@@ -303,7 +303,7 @@ Standardized mathematical formulas for:
 - **GAP-03**: End-to-end incident lifecycle with statutory reporting [P0]
 - **GAP-04**: Bidirectional English/Arabic RTL mirroring and typography [P1]
 - **GAP-05**: Control of Work / e-PTW, LOTO, and SIMOPS clash engine [P1]
-- **GAP-06**: GCC Compliance variance engine (Oman MoL, UAE OSHAD, Qatar WBGT) [P1]
+- **GAP-06**: GCC Compliance variance engine (Oman MoL, Oman Oman MoL, Qatar WBGT) [P1]
 - **GAP-07**: Offline-first mobile field PWA with IndexedDB [P2]
 - **GAP-08**: Grounded AI safety governance with human sign-off gates [P2]
 - **GAP-09**: Occupational health privacy and medical record isolation [P2]

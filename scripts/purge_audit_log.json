@@ -1,0 +1,3572 @@
+[
+  {
+    "file": "components/AdnocOshadDashboard.tsx",
+    "original": "Oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "components/AdnocOshadDashboard.tsx",
+    "original": "Adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "components/App.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/App.tsx",
+    "original": "Oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "components/App.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/ArabicComponentsModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/ArabicComponentsModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Abu Dhabi Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/BusinessContinuityModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/CAPAModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/CAPAModule.tsx",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "components/CAPAModule.tsx",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/CAPAModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Federal Decree-Law No. 45/2021",
+    "action": "REPLACE",
+    "replacement": "Oman Personal Data Protection Law (Royal Decree 6/2022)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Dubai Municipality",
+    "action": "REPLACE",
+    "replacement": "Muscat Municipality"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Emiratisation & Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation Quotas (Ministry of Labour)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Omanisation & Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation (Ministry of Labour)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "emiratisation",
+    "action": "REPLACE",
+    "replacement": "omanisation"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "National ICV Program (UAE MoIAT)",
+    "action": "REPLACE",
+    "replacement": "Oman In-Country Value Program (MEM / OIA)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "National ICV (UAE)",
+    "action": "REPLACE",
+    "replacement": "Oman ICV Score (MEM / OIA)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "icvUAE",
+    "action": "REPLACE",
+    "replacement": "icvOman"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "ADX_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "DFM_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "ADX UAE (31 Metrics)",
+    "action": "REPLACE",
+    "replacement": "MSX Oman (32 Indicators)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "UAE SCA",
+    "action": "REPLACE",
+    "replacement": "Oman CMA"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Tadweer Bolisat (UAE)",
+    "action": "REPLACE",
+    "replacement": "Be'ah Portal (Oman)"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "113.2M AED",
+    "action": "REPLACE",
+    "replacement": "11.8M OMR"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "UAE Net Zero 2050",
+    "action": "REPLACE",
+    "replacement": "Oman Vision 2040 Decarbonization"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "UAE & Oman",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "Oman & UAE",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "UAE National",
+    "action": "REPLACE",
+    "replacement": "Omani national"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "components/CarbonAccountingModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/ChatBot.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/ChemicalsModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/ChemicalsModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/ComplyFlowModule.tsx",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "components/ComplyFlowModule.tsx",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "OSHAD SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "Dubai Municipality",
+    "action": "REPLACE",
+    "replacement": "Muscat Municipality"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "DM Code",
+    "action": "REPLACE",
+    "replacement": "Oman Environment Authority"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "UAE Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "AED 50,000",
+    "action": "REPLACE",
+    "replacement": "OMR 5,000"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "AED 100,000",
+    "action": "REPLACE",
+    "replacement": "OMR 10,000"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "AED 25,000",
+    "action": "REPLACE",
+    "replacement": "OMR 2,500"
+  },
+  {
+    "file": "components/DMSModule.tsx",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "components/DesignSystemGallery.tsx",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/DesignSystemGallery.tsx",
+    "original": "Al Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/DesignSystemGallery.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/DigitalTwinViewer.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "UAE Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "Abu Dhabi HQ",
+    "action": "REPLACE",
+    "replacement": "Muscat HQ"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/EmergencyModule.tsx",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "components/EnterpriseGlobalHeader.tsx",
+    "original": "dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/EnvironmentalModule.tsx",
+    "original": "Abu Dhabi HQ",
+    "action": "REPLACE",
+    "replacement": "Muscat HQ"
+  },
+  {
+    "file": "components/EnvironmentalModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/EnvironmentalModule.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/EnvironmentalModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/EnvironmentalModule.tsx",
+    "original": "KEZAD",
+    "action": "REPLACE",
+    "replacement": "Sohar Freezone"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "UAE Federal Law",
+    "action": "REPLACE",
+    "replacement": "Oman Royal Decrees & Labour Law"
+  },
+  {
+    "file": "components/GlobalCommandPalette.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "\"UAE\"",
+    "action": "REPLACE",
+    "replacement": "\"OMAN\""
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/GovernanceModule.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/GuestDemoModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/GuestDemoModule.tsx",
+    "original": "OSHAD CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "components/GuestDemoModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/GuestDemoModule.tsx",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "components/GuestDemoModule.tsx",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/HazardRegisterModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/HealthMonitoringModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "OSHAD Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "Oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/IncidentForm.tsx",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/InspectionModule.tsx",
+    "original": "Abu Dhabi HQ",
+    "action": "REPLACE",
+    "replacement": "Muscat HQ"
+  },
+  {
+    "file": "components/InspectionModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/InspectionModule.tsx",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/InspectionModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/LessonsLearnedModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/LessonsLearnedModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/LessonsLearnedModule.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/LessonsLearnedModule.tsx",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/LiftingModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/LiftingModule.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/MOCModule.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/MyWorkCockpit.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/PlanningModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/PlanningModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/PlanningModule.tsx",
+    "original": "Ruwais Zone A",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Zone 1"
+  },
+  {
+    "file": "components/PlanningModule.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/PredictiveMaintenanceModule.tsx",
+    "original": "OSHAD CoP 14",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1231"
+  },
+  {
+    "file": "components/PredictiveMaintenanceModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/PredictiveRiskDashboard.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/PredictiveRiskDashboard.tsx",
+    "original": "Ruwais Zone A",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Zone 1"
+  },
+  {
+    "file": "components/PredictiveRiskDashboard.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "ADNOC COP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/PredictiveSafetyView.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/RAMSModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/RAMSModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/SecurityModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/SecurityModule.tsx",
+    "original": "DXB",
+    "action": "REPLACE",
+    "replacement": "SOH"
+  },
+  {
+    "file": "components/ToolboxTalksModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "DM Code",
+    "action": "REPLACE",
+    "replacement": "Oman Environment Authority"
+  },
+  {
+    "file": "components/TrainingModule.tsx",
+    "original": "FANR",
+    "action": "REPLACE",
+    "replacement": "Ministry of Energy and Minerals (MEM Oman)"
+  },
+  {
+    "file": "components/TransportModule.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/TransportModule.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/TransportModule.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/UserProfileModal.tsx",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "components/UserProfileModal.tsx",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "components/UserProfileModal.tsx",
+    "original": "\"UAE\"",
+    "action": "REPLACE",
+    "replacement": "\"OMAN\""
+  },
+  {
+    "file": "components/UserProfileModal.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/UserProfileModal.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/ai/AICopilotDrawer.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/ai/AICopilotDrawer.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/ai/AICopilotDrawer.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/ai/ComplianceAssistant.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/ai/ComplianceAssistant.tsx",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "UAE Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "components/audit/AuditMockData.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/audit/AuditReports.tsx",
+    "original": "OSHAD SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/audit/AuditReports.tsx",
+    "original": "OSHAD CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "components/audit/AuditReports.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/contractors/ContractorOnboarding.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/contractors/ContractorOnboarding.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/contractors/ContractorOnboarding.tsx",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "components/contractors/ContractorOnboarding.tsx",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "components/contractors/ContractorPortal.tsx",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "components/contractors/ContractorPortal.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/contractors/ContractorPortal.tsx",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/contractors/ContractorPortal.tsx",
+    "original": "Sharjah",
+    "action": "REPLACE",
+    "replacement": "Salalah"
+  },
+  {
+    "file": "components/contractors/ContractorPortal.tsx",
+    "original": "+971",
+    "action": "REPLACE",
+    "replacement": "+968"
+  },
+  {
+    "file": "components/controlOfWork/ControlOfWorkModule.tsx",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "components/controlOfWork/ControlOfWorkModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/oshad/OshadWorkflowDesigner.tsx",
+    "original": "Oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "components/pwa/InspectionChecklist.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/regulatory/ComplianceScorecards.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/regulatory/ComplianceScorecards.tsx",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "components/regulatory/ComplianceScorecards.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/regulatory/EmployeeCertificationTracker.tsx",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/regulatory/EmployeeCertificationTracker.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/regulatory/EmployeeCertificationTracker.tsx",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "components/regulatory/OfficialGovernmentSourcesRegistry.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/regulatory/OfficialGovernmentSourcesRegistry.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/regulatory/OfficialGovernmentSourcesRegistry.tsx",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "components/regulatory/RegionalConfigConfirmDialog.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/regulatory/RegionalConfigConfirmDialog.tsx",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Abu Dhabi OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Abu Dhabi OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO SP-1143"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "ADNOC Code of Practice",
+    "action": "REPLACE",
+    "replacement": "PDO HSE Code of Practice (SP-1143)"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/system/ExecutiveDashboard.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "\"UAE\"",
+    "action": "REPLACE",
+    "replacement": "\"OMAN\""
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/system/GovernanceModule.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/system/IAMModule.tsx",
+    "original": "\"UAE\"",
+    "action": "REPLACE",
+    "replacement": "\"OMAN\""
+  },
+  {
+    "file": "components/system/IAMModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "components/system/IAMModule.tsx",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "components/system/PricingGtmModule.tsx",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "components/system/PricingGtmModule.tsx",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/ProcurementExport.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/ProcurementExport.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/ProcurementExport.ts",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/ProcurementExport.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/ReportEngine.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/ReportEngine.ts",
+    "original": "UAE ICV",
+    "action": "REPLACE",
+    "replacement": "Oman ICV"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "OSHAD SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "ADNOC Code of Practice",
+    "action": "REPLACE",
+    "replacement": "PDO HSE Code of Practice (SP-1143)"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "Ministry of Human Resources and Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (Sultanate of Oman)"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "Federal Decree-Law No. 33/2021",
+    "action": "REPLACE",
+    "replacement": "Oman Labour Law (Royal Decree No. 53/2023)"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "AED 100,000",
+    "action": "REPLACE",
+    "replacement": "OMR 10,000"
+  },
+  {
+    "file": "services/aiAssistantService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/arabicNLPUtils.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/arabicNLPUtils.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/arabicNLPUtils.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/arabicNLPUtils.ts",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "services/auditLogger.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/contractorCore.ts",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "services/contractorCore.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/contractorCore.ts",
+    "original": "Mohre",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/contractorCore.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/contractorCore.ts",
+    "original": "emirates",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "ADNOC COP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "INC-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "INC-2026-OMN-"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "capa-uae-",
+    "action": "REPLACE",
+    "replacement": "capa-omn-"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/demoDataLoader.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "Abu Dhabi OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "OSHAD-SF Mechanism 11",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "OSHAD CoP 2.0",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "INC-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "INC-2026-OMN-"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "capa-uae-",
+    "action": "REPLACE",
+    "replacement": "capa-omn-"
+  },
+  {
+    "file": "services/enterpriseDataStore.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "ADX_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "UAE SCA",
+    "action": "REPLACE",
+    "replacement": "Oman CMA"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Tadweer_Bolisat_UAE",
+    "action": "REPLACE",
+    "replacement": "Beah_Manifest_Oman"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "DEWA (Dubai)",
+    "action": "REPLACE",
+    "replacement": "Nama Electricity (Oman)"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Abu Dhabi Corporate HQ & Tech Hub",
+    "action": "REPLACE",
+    "replacement": "Muscat Corporate HQ & Technology Center"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "AUH-HQ-01",
+    "action": "REPLACE",
+    "replacement": "MCT-HQ-01"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "DXB",
+    "action": "REPLACE",
+    "replacement": "SOH"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "RUW-REF-02",
+    "action": "REPLACE",
+    "replacement": "MAF-REF-02"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "KEZAD Industrial Logistics Hub",
+    "action": "REPLACE",
+    "replacement": "Sohar Freezone Industrial Logistics Hub"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "KEZAD",
+    "action": "REPLACE",
+    "replacement": "Sohar Freezone"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "KZD-LOG-03",
+    "action": "REPLACE",
+    "replacement": "SOH-LOG-03"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "Al Maryah Island",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Industrial Area"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "UAE Net Zero 2050",
+    "action": "REPLACE",
+    "replacement": "Oman Vision 2040 Decarbonization"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "UAE & Oman",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "UAE National",
+    "action": "REPLACE",
+    "replacement": "Omani national"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "FAC-UAE-",
+    "action": "REPLACE",
+    "replacement": "FAC-OMN-"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/esgDataStore.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "DUBAI",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/esgEmissionFactors.ts",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Omanisation & Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation (Ministry of Labour)"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "emiratisation",
+    "action": "REPLACE",
+    "replacement": "omanisation"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "icvUAE",
+    "action": "REPLACE",
+    "replacement": "icvOman"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "ADX_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "DFM_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "UAE SCA",
+    "action": "REPLACE",
+    "replacement": "Oman CMA"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/esgReportingService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "OSHAD CoP 2.0",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "emiratisation",
+    "action": "REPLACE",
+    "replacement": "omanisation"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "icvUAE",
+    "action": "REPLACE",
+    "replacement": "icvOman"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "UAE SCA",
+    "action": "REPLACE",
+    "replacement": "Oman CMA"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "UAE and Oman",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "UAE & Oman",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/esgValidationService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "ABU DHABI",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "services/gccStatutoryReportingService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/geminiClientService.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "OSHAD SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Dubai Municipality",
+    "action": "REPLACE",
+    "replacement": "Muscat Municipality"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "UAE Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Environment Agency Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Environment Authority (Oman EA RD 114/2001)"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/geminiService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/immutableAuditLogger.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/notificationService.ts",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "services/notificationService.ts",
+    "original": "Abu Dhabi Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/notificationService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/notificationService.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/notificationService.ts",
+    "original": "INC-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "INC-2026-OMN-"
+  },
+  {
+    "file": "services/offlineStorage.ts",
+    "original": "Al Ruwais Industrial Complex",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Industrial Complex"
+  },
+  {
+    "file": "services/oshadClient.ts",
+    "original": "Oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/oshadReportGenerator.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/oshadWorkflowEngine.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/permissionService.ts",
+    "original": "UAE Federal Law",
+    "action": "REPLACE",
+    "replacement": "Oman Royal Decrees & Labour Law"
+  },
+  {
+    "file": "services/predictiveMaintenanceValidation.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/predictiveMaintenanceValidation.ts",
+    "original": "OSHAD CoP 14",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1231"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "ADNOC Code of Practice",
+    "action": "REPLACE",
+    "replacement": "PDO HSE Code of Practice (SP-1143)"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/ragDataPipeline.ts",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Abu Dhabi OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO SP-1143"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD_SF",
+    "action": "REPLACE",
+    "replacement": "OMAN_MOL_MD286"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "ADNOC_COP",
+    "action": "REPLACE",
+    "replacement": "PDO_SP"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "adnoc",
+    "action": "REPLACE",
+    "replacement": "pdo"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Ministry of Human Resources and Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (Sultanate of Oman)"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Federal Decree-Law No. 33/2021",
+    "action": "REPLACE",
+    "replacement": "Oman Labour Law (Royal Decree No. 53/2023)"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Federal Decree-Law No. 45/2021",
+    "action": "REPLACE",
+    "replacement": "Oman Personal Data Protection Law (Royal Decree 6/2022)"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "mohre",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Dubai Municipality",
+    "action": "REPLACE",
+    "replacement": "Muscat Municipality"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "UAE Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "ABU DHABI",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "DUBAI",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "RUWAIS",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "KEZAD",
+    "action": "REPLACE",
+    "replacement": "Sohar Freezone"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "AED 100,000",
+    "action": "REPLACE",
+    "replacement": "OMR 10,000"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Emirates",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "EMIRATES",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/regionalComplianceService.ts",
+    "original": "Emirate",
+    "action": "REPLACE",
+    "replacement": "Governorate"
+  },
+  {
+    "file": "services/regulatoryIntelligenceService.ts",
+    "original": "oshad",
+    "action": "REPLACE",
+    "replacement": "omanMoL"
+  },
+  {
+    "file": "services/securityCompliance.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "services/simopsService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/simopsService.ts",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "services/simopsService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/simopsService.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "services/simopsService.ts",
+    "original": "UAE Federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "ADNOC CoP",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 Specification"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "MoHRE",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "services/unifiedAuditTrailService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Abu Dhabi OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD CoP 21.0",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD Form G",
+    "action": "REPLACE",
+    "replacement": "Oman MoL Form MD 286"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "UAE Ministry of Human Resources",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Abu Dhabi Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Civil Defence Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Environment Agency Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Environment Authority (Oman EA RD 114/2001)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Abu Dhabi HQ",
+    "action": "REPLACE",
+    "replacement": "Muscat HQ"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "AUH",
+    "action": "REPLACE",
+    "replacement": "MCT"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "+971 2 602 4412",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 4412"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "+971 2 602 3042",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 3042"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "+971",
+    "action": "REPLACE",
+    "replacement": "+968"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "UAE, Oman, KSA",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "UAE, Oman",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "INC-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "INC-2026-OMN-"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "HAZ-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "HAZ-2026-OMN-"
+  },
+  {
+    "file": "services/userProfileService.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi OSHAD-SF Mechanism 11.0",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi OSHAD-SF Mechanism 11",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO SP-1143"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "OSHAD Mechanism 11",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO PR-1172"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "OSHAD-SF",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008 & PDO Specifications"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "OSHAD CoP 2.0",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "ADNOC CoP 2.0",
+    "action": "REPLACE",
+    "replacement": "PDO SP-1143 (PTW Specification)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "ADNOC HSE Directorate",
+    "action": "REPLACE",
+    "replacement": "PDO HSE Directorate"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE Ministry of Human Resources",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour (MoL)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi Civil Defence",
+    "action": "REPLACE",
+    "replacement": "Civil Defence and Ambulance Authority (CDAA Oman)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Environment Agency Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Environment Authority (Oman EA RD 114/2001)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi EPA",
+    "action": "REPLACE",
+    "replacement": "Environment Authority (Oman EA)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi Public Health Center",
+    "action": "REPLACE",
+    "replacement": "Ministry of Labour Occupational Safety & Health Directorate"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "ADPHC",
+    "action": "REPLACE",
+    "replacement": "Oman MoL OSHD"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi Regional Operations Center · UAE",
+    "action": "REPLACE",
+    "replacement": "Muscat Operational Concession Center · Oman"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi HQ",
+    "action": "REPLACE",
+    "replacement": "Muscat HQ"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi Region",
+    "action": "REPLACE",
+    "replacement": "Muscat & Interior Concessions"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi Concessions",
+    "action": "REPLACE",
+    "replacement": "Oman Industrial Concessions"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "AUH",
+    "action": "REPLACE",
+    "replacement": "MCT"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Al-Ruwais Polyolefin Asset & Regional Concession Hub",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Concession Hub"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Al-Ruwais Polyolefin Asset (UAE)",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery & Petrochemical Asset (Oman)"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Al-Ruwais Polyolefin Asset",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Refinery Asset"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Al-Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Ruwais Asset Expansion Phase 3",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal Asset Expansion Phase 3"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Ruwais",
+    "action": "REPLACE",
+    "replacement": "Mina Al Fahal"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Habshan Gas Complex",
+    "action": "REPLACE",
+    "replacement": "Khazzan Tight Gas Complex Block 61"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Habshan",
+    "action": "REPLACE",
+    "replacement": "Khazzan Gas Asset"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Jebel Ali Marine Terminal",
+    "action": "REPLACE",
+    "replacement": "Duqm Maritime Port Terminal"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "Jebel Ali",
+    "action": "REPLACE",
+    "replacement": "Duqm Industrial Port"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "+971 2 602 1088",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 1088"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "+971 2 602 0045",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 0045"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "+971 2 602 4412",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 4412"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "+971 2 602 2104",
+    "action": "REPLACE",
+    "replacement": "+968 24 602 2104"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "+971",
+    "action": "REPLACE",
+    "replacement": "+968"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE, Oman, KSA",
+    "action": "REPLACE",
+    "replacement": "Sultanate of Oman"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE Concessions",
+    "action": "REPLACE",
+    "replacement": "Oman Industrial Concessions"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE Federal Law",
+    "action": "REPLACE",
+    "replacement": "Oman Royal Decrees & Labour Law"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE federal",
+    "action": "REPLACE",
+    "replacement": "Oman Statutory"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "INC-2026-UAE-",
+    "action": "REPLACE",
+    "replacement": "INC-2026-OMN-"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "CAPA-UAE-",
+    "action": "REPLACE",
+    "replacement": "CAPA-OMN-"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "capa-uae-",
+    "action": "REPLACE",
+    "replacement": "capa-omn-"
+  },
+  {
+    "file": "services/userProfilesExtended.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "MOHRE",
+    "action": "REPLACE",
+    "replacement": "Oman Ministry of Labour"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Emiratisation",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Tawteen",
+    "action": "REPLACE",
+    "replacement": "Omanisation"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "National ICV Program (MoIAT UAE)",
+    "action": "REPLACE",
+    "replacement": "Oman In-Country Value Program (MEM / OIA)"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "ADX_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "DFM_UAE",
+    "action": "REPLACE",
+    "replacement": "MSX_OMAN"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "UAE SCA",
+    "action": "REPLACE",
+    "replacement": "Oman CMA"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "ADX",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "DFM",
+    "action": "REPLACE",
+    "replacement": "MSX"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Tadweer_Bolisat_UAE",
+    "action": "REPLACE",
+    "replacement": "Beah_Manifest_Oman"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Tadweer",
+    "action": "REPLACE",
+    "replacement": "Be'ah (Oman)"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "EWEC",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "DEWA (Dubai)",
+    "action": "REPLACE",
+    "replacement": "Nama Electricity (Oman)"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "DEWA",
+    "action": "REPLACE",
+    "replacement": "Nama Power"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "In AED or OMR",
+    "action": "REPLACE",
+    "replacement": "In OMR"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "UAE Net Zero 2050",
+    "action": "REPLACE",
+    "replacement": "Oman Vision 2040 Decarbonization"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "'UAE'",
+    "action": "REPLACE",
+    "replacement": "'OMAN'"
+  },
+  {
+    "file": "types/esg.ts",
+    "original": "UAE",
+    "action": "REPLACE",
+    "replacement": "Oman"
+  },
+  {
+    "file": "types.ts",
+    "original": "OSHAD_SF",
+    "action": "REPLACE",
+    "replacement": "OMAN_MOL_MD286"
+  },
+  {
+    "file": "types.ts",
+    "original": "OSHAD",
+    "action": "REPLACE",
+    "replacement": "Oman MoL MD 286/2008"
+  },
+  {
+    "file": "types.ts",
+    "original": "oshadFormGSubmittedAt",
+    "action": "REPLACE",
+    "replacement": "molFormSubmittedAt"
+  },
+  {
+    "file": "types.ts",
+    "original": "oshadReference",
+    "action": "REPLACE",
+    "replacement": "molReference"
+  },
+  {
+    "file": "types.ts",
+    "original": "ADNOC_COP",
+    "action": "REPLACE",
+    "replacement": "PDO_SP"
+  },
+  {
+    "file": "types.ts",
+    "original": "ADNOC_Flash_Report",
+    "action": "REPLACE",
+    "replacement": "PDO_Flash_Report"
+  },
+  {
+    "file": "types.ts",
+    "original": "ADNOC",
+    "action": "REPLACE",
+    "replacement": "PDO"
+  },
+  {
+    "file": "types.ts",
+    "original": "FEDERAL_MOHRE",
+    "action": "REPLACE",
+    "replacement": "OMAN_MOL_RD53"
+  },
+  {
+    "file": "types.ts",
+    "original": "DM_CODE",
+    "action": "REPLACE",
+    "replacement": "OMAN_EA"
+  },
+  {
+    "file": "types.ts",
+    "original": "Abu Dhabi",
+    "action": "REPLACE",
+    "replacement": "Muscat"
+  },
+  {
+    "file": "types.ts",
+    "original": "Dubai",
+    "action": "REPLACE",
+    "replacement": "Sohar"
+  },
+  {
+    "file": "types.ts",
+    "original": "AED",
+    "action": "REPLACE",
+    "replacement": "OMR"
+  }
+]

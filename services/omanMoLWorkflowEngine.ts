@@ -1,6 +1,6 @@
 /**
- * OshadWorkflowEngine.ts
- * Automates and enforces OSHAD-SF Mechanisms 1-11 Business Logic.
+ * omanMoLWorkflowEngine.ts
+ * Automates and enforces Oman MoL MD 286/2008 & PDO SP-1143/PR-1172 Business Logic.
  * Operates independently of UI to maintain rigid compliance constraints.
  */
 
@@ -18,9 +18,9 @@ export interface HardGateRequirement {
   missingEvidence: string[];
 }
 
-export class OshadWorkflowEngine {
+export class omanMoLWorkflowEngine {
   
-  // Mechanism 1: Leadership & Management Accountability
+  // Statutory Element 1: Leadership & Management Accountability
   public static generateQuarterlyReviewTasks(tenantId: string, currentHseManagers: string[]) {
     const today = new Date();
     const currentQuarter = Math.floor(today.getMonth() / 3) + 1;
@@ -28,7 +28,7 @@ export class OshadWorkflowEngine {
     // In a real DB, this inserts row records into `workflow_tasks` table
     const tasks = currentHseManagers.map(managerId => ({
       tenant_id: tenantId,
-      mechanism_id: 1, // Mechanism 1
+      mechanism_id: 1, // Element 1
       assigned_to: managerId,
       status: 'PENDING',
       due_date: new Date(today.getFullYear(), currentQuarter * 3, 0), // Last day of quarter
@@ -41,7 +41,7 @@ export class OshadWorkflowEngine {
     return tasks;
   }
 
-  // Mechanism 3: Risk Management (ADNOC 5x5 Matrix Integration)
+  // Statutory Element 3: Risk Management (PDO 5x5 RAM Matrix Integration per SP-1143 / PR-1172)
   public static calculateRisk(probability: number, severity: number): RiskMatrixResult {
     // Both 1 to 5 scale
     const score = probability * severity;
@@ -74,13 +74,13 @@ export class OshadWorkflowEngine {
     const requirements: HardGateRequirement[] = [];
 
     if (actionType === 'SUBMIT_INCIDENT') {
-      // OSHAD Mechanism 11 / Mechanism 7 strict requirements for incident entry
+      // Oman MoL MD 286/2008 / PDO PR-1172 strict requirements for incident entry
       const hasDate = !!providedData.date;
       const hasLocation = !!providedData.location;
       const hasSeverity = !!providedData.severity;
       
       requirements.push({
-        code: 'OSHAD-M7-R1 (Event Details)',
+        code: 'MOL-MD286-R1 (Event Details)',
         isSatisfied: hasDate && hasLocation && hasSeverity,
         missingEvidence: (!hasDate || !hasLocation || !hasSeverity) ? ['Core Metadata'] : []
       });
@@ -88,7 +88,7 @@ export class OshadWorkflowEngine {
       // E.g. If it's a High severity incident, initial photos are a hard gate.
       if (providedData.severity === 'High' || providedData.severity === 'Critical') {
         requirements.push({
-          code: 'OSHAD-M11-R4 (Visual Evidence for Serious Incident)',
+          code: 'PDO-PR1172-R4 (Visual Evidence for Serious Incident)',
           isSatisfied: Array.isArray(providedData.photos) && providedData.photos.length > 0,
           missingEvidence: (!providedData.photos?.length) ? ['Incident Scene Photos'] : []
         });
@@ -101,7 +101,7 @@ export class OshadWorkflowEngine {
     };
   }
 
-  // Mechanism 11: Contractor Pre-qualification Expiry Enforcement
+  // Statutory Contractor Pre-qualification Expiry Enforcement per Oman Labour Law RD 53/2023 & OPAL Unified Standards
   public static assessContractorStatus(complianceDocs: { type: string; expiryDate: string }[]) {
     const today = new Date();
     const alerts: string[] = [];

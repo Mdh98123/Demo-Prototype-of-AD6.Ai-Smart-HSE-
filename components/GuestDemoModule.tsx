@@ -56,13 +56,13 @@ interface CAPA {
 
 // --- Compliance Utilities ---
 const getReportingTimeline = (severity: string) => {
-  if (severity === 'Critical') return '1 Hour (OSHAD-SF Notification required immediately)';
+  if (severity === 'Critical') return '1 Hour (Oman MoL MD 286/2008 & PDO Specifications Notification required immediately)';
   if (severity === 'Major') return '4 Hours (Form E submission within 4h)';
   return '24 Hours (Internal investigation, Form E optional pending assessment)';
 };
 
 // --- Mock Defaults ---
-const adnocChecklistDraft: ChecklistItem[] = [
+const pdoChecklistDraft: ChecklistItem[] = [
   { id: '1', text: 'Permit to Work available and authorized by Site Supervisor?', isCompliant: null, riskWeight: 5 },
   { id: '2', text: 'Lifting equipment SWL visible and current colored tag applied?', isCompliant: null, riskWeight: 4 },
   { id: '3', text: 'All workers utilizing correct task-specific PPE?', isCompliant: null, riskWeight: 3 },
@@ -93,7 +93,7 @@ export const GuestDemoModule: React.FC<{ onExit: () => void }> = ({ onExit }) =>
     description: '',
     witnesses: ''
   });
-  const [checklist, setChecklist] = useSessionState<ChecklistItem[]>('demo_checklist', adnocChecklistDraft);
+  const [checklist, setChecklist] = useSessionState<ChecklistItem[]>('demo_checklist', pdoChecklistDraft);
   const [capas, setCapas] = useSessionState<CAPA[]>('demo_capas', mockCAPAs);
 
   const tx = (arStr: string, enStr: string) => language === 'ar' ? arStr : enStr;
@@ -113,7 +113,7 @@ export const GuestDemoModule: React.FC<{ onExit: () => void }> = ({ onExit }) =>
     const doc = new jsPDF();
     doc.setFontSize(22);
     doc.setTextColor(30, 58, 138); // Blue
-    doc.text('OSHAD Incident Report (Demo)', 14, 20);
+    doc.text('Oman MoL MD 286/2008 Incident Report (Demo)', 14, 20);
     
     doc.setFontSize(10);
     doc.setTextColor(100);
@@ -210,7 +210,7 @@ export const GuestDemoModule: React.FC<{ onExit: () => void }> = ({ onExit }) =>
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <div>
                       <h2 className="text-2xl font-black text-slate-800 tracking-tight">{tx('سجل حادث جديد', 'Log New Incident')}</h2>
-                      <p className="text-xs text-slate-500 font-medium mt-1">{tx('الامتثال لمتطلبات OSHAD الآلية', 'Automated OSHAD compliance categorization')}</p>
+                      <p className="text-xs text-slate-500 font-medium mt-1">{tx('الامتثال لمتطلبات Oman MoL MD 286/2008 الآلية', 'Automated Oman MoL MD 286/2008 compliance categorization')}</p>
                     </div>
                     <button onClick={handleReportPDF} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-md transition-colors w-full sm:w-auto justify-center">
                       <Download size={16} /> {tx('تصدير كـ PDF', 'Export Report PDF')}
@@ -227,7 +227,7 @@ export const GuestDemoModule: React.FC<{ onExit: () => void }> = ({ onExit }) =>
                         <input type="text" placeholder={tx('مثال: المنطقة ب المستودع', 'e.g. Zone B Warehouse')} value={incidentData.location} onChange={e => setIncidentData(p => ({...p, location: e.target.value}))} className="w-full glass-panel border-2 border-slate-100 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 focus:glass-card transition-all font-bold text-slate-700" />
                     </div>
                     <div className="space-y-2 md:col-span-2">
-                        <label className="text-[11px] font-black uppercase text-slate-500 tracking-widest">{tx('الشدة (حسب OSHAD)', 'Severity (OSHAD CoP)')}</label>
+                        <label className="text-[11px] font-black uppercase text-slate-500 tracking-widest">{tx('الشدة (حسب Oman MoL MD 286/2008)', 'Severity (PDO SP-1143)')}</label>
                         <div className="flex flex-wrap gap-3">
                           {['Minor', 'Major', 'Critical'].map(sev => (
                             <button 
@@ -275,7 +275,7 @@ export const GuestDemoModule: React.FC<{ onExit: () => void }> = ({ onExit }) =>
                     <div className="mb-8">
                        <div className="flex items-center gap-3 mb-2">
                           <h2 className="text-2xl font-black text-slate-800 tracking-tight">{tx('قائمة تفتيش المواقع', 'Site Compliance Checklist')}</h2>
-                          <span className="px-2 py-0.5 bg-teal-100 text-teal-800 text-[10px] font-black uppercase tracking-widest rounded">ADNOC CoP 7.3</span>
+                          <span className="px-2 py-0.5 bg-teal-100 text-teal-800 text-[10px] font-black uppercase tracking-widest rounded">PDO SP-1143 Specification 7.3</span>
                        </div>
                        <p className="text-xs text-slate-500 font-medium">{tx('تقييم مقيس حسب المخاطر - اضغط للإجابة', 'Risk-weighted assessment matrix. Tap to evaluate.')}</p>
                     </div>

@@ -146,7 +146,7 @@ export const CAPAModule: React.FC = () => {
             CAPA Management & Closed-Loop Remediation
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            ISO 45001 / OSHAD-SF compliant corrective and preventive action ledger across Oman, UAE & KSA operations.
+            ISO 45001 / Oman MoL MD 286/2008 & PDO Specifications compliant corrective and preventive action ledger across Oman, Oman & KSA operations.
           </p>
         </div>
 
@@ -274,7 +274,7 @@ export const CAPAModule: React.FC = () => {
           >
             <option value="ALL">All 3 GCC Sites</option>
             <option value="Fahud-West">Fahud-West Gas Station (Oman)</option>
-            <option value="Al-Ruwais">Al-Ruwais Polyolefin Asset (UAE)</option>
+            <option value="Mina Al Fahal">Mina Al Fahal Refinery & Petrochemical Asset (Oman)</option>
             <option value="Ras Al-Khair">Ras Al-Khair Facility (KSA)</option>
           </select>
 

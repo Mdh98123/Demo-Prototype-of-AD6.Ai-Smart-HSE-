@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, CartesianGrid } from 'recharts';
 
-const KEZAD_LIMITS = {
+const SOHAR_FREEZONE_LIMITS = {
     SO2_24H: 150, // ug/m3
     CO_1H: 30, // mg/m3
     NOISE_DAY: 85 // dB
@@ -16,21 +16,21 @@ const KEZAD_LIMITS = {
 const EnvironmentalModule: React.FC = () => {
   // Mocking real-time sensor data that includes a breach
   const [readings] = useState<EnvironmentalReading[]>([
-    { id: '1', type: 'Air Quality', value: 38, unit: 'unit', location: 'Habshan Gas Complex', timestamp: '2026-06-21T12:52:04.348Z', status: 'Threshold Breach' },
-    { id: '2', type: 'Waste Volume', value: 14, unit: 'unit', location: 'Abu Dhabi HQ', timestamp: '2026-05-31T20:07:41.265Z', status: 'Threshold Breach' },
-    { id: '3', type: 'Waste Volume', value: 48, unit: 'unit', location: 'Ruwais Refinery Complex', timestamp: '2026-07-06T16:34:30.072Z', status: 'Within Limit' },
-    { id: '4', type: 'Waste Volume', value: 52, unit: 'unit', location: 'Jebel Ali Construction Site', timestamp: '2026-04-28T14:42:54.102Z', status: 'Threshold Breach' },
-    { id: '5', type: 'Noise Level', value: 84, unit: 'unit', location: 'Ruwais Refinery Complex', timestamp: '2026-05-06T01:38:48.428Z', status: 'Threshold Breach' },
-    { id: '6', type: 'Waste Volume', value: 23, unit: 'unit', location: 'Ruwais Refinery Complex', timestamp: '2026-05-11T06:58:27.196Z', status: 'Within Limit' },
+    { id: '1', type: 'Air Quality', value: 38, unit: 'unit', location: 'Khazzan Tight Gas Complex Block 61', timestamp: '2026-06-21T12:52:04.348Z', status: 'Threshold Breach' },
+    { id: '2', type: 'Waste Volume', value: 14, unit: 'unit', location: 'Muscat HQ', timestamp: '2026-05-31T20:07:41.265Z', status: 'Threshold Breach' },
+    { id: '3', type: 'Waste Volume', value: 48, unit: 'unit', location: 'Mina Al Fahal Refinery Complex', timestamp: '2026-07-06T16:34:30.072Z', status: 'Within Limit' },
+    { id: '4', type: 'Waste Volume', value: 52, unit: 'unit', location: 'Duqm Industrial Port Construction Site', timestamp: '2026-04-28T14:42:54.102Z', status: 'Threshold Breach' },
+    { id: '5', type: 'Noise Level', value: 84, unit: 'unit', location: 'Mina Al Fahal Refinery Complex', timestamp: '2026-05-06T01:38:48.428Z', status: 'Threshold Breach' },
+    { id: '6', type: 'Waste Volume', value: 23, unit: 'unit', location: 'Mina Al Fahal Refinery Complex', timestamp: '2026-05-11T06:58:27.196Z', status: 'Within Limit' },
     { id: '7', type: 'Waste Volume', value: 33, unit: 'unit', location: 'Musaffah Industrial Zone', timestamp: '2026-07-11T02:33:41.323Z', status: 'Threshold Breach' },
     { id: '8', type: 'Waste Volume', value: 85, unit: 'unit', location: 'Musaffah Industrial Zone', timestamp: '2026-06-05T11:22:49.382Z', status: 'Threshold Breach' },
     { id: '9', type: 'Noise Level', value: 80, unit: 'unit', location: 'Musaffah Industrial Zone', timestamp: '2026-06-28T00:30:24.220Z', status: 'Within Limit' },
-    { id: '10', type: 'Noise Level', value: 49, unit: 'unit', location: 'Habshan Gas Complex', timestamp: '2026-06-23T13:22:57.757Z', status: 'Within Limit' },
-    { id: '11', type: 'Noise Level', value: 0, unit: 'unit', location: 'Abu Dhabi HQ', timestamp: '2026-05-25T14:43:47.154Z', status: 'Threshold Breach' },
-    { id: '12', type: 'Waste Volume', value: 10, unit: 'unit', location: 'Ruwais Refinery Complex', timestamp: '2026-05-12T21:35:19.548Z', status: 'Within Limit' },
-    { id: '13', type: 'Water Quality', value: 33, unit: 'unit', location: 'Abu Dhabi HQ', timestamp: '2026-05-17T03:37:30.878Z', status: 'Within Limit' },
+    { id: '10', type: 'Noise Level', value: 49, unit: 'unit', location: 'Khazzan Tight Gas Complex Block 61', timestamp: '2026-06-23T13:22:57.757Z', status: 'Within Limit' },
+    { id: '11', type: 'Noise Level', value: 0, unit: 'unit', location: 'Muscat HQ', timestamp: '2026-05-25T14:43:47.154Z', status: 'Threshold Breach' },
+    { id: '12', type: 'Waste Volume', value: 10, unit: 'unit', location: 'Mina Al Fahal Refinery Complex', timestamp: '2026-05-12T21:35:19.548Z', status: 'Within Limit' },
+    { id: '13', type: 'Water Quality', value: 33, unit: 'unit', location: 'Muscat HQ', timestamp: '2026-05-17T03:37:30.878Z', status: 'Within Limit' },
     { id: '14', type: 'Air Quality', value: 97, unit: 'unit', location: 'Musaffah Industrial Zone', timestamp: '2026-07-09T06:44:31.580Z', status: 'Within Limit' },
-    { id: '15', type: 'Noise Level', value: 73, unit: 'unit', location: 'Ruwais Refinery Complex', timestamp: '2026-05-07T22:18:04.354Z', status: 'Within Limit' }
+    { id: '15', type: 'Noise Level', value: 73, unit: 'unit', location: 'Mina Al Fahal Refinery Complex', timestamp: '2026-05-07T22:18:04.354Z', status: 'Within Limit' }
   ]);
 
   const mockHistory = [
@@ -66,7 +66,7 @@ const EnvironmentalModule: React.FC = () => {
               <Activity className="text-red-600 mb-4" size={32}/>
               <span className="text-[10px] font-black text-red-400 uppercase tracking-widest">Noise Level</span>
               <div className="text-3xl font-black text-red-700">88<span className="text-xs ms-1">dB</span></div>
-              <p className="text-[10px] text-red-600 font-black mt-2 uppercase flex items-center gap-1"><AlertTriangle size={12}/> Critical &gt; {KEZAD_LIMITS.NOISE_DAY}dB</p>
+              <p className="text-[10px] text-red-600 font-black mt-2 uppercase flex items-center gap-1"><AlertTriangle size={12}/> Critical &gt; {SOHAR_FREEZONE_LIMITS.NOISE_DAY}dB</p>
           </div>
           <div className="glass-card p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center text-center">
               <Droplets className="text-teal-500 mb-4" size={32}/>
@@ -101,7 +101,7 @@ const EnvironmentalModule: React.FC = () => {
           </div>
           <div className="lg:col-span-4 space-y-6">
               <div className="glass-card p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
-                  <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">KEZAD Violations</h3>
+                  <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">Sohar Freezone Violations</h3>
                   <div className="space-y-4">
                       {readings.filter(r => r.status !== 'Within Limit').map(r => (
                           <div key={r.id} className="p-4 bg-red-50 rounded-2xl border-2 border-red-100">

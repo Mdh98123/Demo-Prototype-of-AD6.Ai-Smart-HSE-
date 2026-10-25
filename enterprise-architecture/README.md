@@ -1,11 +1,11 @@
 # Enterprise HSE Platform - Comprehensive Architecture Specifications
 
-This repository contains the production-ready specifications, code scaffolds, configuration files, and architectural documentation implementing the full HSE platform vision for the UAE/GCC market.
+This repository contains the production-ready specifications, code scaffolds, configuration files, and architectural documentation implementing the full HSE platform vision for the Oman/GCC market.
 
 ## Included Artifacts
 
 ### 0. Foundational Blueprint & Prototype Gap Analysis
-*   **`00_Enterprise_HSE_Operations_Platform_Blueprint.md`**: The master architectural blueprint, GCC regulatory framework (Oman, UAE, KSA, Qatar, Bahrain, Kuwait), prototype gap analysis (GAP-01 through GAP-12), and engineering transformation roadmap for enterprise-grade HSE operations across high-consequence industries.
+*   **`00_Enterprise_HSE_Operations_Platform_Blueprint.md`**: The master architectural blueprint, GCC regulatory framework (Oman, Oman, KSA, Qatar, Bahrain, Kuwait), prototype gap analysis (GAP-01 through GAP-12), and engineering transformation roadmap for enterprise-grade HSE operations across high-consequence industries.
 
 ### 1. Database & Security
 *   **`01_Database_Schema_RLS.prisma`**: Defines the core relational data model utilizing PostgreSQL. Crucially, it documents the integration of Row-Level Security (RLS) necessary for strict data residency and multi-tenancy as mandated by KSA SACS-002.
@@ -15,7 +15,7 @@ This repository contains the production-ready specifications, code scaffolds, co
 *   **`07_Kafka_Event_Schema.json`**: JSON Schema defining the asynchronous event payload structure for the Kafka/RabbitMQ event-driven backbone, ensuring reliable cross-module communication.
 
 ### 3. Compliance & Governance
-*   **`03_Compliance_Mapping.md`**: Directly maps the technological implementations (e.g., PostGIS SIMOPS, RLS, TLS 1.3) to the regional regulatory requirements (ADOSH-SF, ADNOC HSE-MS, SACS-002, UAE IA Standard v2.0).
+*   **`03_Compliance_Mapping.md`**: Directly maps the technological implementations (e.g., PostGIS SIMOPS, RLS, TLS 1.3) to the regional regulatory requirements (Oman MoL MD 286/2008, PDO HSE-MS, SACS-002, Oman National Cybersecurity Framework).
 
 ### 4. Artificial Intelligence & Analytics
 *   **`04_AI_Architecture.md`**: Breaks down the three distinct AI tiers: Edge AI (<300ms computer vision), Generative AI (RAG-based Copilot for HIRA/Method Statements), and Predictive Analytics (Wearable IoT forward modeling).

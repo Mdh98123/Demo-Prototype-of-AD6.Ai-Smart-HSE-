@@ -170,7 +170,7 @@ export const PredictiveMaintenanceModule: React.FC = () => {
       id: `EQ-${Math.floor(100 + Math.random() * 900)}`,
       name: '',
       type: 'Compressor',
-      location: 'Ruwais Polyolefin Unit · Sector 4',
+      location: 'Mina Al Fahal Polyolefin Unit · Sector 4',
       operationalHours: '4500',
       lastMaintenanceDate: new Date().toISOString().split('T')[0],
       temperature: '62.0',
@@ -985,7 +985,7 @@ export const PredictiveMaintenanceModule: React.FC = () => {
                       type="text"
                       value={equipmentForm.location}
                       onChange={(e) => setEquipmentForm({ ...equipmentForm, location: e.target.value })}
-                      placeholder="e.g. Ruwais Polyolefin Asset · Area 4"
+                      placeholder="e.g. Mina Al Fahal Polyolefin Asset · Area 4"
                       className={`w-full px-3.5 py-2.5 rounded-xl border text-xs font-semibold transition-all ${
                         equipmentValidation.fieldStates.location?.isValid === false
                           ? 'border-red-400 bg-red-50/50 focus:ring-2 focus:ring-red-400'
@@ -1416,7 +1416,7 @@ export const PredictiveMaintenanceModule: React.FC = () => {
                 />
               </div>
 
-              {/* Mandatory LOTO Check per OSHAD CoP 14.0 */}
+              {/* Mandatory LOTO Check per PDO SP-1231.0 */}
               <div className={`p-4 rounded-2xl border transition-all ${
                 workOrderValidation.fieldStates.lotoRequired?.isValid === false
                   ? 'border-red-300 bg-red-50/60'
@@ -1432,7 +1432,7 @@ export const PredictiveMaintenanceModule: React.FC = () => {
                   <div className="text-xs">
                     <span className="font-bold text-slate-900 flex items-center gap-1.5">
                       <Lock size={12} className="text-amber-600" />
-                      Lockout / Tagout (LOTO) Energy Isolation Required (OSHA 1910.147 / OSHAD CoP 14.0)
+                      Lockout / Tagout (LOTO) Energy Isolation Required (OSHA 1910.147 / PDO SP-1231.0)
                     </span>
                     <p className="text-[11px] text-slate-500 mt-0.5">
                       Mandatory if equipment has status 'Critical', temperature &gt;85°C, or hazardous rotating components.

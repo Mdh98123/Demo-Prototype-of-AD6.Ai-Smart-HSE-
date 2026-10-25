@@ -33,7 +33,7 @@ export const ComplianceScorecards: React.FC = () => {
             Enterprise Statutory Compliance Scorecard
           </h3>
           <p className="text-xs text-slate-300 max-w-xl mt-1">
-            Standardized index measuring alignment against OSHAD-SF, UAE MoHRE, Civil Defence, and Oman Ministry of Labour standards across all active operating concessions.
+            Standardized index measuring alignment against Oman MoL MD 286/2008 & PDO Specifications, Oman Ministry of Labour (MoL), Civil Defence, and Oman Ministry of Labour standards across all active operating concessions.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export const ComplianceScorecards: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-xs">
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
             <span className="text-[10px] font-black uppercase text-slate-400 block tracking-wider">
-              1. Labor & MoHRE Law
+              1. Labor & Ministry of Labour (MoL) Law
             </span>
             <div className="text-2xl font-black text-slate-800">{selectedFacility.laborScore}%</div>
             <p className="text-[10px] text-slate-500 font-medium">Midday ban, wages protection & thermal welfare.</p>

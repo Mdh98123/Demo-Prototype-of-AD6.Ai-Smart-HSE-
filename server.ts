@@ -84,7 +84,7 @@ async function startServer() {
   // Enterprise Gemini AI Suite Router (Chat, Grounding, Maps, Transcription)
   app.use("/api/gemini", geminiRouter);
 
-  // Predictive Maintenance & Asset Integrity Validation Router (ISO 10816, API 670, OSHAD CoP 14)
+  // Predictive Maintenance & Asset Integrity Validation Router (ISO 10816, API 670, PDO SP-1231 & MD 286/2008)
   app.use("/api/predictive-maintenance", predictiveMaintenanceRouter);
 
   // GCC Enterprise Procurement - Security Headers & Hardening (Mozilla Observatory A+)
@@ -316,7 +316,7 @@ async function startServer() {
   });
 
   // Statutory Compliance API Connector (Oman Regulatory Gateway)
-  app.get("/api/oshad/risk/:riskId", async (req, res) => {
+  app.get(["/api/regulatory/risk/:riskId", "/api/regional/risk/:riskId"], async (req, res) => {
     const { riskId } = req.params;
     res.json({
         id: riskId,

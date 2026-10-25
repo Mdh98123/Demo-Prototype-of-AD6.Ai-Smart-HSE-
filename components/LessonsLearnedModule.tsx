@@ -17,7 +17,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-001',
         title: 'Confined Space Ventilation Failure at Tank 42',
         module: 'Permit to Work',
-        tags: ['Confined Space', 'Ventilation', 'Gas Testing', 'Ruwais'],
+        tags: ['Confined Space', 'Ventilation', 'Gas Testing', 'Mina Al Fahal'],
         date: '2026-03-15',
         summary: 'Primary ventilation fan failed mid-operation due to breaker trip. Standby blower was not staged within line of sight.',
         keyTakeaway: 'Always stage a secondary spark-proof pneumatic ventilation unit within 25m of active vessel manways with dual-circuit electrical supply.'
@@ -26,7 +26,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-002',
         title: 'Scaffold Tagging Discrepancy during Shift Handover',
         module: 'Safety Audits',
-        tags: ['Working at Height', 'Scaffolding', 'Contractor', 'Habshan'],
+        tags: ['Working at Height', 'Scaffolding', 'Contractor', 'Khazzan Gas Asset'],
         date: '2026-03-22',
         summary: 'Scaffold was modified by night crew but the green tag remained active, leading to pipefitters accessing an unbraced cantilever.',
         keyTakeaway: 'Implement dual-signature digital barcode handover protocol; any physical alteration automatically invalidates the permit.'
@@ -53,7 +53,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-005',
         title: 'Arc Flash Hazard During 33kV Grounding Stick Misalignment',
         module: 'Electrical Safety',
-        tags: ['Electrical', 'Arc Flash', 'NFPA 70E', 'Ruwais'],
+        tags: ['Electrical', 'Arc Flash', 'NFPA 70E', 'Mina Al Fahal'],
         date: '2026-04-03',
         summary: 'Technician reached across de-energized cubicle busbar without verifying zero potential on adjacent bus tie.',
         keyTakeaway: 'Enforce physical interlock barriers on adjacent energized sections and calibrate non-contact voltage test wands prior to touch.'
@@ -62,7 +62,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-006',
         title: 'Acid Transfer Hose Burst Due to Wrong Elastomer Gasket',
         module: 'Chemical Safety',
-        tags: ['Chemicals', 'COSHH', 'Material Compatibility', 'Jebel Ali'],
+        tags: ['Chemicals', 'COSHH', 'Material Compatibility', 'Duqm Industrial Port'],
         date: '2026-04-05',
         summary: 'Buna-N rubber seal installed instead of PTFE Viton on 32% HCl delivery pump skid, dissolving within 4 hours of transfer.',
         keyTakeaway: 'Implement laser-etched color-coded camlock couplings matched strictly to chemical compatibility charts with barcoded hose tagging.'
@@ -80,7 +80,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-008',
         title: 'Midday Heat Stroke During Fast-Track Slab Concrete Pour',
         module: 'Occupational Health',
-        tags: ['Heat Stress', 'WBGT', 'MOHRE Midday Break', 'Ras Al Khair'],
+        tags: ['Heat Stress', 'WBGT', 'Oman Ministry of Labour Midday Break', 'Ras Al Khair'],
         date: '2026-04-09',
         summary: 'Three finishers suffered heat cramps and confusion after continuing slab troweling past 12:30 PM under 43°C ambient temperature.',
         keyTakeaway: 'Continuous electronic wet-bulb globe temperature (WBGT) telemetry; automatic work stoppage alarm triggered when WBGT reaches 32°C.'
@@ -89,7 +89,7 @@ const MOCK_LESSONS: Lesson[] = [
         id: 'LL-009',
         title: 'Uncontrolled Nitrogen Purging Pocket in Low-Point Valve Pit',
         module: 'Hazard Management',
-        tags: ['Asphyxiation', 'Nitrogen', 'Confined Space', 'Habshan'],
+        tags: ['Asphyxiation', 'Nitrogen', 'Confined Space', 'Khazzan Gas Asset'],
         date: '2026-04-11',
         summary: 'Nitrogen gas bled into open concrete sump pit displacing oxygen to 14.2%; worker stepped down ladder without gas monitor.',
         keyTakeaway: 'Treat any open depression deeper than 1.2m as a confined space whenever inert purge lines are active within 15m radius.'

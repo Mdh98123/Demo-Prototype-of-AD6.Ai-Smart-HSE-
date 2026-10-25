@@ -25,7 +25,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
   - `/components/BowtieAnalysisTool.tsx` (Barrier risk modeling)
   - `/services/enterpriseDataStore.ts` (CRUD, persistence, event dispatching)
   - `/services/demoDataLoader.ts` (`GULF_ENERGY_INCIDENTS` seed data)
-  - `/services/gccStatutoryReportingService.ts` (UAE Form G & Oman 24h statutory notices)
+  - `/services/gccStatutoryReportingService.ts` (Oman Form G & Oman 24h statutory notices)
 - **Route / Nav Entry:** `View.INCIDENTS` (`/incidents`), `View.INCIDENT_MANAGEMENT`
 - **Current Data Source:** `EnterpriseDataStore`, `DemoDataLoader.GULF_ENERGY_INCIDENTS`, dual-key storage
 - **Storage Type:** Persisted in `localStorage` (`ad6_incidents` & `ad6_enterprise_incidents`); real-time broadcast via WebSocket (`io.emit('incidentUpdate')` in `/server.ts`)
@@ -92,7 +92,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
   - `/services/simopsService.ts` (Haversine formula, 50m conflict radius, hazard clash matrix)
   - `/components/controlOfWork/SimopsClashModal.tsx` (Interactive collision warning and mitigation modal)
   - `/components/GISMapModule.tsx` (Spatial visualization of overlapping permit zones)
-- **Route / Nav Entry:** `View.ADNOC_OSHAD` (SIMOPS Matrix), integrated into `ControlOfWorkModule.tsx`
+- **Route / Nav Entry:** `View.PDO_Oman MoL` (SIMOPS Matrix), integrated into `ControlOfWorkModule.tsx`
 - **Current Data Source:** Active permit locations and coordinates from `EnterpriseDataStore`
 - **Storage Type:** Computed dynamically in-memory from stored permits
 - **Implementation Status:** Functional mathematical algorithm
@@ -109,14 +109,14 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
   - `/components/audit/AuditDashboard.tsx`, `/components/audit/AuditExecution.tsx`
   - `/components/audit/AuditFindings.tsx`, `/components/audit/AuditPlanner.tsx`
   - `/components/audit/AuditReports.tsx`, `/components/audit/ChecklistEngine.tsx`
-  - `/components/audit/AuditMockData.ts` (ISO 45001, OSHAD-SF, ADNOC protocols)
+  - `/components/audit/AuditMockData.ts` (ISO 45001, Oman MoL MD 286/2008, PDO protocols)
 - **Route / Nav Entry:** `View.AUDITS`, `View.SAFETY_AUDIT`
 - **Current Data Source:** `AuditMockData.ts`, `localStorage`
 - **Storage Type:** In-memory with `localStorage` persistence
 - **Implementation Status:** Functional (Audit schedules, finding severity grading, non-conformance logging)
 - **Dependencies:** `lucide-react`, `AuditTypes.ts`, `AuditMockData.ts`
 - **Known Limitations:** External auditor portal authentication is currently integrated into the single tenant space.
-- **Preservation Strategy:** Retain ISO 45001 / OSHAD-SF / ADNOC audit protocols, finding severity grading, and checklist engines.
+- **Preservation Strategy:** Retain ISO 45001 / Oman MoL MD 286/2008 / PDO audit protocols, finding severity grading, and checklist engines.
 
 ---
 
@@ -206,7 +206,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 ### 2.12 Document Management System (DMS)
 - **Feature Name:** Controlled HSE Document Register & Policies
 - **File Paths:**
-  - `/components/DMSModule.tsx` (Document tree, version tracking, approval workflow, OSHAD manuals)
+  - `/components/DMSModule.tsx` (Document tree, version tracking, approval workflow, Oman MoL manuals)
 - **Route / Nav Entry:** `View.DMS`
 - **Current Data Source:** In-memory repository with `localStorage` overrides
 - **Storage Type:** In-memory / `localStorage`
@@ -240,7 +240,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Feature Name:** Cross-Border Regulatory Knowledge Retrieval
 - **File Paths:**
   - `/services/ragOrchestrator.ts` (Hybrid vector/keyword similarity search)
-  - `/services/ragDataPipeline.ts` (Codified chunks of OSHAD-SF, UAE Labor Law, Oman RD 53/2023, PDO SP-1143)
+  - `/services/ragDataPipeline.ts` (Codified chunks of Oman MoL MD 286/2008, Oman Labor Law, Oman RD 53/2023, PDO SP-1143)
   - `/services/regulatoryIntelligenceService.ts` (Live regulatory bulletins)
   - `/components/regulatory/LiveRegulatoryNoticeBoard.tsx`
 - **Route / Nav Entry:** `View.COMPLIANCE_INTELLIGENCE`, embedded in `ComplianceAssistant.tsx`
@@ -249,7 +249,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Implementation Status:** Functional (Cosine similarity calculation and statutory citation injection)
 - **Dependencies:** `ragDataPipeline.ts`, `ragOrchestrator.ts`
 - **Known Limitations:** Static pre-compiled vector chunks; external web scraping is handled via server Google Search grounding.
-- **Preservation Strategy:** Maintain UAE and Oman statutory corpus chunks and cross-border citation formatting.
+- **Preservation Strategy:** Maintain Oman and Oman statutory corpus chunks and cross-border citation formatting.
 
 ---
 
@@ -291,7 +291,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **File Paths:**
   - `/components/GISMapModule.tsx` (Interactive Leaflet map, layer toggles, permit clusters, hazard heatmaps)
 - **Route / Nav Entry:** `View.GIS_MAP`
-- **Current Data Source:** Real coordinates for Ruwais, Fahud, Mina Zayed, and Ras Al-Khair concessions from `TenantContext.tsx` and `demoDataLoader.ts`
+- **Current Data Source:** Real coordinates for Mina Al Fahal, Fahud, Mina Zayed, and Ras Al-Khair concessions from `TenantContext.tsx` and `demoDataLoader.ts`
 - **Storage Type:** In-memory with reactive updates from `EnterpriseDataStore`
 - **Implementation Status:** Functional (Interactive pan/zoom, layer filtering, SIMOPS permit radius circles, heat stress weather overlays)
 - **Dependencies:** `leaflet`, `react-leaflet`, `leaflet.heat`, `lucide-react`
@@ -360,7 +360,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Route / Nav Entry:** Global Header Language Switcher (EN / AR)
 - **Current Data Source:** Built-in translation dictionaries in `/src/i18n/config.ts`
 - **Storage Type:** Persisted in `localStorage` (`ad6_language`)
-- **Implementation Status:** Functional (Full UI RTL mirroring, typography switching to Dubai/Arabic fonts, Hijri/Gregorian dual date conversion)
+- **Implementation Status:** Functional (Full UI RTL mirroring, typography switching to Sohar/Arabic fonts, Hijri/Gregorian dual date conversion)
 - **Dependencies:** `i18next`, `react-i18next`, `i18next-browser-languagedetector`
 - **Known Limitations:** Advanced Arabic NLP sentiment analysis uses lightweight client heuristics when offline.
 - **Preservation Strategy:** Preserve bidirectional CSS layouts, all translation dictionary keys, and `HijriDatePicker` algorithms.
@@ -373,11 +373,11 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
   - `/components/Dashboard.tsx` (Operational dashboard)
   - `/components/ComplianceDashboard.tsx` (Statutory compliance status)
   - `/components/system/ExecutiveDashboard.tsx` (C-Suite & Board directorate KPIs: TRIR, LTIFR, 12M trends)
-  - `/components/AdnocOshadDashboard.tsx` (ADNOC CoP & OSHAD compliance scorecard)
+  - `/components/pdoomanMoLDashboard.tsx` (PDO SP-1143 & Oman MoL compliance scorecard)
 - **Route / Nav Entry:** `View.DASHBOARD`, `View.EXECUTIVE_DASHBOARD`, `View.EXECUTIVE_COMMAND_CENTER`
 - **Current Data Source:** Dynamic mathematical aggregation of `EnterpriseDataStore` incidents and safe hours
 - **Storage Type:** In-memory aggregation of persisted records
-- **Implementation Status:** Functional (Zero hardcoded values; OSHA 1904 / OSHAD-SF compliant TRIR & LTIFR formulas)
+- **Implementation Status:** Functional (Zero hardcoded values; OSHA 1904 / Oman MoL MD 286/2008 compliant TRIR & LTIFR formulas)
 - **Dependencies:** `recharts`, `enterpriseDataStore.ts`, `lucide-react`
 - **Known Limitations:** Historical data beyond the seeded period is calculated based on entered records.
 - **Preservation Strategy:** Strictly retain formula calculations:
@@ -391,7 +391,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **File Paths:**
   - `/services/ReportEngine.ts` (Executive PDF reports)
   - `/services/ProcurementExport.ts` (Procurement and tender safety compliance dossiers)
-  - `/services/oshadReportGenerator.ts` (Abu Dhabi OSHAD Form G & quarterly performance returns)
+  - `/services/omanMoLReportGenerator.ts` (Muscat Oman MoL Form G & quarterly performance returns)
   - `/services/gccStatutoryReportingService.ts` (Oman Ministry of Labour & Civil Defence notifications)
 - **Route / Nav Entry:** Triggered via "Export Report" / "Download PDF" buttons across all modules
 - **Current Data Source:** Live application data stores
@@ -399,12 +399,12 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Implementation Status:** Functional (High-fidelity vector PDF generation with auto-table formatting and corporate headers)
 - **Dependencies:** `jspdf`, `jspdf-autotable`
 - **Known Limitations:** Complex multi-page charts render as table data summaries in exported PDFs.
-- **Preservation Strategy:** Retain all statutory template layouts (UAE Form G, Form E, Oman MD 286/2008 format).
+- **Preservation Strategy:** Retain all statutory template layouts (Oman Form G, Form E, Oman MD 286/2008 format).
 
 ---
 
 ### 2.24 Multi-Jurisdiction Regulatory Governance
-- **Feature Name:** Cross-Border Regulatory Governance (UAE, Oman, Combined)
+- **Feature Name:** Cross-Border Regulatory Governance (Oman, Oman, Combined)
 - **File Paths:**
   - `/contexts/RegionalComplianceContext.tsx` (Global multi-jurisdiction context)
   - `/components/regulatory/JurisdictionSelectorDropdown.tsx` (Header dropdown selector)
@@ -418,7 +418,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Implementation Status:** Functional (Switching jurisdictions instantly adapts active legal frameworks, heat stress rest rules, and currency symbols across all modules)
 - **Dependencies:** `RegionalComplianceContext`, `server.ts`
 - **Known Limitations:** Changing mode requires ADMIN role; client prompts for change reason.
-- **Preservation Strategy:** Keep the 3 modes (`UAE`, `OMAN`, `COMBINED`) and all legal citations (OSHAD-SF v3.1, Oman RD 53/2023, PDO SP-1143, PDO SP-1170).
+- **Preservation Strategy:** Keep the 3 modes (`Oman`, `OMAN`, `COMBINED`) and all legal citations (Oman MoL MD 286/2008 & PDO Specifications, Oman RD 53/2023, PDO SP-1143, PDO SP-1170).
 
 ---
 
@@ -506,7 +506,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Implementation Status:** Functional (Switching site updates live weather, heat stress index, active permit counts, and concession boundary layers)
 - **Dependencies:** `TenantContext.tsx`, `EnterpriseGlobalHeader.tsx`
 - **Known Limitations:** Multi-tenancy operates via client context isolation; cross-tenant backend database isolation is specified in `/enterprise-architecture/01_Database_Schema_RLS.prisma`.
-- **Preservation Strategy:** Retain the 3 flagship sites (Fahud-West OMN-FHD-02, Al-Ruwais Polyolefin UAE-RUW-03, Ras Al-Khair KSA-RAK-01) and reactive change listeners.
+- **Preservation Strategy:** Retain the 3 flagship sites (Fahud-West OMN-FHD-02, Al-Mina Al Fahal Polyolefin OMN-MAF-01, Ras Al-Khair KSA-RAK-01) and reactive change listeners.
 
 ---
 
@@ -525,18 +525,18 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 
 ---
 
-### 2.31 Digital Forms & OSHAD Workflow Designer
-- **Feature Name:** Drag-and-Drop Digital Forms & OSHAD Mechanism Designer
+### 2.31 Digital Forms & Oman MoL Workflow Designer
+- **Feature Name:** Drag-and-Drop Digital Forms & Oman MoL Mechanism Designer
 - **File Paths:**
   - `/components/DigitalFormsBuilderModule.tsx` (Form designer with field canvas)
-  - `/components/oshad/OshadWorkflowDesigner.tsx` (OSHAD Mechanism 1 to 11 enforcement workflow builder)
+  - `/components/omanMoL/omanMoLWorkflowDesigner.tsx` (Oman MoL Mechanism 1 to 11 enforcement workflow builder)
 - **Route / Nav Entry:** `View.FORMS_BUILDER`
 - **Current Data Source:** In-memory form schemas with `localStorage` export
 - **Storage Type:** In-memory / `localStorage`
 - **Implementation Status:** Functional (Custom form builder with text, number, select, date, signature, and photo fields)
 - **Dependencies:** `lucide-react`, `framer-motion`
 - **Known Limitations:** Form response aggregation is scoped to the client session.
-- **Preservation Strategy:** Retain the OSHAD Mechanism 1-11 workflow sequence and form field types.
+- **Preservation Strategy:** Retain the Oman MoL Mechanism 1-11 workflow sequence and form field types.
 
 ---
 
@@ -544,7 +544,7 @@ Under the **Non-Negotiable Preservation Contract**, developers, agents, and arch
 - **Feature Name:** MOC Risk Governance & ComplyFlow Statutory Register
 - **File Paths:**
   - `/components/MOCModule.tsx` (Permanent/temporary process modifications, pre-commissioning safety review)
-  - `/components/ComplyFlowModule.tsx` (Legal compliance obligations register, UAE & Oman statutory cross-reference)
+  - `/components/ComplyFlowModule.tsx` (Legal compliance obligations register, Oman & Oman statutory cross-reference)
 - **Route / Nav Entry:** `View.MOC`, `View.COMPLY_FLOW`
 - **Current Data Source:** In-memory registers with `localStorage` backing
 - **Storage Type:** In-memory / `localStorage`

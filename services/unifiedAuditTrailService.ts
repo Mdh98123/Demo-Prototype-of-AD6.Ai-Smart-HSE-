@@ -92,7 +92,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 1,
     timestamp: '2026-10-01T06:00:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     actor: {
       userId: 'usr-khalid-dhaheri',
       userName: 'Khalid Al-Dhaheri',
@@ -105,14 +105,14 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     entityId: 'TENANT-GE-01',
     entityTitle: 'Gulf Energy Q4 Concession Setup',
     previousValue: null,
-    newValue: { status: 'Active', complianceFramework: 'OSHAD-SF 3.0 & ISO 45001' },
+    newValue: { status: 'Active', complianceFramework: 'Oman MoL MD 286/2008 & PDO Specifications 3.0 & ISO 45001' },
     diff: [
       { field: 'status', label: 'Status', previous: null, current: 'Active' },
-      { field: 'complianceFramework', label: 'Compliance Framework', previous: null, current: 'OSHAD-SF 3.0 & ISO 45001' }
+      { field: 'complianceFramework', label: 'Compliance Framework', previous: null, current: 'Oman MoL MD 286/2008 & PDO Specifications 3.0 & ISO 45001' }
     ],
-    changeSummary: 'Initialized multi-tenant enterprise HSE workspace with OSHAD-SF Mechanism 11.0 assurance controls.',
+    changeSummary: 'Initialized multi-tenant enterprise HSE workspace with Oman MoL MD 286/2008 & PDO PR-1172 assurance controls.',
     reason: 'Annual Concession Audit Readiness Cycle',
-    regulatoryFramework: ['UAE PDPL Art. 24', 'OSHAD-SF Mechanism 11.0'],
+    regulatoryFramework: ['Oman PDPL Art. 24', 'Oman MoL MD 286/2008 & PDO PR-1172'],
     severity: 'Low',
     previousHash: GENESIS_HASH,
     recordHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -187,7 +187,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 4,
     timestamp: '2026-10-06T07:50:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     actor: {
       userId: 'usr-marcus-chen',
       userName: 'Marcus Chen',
@@ -207,7 +207,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     ],
     changeSummary: 'Permit PTW-2026-8809 authorized and transitioned from Requested to Active following mechanical isolation verification.',
     reason: 'Zero energy verification complete on Box #LOTO-14',
-    regulatoryFramework: ['OSHAD-SF CoP 21.0 Permit to Work', 'ADNOC CoP PTW'],
+    regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 21.0 Permit to Work', 'PDO SP-1143 Specification PTW'],
     severity: 'Medium',
     previousHash: '1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b',
     recordHash: '3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d',
@@ -218,7 +218,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 5,
     timestamp: '2026-10-06T09:15:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     actor: {
       userId: 'usr-rahul-gupta',
       userName: 'Rahul Gupta',
@@ -237,7 +237,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     ],
     changeSummary: 'Field Receiver Rahul Gupta signed custody acceptance of PTW-2026-8809 after safety briefing.',
     reason: 'Pre-job toolbox talk and gas check acknowledged',
-    regulatoryFramework: ['OSHAD-SF CoP 21.0'],
+    regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 21.0'],
     severity: 'Low',
     previousHash: '3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d',
     recordHash: '5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f',
@@ -279,7 +279,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 7,
     timestamp: '2026-10-07T09:40:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Ruwais Refinery Complex (UAE)',
+    siteName: 'Mina Al Fahal Refinery Complex (Oman)',
     actor: {
       userId: 'usr-tariq-hashemi',
       userName: 'Tariq Al-Hashemi',
@@ -298,7 +298,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     ],
     changeSummary: 'Authorized resumption of scaffolding work after third-party inspector verified toe-boards and ladder clamps.',
     reason: 'Physical inspection completed and documented with photo evidence',
-    regulatoryFramework: ['OSHAD-SF CoP 34.0 Working at Heights'],
+    regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 34.0 Working at Heights'],
     severity: 'High',
     previousHash: '7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b',
     recordHash: '9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c',
@@ -309,7 +309,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 8,
     timestamp: '2026-10-07T11:20:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Habshan Gas Complex (UAE)',
+    siteName: 'Khazzan Tight Gas Complex Block 61 (Oman)',
     actor: {
       userId: 'usr-khalfan-zaabi',
       userName: 'Khalfan Al-Zaabi',
@@ -328,7 +328,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     ],
     changeSummary: 'Technical Authority approved bypass spool piece installation subject to dual block and bleed isolation.',
     reason: 'Process Safety Review HAZOP Node 14 Sign-off',
-    regulatoryFramework: ['ADNOC CoP Management of Change v2'],
+    regulatoryFramework: ['PDO SP-1143 Specification Management of Change v2'],
     severity: 'Medium',
     previousHash: '9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c',
     recordHash: '1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',
@@ -339,7 +339,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 9,
     timestamp: '2026-10-07T13:45:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Mina Zayed Terminal (UAE)',
+    siteName: 'Mina Zayed Terminal (Oman)',
     actor: {
       userId: 'usr-sarah-jenkins',
       userName: 'Dr. Sarah Jenkins',
@@ -358,8 +358,8 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
       { field: 'mandateWorkStoppage', label: 'Mandatory Work Stoppage', previous: null, current: true }
     ],
     changeSummary: 'Logged WBGT exceedance at Berth 4 container deck; enforced 3-hour shaded rest protocol.',
-    reason: 'UAE MoHRE Ministerial Resolution No. 518 Midday Break Compliance',
-    regulatoryFramework: ['MoHRE Ministerial Resolution 518/2005'],
+    reason: 'Oman Ministry of Labour (MoL) Ministerial Resolution No. 518 Midday Break Compliance',
+    regulatoryFramework: ['Ministry of Labour (MoL) Ministerial Resolution 518/2005'],
     severity: 'High',
     previousHash: '1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',
     recordHash: '3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f',
@@ -370,7 +370,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 10,
     timestamp: '2026-10-07T15:10:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Jebel Ali Logistics Hub (UAE)',
+    siteName: 'Duqm Industrial Port Logistics Hub (Oman)',
     actor: {
       userId: 'usr-arun-kumar',
       userName: 'Arun Kumar',
@@ -389,7 +389,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     ],
     changeSummary: 'Reconciled bulk sulfuric acid level after closed-circuit decanting with certified dual-containment hose.',
     reason: 'Monthly statutory chemical volume audit',
-    regulatoryFramework: ['OSHAD-SF CoP 14.0 Hazardous Substances'],
+    regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 14.0 Hazardous Substances'],
     severity: 'Low',
     previousHash: '3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f',
     recordHash: '5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b',
@@ -430,7 +430,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     sequenceNumber: 12,
     timestamp: '2026-10-07T17:50:00Z',
     tenantId: 'gulf-energy-infra',
-    siteName: 'Corporate Headquarters (Abu Dhabi)',
+    siteName: 'Corporate Headquarters (Muscat)',
     actor: {
       userId: 'usr-layla-hassan',
       userName: 'Dr. Layla Hassan',
@@ -440,7 +440,7 @@ const INITIAL_AUDIT_SEED: UnifiedAuditRecord[] = [
     },
     actionType: 'SYSTEM_CONFIG',
     module: 'SYSTEM_ADMIN',
-    entityId: 'CONFIG-OSHAD-2026',
+    entityId: 'CONFIG-Oman MoL MD 286/2008-2026',
     entityTitle: 'Q4 Enterprise Audit Assurance Protocol Lock',
     previousValue: { auditLockStatus: 'Draft' },
     newValue: { auditLockStatus: 'Locked for Board Submission' },
@@ -645,7 +645,7 @@ export class UnifiedAuditTrailService {
       diff,
       changeSummary: summary,
       reason: params.reason || 'Routine operational update',
-      regulatoryFramework: params.regulatoryFramework || ['ISO 45001:2018', 'UAE PDPL'],
+      regulatoryFramework: params.regulatoryFramework || ['ISO 45001:2018', 'Oman PDPL'],
       severity: params.severity || 'Medium',
       previousHash,
       recordHash,
@@ -704,7 +704,7 @@ export class UnifiedAuditTrailService {
       newValue: { status: newStatus, ...(options?.additionalData || {}) },
       changeSummary: `Status transition on ${entityTitle}: '${previousStatus}' ➔ '${newStatus}'`,
       reason: reason || `Status changed to ${newStatus}`,
-      regulatoryFramework: options?.regulatoryFramework || ['ISO 45001:2018 Cl. 9.2', 'OSHAD-SF'],
+      regulatoryFramework: options?.regulatoryFramework || ['ISO 45001:2018 Cl. 9.2', 'Oman MoL MD 286/2008 & PDO Specifications'],
       severity: options?.severity || (newStatus === 'Closed' ? 'Low' : 'High'),
       siteName: options?.siteName
     });
@@ -781,7 +781,7 @@ export class UnifiedAuditTrailService {
       previousValue: beforeState,
       newValue: afterState,
       reason: reason || 'Field modifications saved',
-      regulatoryFramework: options?.regulatoryFramework || ['UAE PDPL Art. 24'],
+      regulatoryFramework: options?.regulatoryFramework || ['Oman PDPL Art. 24'],
       severity: options?.severity || 'Medium',
       siteName: options?.siteName
     });
@@ -895,7 +895,7 @@ export class UnifiedAuditTrailService {
           generatedAt: new Date().toISOString(),
           totalRecords: records.length,
           integrityStandard: 'SHA-256 WORM Immutable Ledger',
-          frameworks: ['ISO 45001:2018 Clause 9.2', 'UAE PDPL Article 24', 'OSHAD-SF Mechanism 11.0']
+          frameworks: ['ISO 45001:2018 Clause 9.2', 'Oman PDPL Article 24', 'Oman MoL MD 286/2008 & PDO PR-1172']
         },
         auditRecords: records
       }, null, 2);

@@ -34,12 +34,12 @@
   ],
   "optionalEnvVars": [
     {
-      "name": "OSHAD_API_TOKEN",
-      "description": "Abu Dhabi OSHAD-SF API authentication token"
+      "name": "Oman MoL_API_TOKEN",
+      "description": "Muscat Oman MoL MD 286/2008 API authentication token"
     },
     {
-      "name": "ADNOC_SAFETY_TOKEN",
-      "description": "ADNOC HSE Portal Integration token"
+      "name": "PDO_SAFETY_TOKEN",
+      "description": "PDO HSE Portal Integration token"
     },
     {
       "name": "VITE_FIREBASE_API_KEY",
@@ -125,7 +125,7 @@
       "purpose": "Enterprise HSE application view and functional module component"
     },
     {
-      "path": "components/AdnocOshadDashboard.tsx",
+      "path": "components/pdoomanMoLDashboard.tsx",
       "purpose": "Enterprise HSE application view and functional module component"
     },
     {
@@ -449,7 +449,7 @@
       "purpose": "Permit to Work and SIMOPS barrier gating components"
     },
     {
-      "path": "components/oshad/OshadWorkflowDesigner.tsx",
+      "path": "components/omanMoL/omanMoLWorkflowDesigner.tsx",
       "purpose": "Enterprise HSE application view and functional module component"
     },
     {
@@ -597,7 +597,7 @@
       "purpose": "Automation and migration utility script"
     },
     {
-      "path": "database/oshad_schema.sql",
+      "path": "database/omanMoL_schema.sql",
       "purpose": "Database schema DDL files"
     },
     {
@@ -1117,15 +1117,15 @@
       "purpose": "Core business logic, analytics, data store, and AI integration services"
     },
     {
-      "path": "services/oshadClient.ts",
+      "path": "services/omanMoLClient.ts",
       "purpose": "Core business logic, analytics, data store, and AI integration services"
     },
     {
-      "path": "services/oshadReportGenerator.ts",
+      "path": "services/omanMoLReportGenerator.ts",
       "purpose": "Core business logic, analytics, data store, and AI integration services"
     },
     {
-      "path": "services/oshadWorkflowEngine.ts",
+      "path": "services/omanMoLWorkflowEngine.ts",
       "purpose": "Core business logic, analytics, data store, and AI integration services"
     },
     {

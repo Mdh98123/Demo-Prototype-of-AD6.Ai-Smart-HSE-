@@ -13,11 +13,11 @@ This document specifies the three distinct tiers of AI processing required by th
 
 ## 2. Generative AI (Agentic Copilot)
 **Objective:** Assist users in generating Hazard Identification and Risk Assessments (HIRA) and Method Statements.
-**Constraint:** Grounded in enterprise documentation and local GCC regulations (ADOSH-SF).
+**Constraint:** Grounded in enterprise documentation and local GCC regulations (Oman MoL MD 286/2008).
 **Implementation:**
 - **Architecture:** Retrieval-Augmented Generation (RAG).
 - **Components:** 
-  - Vector Database (e.g., Milvus or Pinecone) storing chunked policies and ADNOC/OSHAD manuals.
+  - Vector Database (e.g., Milvus or Pinecone) storing chunked policies and PDO/Oman MoL manuals.
   - LLM Orchestrator (e.g., LangChain) invoking OpenAI / Gemini models.
 - **Workflow:** User describes the job -> Copilot fetches relevant regulations -> Drafts a HIRA -> Requires human-in-the-loop (HITL) approval.
 

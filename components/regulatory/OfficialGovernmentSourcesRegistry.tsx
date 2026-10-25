@@ -52,8 +52,8 @@ export const OfficialGovernmentSourcesRegistry: React.FC = () => {
             className="text-xs bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-1.5 font-bold text-slate-700 outline-none"
           >
             <option value="ALL">All Jurisdictions</option>
-            <option value="UAE Federal">UAE Federal</option>
-            <option value="Abu Dhabi (OSHAD)">Abu Dhabi (OSHAD)</option>
+            <option value="Oman Statutory">Oman Statutory</option>
+            <option value="Muscat (Oman MoL MD 286/2008)">Muscat (Oman MoL MD 286/2008)</option>
             <option value="Oman">Oman (MoL)</option>
             <option value="International (ISO)">International (ISO)</option>
           </select>

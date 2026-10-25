@@ -26,7 +26,7 @@ const PlanningModule: React.FC = () => {
     },
     { 
         id: 'PLN-002', 
-        title: 'Emergency Response Protocol - Habshan', 
+        title: 'Emergency Response Protocol - Khazzan Gas Asset', 
         type: 'ERP', 
         phase: 'Procurement',
         status: 'Approved', 
@@ -39,7 +39,7 @@ const PlanningModule: React.FC = () => {
     },
     {
         id: 'PLN-003', 
-        title: 'Ruwais Zone A Environmental Management Plan', 
+        title: 'Mina Al Fahal Zone 1 Environmental Management Plan', 
         type: 'EMP', 
         phase: 'Construction',
         status: 'Regulator_Review', 
@@ -200,14 +200,14 @@ const PlanningModule: React.FC = () => {
                   <div className="space-y-8">
                       <div className="flex gap-6 items-start border-s-4 border-teal-500/30 ps-6">
                           <div>
-                              <p className="text-[10px] font-black text-teal-400 uppercase mb-1">MOHRE Submission</p>
+                              <p className="text-[10px] font-black text-teal-400 uppercase mb-1">Oman Ministry of Labour Submission</p>
                               <p className="text-sm font-bold text-white">Project 4 PHSP Certified</p>
                               <p className="text-[9px] text-slate-400 uppercase mt-1">20 May 2024</p>
                           </div>
                       </div>
                       <div className="flex gap-6 items-start border-s-4 border-orange-500/30 ps-6">
                           <div>
-                              <p className="text-[10px] font-black text-orange-400 uppercase mb-1">OSHAD Verification</p>
+                              <p className="text-[10px] font-black text-orange-400 uppercase mb-1">Oman MoL MD 286/2008 Verification</p>
                               <p className="text-sm font-bold text-white">NCR-12 Blocking approval</p>
                               <p className="text-[9px] text-slate-400 uppercase mt-1">Awaiting Site Scan</p>
                           </div>

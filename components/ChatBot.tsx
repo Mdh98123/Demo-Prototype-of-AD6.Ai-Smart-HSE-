@@ -154,7 +154,7 @@ export const ChatBot: React.FC = () => {
         if (audioBlob && audioBlob.size > 0) {
           const result = await GeminiClientService.transcribeAudio(
             audioBlob,
-            'Transcribe this voice message accurately for safety operations. Keep terms like PPE, LOTO, OSHAD, PTW intact.'
+            'Transcribe this voice message accurately for safety operations. Keep terms like PPE, LOTO, Oman MoL MD 286/2008, PTW intact.'
           );
           if (result.text) {
             setInput(prev => (prev ? prev + ' ' + result.text : result.text));
@@ -233,7 +233,7 @@ export const ChatBot: React.FC = () => {
         image: currentImg || undefined
       });
 
-      // Default UAE Coordinates (Abu Dhabi / Ruwais) if browser geolocation is unavailable
+      // Default Oman Coordinates (Muscat / Mina Al Fahal) if browser geolocation is unavailable
       let userLatLng = { latitude: 24.1107, longitude: 52.7306 };
       if (typeof navigator !== 'undefined' && navigator.geolocation) {
         try {
@@ -347,7 +347,7 @@ export const ChatBot: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium">
-                ADNOC • OSHAD-SF • GCC Statutory Compliance Engine
+                PDO • Oman MoL MD 286/2008 & PDO Specifications • GCC Statutory Compliance Engine
               </p>
             </div>
           </div>

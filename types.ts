@@ -1,7 +1,7 @@
 
 export type UserRole = 'ADMIN' | 'Board_Director' | 'CEO' | 'Head_Group_HSE' | 'Regional_HSE_Director' | 'Site_HSE_Manager' | 'HSE_Officer' | 'Environmental_Officer' | 'Project_Manager' | 'Internal_Auditor' | 'Site_Supervisor' | 'Worker' | 'HR_Coordinator' | 'Legal_Team' | 'Transport_Manager' | 'Security_Officer' | 'Store_Keeper' | 'Maintenance_Lead';
 
-export type ComplianceFramework = 'OMAN_MOL_MD286' | 'PDO_SP' | 'OMAN_CDAA' | 'ISO_45001' | 'OMAN_PASI' | 'ADNOC_COP' | 'OSHAD_SF' | 'DM_CODE' | 'FEDERAL_MOHRE';
+export type ComplianceFramework = 'OMAN_MOL_MD286' | 'PDO_SP' | 'OMAN_CDAA' | 'ISO_45001' | 'OMAN_PASI' | 'PDO_SP' | 'OMAN_MOL_MD286' | 'OMAN_EA' | 'OMAN_MOL_RD53';
 
 export enum View {
   LESSONS_LEARNED = 'LESSONS_LEARNED',
@@ -62,7 +62,7 @@ export enum View {
   EXCAVATION = 'EXCAVATION',
   JSA = 'JSA',
   BOWTIE = 'BOWTIE',
-  ADNOC_OSHAD = 'ADNOC_OSHAD',
+  PDO_MOL_WORKFLOW = 'PDO_MOL_WORKFLOW',
   IOT_STATUS = 'IOT_STATUS',
   RTL_DEMO = 'RTL_DEMO',
   PWA_INSPECTIONS = 'PWA_INSPECTIONS',
@@ -331,7 +331,7 @@ export interface Incident {
   immediateActionsTaken?: string;
   location: string;
   facilityCode?: string;
-  jurisdiction?: 'Abu Dhabi' | 'Oman' | 'Dubai' | 'KSA' | 'Qatar' | 'Other';
+  jurisdiction?: 'Muscat' | 'Oman' | 'Sohar' | 'KSA' | 'Qatar' | 'Other';
   severity: 'Low' | 'Medium' | 'High' | 'Critical';
   potentialSeverity?: 'Low' | 'Medium' | 'High' | 'Critical';
   status: 'Reported' | 'Under Triage' | 'Under Investigation' | 'CAPA Pending' | 'Closed' | 'Review' | 'Investigation' | 'Open';
@@ -347,8 +347,8 @@ export interface Incident {
   fishboneFactors?: IncidentFishboneFactors;
   capaActions?: IncidentCapaAction[];
   statutorySubmissions?: {
-    oshadFormGSubmittedAt?: string;
-    oshadReference?: string;
+    molFormSubmittedAt?: string;
+    molReference?: string;
     omanMolNoticeSubmittedAt?: string;
     omanMolReference?: string;
   };
@@ -356,7 +356,7 @@ export interface Incident {
 }
 
 export interface IncidentReportOptions {
-  format: 'OSHAD_Form_E' | 'ADNOC_Flash_Report' | 'Internal_Memo';
+  format: 'Oman MoL MD 286/2008_Form_E' | 'PDO_Flash_Report' | 'Internal_Memo';
   tone: string;
   includeRca: boolean;
   includeEvidence: boolean;
@@ -775,7 +775,7 @@ export interface OperationalMapping {
 export interface FineRisk {
   regulationId: string;
   violationType: string;
-  potentialFineAED: number;
+  potentialFineOMR: number;
   probability: 'High' | 'Medium' | 'Low';
   preventionAction: string;
 }

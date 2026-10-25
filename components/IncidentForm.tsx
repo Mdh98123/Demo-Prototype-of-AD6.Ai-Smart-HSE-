@@ -200,7 +200,7 @@ export const IncidentForm: React.FC = () => {
   const [reportStep, setReportStep] = useState<1 | 2 | 3>(1);
   const [formTimestamp, setFormTimestamp] = useState(new Date().toISOString().slice(0, 16));
   const [formSite, setFormSite] = useState(GCC_PRESET_SITES[0].name);
-  const [formJurisdiction, setFormJurisdiction] = useState<'Abu Dhabi' | 'Oman' | 'Dubai' | 'KSA' | 'Qatar'>('Abu Dhabi');
+  const [formJurisdiction, setFormJurisdiction] = useState<'Muscat' | 'Oman' | 'Sohar' | 'KSA' | 'Qatar'>('Muscat');
   const [formLocationArea, setFormLocationArea] = useState('');
   const [formCoordinates, setFormCoordinates] = useState({ lat: 23.7500, lng: 53.5000 });
   const [formClassification, setFormClassification] = useState<Incident['classification']>('Near Miss');
@@ -879,17 +879,6 @@ export const IncidentForm: React.FC = () => {
 
                 {/* Statutory Quick Export Shortcuts in Header */}
                 <div className="flex items-center gap-2">
-                  {isAbuDhabi && (
-                    <button
-                      disabled={!isAuthorizedStatutorySubmitter}
-                      onClick={handleExportOshadPdf}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow transition-all flex items-center gap-1.5"
-                      title={!isAuthorizedStatutorySubmitter ? 'Restricted: HSE Officer / Director role required' : undefined}
-                    >
-                      <Download size={13} />
-                      <span>{isAuthorizedStatutorySubmitter ? 'OSHAD Form G' : 'Form G Restricted'}</span>
-                    </button>
-                  )}
                   {isOman && (
                     <button
                       disabled={!isAuthorizedStatutorySubmitter}
@@ -1469,7 +1458,7 @@ export const IncidentForm: React.FC = () => {
                       Grounded AI Statutory Compliance & Deadline Verification
                     </h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      Cross-reference incident timeline and severity against local ministerial decrees (Oman MD 286/2008 & ADPHC OSHAD Mechanism 11.0).
+                      Cross-reference incident timeline and severity against local ministerial decrees (Oman MD 286/2008 & Oman MoL OSHD Oman MoL MD 286/2008 & PDO PR-1172).
                     </p>
                   </div>
                   <button

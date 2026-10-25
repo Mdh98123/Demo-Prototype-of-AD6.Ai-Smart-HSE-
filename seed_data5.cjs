@@ -1,11 +1,11 @@
 const fs = require('fs');
 
 const sites = [
-  "Ruwais Refinery Complex",
+  "Mina Al Fahal Refinery Complex",
   "Jebel Ali Construction Site",
   "Musaffah Industrial Zone",
   "Habshan Gas Complex",
-  "Abu Dhabi HQ"
+  "Muscat HQ"
 ];
 
 let content = fs.readFileSync('components/ProjectsModule.tsx', 'utf8');

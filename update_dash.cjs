@@ -28,7 +28,7 @@ const incidentBreakdown = [
 ];
 
 const RECENT_AUDITS = [
-    { id: 'AUD-001', site: 'Al Ruwais Terminal', score: 92, status: 'Compliant' },
+    { id: 'AUD-001', site: 'Al Mina Al Fahal Terminal', score: 92, status: 'Compliant' },
     { id: 'AUD-002', site: 'Habshan Plant 5', score: 74, status: 'Warning' },
     { id: 'AUD-003', site: 'ZADCO Offshore', score: 88, status: 'Compliant' },
     { id: 'AUD-004', site: 'Fujairah Storage', score: 45, status: 'Critical' },

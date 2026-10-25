@@ -93,8 +93,8 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 | `AUTH_MODE` / `VITE_AUTH_MODE` | Non-sensitive | No | Sets authentication subsystem mode (`demo` \| `firebase` \| `enterprise`). Defined in `.env.example` and `services/authService.ts`. |
 | `DEMO_MODE` / `VITE_DEMO_MODE` | Non-sensitive | No | Toggles demonstration mode availability (`true` \| `false`). Defined in `.env.example` and `services/authService.ts`. |
 | `GEMINI_API_KEY` | **Secret** | **Yes (for AI)** | Server-side Gemini API key. Never exposed to browser. Used in `/routes/geminiRouter.ts`. |
-| `OSHAD_API_TOKEN` | Secret | No | Token for UAE statutory connector `/api/oshad/*`. |
-| `ADNOC_SAFETY_TOKEN` | Secret | No | Token for ADNOC CoP integration. |
+| `Oman MoL_API_TOKEN` | Secret | No | Token for Oman statutory connector `/api/omanMoL/*`. |
+| `PDO_SAFETY_TOKEN` | Secret | No | Token for PDO SP-1143 integration. |
 | `ENABLE_CLOUD_LOGGING` | Non-sensitive | No | Toggles Google Cloud Logging output in `/services/audit.js`. |
 | `VITE_FIREBASE_*` | Public Client | No | Firebase configuration overrides in `/lib/firebase.ts`. |
 

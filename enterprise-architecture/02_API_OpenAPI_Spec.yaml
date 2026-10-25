@@ -5,7 +5,7 @@ info:
   description: API specifications for HSE platform, honoring multi-tenancy, RLS, and strict GCC standards.
 servers:
   - url: https://api.hse-platform.com/v1
-    description: Production API (UAE Data Center)
+    description: Production API (Oman Sovereign Data Center)
 components:
   securitySchemes:
     saml2:

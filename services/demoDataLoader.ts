@@ -39,12 +39,12 @@ export const GULF_ENERGY_SITES: OperationalSite[] = [
     headcountOnSite: 1150
   },
   {
-    id: 'site-ruwais-polyolefin',
+    id: 'site-Mina Al Fahal-polyolefin',
     tenantId: 'tenant-geig',
-    name: 'Al-Ruwais Polyolefin Asset (UAE)',
-    code: 'UAE-RUW-03',
-    country: 'UAE',
-    location: 'Ruwais Industrial Complex, Al Dhafra Region, Abu Dhabi, UAE',
+    name: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
+    code: 'Oman-RUW-03',
+    country: 'Oman',
+    location: 'Mina Al Fahal Industrial Complex, Al Dhafra Region, Muscat, Oman',
     coordinates: '24.1107, 52.7306',
     type: 'Refinery',
     riskLevel: 'High Risk',
@@ -78,31 +78,31 @@ export const GULF_ENERGY_SITES: OperationalSite[] = [
 // 3. 10 Enterprise Users Across Tiers
 // -------------------------------------------------------------
 export const GULF_ENERGY_USERS: UserProfile[] = [
-  // 1. Site Safety Officer (UAE)
+  // 1. Site Safety Officer (Oman)
   {
     id: 'usr-tariq-hashemi',
     name: 'Tariq Al-Hashemi',
     email: 'tariq.hashemi@gulfenergy.com',
     role: 'HSE_Officer',
-    department: 'Site Safety Operations - Al-Ruwais Polyolefin',
+    department: 'Site Safety Operations - Mina Al Fahal Polyolefin',
     safetyScore: 1240,
     recentIncidents: ['Conducted H2S evacuation drill', 'Investigated offsites valve packing leak'],
     observations: [],
     certifications: [
       { name: 'NEBOSH International Diploma in OHS', status: 'Valid', expiryDate: '2028-04-15' },
-      { name: 'OSHAD General Safety Practitioner', status: 'Valid', expiryDate: '2027-09-30' }
+      { name: 'Oman MoL MD 286/2008 General Safety Practitioner', status: 'Valid', expiryDate: '2027-09-30' }
     ],
     achievements: [
       { id: 'ach-1', title: 'Life Saver', description: 'Zero lost time injuries in supervised zone for 365 days', dateEarned: '2026-06-01', icon: 'Shield', tier: 'Gold' }
     ]
   },
-  // 2. Permit Issuer & Area Authority (UAE)
+  // 2. Permit Issuer & Area Authority (Oman)
   {
     id: 'usr-mansoor-ketbi',
     name: 'Eng. Mansoor Al-Ketbi',
     email: 'mansoor.ketbi@gulfenergy.com',
     role: 'Site_HSE_Manager',
-    department: 'Operations & Control of Work - Al-Ruwais',
+    department: 'Operations & Control of Work - Mina Al Fahal',
     safetyScore: 1450,
     recentIncidents: ['Authorized Flare Header Hot Tap Tie-In'],
     observations: [],
@@ -127,7 +127,7 @@ export const GULF_ENERGY_USERS: UserProfile[] = [
     certifications: [
       { name: 'Fellow of the Faculty of Occupational Medicine (FFOM)', status: 'Valid', expiryDate: '2029-01-01' },
       { name: 'Oman Medical Specialty Board (OMSB) Certified', status: 'Valid', expiryDate: '2028-12-31' },
-      { name: 'OSHAD Occupational Health Assessor', status: 'Valid', expiryDate: '2027-08-15' }
+      { name: 'Oman MoL MD 286/2008 Occupational Health Assessor', status: 'Valid', expiryDate: '2027-08-15' }
     ],
     achievements: [
       { id: 'ach-3', title: 'Wellness Vanguard', description: 'Implemented WBGT Heat Stress biometric monitoring protocol', dateEarned: '2026-05-20', icon: 'HeartPulse', tier: 'Gold' }
@@ -165,13 +165,13 @@ export const GULF_ENERGY_USERS: UserProfile[] = [
     ],
     achievements: []
   },
-  // 6. Field HSE Compliance & Inspection Officer (UAE)
+  // 6. Field HSE Compliance & Inspection Officer (Oman)
   {
     id: 'usr-fatima-kaabi',
     name: 'Fatima Al-Kaabi',
     email: 'fatima.kaabi@gulfenergy.com',
     role: 'HSE_Officer',
-    department: 'HSE Assurance & Compliance Audit - UAE',
+    department: 'HSE Assurance & Compliance Audit - Oman',
     safetyScore: 1310,
     recentIncidents: ['Issued Stop Work Authority for unanchored scaffold board'],
     observations: [],
@@ -229,7 +229,7 @@ export const GULF_ENERGY_USERS: UserProfile[] = [
     observations: [],
     certifications: [
       { name: 'Certified Environmental Systems Lead (ISO 14001:2015)', status: 'Valid', expiryDate: '2028-08-14' },
-      { name: 'OSHA / OSHAD Heat Illness Prevention Champion', status: 'Valid', expiryDate: '2027-04-10' }
+      { name: 'OSHA / Oman MoL MD 286/2008 Heat Illness Prevention Champion', status: 'Valid', expiryDate: '2027-04-10' }
     ],
     achievements: []
   },
@@ -388,15 +388,15 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     ]
   },
 
-  // Incident 2: Confined Space H2S Near-Miss in UAE (OSHAD Form G Draft)
+  // Incident 2: Confined Space H2S Near-Miss in Oman (Oman MoL Form MD 286 Draft)
   {
-    id: 'INC-2026-UAE-0419',
+    id: 'INC-2026-OMN-0419',
     type: 'Near Miss',
     classification: 'Near Miss',
-    description: 'During preparation for authorized confined space entry into De-ethanizer Overhead Reflux Drum (V-102) for internal ultrasonic shell thickness measurement, the Lead Authorized Gas Tester lowered an aspirated multi-gas probe into the lower vessel sump. The detector sounded a high-level audio-visual alarm indicating H2S concentration of 14.8 PPM (surpassing the 10.0 PPM UAE statutory ceiling) along with 0.0% LEL and 20.8% O2.',
+    description: 'During preparation for authorized confined space entry into De-ethanizer Overhead Reflux Drum (V-102) for internal ultrasonic shell thickness measurement, the Lead Authorized Gas Tester lowered an aspirated multi-gas probe into the lower vessel sump. The detector sounded a high-level audio-visual alarm indicating H2S concentration of 14.8 PPM (surpassing the 10.0 PPM Oman statutory ceiling) along with 0.0% LEL and 20.8% O2.',
     immediateActionsTaken: 'Entry instantly halted; Standby Safety Watch ordered all personnel back to muster point; Positive mechanical spade isolations inspected; Found weeping bypass valve on sour condensate purge header; Valve chained and blinded; Vessel re-purged with dry nitrogen for 6 hours followed by forced air mechanical eductors.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Unit 42 Offsites Vessel V-102',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Unit 42 Offsites Vessel V-102',
+    jurisdiction: 'Muscat',
     severity: 'High',
     potentialSeverity: 'Critical',
     status: 'Under Investigation',
@@ -454,8 +454,8 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     },
     capaActions: [
       {
-        id: 'capa-uae-01',
-        description: 'Complete OSHAD-SF Form G (Serious Incident Notification) submission to Abu Dhabi Public Health Centre (ADPHC) Mechanism 11.0.',
+        id: 'capa-omn-01',
+        description: 'Complete Oman MoL MD 286/2008 & PDO Specifications Form G (Serious Incident Notification) submission to Muscat Public Health Centre (Oman MoL OSHD) Mechanism 11.0.',
         assignee: 'Fatima Al-Kaabi',
         targetDate: '2026-10-04',
         priority: 'P1 - Critical',
@@ -463,7 +463,7 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
         type: 'Corrective'
       },
       {
-        id: 'capa-uae-02',
+        id: 'capa-omn-02',
         description: 'Install positive spectacle blind on 2" bypass line and conduct helium leak test prior to entry re-authorization.',
         assignee: 'Eng. Mansoor Al-Ketbi',
         targetDate: '2026-10-05',
@@ -472,7 +472,7 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
         type: 'Corrective'
       },
       {
-        id: 'capa-uae-03',
+        id: 'capa-omn-03',
         description: 'Conduct comprehensive As-Built P&ID walkdown and line tagging across all Unit 42 offsites vessels.',
         assignee: 'Dr. Vikram Malhotra',
         targetDate: '2026-10-30',
@@ -536,15 +536,15 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     ]
   },
 
-  // Incident 4: Minor First Aid - Heat Exhaustion Warning (UAE)
+  // Incident 4: Minor First Aid - Heat Exhaustion Warning (Oman)
   {
-    id: 'INC-2026-UAE-0518',
+    id: 'INC-2026-OMN-0518',
     type: 'First Aid',
     classification: 'First Aid',
     description: 'During afternoon scaffold dismantling, a contract rigger reported dizziness, heavy sweating, and mild headache under ambient WBGT heat flag Yellow (31.8°C). Core temperature measured 37.9°C at the air-conditioned rest shelter.',
     immediateActionsTaken: 'Worker rested in cooled climate trailer; oral electrolyte hydration therapy administered; vital signs monitored for 45 minutes; symptoms fully resolved; rehydration protocol reviewed with entire crew.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Polypropylene Extrusion Line',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Polypropylene Extrusion Line',
+    jurisdiction: 'Muscat',
     severity: 'Low',
     potentialSeverity: 'Medium',
     status: 'Closed',
@@ -560,7 +560,7 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     fishboneFactors: { manpower: [], machine: [], method: [], material: [], measurement: [], environment: [] },
     capaActions: [
       {
-        id: 'capa-uae-04',
+        id: 'capa-omn-04',
         description: 'Supervisor to enforce buddy system and biometric heart rate alerts during WBGT Flag Yellow/Orange conditions.',
         assignee: 'Khalid Al-Dhaheri',
         targetDate: '2026-10-05',
@@ -668,15 +668,15 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     ]
   },
 
-  // Incident 7: Near Miss - Scaffolding Coupler Drop (UAE)
+  // Incident 7: Near Miss - Scaffolding Coupler Drop (Oman)
   {
-    id: 'INC-2026-UAE-0622',
+    id: 'INC-2026-OMN-0622',
     type: 'Near Miss',
     classification: 'Near Miss',
     description: 'During 18m scaffolding erection on the Polyethylene Reactor Tower (R-201), an unsecured swivel scaffolding coupler slipped from a rigger\'s hand and fell 14 meters onto the secondary containment deck. The drop zone was barricaded; no workers were struck.',
     immediateActionsTaken: 'Work stopped immediately at height; rigger tethering bags and 100% tool lanyard compliance verified; scaffold crew stood down for 30-minute drop prevention toolbox talk; safety net installed below working platform.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Reactor R-201 Structure',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Reactor R-201 Structure',
+    jurisdiction: 'Muscat',
     severity: 'Medium',
     potentialSeverity: 'Critical',
     status: 'Under Investigation',
@@ -703,8 +703,8 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     fishboneFactors: { manpower: ['Worker carried loose fittings'], machine: [], method: ['Lacking mandatory parts pouch rule'], material: [], measurement: [], environment: [] },
     capaActions: [
       {
-        id: 'capa-uae-07',
-        description: 'Provide certified zip-lock tether pouches for all scaffolding crews across Al-Ruwais asset.',
+        id: 'capa-omn-07',
+        description: 'Provide certified zip-lock tether pouches for all scaffolding crews across Mina Al Fahal asset.',
         assignee: 'Eng. Mansoor Al-Ketbi',
         targetDate: '2026-10-14',
         priority: 'P2 - High',
@@ -830,8 +830,8 @@ export const GULF_ENERGY_INCIDENTS: Incident[] = [
     classification: 'Near Miss',
     description: 'During continuous production on Polymer Extruder Unit EX-04 in Zone C, an anomalous thermal rise to 142°C caused bearing friction and an audible high-temperature smoke detector alarm. Emergency power stop tripped automatically with zero flame or toxic release.',
     immediateActionsTaken: 'Extruder drive motor powered down; fire warden deployed dry powder standby; cooling cycle engaged; LOTO padlock applied by maintenance crew; zero flames or toxic gas release verified.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Extrusion Hall Zone C',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Extrusion Hall Zone C',
+    jurisdiction: 'Muscat',
     severity: 'Medium',
     potentialSeverity: 'High',
     status: 'Closed',
@@ -920,7 +920,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Confined Space Entry',
     status: 'Active',
     zone: 'Zone 4B - Distillation Column C-102',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Column C-102 Lower Head',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Column C-102 Lower Head',
     contractor: 'Gulf Petrochemical Maintenance Services',
     crewSize: 6,
     validFrom: '2026-10-04T07:00:00Z',
@@ -965,7 +965,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: true,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Area Authority / Permit Issuer',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       certNumber: 'AA-PTW-8812',
       timestamp: '2026-10-04T06:55:00Z',
       digestHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -994,7 +994,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Hot Work',
     status: 'Active',
     zone: 'Zone 4A - Process Unit 2',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Offsites Unit 42 Flare Header',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Offsites Unit 42 Flare Header',
     contractor: 'Al-Futtaim Engineering & Construction',
     crewSize: 8,
     validFrom: '2026-10-04T06:00:00Z',
@@ -1053,7 +1053,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: true,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Area Authority / Permit Issuer',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       certNumber: 'AA-PTW-8812',
       timestamp: '2026-10-04T05:58:00Z',
       digestHash: 'a718b5b57d078ef40316ec1bf584b42b93fc9fd7502c3ec78e4708170c017bc9',
@@ -1087,7 +1087,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     crewSize: 4,
     validFrom: '2026-10-04T05:30:00Z',
     validTo: '2026-10-04T17:30:00Z',
-    description: 'Suspended: WBGT Heat Ban Threshold Breached. Ambient WBGT reached 33.2°C (Black Flag / Mandatory UAE/Oman Midday Heat Work Stoppage 12:30–15:00). All elevated hot work halted until temperature drops below 30.5°C.',
+    description: 'Suspended: WBGT Heat Ban Threshold Breached. Ambient WBGT reached 33.2°C (Black Flag / Mandatory Oman/Oman Midday Heat Work Stoppage 12:30–15:00). All elevated hot work halted until temperature drops below 30.5°C.',
     riskScore: 20,
     riskRating: 'Critical',
     flammableVentingOrHydrocarbonRisk: false,
@@ -1222,7 +1222,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     updatedAt: '2026-10-04T06:55:00Z'
   },
 
-  // Permit 6: Active Cold Work (Al-Ruwais UAE)
+  // Permit 6: Active Cold Work (Mina Al Fahal Oman)
   {
     id: 'ptw-geig-006',
     permitNumber: 'PTW-2026-8828',
@@ -1230,7 +1230,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Cold Work',
     status: 'Active',
     zone: 'Zone 1 - Seawater Pumphouse',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Pumphouse Basin B',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Pumphouse Basin B',
     contractor: 'Hydratight Middle East',
     crewSize: 4,
     validFrom: '2026-10-04T07:30:00Z',
@@ -1245,7 +1245,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: true,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Area Authority',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       certNumber: 'AA-PTW-8812',
       timestamp: '2026-10-04T07:15:00Z',
       digestHash: '7905f51525346807ab99184f352bff467cb4ba3b8b56a61fa966b93da277d6c4',
@@ -1405,7 +1405,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: false,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Area Authority / Permit Issuer',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       timestamp: '2026-10-07T06:00:00Z',
       checklistConfirmed: false
     },
@@ -1430,7 +1430,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Working at Height',
     status: 'Active',
     zone: 'Zone 1 - Main Flare Stack',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · 65m Flare Tip Platform',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · 65m Flare Tip Platform',
     contractor: 'Al Jaber Industrial Services',
     crewSize: 3,
     validFrom: '2026-10-06T06:00:00Z',
@@ -1445,7 +1445,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: true,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Permit Issuer',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       timestamp: '2026-10-06T05:45:00Z',
       checklistConfirmed: true
     },
@@ -1470,7 +1470,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Cold Work',
     status: 'Active',
     zone: 'Zone 3 - Water Treatment Area',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Water Treatment Train B',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Water Treatment Train B',
     contractor: 'Gulf Energy Internal Maintenance',
     crewSize: 4,
     validFrom: '2026-10-06T08:00:00Z',
@@ -1488,7 +1488,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
         h2s: 0.0,
         co: 0.0,
         testerName: 'Hamad Al-Kaabi',
-        testerCertNo: 'ADNOC-AGT-441',
+        testerCertNo: 'PDO-AGT-441',
         detectorSerial: 'BW-GAS-102',
         status: 'SAFE',
         bumpTested: true
@@ -1512,7 +1512,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
       signed: true,
       signatoryName: 'Eng. Mansoor Al-Ketbi',
       signatoryRole: 'Area Authority',
-      signatoryOrg: 'Gulf Energy UAE',
+      signatoryOrg: 'Gulf Energy Oman',
       timestamp: '2026-10-06T07:50:00Z',
       checklistConfirmed: true
     },
@@ -1577,7 +1577,7 @@ export const GULF_ENERGY_PERMITS: Permit[] = [
     type: 'Hot Work',
     status: 'Authorized',
     zone: 'Zone C - Hydrocarbon Processing Header',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Header Manifold HM-03',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Header Manifold HM-03',
     contractor: 'Gulf Energy Technical Services',
     crewSize: 6,
     validFrom: '2026-10-08T06:00:00Z',
@@ -1685,8 +1685,8 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     id: 'CAPA-2026-02',
     title: 'Mandate As-Built P&ID tracing walkdown before LOTO authorization',
     sourceType: 'Incident',
-    sourceId: 'INC-2026-UAE-0419',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    sourceId: 'INC-2026-OMN-0419',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     ownerName: 'Eng. Mansoor Al-Ketbi',
     ownerRole: 'Chief Permit Issuer',
     priority: 'P1 - Critical',
@@ -1737,8 +1737,8 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     id: 'CAPA-2026-05',
     title: 'Deploy WBGT IoT ambient telemetry beacons on elevated scaffolds',
     sourceType: 'Regulatory',
-    sourceId: 'OSHAD-M11-HEAT',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    sourceId: 'Oman MoL MD 286/2008-M11-HEAT',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     ownerName: 'Khalid Al-Dhaheri',
     ownerRole: 'Environmental Specialist',
     priority: 'P2 - High',
@@ -1806,8 +1806,8 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     id: 'CAPA-2026-09',
     title: 'Conduct acoustic ultrasonic inspection on V-102 isolation bypass valve',
     sourceType: 'Incident',
-    sourceId: 'INC-2026-UAE-0419',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    sourceId: 'INC-2026-OMN-0419',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     ownerName: 'Tariq Al-Hashemi',
     ownerRole: 'Site Safety Officer',
     priority: 'P1 - Critical',
@@ -1858,7 +1858,7 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     title: 'Complete SIMOPS clash radius calibration in digital PTW module',
     sourceType: 'PTW',
     sourceId: 'PTW-2026-8812',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     ownerName: 'Fatima Al-Kaabi',
     ownerRole: 'HSE Compliance Officer',
     priority: 'P2 - High',
@@ -1867,7 +1867,7 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     countdownText: 'Due in 2 days',
     isOverdue: false,
     hierarchy: 'Engineering',
-    details: 'Spatial clash engine updated with 50m hot work vs flammable venting proximity logic per ADNOC COP-HSE.'
+    details: 'Spatial clash engine updated with 50m hot work vs flammable venting proximity logic per PDO SP-1143 Specification-HSE.'
   },
 
   // 13. Closed
@@ -1894,8 +1894,8 @@ export const GULF_ENERGY_CAPAS: EnterpriseCapa[] = [
     id: 'CAPA-2026-14',
     title: 'Revise chemical safety eyewash station weekly flushing log',
     sourceType: 'Inspection',
-    sourceId: 'INSP-2026-UAE-082',
-    siteName: 'Al-Ruwais Polyolefin Asset (UAE)',
+    sourceId: 'INSP-2026-Oman-082',
+    siteName: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     ownerName: 'Fatima Al-Kaabi',
     ownerRole: 'HSE Compliance Officer',
     priority: 'P3 - Medium',

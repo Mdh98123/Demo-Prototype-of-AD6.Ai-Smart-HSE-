@@ -84,7 +84,7 @@ export const AuditLogger = {
       changeSummary: `${action}: ${details}`,
       reason: details,
       severity: riskLevel,
-      regulatoryFramework: ['ISO 45001:2018', 'UAE PDPL Art. 24']
+      regulatoryFramework: ['ISO 45001:2018', 'Oman PDPL Art. 24']
     }).catch(err => console.warn('[AUDIT] Unified logger bridge notice:', err));
 
     console.log(`[AUDIT] ${action} by ${actorName}: ${status}`);

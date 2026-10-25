@@ -97,7 +97,7 @@ export class ImmutableAuditLogger {
       targetTable.includes('permit') ? 'PERMITS' :
       targetTable.includes('incident') ? 'INCIDENTS' :
       targetTable.includes('capa') ? 'CAPA' :
-      targetTable.includes('oshad') ? 'SAFETY_AUDIT' : 'SYSTEM_ADMIN';
+      targetTable.includes('omanMoL') ? 'SAFETY_AUDIT' : 'SYSTEM_ADMIN';
 
     UnifiedAuditTrailService.logAction({
       actor: {

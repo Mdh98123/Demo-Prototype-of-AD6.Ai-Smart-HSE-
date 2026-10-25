@@ -55,7 +55,7 @@ const INITIAL_RAMS: RAMS[] = [
             'Full body harness with dual twin lanyard 100% tie-off',
             'Toe boards and exclusion zone barricade 15m radius',
             'Anemometer monitoring with stop work at 20 knots',
-            'MOHRE mandatory shade refuge and electrolyte hydration'
+            'Oman Ministry of Labour mandatory shade refuge and electrolyte hydration'
         ],
         briefingLogs: [
             { id: 'BL-101', date: '2026-04-02', supervisor: 'Marcus Chen', attendees: 14, topic: '100% Tie-off & Dropped Object Prevention' }
@@ -111,7 +111,7 @@ const INITIAL_RAMS: RAMS[] = [
         ],
         controls: [
             'Geotechnical plate load test & steel spreader mats verified',
-            '3D lift trajectory study approved by ADNOC Lifting Technical Authority',
+            '3D lift trajectory study approved by PDO Lifting Technical Authority',
             'Radio frequency dedicated channel with dual appointed banksmen',
             'Minimum 25m non-conductive synthetic taglines deployed'
         ],
