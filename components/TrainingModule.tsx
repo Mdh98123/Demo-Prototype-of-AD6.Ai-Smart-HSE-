@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { analyzeTrainingNeeds, analyzeTeamGaps, suggestRefresherCourse } from '../services/geminiService';
 import { TrainingRecommendation, TeamSkillAnalysis, UserProfile } from '../types';
 import { useUser } from '../contexts/UserContext';
+import { useWorkflow } from '../contexts/WorkflowContext';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 import { 
   GraduationCap, Users, Loader2, Award, AlertTriangle, CheckCircle, 
   TrendingUp, BrainCircuit, Activity,
@@ -20,13 +22,15 @@ import {
   Search
 } from 'lucide-react';
 
-const TrainingModule: React.FC = () => {
+const TrainingModule: React.FC<{ initialWorkflowRecordId?: string }> = ({ initialWorkflowRecordId }) => {
   const { currentUser, users } = useUser();
+  const { enabled: workflowEnabled, createForRecord } = useWorkflow();
   const [activeTab, setActiveTab] = useState<'MyProfile' | 'TeamMatrix' | 'Library' | 'Presentations'>('MyProfile');
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<TrainingRecommendation[]>([]);
   const [teamAnalysis, setTeamAnalysis] = useState<TeamSkillAnalysis[]>([]);
   const [selectedCert, setSelectedCert] = useState<string | null>(null);
+  const [workflowError, setWorkflowError] = useState<string | null>(null);
 
   const isManager = ['ADMIN', 'Head_Group_HSE', 'Regional_HSE_Director', 'Site_HSE_Manager', 'Project_Manager'].includes(currentUser.role);
 
@@ -38,6 +42,24 @@ const TrainingModule: React.FC = () => {
       { name: 'Working at Heights', status: 'Valid', expiryDate: '2026-02-10' },
       { name: 'First Aid CPR', status: 'Valid', expiryDate: '2025-08-20' }
   ];
+
+  useEffect(() => {
+      if (!workflowEnabled) return;
+      const now = Date.now();
+      (currentUser.certifications || []).filter(cert => {
+          return (new Date(cert.expiryDate).getTime() - now) / 86400000 <= 90;
+      }).forEach(cert => {
+          const recordId = `TRN-${currentUser.id}-${encodeURIComponent(cert.name)}`;
+          void createForRecord({
+              recordType: 'Training',
+              recordId,
+              title: `Training expiry: ${cert.name}`,
+              priority: new Date(cert.expiryDate).getTime() < now ? 'Critical' : 'High',
+              siteId: 'site-sohar',
+              department: currentUser.department
+          }).catch(cause => setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.'));
+      });
+  }, [createForRecord, currentUser, workflowEnabled]);
 
   const handleAnalyzeProfile = async () => {
       setLoading(true);
@@ -87,6 +109,8 @@ const TrainingModule: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
+        {initialWorkflowRecordId && <WorkflowRecordPanel recordType="Training" recordId={initialWorkflowRecordId} />}
+        {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">{workflowError}</p>}
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
             <div className="flex items-center gap-x-6">

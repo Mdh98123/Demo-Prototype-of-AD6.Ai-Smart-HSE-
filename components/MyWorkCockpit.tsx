@@ -13,6 +13,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { EnterpriseDataStore, CockpitTask, StopWorkRecord } from '../services/enterpriseDataStore';
 import { NotificationService } from '../services/notificationService';
 import { UserProfileModal } from './UserProfileModal';
+import WorkflowDashboard from './workflow/WorkflowDashboard';
 
 export const MyWorkCockpit: React.FC = () => {
   const { currentUser } = useUser();
@@ -327,6 +328,7 @@ export const MyWorkCockpit: React.FC = () => {
 
   return (
     <div className={`space-y-6 max-w-[1720px] mx-auto text-slate-900 pb-20 animate-fade-in ${dir === 'rtl' ? 'font-arabic' : 'font-sans'}`}>
+      <WorkflowDashboard />
       
       {/* Toast Alert */}
       {toastMessage && (

@@ -12,6 +12,7 @@ import {
 import { GULF_ENERGY_USERS } from './demoDataLoader';
 import { EXTENDED_ENTERPRISE_USERS } from './userProfilesExtended';
 import { SecureStorage } from './storageService';
+import { WORKFLOW_DEMO_USERS } from './workflowDemoUsers';
 
 const STORAGE_USERS_KEY = 'ad6_enterprise_user_profiles_v3';
 
@@ -27,17 +28,22 @@ export class UserProfileService {
     try {
       const stored = await SecureStorage.getItem<UserProfile[]>(STORAGE_USERS_KEY);
       if (stored && Array.isArray(stored) && stored.length > 0) {
-        this.cachedUsers = stored;
-        return stored;
+        this.cachedUsers = this.includeWorkflowDemoUsers(stored);
+        return this.cachedUsers;
       }
     } catch {
       // Fallback
     }
 
     const seeded = this.generateRealisticEnterpriseUsers();
-    this.cachedUsers = seeded;
-    await SecureStorage.setItem(STORAGE_USERS_KEY, seeded);
-    return seeded;
+    this.cachedUsers = this.includeWorkflowDemoUsers(seeded);
+    await SecureStorage.setItem(STORAGE_USERS_KEY, this.cachedUsers);
+    return this.cachedUsers;
+  }
+
+  private static includeWorkflowDemoUsers(users: UserProfile[]): UserProfile[] {
+    const userIds = new Set(users.map(user => user.id));
+    return [...users, ...WORKFLOW_DEMO_USERS.filter(user => !userIds.has(user.id))];
   }
 
   public static async getUserById(userId: string): Promise<UserProfile | null> {

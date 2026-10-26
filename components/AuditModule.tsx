@@ -7,10 +7,11 @@ import { ChecklistEngine } from './audit/ChecklistEngine';
 import { AuditFindings } from './audit/AuditFindings';
 import { AuditExecution } from './audit/AuditExecution';
 import { AuditReports } from './audit/AuditReports';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 import { LayoutDashboard, Calendar, ClipboardList, AlertTriangle, ShieldCheck, FileBarChart } from 'lucide-react';
 
-const AuditModule: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'Dashboard' | 'Planner' | 'Templates' | 'Findings' | 'Reports'>('Dashboard');
+const AuditModule: React.FC<{ initialWorkflowRecordId?: string }> = ({ initialWorkflowRecordId }) => {
+    const [activeTab, setActiveTab] = useState<'Dashboard' | 'Planner' | 'Templates' | 'Findings' | 'Reports'>(initialWorkflowRecordId ? 'Findings' : 'Dashboard');
     const [audits, setAudits] = useState<SafetyAudit[]>(MOCK_AUDITS);
     const [executingAuditId, setExecutingAuditId] = useState<string | null>(null);
 
@@ -81,6 +82,7 @@ const AuditModule: React.FC = () => {
 
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto p-6">
+                {initialWorkflowRecordId && <WorkflowRecordPanel recordType="Audit" recordId={initialWorkflowRecordId} />}
                 {activeTab === 'Dashboard' && (
                     <div className="space-y-6">
                         <AuditDashboard audits={audits} />

@@ -7,6 +7,7 @@ import { GULF_ENERGY_USERS } from '../services/demoDataLoader';
 import { UserProfileService } from '../services/userProfileService';
 import { calculateEffectivePermissions } from '../services/permissionService';
 import { SEED_OMANI_USERS } from '../services/omanCentralDataStore';
+import { WORKFLOW_DEMO_USERS } from '../services/workflowDemoUsers';
 
 // Helper to generate dynamic dates
 const getDate = (daysToAdd: number) => {
@@ -15,8 +16,20 @@ const getDate = (daysToAdd: number) => {
   return date.toISOString().split('T')[0];
 };
 
+const setTabDemoIdentity = (userId: string | null, isDemo: boolean) => {
+  if (typeof window === 'undefined') return;
+  if (!isDemo) {
+    sessionStorage.removeItem('ad6_demo_mode');
+    sessionStorage.removeItem('ad6_demo_user_id');
+    return;
+  }
+  sessionStorage.setItem('ad6_demo_mode', 'true');
+  if (userId) sessionStorage.setItem('ad6_demo_user_id', userId);
+};
+
 export const MOCK_USERS: UserProfile[] = [
   ...SEED_OMANI_USERS,
+  ...WORKFLOW_DEMO_USERS,
   { id: 'demo_user', name: 'Demo User', role: 'ADMIN', jobTitle: 'Platform Demo Administrator', siteLocation: 'Muscat Corporate HQ', assignedSites: ['Sohar Complex', 'Duqm Terminal', 'Fahud Plant'], department: 'System Demo Environment', safetyScore: 0, recentIncidents: [], observations: [], certifications: [], achievements: [] },
   { id: 'admin', name: 'System Admin', role: 'ADMIN', jobTitle: 'Lead Enterprise HSE Platform Architect', siteLocation: 'Corporate Command Center · Muscat', assignedSites: ['All Concessions (Sohar, Duqm, Fahud, Salalah)', 'Muscat HQ'], department: 'Digital Safety Infrastructure & Security', safetyScore: 2500, recentIncidents: [], observations: [], certifications: [{ name: 'Full System Authority', status: 'Valid', expiryDate: getDate(3650) }], achievements: [{ id: 'admin-0', title: 'Grandmaster', description: 'Complete system oversight enabled', dateEarned: getDate(-365), icon: 'Shield', tier: 'Gold' }] },
   { id: 'u0', name: 'H.E. Sheikh Hilal Al-Maamari', role: 'Board_Director', jobTitle: 'Board Director & Safety Oversight Chair', siteLocation: 'Al Hajar Corporate HQ', assignedSites: ['Muscat HQ', 'All Concessions'], department: 'Board of Directors', safetyScore: 120, recentIncidents: [], observations: [], certifications: [], achievements: [] },
@@ -110,8 +123,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         console.warn('Failed to hydrate enriched users:', err);
       }
       // 1. Restore Session securely
-      const sessionUser = await AuthService.getCurrentUser();
-      const demoFlag = await AuthService.isDemoSession();
+      let sessionUser = await AuthService.getCurrentUser();
+      const tabDemoFlag = typeof window !== 'undefined' ? sessionStorage.getItem('ad6_demo_mode') : null;
+      const demoFlag = tabDemoFlag === null ? await AuthService.isDemoSession() : tabDemoFlag === 'true';
+      const tabDemoUserId = typeof window !== 'undefined' ? sessionStorage.getItem('ad6_demo_user_id') : null;
+      if (demoFlag && tabDemoUserId) {
+        const tabUser = MOCK_USERS.find(user => user.id === tabDemoUserId);
+        if (tabUser) {
+          sessionUser = {
+            id: tabUser.id,
+            username: tabUser.email || tabUser.name,
+            name: tabUser.name,
+            role: tabUser.role,
+            department: tabUser.department,
+            permissions: []
+          };
+        }
+      }
       
       if (sessionUser) {
         // Try to find the user in enriched store or mocks
@@ -176,6 +204,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (username === 'SSO_LOGIN') {
       const result = await AuthService.loginWithGoogle();
       if (result) {
+        setTabDemoIdentity(result.user.id, result.isDemo);
         const mockProfile = MOCK_USERS.find(u => u.id === result.user.id);
         if (mockProfile) setCurrentUser(mockProfile);
         else {
@@ -200,6 +229,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const result = await AuthService.login(username, rememberMe);
     if (result) {
+        setTabDemoIdentity(result.user.id, result.isDemo);
         // Try to find the user in mocks, otherwise construct visitor profile
         const mockProfile = MOCK_USERS.find(u => u.id === result.user.id);
         if (mockProfile) {
@@ -227,6 +257,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (email: string, name: string, department: string) => {
     const result = await AuthService.register(email, name, department);
     if (result) {
+        setTabDemoIdentity(result.user.id, result.isDemo);
         setCurrentUser({
             id: result.user.id,
             name: result.user.name,
@@ -248,6 +279,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const loginDemo = async (demoUserId: string = 'admin') => {
     const result = await AuthService.loginDemo(demoUserId);
     if (result) {
+      setTabDemoIdentity(result.user.id, true);
       const enriched = await UserProfileService.getUserById(result.user.id);
       if (enriched) {
         const liveStats = UserProfileService.calculateLiveStats(enriched);
@@ -278,6 +310,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = () => {
+    setTabDemoIdentity(null, false);
     AuthService.logout();
     setCurrentUser(null);
     setIsDemoMode(false);
@@ -285,6 +318,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const switchUser = async (userId: string) => {
       if (!isDemoMode) return; // Strict guard
+      setTabDemoIdentity(userId, true);
       const enriched = await UserProfileService.getUserById(userId);
       if (enriched) {
           const liveStats = UserProfileService.calculateLiveStats(enriched);

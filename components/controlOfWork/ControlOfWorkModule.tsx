@@ -19,6 +19,8 @@ import { useUser } from '../../contexts/UserContext';
 import { useTenant } from '../../contexts/TenantContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useRegionalCompliance } from '../../contexts/RegionalComplianceContext';
+import { useWorkflow } from '../../contexts/WorkflowContext';
+import { WorkflowRecordPanel } from '../workflow/WorkflowRecordPanel';
 
 interface ControlOfWorkModuleProps {
   initialPermitId?: string;
@@ -26,6 +28,7 @@ interface ControlOfWorkModuleProps {
 
 export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initialPermitId }) => {
   const { currentUser } = useUser();
+  const { enabled: workflowEnabled, createForRecord } = useWorkflow();
   const { currentSite, currentTenant } = useTenant();
   const { language, dir, t } = useLanguage();
   const { regionalMode, isUaeMode, isOmanMode, isCombinedMode, activeProfile } = useRegionalCompliance();
@@ -67,6 +70,7 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
   const [permits, setPermits] = useState<Permit[]>(() => {
     return DemoDataLoader.getStoredPermits();
   });
+  const [workflowError, setWorkflowError] = useState<string | null>(null);
   const [selectedPermitId, setSelectedPermitId] = useState<string | null>(initialPermitId || 'ptw-geig-001');
 
   // Listen to demonstration dataset reset event
@@ -356,6 +360,18 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
       }
       return p;
     }));
+    if (newStatus === 'Requested' && selectedPermit.status !== 'Requested' && workflowEnabled) {
+      void createForRecord({
+        recordType: 'Permit',
+        recordId: selectedPermit.id,
+        title: selectedPermit.title,
+        priority: selectedPermit.type === 'Confined Space Entry' || selectedPermit.type === 'Hot Work' || selectedPermit.type === 'Critical Lift' ? 'High' : 'Medium',
+        siteId: 'site-sohar',
+        department: currentUser?.department
+      }).then(() => setWorkflowError(null)).catch(cause => {
+        setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.');
+      });
+    }
   };
 
   // Digital Signatures
@@ -527,6 +543,7 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
 
   return (
     <div className="space-y-5 animate-in fade-in duration-300 pb-12">
+      {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-800">{workflowError}</p>}
       
       {/* Top Header Bar & Mode Toggle */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl backdrop-blur-sm">
@@ -962,6 +979,8 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
             </div>
 
           </div>
+
+          <WorkflowRecordPanel recordType="Permit" recordId={selectedPermit.id} />
 
           {/* TWO-COLUMN WORKFLOW SECTION: GAS TESTING & LOTO */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

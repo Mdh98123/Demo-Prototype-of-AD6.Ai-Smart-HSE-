@@ -62,6 +62,7 @@ import { UserRole, View } from '../types';
 import { GuestDemoModule } from './GuestDemoModule';
 import { canAccessView, getDefaultLandingView } from '../services/permissionService';
 import { AccessDenied } from './ui/AccessDenied';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 
 interface NavChild {
   labelKey: string;
@@ -213,6 +214,35 @@ const App: React.FC = () => {
     }
     if (window.innerWidth < 1024) setSidebarOpen(false);
   };
+
+  useEffect(() => {
+    const handleWorkflowRecord = (event: Event) => {
+      const detail = (event as CustomEvent<{ recordType?: string; recordId?: string }>).detail;
+      if (!detail?.recordId) return;
+      const targetView = detail.recordType === 'Permit'
+        ? View.PERMITS
+        : detail.recordType === 'Observation' || detail.recordType === 'NearMiss'
+          ? View.OBSERVATIONS
+          : detail.recordType === 'Inspection'
+            ? View.INSPECTIONS
+            : detail.recordType === 'Audit'
+              ? View.AUDITS
+              : detail.recordType === 'Training'
+                ? View.TRAINING
+                : detail.recordType === 'NCR'
+                  ? View.INSPECTIONS
+                  : detail.recordType === 'CAPA'
+                    ? View.CAPA
+                  : View.INCIDENTS;
+      handleNav(targetView, {
+        workflowRecordRef: detail,
+        ...(detail.recordType === 'Permit' ? { initialPermitId: detail.recordId } : {}),
+        initialWorkflowRecordId: detail.recordId
+      });
+    };
+    window.addEventListener('ad6-open-workflow-record', handleWorkflowRecord);
+    return () => window.removeEventListener('ad6-open-workflow-record', handleWorkflowRecord);
+  }, [handleNav]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -372,12 +402,12 @@ const App: React.FC = () => {
                 {/* BRAND NEW ENTERPRISE ARCHITECTURE VIEWS */}
                 {currentView === View.EXECUTIVE_COMMAND_CENTER && <ExecutiveDashboard />}
                 {currentView === View.HSE_OPERATIONS && <Dashboard onNavigate={handleNav} />}
-                {currentView === View.INCIDENT_MANAGEMENT && <IncidentForm />}
-                {currentView === View.SAFETY_AUDIT && <AuditModule />}
+                {currentView === View.INCIDENT_MANAGEMENT && <IncidentForm initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
+                {currentView === View.SAFETY_AUDIT && <AuditModule initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
                 {currentView === View.PERMIT_TO_WORK && <PermitForm {...viewParams} />}
-                {currentView === View.VISUAL_INSPECTION && <SafetyObservationForm />}
+                {currentView === View.VISUAL_INSPECTION && <SafetyObservationForm initialWorkflowRecordId={viewParams.workflowRecordRef?.recordId} />}
                 {currentView === View.WORKFORCE_SAFETY && <MyWorkCockpit />}
-                {currentView === View.TRAINING_COMPETENCY && <TrainingModule />}
+                {currentView === View.TRAINING_COMPETENCY && <TrainingModule initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
                 {currentView === View.COMPLIANCE_INTELLIGENCE && <ComplyFlowModule />}
                 {currentView === View.ANALYTICS_REPORTING && <ExecutiveDashboard />}
 
@@ -391,19 +421,24 @@ const App: React.FC = () => {
                 {currentView === View.JSA && <JSAModule />}
                 {currentView === View.EXCAVATION && <ExcavationModule />}
                 {currentView === View.HAZARDS && <HazardRegisterModule />}
-                {currentView === View.CAPA && <CAPAModule />}
+                {currentView === View.CAPA && (
+                  <>
+                    {viewParams.initialWorkflowRecordId && <WorkflowRecordPanel recordType="CAPA" recordId={viewParams.initialWorkflowRecordId} />}
+                    <CAPAModule />
+                  </>
+                )}
                 {currentView === View.LOTO && <LOTOModule />}
                 {currentView === View.DMS && <DMSModule />}
                 {currentView === View.FORMS_BUILDER && <DigitalFormsBuilderModule />}
                 {currentView === View.BUSINESS_CONTINUITY && <BusinessContinuityModule />}
                 {currentView === View.GIS_MAP && <GISMapModule />}
                 {currentView === View.LESSONS_LEARNED && <LessonsLearnedModule />}
-                {currentView === View.INCIDENTS && <IncidentForm />}
-                {currentView === View.OBSERVATIONS && <SafetyObservationForm />}
+                {currentView === View.INCIDENTS && <IncidentForm initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
+                {currentView === View.OBSERVATIONS && <SafetyObservationForm initialWorkflowRecordId={viewParams.workflowRecordRef?.recordId} />}
                 {currentView === View.PERMITS && <PermitForm {...viewParams} />}
-                {currentView === View.TRAINING && <TrainingModule />}
+                {currentView === View.TRAINING && <TrainingModule initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
                 {currentView === View.INSPECTIONS && <InspectionModule {...viewParams} />}
-                {currentView === View.AUDITS && <AuditModule />}
+                {currentView === View.AUDITS && <AuditModule initialWorkflowRecordId={viewParams.initialWorkflowRecordId} />}
                 {currentView === View.MAINTENANCE && <PredictiveMaintenanceModule />}
                 {currentView === View.TOOLBOX && <ToolboxTalksModule />}
                 {currentView === View.CONTRACTORS && <ContractorPortal />}

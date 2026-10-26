@@ -15,6 +15,13 @@ dist-ssr
 build
 *.local
 
+# Test coverage and tool caches
+coverage/
+.nyc_output/
+.vite/
+.cache/
+*.tsbuildinfo
+
 # Logs
 logs
 *.log

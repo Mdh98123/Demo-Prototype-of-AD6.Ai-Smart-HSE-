@@ -132,7 +132,7 @@ export const PERMISSIONS = {
 export type Permission = typeof PERMISSIONS[keyof typeof PERMISSIONS];
 
 // ============================================================================
-// 2. ROLE-TO-PERMISSION MAPPINGS (ALL 18 SUPPORTED ROLES)
+// 2. ROLE-TO-PERMISSION MAPPINGS
 // ============================================================================
 
 export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
@@ -468,6 +468,27 @@ export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
     PERMISSIONS.SYSTEM_LOGS_VIEW,
     PERMISSIONS.LESSONS_LEARNED_VIEW,
     PERMISSIONS.COMPLIANCE_ASSISTANT_VIEW
+  ],
+
+  QA_QC_Manager: [
+    PERMISSIONS.TASKS_VIEW,
+    PERMISSIONS.TASKS_MANAGE,
+    PERMISSIONS.CAPA_VIEW,
+    PERMISSIONS.CAPA_MANAGE,
+    PERMISSIONS.AUDITS_VIEW,
+    PERMISSIONS.AUDITS_MANAGE,
+    PERMISSIONS.INSPECTIONS_VIEW,
+    PERMISSIONS.INSPECTIONS_EXECUTE,
+    PERMISSIONS.DASHBOARD_VIEW
+  ],
+
+  QA_QC_Inspector: [
+    PERMISSIONS.TASKS_VIEW,
+    PERMISSIONS.TASKS_MANAGE,
+    PERMISSIONS.CAPA_VIEW,
+    PERMISSIONS.INSPECTIONS_VIEW,
+    PERMISSIONS.INSPECTIONS_EXECUTE,
+    PERMISSIONS.DASHBOARD_VIEW
   ],
 
   // 11. Site Supervisor (Permit Issuer)

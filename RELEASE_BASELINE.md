@@ -1,9 +1,9 @@
 # AD6.Ai Smart HSE Enterprise Platform — Release Baseline Specification
 
-**Baseline Release Version:** 1.0.0-verified  
-**Inspection & Verification Date:** 2026-10-23  
+**Baseline Release Version:** 1.0.0
+**Inspection & Verification Date:** 2026-10-25
 **Target Environment:** Node.js 20.6+ / Node 22 LTS, Express 5 Gateway, Vite 6, React 19 SPA, Google AI Studio / Google Cloud Run  
-**Assessed Status:** Complete, Verified, Zero-Regression State  
+**Assessed Status:** Baseline recorded; known correctness, security, and browser-flow blockers remain
 
 ---
 
@@ -11,12 +11,12 @@
 
 | Layer | Specification | Standard Command | Operational Notes |
 |---|---|---|---|
-| **Node Runtime** | Node.js `>= 20.6.0` (Verified on Node 22.14.0) | `node -v` | Supports native `process.loadEnvFile()` |
+| **Node Runtime** | Node.js `>= 20.6.0` (observed Node 24.19.0 / npm 11.17.0) | `node -v` | Baseline was run on Node 24, not Node 22 |
 | **Development Server** | Vite 6 + Express 5 Gateway | `npm run dev` | Runs `tsx server.ts` on port 3000 |
-| **Type Check / Linter** | TypeScript Compiler 5.8.2 (`tsc --noEmit`) | `npm run lint` | 0 errors across 400+ TypeScript files |
+| **Type Check / Linter** | TypeScript Compiler (`tsc --noEmit`) | `npm run lint` | Initial baseline failed at `components/IncidentForm.tsx:885`; passed after removing the inactive OSHAD action in commit `0b75d95` |
 | **Production Build** | Vite + esbuild Node.js bundle | `npm run build` | Generates `/dist` and `dist/server.cjs` |
-| **Automated Tests** | Node.js Native Test Runner (`node:test`) | `npm test` | Runs health and auth regression test suites |
-| **RBAC Unit Suite** | Node.js Native Runner via tsx | `npx tsx --test test/rbac_navigation.test.mjs` | Runs 12 granular RBAC persona tests |
+| **Automated Tests** | Node.js Native Test Runner (`node:test`) | `npm test` | 8/8 tests passed |
+| **RBAC Test Suite** | Node.js Native Runner via tsx | `npx tsx --test test/rbac_navigation.test.mjs` | 12/12 tests passed; authorization behavior is simulated by these tests |
 | **Production Server** | Node.js runtime | `npm start` | Runs `node dist/server.cjs` (Port 8080) |
 | **Container Engine** | Multi-stage Dockerfile (Node 22 Alpine) | `docker build -t ad6-hse-platform .` | Cloud Run healthcheck at `/api/healthz` |
 
@@ -76,11 +76,25 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 
 ### 3.3 Static Analysis (`npm run lint`)
 - Command: `tsc --noEmit`
-- Result: Clean exit code 0. Zero TypeScript syntax, import, or type mismatches.
+- Initial baseline: failed with `TS2552` because `handleExportOshadPdf` was undefined at `components/IncidentForm.tsx:885`.
+- After the approved cleanup: passed with zero TypeScript errors.
 
 ### 3.4 Production Build (`npm run build`)
 - Command: `vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs`
-- Result: Clean exit code 0. Complete bundles generated in `/dist` and `/dist/server.cjs`.
+- Initial baseline: passed in 37.95 seconds; 84 output files totaling 5.05 MB. Largest JavaScript entry: 1,765.88 KB minified / 513.53 KB gzip.
+- Post-cleanup build: passed in 38.04 seconds; largest JavaScript entry: 1,765.88 KB minified / 513.56 KB gzip.
+
+### 3.5 Browser, Hosting, and Security Baseline
+
+- Local production smoke check: `/` returned the app shell and `/api/healthz` returned HTTP 200 with `status: healthy`.
+- Browser smoke check: demo entry, My Work, ESG, and the incident detail screen loaded. A synthetic incident was created only in an isolated local browser and the browser state was restored afterwards.
+- Oman incident export remained visible as `Oman MoL 24H`; the inactive OSHAD Form G control was removed.
+- Permit issuance was not tested: no new-permit creation flow was exposed, and no existing permit was signed or modified.
+- Inspection checklist generation failed with `TARGET LOCATION IS REQUIRED` after selecting a synthetic location. Navigating to Mobile Field Inspections rendered a blank application root; no photo was submitted.
+- Arabic mode set `html lang="ar"` and `dir="rtl"`, but visible ESG labels remained English. AI hazard analysis was not invoked.
+- Authoritative live demo: `https://ad6-hse-enterprise-ai-platform.ai.studio`; `/api/healthz` returned JSON. The separate Vercel Production URL `https://demo-prototype-of-ad-6-ai-smart-r0jons48e.vercel.app` returned the SPA HTML fallback for `/api/healthz`. No staging URL was identified and no deployment was made.
+- The repository documents `npm run build` and `npm start`; actual live-host build/start commands and configured environment values were not observable.
+- Dependency audit: 39 vulnerabilities total (4 critical, 17 high, 15 moderate, 3 low); production-only audit reported 28 (4 critical, 10 high, 13 moderate, 1 low).
 
 ---
 
@@ -98,9 +112,18 @@ To maintain strict compliance with both the Google AI Studio iframe sandbox envi
 | `ENABLE_CLOUD_LOGGING` | Non-sensitive | No | Toggles Google Cloud Logging output in `/services/audit.js`. |
 | `VITE_FIREBASE_*` | Public Client | No | Firebase configuration overrides in `/lib/firebase.ts`. |
 
+This is the repository-documented environment inventory; the live host's configured values were not inspected.
+
 ---
 
 ## 5. Security & Invariant Baseline
+
+The statements below describe intended design and existing regression tests; they are not proof of end-to-end server security. The baseline audit also found unresolved release blockers:
+
+- `vite.config.ts:14-15` injects Gemini environment values into the client bundle.
+- `server.ts:131` trusts caller-supplied identity/permission claims in the access-verification route; the RBAC tests do not exercise production authorization.
+- `server.ts:67,71-73,149,158-160` includes a wildcard Socket.IO origin and unauthenticated audit/realtime surfaces.
+- `npm audit` reported the vulnerabilities listed in Section 3.5.
 
 1. **Unauthenticated Session Gating:**
    - Fresh browser sessions initialize with `currentUser = null` and `isDemoMode = false`.

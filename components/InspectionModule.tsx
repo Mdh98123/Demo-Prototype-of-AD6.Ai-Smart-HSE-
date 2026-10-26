@@ -1,11 +1,13 @@
 import { AITag } from './AITag';
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
+import { useWorkflow } from '../contexts/WorkflowContext';
 import { generateInspectionChecklist, suggestAuditFinding } from '../services/geminiService';
 import { InspectionItem, NCR } from '../types';
 import LocationSelector, { PREDEFINED_LOCATIONS } from './LocationSelector';
 import { VoiceDictationButton } from './media/VoiceDictationButton';
 import { InspectionDetail } from './InspectionDetail';
+import { WorkflowRecordPanel } from './workflow/WorkflowRecordPanel';
 import { 
   ClipboardCheck, Loader2, Plus, AlertOctagon, CheckCircle2, 
   XCircle, MinusCircle, Camera, FileText, ChevronRight,
@@ -32,6 +34,7 @@ function deg2rad(deg: number) {
 
 interface InspectionModuleProps {
   initialTab?: 'new' | 'history';
+  initialWorkflowRecordId?: string;
 }
 
 interface InspectionRecord {
@@ -45,8 +48,9 @@ interface InspectionRecord {
     items: InspectionItem[];
 }
 
-const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'history' }) => {
+const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'history', initialWorkflowRecordId }) => {
   const { currentUser } = useUser();
+  const { enabled: workflowEnabled, createForRecord } = useWorkflow();
   const [activeTab, setActiveTab] = useState<'new' | 'history'>(initialTab);
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState<InspectionRecord[]>([]);
@@ -60,6 +64,7 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
   const [currentInspectionId] = useState(`INSP-${Date.now()}`);
   const [aiError, setAiError] = useState<string | null>(null);
   const [selectedRecordForDetail, setSelectedRecordForDetail] = useState<any | null>(null);
+  const [workflowError, setWorkflowError] = useState<string | null>(null);
 
   // Validation State
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -246,6 +251,20 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
       const newHistory = [record, ...history];
       setHistory(newHistory);
       localStorage.setItem('hse_inspection_history', JSON.stringify(newHistory));
+      if (workflowEnabled) {
+          ncrs.forEach(ncr => {
+              void createForRecord({
+                  recordType: 'NCR',
+                  recordId: ncr.id,
+                  title: ncr.description.slice(0, 100),
+                  priority: ncr.severity === 'Major' ? 'High' : 'Medium',
+                  siteId: 'site-sohar',
+                  department: currentUser.department
+              }).then(() => setWorkflowError(null)).catch(cause => {
+                  setWorkflowError(cause instanceof Error ? cause.message : 'Workflow task creation failed.');
+              });
+          });
+      }
       
       // Reset
       setChecklist([]);
@@ -271,6 +290,8 @@ const InspectionModule: React.FC<InspectionModuleProps> = ({ initialTab = 'histo
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
+      {initialWorkflowRecordId && <WorkflowRecordPanel recordType="NCR" recordId={initialWorkflowRecordId} />}
+      {workflowError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">{workflowError}</p>}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-6">
           <div className="flex items-center gap-x-5">
             <div className="bg-indigo-600 p-5 rounded-[2rem] text-white shadow-2xl shadow-indigo-500/20">

@@ -3,7 +3,7 @@
 // Multi-format export: PDF (jsPDF + AutoTable), XLSX (SheetJS), and Regulatory JSON
 
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { 
   ESGStandard, 
@@ -138,7 +138,7 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
     ['GROSS TOTAL FOOTPRINT', 'Consolidated Operational Boundaries', `${totalEmissions.toFixed(2)} tCO2e`, '100.0%', 'GHG Corporate Protocol']
   ];
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: 92,
     head: [['Emission Scope', 'Categorization & Sources', 'Calculated CO2e', 'Share %', 'Accounting Standard']],
     body: emissionsTableData,
@@ -165,7 +165,7 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
     ['Workforce Gender Diversity', 'Board & Management Target', `${payload.socialSafety.femaleWorkforcePct}% Overall / ${payload.socialSafety.femaleLeadershipPct}% Leadership`, 'Progressing vs 2030 Roadmap', 'MSX S4 / MSX S4 / GRI 405']
   ];
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: currentY + 4,
     head: [['Pillar / Framework', 'Statutory Benchmark', 'Reported Metric', 'Compliance Status', 'Regulatory Reference']],
     body: socialTableData,
@@ -192,7 +192,7 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
     ['Independent Assurance', `${payload.governance.assuranceLevel} Standard`, `Verified by ${payload.governance.externalAssuranceProvider || 'KPMG'}`, 'ISAE 3000 (Revised) Verification']
   ];
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: currentY + 4,
     head: [['Governance Parameter', 'Declared Performance', 'Standard Assessment', 'Legal & Regulatory Basis']],
     body: govTableData,

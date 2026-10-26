@@ -4,7 +4,7 @@
 // 2. Sultanate of Oman: Ministry of Labour MD 286/2008 & Royal Decree 53/2023 (24-Hour Notice)
 
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { Incident } from '../types';
 
 export interface EntityContext {
@@ -52,7 +52,7 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
   y = 36;
 
   // Section 1: Entity & Site Identification
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['1. ENTITY & OPERATIONAL FACILITY IDENTIFICATION', '']],
@@ -73,7 +73,7 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
   y = (doc as any).lastAutoTable.finalY + 5;
 
   // Section 2: Incident Details & Classification
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['2. INCIDENT PARTICULARS & SEVERITY CLASSIFICATION', '']],
@@ -94,7 +94,7 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
   y = (doc as any).lastAutoTable.finalY + 5;
 
   // Section 3: Sequence of Events
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['3. EVENT NARRATIVE & CHRONOLOGICAL SEQUENCE', '']],
@@ -117,7 +117,7 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
     ? incident.fiveWhys.map(w => `Why ${w.step}: ${w.whyText}`).join(' ➔ ')
     : 'Root cause analysis in progress under Mechanism 11.0 investigation team.';
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['4. PRELIMINARY CAUSAL FACTORS & ACTION STATUS', '']],
@@ -135,7 +135,7 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
   y = (doc as any).lastAutoTable.finalY + 6;
 
   // Section 5: Official Attestation
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'plain',
     body: [
@@ -189,7 +189,7 @@ export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext
   y = 36;
 
   // Section 1: Establishment Particulars
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['1. ESTABLISHMENT PARTICULARS / بيانات المنشأة', '']],
@@ -210,7 +210,7 @@ export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext
   y = (doc as any).lastAutoTable.finalY + 5;
 
   // Section 2: Incident Occurrence Details
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['2. INCIDENT OCCURRENCE & CLASSIFICATION / تفاصيل وتصنيف الحادث', '']],
@@ -231,7 +231,7 @@ export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext
   y = (doc as any).lastAutoTable.finalY + 5;
 
   // Section 3: Event Description & Site Preservation
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['3. OCCURRENCE DESCRIPTION & SITE PRESERVATION PROTOCOL', '']],
@@ -255,7 +255,7 @@ export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext
     ? incident.fiveWhys.map(w => `Why ${w.step}: ${w.whyText}`).join(' ➔ ')
     : 'Root cause analysis in progress under Ministry of Labour statutory investigation timeline.';
 
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'grid',
     head: [['4. ROOT CAUSE SUMMARY & CORRECTIVE ACTIONS / الأسباب الجذرية والإجراءات', '']],
@@ -273,7 +273,7 @@ export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext
   y = (doc as any).lastAutoTable.finalY + 6;
 
   // Section 5: Attestation & Signature
-  (doc as any).autoTable({
+  autoTable(doc, {
     startY: y,
     theme: 'plain',
     body: [
