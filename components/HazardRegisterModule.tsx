@@ -32,7 +32,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     title: 'High Voltage Cable Exposure Near Excavation',
     description: '11kV underground armored cable sleeve exposed after trench backfill erosion during heavy squall.',
     category: 'Electrical',
-    site: 'Ruwais Industrial Complex',
+    site: 'Mina Al Fahal Industrial Complex',
     location: 'Sector 4, Polyethylene Line 2',
     identifiedBy: 'Tariq Al-Hashemi',
     identifiedDate: '2026-03-28',
@@ -53,7 +53,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     title: 'Hydrocarbon Drain Sump Vapor Accumulation',
     description: 'Atmospheric pocket trap in drain sump B exhibiting LEL readings between 8% and 14% on calm afternoons.',
     category: 'Chemical',
-    site: 'Habshan Gas Complex',
+    site: 'Khazzan Tight Gas Complex Block 61',
     location: 'Storage Facility B, Flare Header Interface',
     identifiedBy: 'Amina Al-Mansouri',
     identifiedDate: '2026-03-29',
@@ -84,7 +84,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     residualLikelihood: 3,
     residualSeverity: 3,
     residualScore: 9,
-    existingControls: ['MOHRE Midday Break Compliance enforced', 'Hydration station with electrolyte packets', 'Chilled air rest refuge on deck', 'Buddy system monitoring'],
+    existingControls: ['Oman Ministry of Labour Midday Break Compliance enforced', 'Hydration station with electrolyte packets', 'Chilled air rest refuge on deck', 'Buddy system monitoring'],
     additionalMitigationRequired: 'Shift heavy structural lifts strictly to 20:00 - 04:00 night window',
     actionOwner: 'M. Al-Blooshi (Marine Safety Supt)',
     reviewDate: '2026-04-05',
@@ -137,7 +137,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     title: 'Unlabeled Secondary Chemical Solvent Decanting',
     description: 'Cleaning contractors using unlabelled 5-liter HDPE containers for xylene solvent degreaser.',
     category: 'Chemical',
-    site: 'Jebel Ali Logistics Hub',
+    site: 'Duqm Industrial Port Logistics Hub',
     location: 'Maintenance Workshop Bay 3',
     identifiedBy: 'Arun Kumar',
     identifiedDate: '2026-04-04',
@@ -179,7 +179,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     title: 'Repetitive Strain & Vibration Exposure on Rebar Bending',
     description: 'Manual ironworkers reporting forearm numbness after sustained 8-hour shift on hydraulic rebar benders.',
     category: 'Ergonomic',
-    site: 'Ruwais Industrial Complex',
+    site: 'Mina Al Fahal Industrial Complex',
     location: 'Civil Substation 03 Precast Yard',
     identifiedBy: 'Dr. Sarah Jenkins (Occupational Health)',
     identifiedDate: '2026-04-06',
@@ -200,7 +200,7 @@ const INITIAL_HAZARDS: HazardRecord[] = [
     title: 'Legionella Pneumophila Risk in Cooling Tower Basin 2B',
     description: 'Biocide dosing pump solenoid failed over 72-hour holiday weekend; dipslide showed elevated CFU/ml.',
     category: 'Biological',
-    site: 'Habshan Gas Complex',
+    site: 'Khazzan Tight Gas Complex Block 61',
     location: 'Utility Water Treatment Plant 2',
     identifiedBy: 'Noora Al-Suwaidi',
     identifiedDate: '2026-04-07',
@@ -306,7 +306,7 @@ export const HazardRegisterModule: React.FC = () => {
     title: '',
     description: '',
     category: 'Physical' as HazardRecord['category'],
-    site: 'Ruwais Industrial Complex',
+    site: 'Mina Al Fahal Industrial Complex',
     location: '',
     identifiedBy: 'Tariq Al-Hashemi',
     inherentLikelihood: 3,
@@ -423,7 +423,7 @@ export const HazardRegisterModule: React.FC = () => {
       title: '',
       description: '',
       category: 'Physical',
-      site: 'Ruwais Industrial Complex',
+      site: 'Mina Al Fahal Industrial Complex',
       location: '',
       identifiedBy: 'Tariq Al-Hashemi',
       inherentLikelihood: 3,
@@ -472,7 +472,7 @@ export const HazardRegisterModule: React.FC = () => {
             Enterprise Hazard Register
           </h2>
           <p className="text-slate-500 text-sm mt-0.5">
-            Centralized multi-site risk repository aligned with OSHAD-SF and ISO 45001 standards. Total logged: {hazards.length} hazards.
+            Centralized multi-site risk repository aligned with Oman MoL MD 286/2008 & PDO Specifications and ISO 45001 standards. Total logged: {hazards.length} hazards.
           </p>
         </div>
         <div className="flex items-center gap-2.5">
@@ -519,7 +519,7 @@ export const HazardRegisterModule: React.FC = () => {
           <div className="text-2xl font-bold text-emerald-700 mt-1">
             {Math.round((hazards.filter(h => h.status === 'Controlled').length / (hazards.length || 1)) * 100)}%
           </div>
-          <div className="text-xs text-emerald-600 mt-1 font-medium">Within OSHAD threshold</div>
+          <div className="text-xs text-emerald-600 mt-1 font-medium">Within Oman MoL MD 286/2008 threshold</div>
         </div>
       </div>
 
@@ -796,8 +796,8 @@ export const HazardRegisterModule: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, site: e.target.value })}
                     className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white"
                   >
-                    <option value="Ruwais Industrial Complex">Ruwais Industrial Complex</option>
-                    <option value="Habshan Gas Complex">Habshan Gas Complex</option>
+                    <option value="Mina Al Fahal Industrial Complex">Mina Al Fahal Industrial Complex</option>
+                    <option value="Khazzan Tight Gas Complex Block 61">Khazzan Tight Gas Complex Block 61</option>
                     <option value="Mina Zayed Terminal">Mina Zayed Terminal</option>
                     <option value="Fahud Field Operation">Fahud Field Operation</option>
                     <option value="NEOM Sindalah Island Base">NEOM Sindalah Island Base</option>

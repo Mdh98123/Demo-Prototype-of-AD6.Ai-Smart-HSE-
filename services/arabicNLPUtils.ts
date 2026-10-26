@@ -16,8 +16,8 @@ export class ArabicNLPUtils {
   static extractEntities(text: string): { regulations: string[], entities: string[] } {
     // Mock entity extraction
     const regulations = [];
-    if (text.toLowerCase().includes('oshad') || text.includes('اوشاد')) regulations.push('OSHAD');
-    if (text.toLowerCase().includes('adnoc') || text.includes('ادنوك')) regulations.push('ADNOC');
+    if (text.toLowerCase().includes('omanMoL') || text.includes('اوشاد')) regulations.push('Oman MoL MD 286/2008');
+    if (text.toLowerCase().includes('pdo') || text.includes('ادنوك')) regulations.push('PDO');
     
     return {
       regulations,

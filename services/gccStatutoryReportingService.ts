@@ -1,6 +1,6 @@
 // GCC Statutory Incident Reporting Engine
 // Compliant with:
-// 1. UAE / Abu Dhabi: ADPHC OSHAD-SF Mechanism 11.0 (Form G - Serious Incident Notification)
+// 1. Oman / Muscat: Oman MoL OSHD Oman MoL MD 286/2008 & PDO PR-1172 (Form G - Serious Incident Notification)
 // 2. Sultanate of Oman: Ministry of Labour MD 286/2008 & Royal Decree 53/2023 (24-Hour Notice)
 
 import jsPDF from 'jspdf';
@@ -12,13 +12,13 @@ export interface EntityContext {
   shortName: string;
   sector: string;
   tradeLicenseOrCR: string;
-  oshadClass?: string;
+  omanMoLClass?: string;
   molLicense?: string;
   contactOfficer: string;
   contactPhone: string;
 }
 
-export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
+export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext) {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -28,7 +28,7 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
   const pageWidth = doc.internal.pageSize.getWidth();
   let y = 14;
 
-  // Header Banner (ADPHC OSHAD Emerald Style)
+  // Header Banner (Oman MoL OSHD Oman MoL MD 286/2008 Emerald Style)
   doc.setFillColor(15, 23, 42); // slate-900
   doc.rect(0, 0, pageWidth, 28, 'F');
 
@@ -38,7 +38,7 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
-  doc.text('ABU DHABI OCCUPATIONAL SAFETY AND HEALTH SYSTEM FRAMEWORK (OSHAD-SF)', 14, 11);
+  doc.text('Muscat OCCUPATIONAL SAFETY AND HEALTH SYSTEM FRAMEWORK (Oman MoL MD 286/2008 & PDO Specifications)', 14, 11);
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
@@ -47,7 +47,7 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
 
   doc.setFontSize(8);
   doc.setTextColor(148, 163, 184); // slate-400
-  doc.text('Mandatory 24-Hour Statutory Filing to Abu Dhabi Public Health Centre (ADPHC)', 14, 23);
+  doc.text('Mandatory 24-Hour Statutory Filing to Muscat Public Health Centre (Oman MoL OSHD)', 14, 23);
 
   y = 36;
 
@@ -60,8 +60,8 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
       ['Nominated Entity Name:', entity.orgName],
       ['Sector & Regulatory Authority:', `${entity.sector} · Sector Regulatory Authority (SRA)`],
       ['Operating Asset / Facility:', `${incident.location}`],
-      ['Trade License / Registration:', entity.tradeLicenseOrCR || 'CN-1004829 (Abu Dhabi DED)'],
-      ['OSHAD Entity Classification:', entity.oshadClass || 'Class A (High Risk Industrial Facility)'],
+      ['Trade License / Registration:', entity.tradeLicenseOrCR || 'CN-1004829 (Muscat DED)'],
+      ['Oman MoL MD 286/2008 Entity Classification:', entity.omanMoLClass || 'Class A (High Risk Industrial Facility)'],
       ['Designated HSE Officer:', `${entity.contactOfficer} (${entity.contactPhone})`]
     ],
     headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontSize: 9, fontStyle: 'bold' },
@@ -82,7 +82,7 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
       ['Exact Date & Time of Occurrence:', `${new Date(incident.timestamp).toLocaleString()} (GST / UTC+4)`],
       ['Primary Classification:', (incident.classification || incident.type).toUpperCase()],
       ['Actual Severity / Potential Severity:', `${incident.severity} / ${incident.potentialSeverity || 'High'}`],
-      ['GPS Spatial Coordinates:', incident.coordinates ? `Lat: ${incident.coordinates.lat.toFixed(5)}, Lng: ${incident.coordinates.lng.toFixed(5)}` : '24.1107° N, 52.7306° E (Habshan Asset)'],
+      ['GPS Spatial Coordinates:', incident.coordinates ? `Lat: ${incident.coordinates.lat.toFixed(5)}, Lng: ${incident.coordinates.lng.toFixed(5)}` : '24.1107° N, 52.7306° E (Khazzan Gas Asset Asset)'],
       ['Initial Status in Life Cycle:', incident.status]
     ],
     headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontSize: 9, fontStyle: 'bold' },
@@ -124,7 +124,7 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
     body: [
       ['RCA / 5-Why Conclusion:', rcaText],
       ['CAPA Actions Assigned:', incident.capaActions ? `${incident.capaActions.length} formal corrective actions assigned in system.` : 'Investigation underway, formal CAPA plan to follow within Form G1 deadline.'],
-      ['Preservation of Scene Protocol:', 'Physical barricades installed. Scene preserved for SRA / ADPHC inspection.']
+      ['Preservation of Scene Protocol:', 'Physical barricades installed. Scene preserved for SRA / Oman MoL OSHD inspection.']
     ],
     headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontSize: 9, fontStyle: 'bold' },
     bodyStyles: { fontSize: 8.5, textColor: [30, 41, 59] },
@@ -140,8 +140,8 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
     theme: 'plain',
     body: [
       ['Reported By:', incident.reportedByName || entity.contactOfficer, 'Attested By:', 'Authorized HSE Director'],
-      ['Date of Filing:', new Date().toISOString().split('T')[0], 'ADPHC Submission Deadline:', '24 Hours (Mechanism 11.0)'],
-      ['Digital Verification Hash:', `SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Date.now()}`, 'Form Version:', 'OSHAD-SF Form G v3.1']
+      ['Date of Filing:', new Date().toISOString().split('T')[0], 'Oman MoL OSHD Submission Deadline:', '24 Hours (Mechanism 11.0)'],
+      ['Digital Verification Hash:', `SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Date.now()}`, 'Form Version:', 'Oman MoL MD 286/2008 & PDO Specifications Form G v3.1']
     ],
     bodyStyles: { fontSize: 8, textColor: [100, 116, 139] },
     margin: { left: 14, right: 14 }
@@ -150,9 +150,9 @@ export function exportOshadFormGPdf(incident: Incident, entity: EntityContext) {
   // Footer text
   doc.setFontSize(7.5);
   doc.setTextColor(148, 163, 184);
-  doc.text('This document constitutes an official statutory notification pursuant to Abu Dhabi Public Health Centre (ADPHC) OSHAD-SF Mechanism 11.0. All particulars are recorded under audit trail integrity.', 14, 288);
+  doc.text('This document constitutes an official statutory notification pursuant to Muscat Public Health Centre (Oman MoL OSHD) Oman MoL MD 286/2008 & PDO PR-1172. All particulars are recorded under audit trail integrity.', 14, 288);
 
-  doc.save(`ADPHC_OSHAD_Form_G_${incident.id}.pdf`);
+  doc.save(`Oman MoL OSHD_Oman MoL MD 286/2008_Form_G_${incident.id}.pdf`);
 }
 
 export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext) {

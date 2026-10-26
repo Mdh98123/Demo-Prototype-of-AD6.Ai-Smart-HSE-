@@ -85,7 +85,7 @@ export class GeminiClientService {
     useSearchGrounding?: boolean;
     useMapsGrounding?: boolean;
     userLatLng?: { latitude: number; longitude: number };
-    regionalMode?: 'UAE' | 'OMAN' | 'COMBINED';
+    regionalMode?: 'OMAN' | 'OMAN' | 'COMBINED';
   }): Promise<ChatResponse> {
     const res = await fetch('/api/gemini/chat', {
       method: 'POST',

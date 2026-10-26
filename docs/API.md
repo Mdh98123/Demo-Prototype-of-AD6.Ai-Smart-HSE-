@@ -34,7 +34,7 @@
     "code": "SOD_VIOLATION",
     "message": "Segregation of Duties: Permit Receiver cannot authorize as Area Authority Issuer.",
     "targetField": "issuerSignature",
-    "regulatoryReference": "OSHAD-SF CoP 21.0 PTW Clause 4.2"
+    "regulatoryReference": "PDO SP-1143 PTW Specification Clause 4.2"
   }
 }
 ```

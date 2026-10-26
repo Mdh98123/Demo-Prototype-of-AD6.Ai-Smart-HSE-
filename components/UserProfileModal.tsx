@@ -205,7 +205,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
                 <div className="flex items-center gap-1.5">
                   <MapPin size={14} className="text-emerald-400" />
-                  <span>{userProfile.siteLocation || 'Al-Ruwais Polyolefin Asset'}</span>
+                  <span>{userProfile.siteLocation || 'Mina Al Fahal Refinery Asset'}</span>
                 </div>
                 {userProfile.email && (
                   <div className="flex items-center gap-1.5 font-mono">
@@ -449,9 +449,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         }}
                         className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer appearance-none"
                       >
-                        <option value="UAE">United Arab Emirates (UAE)</option>
-                        <option value="OMAN">Sultanate of Oman (Oman)</option>
-                        <option value="COMBINED">UAE + Oman (Combined Compliance)</option>
+                        <option value="OMAN">Sultanate of Oman (National Framework)</option>
+                        <option value="COMBINED">Oman Concessions & Freezones (PDO & SEZAD)</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-slate-400">
                         <ChevronRight size={16} className="rotate-90" />
@@ -558,7 +557,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Operational Sites Authorized:</span>
                     <div className="flex flex-wrap gap-1.5">
                       {(userProfile.assignedSites || [
-                        'Al-Ruwais Polyolefin Asset (UAE)',
+                        'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
                         'Fahud-West Gas Station (Oman)'
                       ]).map((site, i) => (
                         <span key={i} className="px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-1">
@@ -1004,9 +1003,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       onChange={(e) => openChangeModal(e.target.value as RegionalComplianceMode)}
                       className="w-full sm:w-72 bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-900 font-bold text-xs rounded-xl px-3 py-2.5 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <option value="UAE">United Arab Emirates (UAE)</option>
-                      <option value="OMAN">Sultanate of Oman (Oman)</option>
-                      <option value="COMBINED">UAE + Oman (Combined Compliance)</option>
+                      <option value="OMAN">Sultanate of Oman (National Framework)</option>
+                      <option value="COMBINED">Oman Concessions & Freezones (PDO & SEZAD)</option>
                     </select>
                   </div>
                 </div>

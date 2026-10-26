@@ -8,11 +8,11 @@ import {
 import { GeminiClientService, MapPlace } from '../services/geminiClientService';
 
 const GCC_FACILITIES = [
-  { name: 'Ruwais Industrial Complex', lat: 24.1107, lng: 52.7306, country: 'UAE' },
-  { name: 'Musaffah Industrial Zone', lat: 24.3394, lng: 54.4984, country: 'UAE' },
-  { name: 'Habshan Gas Complex', lat: 23.9575, lng: 53.6822, country: 'UAE' },
-  { name: 'Jebel Ali Free Zone', lat: 24.9857, lng: 55.0864, country: 'UAE' },
-  { name: 'Fujairah Oil Terminal', lat: 25.1288, lng: 56.3265, country: 'UAE' },
+  { name: 'Mina Al Fahal Industrial Complex', lat: 24.1107, lng: 52.7306, country: 'OMAN' },
+  { name: 'Musaffah Industrial Zone', lat: 24.3394, lng: 54.4984, country: 'OMAN' },
+  { name: 'Khazzan Tight Gas Complex Block 61', lat: 23.9575, lng: 53.6822, country: 'OMAN' },
+  { name: 'Duqm Industrial Port Free Zone', lat: 24.9857, lng: 55.0864, country: 'OMAN' },
+  { name: 'Fujairah Oil Terminal', lat: 25.1288, lng: 56.3265, country: 'OMAN' },
 ];
 
 const EmergencyModule: React.FC = () => {
@@ -43,11 +43,11 @@ const EmergencyModule: React.FC = () => {
 
   const [drills] = useState<EmergencyDrill[]>([
     { id: '1', type: 'Confined Space Rescue', date: '2026-05-24', location: 'Musaffah Industrial Zone', outcome: 'Needs Improvement', timeTakenMinutes: 13, participants: 21 },
-    { id: '2', type: 'Confined Space Rescue', date: '2026-06-04', location: 'Ruwais Refinery Complex', outcome: 'Needs Improvement', timeTakenMinutes: 3, participants: 12 },
-    { id: '3', type: 'Fire Evacuation', date: '2026-05-20', location: 'Jebel Ali Construction Site', outcome: 'Successful', timeTakenMinutes: 11, participants: 47 },
-    { id: '4', type: 'Confined Space Rescue', date: '2026-07-14', location: 'Habshan Gas Complex', outcome: 'Successful', timeTakenMinutes: 16, participants: 48 },
-    { id: '5', type: 'Fire Evacuation', date: '2026-04-18', location: 'Abu Dhabi HQ', outcome: 'Needs Improvement', timeTakenMinutes: 16, participants: 45 },
-    { id: '6', type: 'Fire Evacuation', date: '2026-06-22', location: 'Jebel Ali Construction Site', outcome: 'Successful', timeTakenMinutes: 6, participants: 21 },
+    { id: '2', type: 'Confined Space Rescue', date: '2026-06-04', location: 'Mina Al Fahal Refinery Complex', outcome: 'Needs Improvement', timeTakenMinutes: 3, participants: 12 },
+    { id: '3', type: 'Fire Evacuation', date: '2026-05-20', location: 'Duqm Industrial Port Construction Site', outcome: 'Successful', timeTakenMinutes: 11, participants: 47 },
+    { id: '4', type: 'Confined Space Rescue', date: '2026-07-14', location: 'Khazzan Tight Gas Complex Block 61', outcome: 'Successful', timeTakenMinutes: 16, participants: 48 },
+    { id: '5', type: 'Fire Evacuation', date: '2026-04-18', location: 'Muscat HQ', outcome: 'Needs Improvement', timeTakenMinutes: 16, participants: 45 },
+    { id: '6', type: 'Fire Evacuation', date: '2026-06-22', location: 'Duqm Industrial Port Construction Site', outcome: 'Successful', timeTakenMinutes: 6, participants: 21 },
     { id: '7', type: 'Chemical Spill', date: '2026-07-03', location: 'Musaffah Industrial Zone', outcome: 'Needs Improvement', timeTakenMinutes: 9, participants: 41 },
   ]);
 
@@ -166,7 +166,7 @@ const EmergencyModule: React.FC = () => {
                 onChange={(e) => setEmergencyQueryType(e.target.value)}
               >
                 <option value="Nearest Level-1 Trauma Hospital & Emergency ICU Center">Nearest Level-1 Trauma Hospital & ICU</option>
-                <option value="UAE Civil Defence Fire Station & Industrial Hazmat Unit">Civil Defence Fire & Hazmat Station</option>
+                <option value="Civil Defence and Ambulance Authority (CDAA Oman) Fire Station & Industrial Hazmat Unit">Civil Defence Fire & Hazmat Station</option>
                 <option value="Specialized Industrial Burn Treatment Clinic">Specialized Burn Treatment Unit</option>
                 <option value="Approved Environmental Hazardous Waste & Chemical Spills Depot">Hazardous Chemical & Waste Depot</option>
               </select>

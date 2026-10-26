@@ -77,7 +77,7 @@ graph TD
     Nav --> M2[Incidents: Reporting, 5-Whys, Fishbone, Form G Export]
     Nav --> M3[Control of Work: PTW, SIMOPS Matrix, LOTO, Gas Testing]
     Nav --> M4[CAPA Register: Corrective Actions, SLA Tracking, Verification]
-    Nav --> M5[Audits & Inspections: ISO 45001, OSHAD, Field Checklists]
+    Nav --> M5[Audits & Inspections: ISO 45001, Oman MoL, Field Checklists]
     Nav --> M6[Risk & JSA: 5x5 Matrix, Bowtie, Dynamic Risk Assessments]
     Nav --> M7[Contractor Safety: Pre-qualification, Competency Passports]
     Nav --> M8[ESG & Sustainability: Scope 1-3 GHG, Waste, Water, Net-Zero]

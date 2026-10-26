@@ -6,9 +6,9 @@
 
 ## 1. Executive Summary & Capabilities
 
-The **AD6.Ai Smart HSE Enterprise Platform** is a digital operations platform aligning with **ISO 45001, ISO 14001, ISO 9001, GRI, and IFRS S1/S2** standards, localized specifically for Omani and UAE industrial statutory frameworks:
+The **AD6.Ai Smart HSE Enterprise Platform** is a digital operations platform aligning with **ISO 45001, ISO 14001, ISO 9001, GRI, and IFRS S1/S2** standards, localized specifically for Omani and Oman industrial statutory frameworks:
 - **Sultanate of Oman**: Oman Labour Law (Royal Decree 53/2023), Ministerial Decision 286/2008, PDO SP-1143 (PTW Specification) & SP-1170 (Thermal Stress Management - mandatory stop when TWL < 115 W/m²), Environment Authority RD 114/2001, and MSX/FSA ESG guidelines.
-- **United Arab Emirates**: Abu Dhabi Occupational Safety & Health System Framework (OSHAD-SF v3.1), ADNOC Codes of Practice (CoP v6.0), and MoHRE Midday Break regulations (12:30–15:00 from June 15 to Sept 15).
+- **Sultanate of Oman**: Oman Ministry of Labour Occupational Safety & Health Regulations (MD 286/2008 & RD 53/2023), PDO HSE Specifications (SP-1143 / SP-1170), and MoL Midday Break regulations (12:30–15:00 from June 15 to Sept 15).
 
 ### Key Functional Capabilities
 1. **Safi AI Copilot & Voice Transcription:** Server-proxied multimodal reasoning assistant for incident classification, 5-Why root cause analysis (RCA), Ishikawa fishbone mapping, and hands-free field audio logging.

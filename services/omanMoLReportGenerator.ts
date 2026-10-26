@@ -1,23 +1,23 @@
 /**
- * oshadReportGenerator.ts
- * Generates official compliance exports in PDF (Bilingual) and Excel (Data).
+ * omanMoLReportGenerator.ts
+ * Generates official compliance exports in PDF (Bilingual) and Excel (Data) for Sultanate of Oman.
  */
 
 import { jsPDF } from 'jspdf';
 import * as XLSX from 'xlsx';
 
-export class OshadReportGenerator {
+export class omanMoLReportGenerator {
 
-  // Auto-generate OSHAD SF-7 (Annual Report) Data Export for Government
+  // Auto-generate Oman MoL Annual Report & PDO Data Export for Government
   public static generateSF7Excel(tenantData: any, year: number) {
-    // 1. Compile the workbook sheets based on OSHAD-SF Mechanism formats
+    // 1. Compile the workbook sheets based on Oman Ministry of Labour MD 286/2008 & PDO PR-1172 formats
     const workbook = XLSX.utils.book_new();
 
     // Sheet 1: Summary Statistics
     const summaryData = [
-      ['OSHAD-SF Entity Performance Report (Form SF-7)'],
+      ['Sultanate of Oman Ministry of Labour (MD 286/2008) HSE Performance Return'],
       ['Reporting Year', year],
-      ['Entity Name', tenantData.name || 'AD6.Ai Verified Tenant'],
+      ['Entity Name', tenantData.name || 'AD6.Ai Verified Oman Concessionaire'],
       [],
       ['Metric', 'Value'],
       ['Total Man-Hours', tenantData.manHours || 0],
@@ -26,14 +26,14 @@ export class OshadReportGenerator {
       ['Lost Time Injury Frequency Rate (LTIFR)', tenantData.ltifr || 0]
     ];
     const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-    XLSX.utils.book_append_sheet(workbook, wsSummary, 'SF7-Metrics');
+    XLSX.utils.book_append_sheet(workbook, wsSummary, 'MoL-MD286-Metrics');
 
-    // Sheet 2: Incident Logs (Mechanism 11 Extracted)
+    // Sheet 2: Incident Logs (PDO PR-1172 Extracted)
     const wsIncidents = XLSX.utils.json_to_sheet(tenantData.incidents || []);
-    XLSX.utils.book_append_sheet(workbook, wsIncidents, 'Mechanism-11-Log');
+    XLSX.utils.book_append_sheet(workbook, wsIncidents, 'PDO-PR1172-Log');
 
     // 2. Export file
-    XLSX.writeFile(workbook, `OSHAD_SF7_${year}_${tenantData.name || 'Report'}.xlsx`);
+    XLSX.writeFile(workbook, `Oman_MoL_HSE_Return_${year}_${tenantData.name || 'Report'}.xlsx`);
   }
 
   // Auto-generate Bilingual Assessment Configuration Report
@@ -41,22 +41,22 @@ export class OshadReportGenerator {
     const doc = new jsPDF();
     
     doc.setFontSize(18);
-    doc.text('OSHAD-SF Framework Configuration Audit', 14, 20);
-    // Arabic fallback representation (due to standard jsPDF lacking native shaping without custom fonts)
-    doc.text('تدقيق تكوين إطار عمل OSHAD-SF', 196, 20, { align: 'right' });
+    doc.text('Oman Ministry of Labour & PDO Framework Audit', 14, 20);
+    // Arabic representation
+    doc.text('تقرير تدقيق إطار وزارة العمل وشركة تنمية نفط عمان', 196, 20, { align: 'right' });
 
     doc.setFontSize(10);
     doc.text(`Generated At: ${new Date().toISOString()}`, 14, 30);
     
-    // Digital Signature UAE Pass Placeholder
+    // Digital Signature Oman PKI Placeholder
     doc.setDrawColor(0, 200, 0);
     doc.rect(14, 40, 182, 10);
-    doc.text('[ UAE PASS VERIFIED SIGNATURE HASh ALGORITHM HELD ON CHAIN ]', 20, 47);
+    doc.text('[ OMAN PKI / TAM DIGITAL SIGNATURE VERIFIED HASH ALGORITHM HELD ON CHAIN ]', 20, 47);
 
     let currentY = 70;
     Object.keys(configMapping).forEach((mechanism) => {
        doc.setFontSize(12);
-       doc.text(`Mechanism ${mechanism}: ${configMapping[mechanism].title}`, 14, currentY);
+       doc.text(`Statutory Element ${mechanism}: ${configMapping[mechanism].title}`, 14, currentY);
        
        doc.setFontSize(10);
        doc.text(`Status: ${configMapping[mechanism].enabled ? 'ENABLED' : 'DISABLED'}`, 14, currentY + 7);

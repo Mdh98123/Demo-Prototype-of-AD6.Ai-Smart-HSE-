@@ -1,5 +1,5 @@
 // Formal ESG Reporting & Document Generation Service
-// Compliant with ADX, DFM, MSX Oman, GRI 2021 & ISSB IFRS S1/S2 Standards
+// Compliant with MSX, MSX, MSX Oman, GRI 2021 & ISSB IFRS S1/S2 Standards
 // Multi-format export: PDF (jsPDF + AutoTable), XLSX (SheetJS), and Regulatory JSON
 
 import jsPDF from 'jspdf';
@@ -26,9 +26,7 @@ export interface ESGReportPayload {
   facilities: ESGFacility[];
   emissions: DetailedEmissionRecord[];
   omanisation: NationalisationMetrics;
-  emiratisation: NationalisationMetrics;
   icvOman: InCountryValueMetrics;
-  icvUAE: InCountryValueMetrics;
   socialSafety: SocialSafetyMetrics;
   governance: GovernanceMetrics;
   disclosures: ESGDisclosureItem[];
@@ -79,12 +77,8 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(148, 163, 184); // slate-400
-  const standardLabel = payload.standard === 'ADX_UAE' 
-    ? 'Abu Dhabi Securities Exchange (ADX) ESG Disclosure Guidance' 
-    : payload.standard === 'MSX_OMAN'
-    ? 'Muscat Stock Exchange (MSX) ESG Reporting Guidelines & Vision 2040'
-    : payload.standard === 'DFM_UAE'
-    ? 'Dubai Financial Market (DFM) ESG Reporting Standard'
+  const standardLabel = payload.standard === 'MSX_OMAN' 
+    ? 'Muscat Stock Exchange (MSX) ESG Reporting Guidelines & Vision 2040' 
     : 'GRI Universal & ISSB IFRS S1/S2 Standards';
 
   doc.text(`Framework: ${standardLabel}`, 14, 25);
@@ -101,11 +95,11 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
   const kpiData = [
     { label: 'Total GHG Footprint', val: `${totalEmissions.toLocaleString(undefined, { maximumFractionDigits: 1 })} t`, sub: 'Scopes 1 + 2 + 3' },
     { label: 'Lost Time Injury Rate', val: `${payload.socialSafety.ltifrRate}`, sub: `Zero Fatalities (0)` },
-    { label: payload.jurisdiction === 'OMAN' ? 'Omanisation Ratio' : 'Emiratisation Ratio', 
-      val: payload.jurisdiction === 'OMAN' ? `${payload.omanisation.currentActualPct}%` : `${payload.emiratisation.currentActualPct}%`, 
-      sub: `Target: ${payload.jurisdiction === 'OMAN' ? payload.omanisation.statutoryTargetPct : payload.emiratisation.statutoryTargetPct}%` },
-    { label: payload.jurisdiction === 'OMAN' ? 'ICV Oman Score' : 'National ICV UAE', 
-      val: payload.jurisdiction === 'OMAN' ? `${payload.icvOman.certifiedScorePct}%` : `${payload.icvUAE.certifiedScorePct}%`, 
+    { label: payload.jurisdiction === 'OMAN' ? 'Omanisation Ratio' : 'Omanisation Ratio', 
+      val: payload.jurisdiction === 'OMAN' ? `${payload.omanisation.currentActualPct}%` : `${payload.omanisation.currentActualPct}%`, 
+      sub: `Target: ${payload.jurisdiction === 'OMAN' ? payload.omanisation.statutoryTargetPct : payload.omanisation.statutoryTargetPct}%` },
+    { label: payload.jurisdiction === 'OMAN' ? 'ICV Oman Score' : 'National ICV Oman', 
+      val: payload.jurisdiction === 'OMAN' ? `${payload.icvOman.certifiedScorePct}%` : `${payload.icvOman.certifiedScorePct}%`, 
       sub: 'Certified Supply Chain' }
   ];
 
@@ -139,8 +133,8 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
 
   const emissionsTableData = [
     ['Scope 1 (Direct)', 'Stationary & Mobile Combustion, Flaring, Refrigerants', `${scope1Total.toFixed(2)} tCO2e`, `${((scope1Total / (totalEmissions || 1)) * 100).toFixed(1)}%`, 'IPCC AR6 / DEFRA 2024'],
-    ['Scope 2 (Indirect)', 'Grid Electricity & District Chilled Water', `${scope2Total.toFixed(2)} tCO2e`, `${((scope2Total / (totalEmissions || 1)) * 100).toFixed(1)}%`, 'DEWA / EWEC / Nama 2024'],
-    ['Scope 3 (Value Chain)', 'Industrial Waste Operations & Transport', `${scope3Total.toFixed(2)} tCO2e`, `${((scope3Total / (totalEmissions || 1)) * 100).toFixed(1)}%`, 'Tadweer & Be\'ah Factors'],
+    ['Scope 2 (Indirect)', 'Grid Electricity & District Chilled Water', `${scope2Total.toFixed(2)} tCO2e`, `${((scope2Total / (totalEmissions || 1)) * 100).toFixed(1)}%`, 'Nama Power / Nama Power / Nama 2024'],
+    ['Scope 3 (Value Chain)', 'Industrial Waste Operations & Transport', `${scope3Total.toFixed(2)} tCO2e`, `${((scope3Total / (totalEmissions || 1)) * 100).toFixed(1)}%`, 'Beah (Oman) & Be\'ah Factors'],
     ['GROSS TOTAL FOOTPRINT', 'Consolidated Operational Boundaries', `${totalEmissions.toFixed(2)} tCO2e`, '100.0%', 'GHG Corporate Protocol']
   ];
 
@@ -157,18 +151,18 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
 
   let currentY = (doc as any).lastAutoTable.finalY + 8;
 
-  // Table 2: Nationalisation & Social Indicators (Omanisation & Emiratisation)
+  // Table 2: Nationalisation & Social Indicators (Omanisation (Ministry of Labour))
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
   doc.setTextColor(30, 41, 59);
-  doc.text('3. WORKFORCE NATIONALISATION & SOCIAL IMPACT (UAE & OMAN)', 14, currentY);
+  doc.text('3. WORKFORCE NATIONALISATION & SOCIAL IMPACT (Oman & OMAN)', 14, currentY);
 
   const socialTableData = [
     ['Omanisation Quota (Oman)', `${payload.omanisation.statutoryTargetPct}% Target`, `${payload.omanisation.currentActualPct}% Actual`, 'Compliant (+3.4%)', 'Oman Ministry of Labour / MSX S1'],
-    ['Emiratisation Quota (UAE)', `${payload.emiratisation.statutoryTargetPct}% Target`, `${payload.emiratisation.currentActualPct}% Actual`, 'Compliant (+1.8%)', 'MOHRE Tawteen / ADX S11'],
+    ['Omanisation Quota (Oman)', `${payload.omanisation.statutoryTargetPct}% Target`, `${payload.omanisation.currentActualPct}% Actual`, 'Compliant (+1.8%)', 'Oman Ministry of Labour Omanisation / MSX S11'],
     ['Wage Protection System (WPS)', '100.0% Required', `${payload.socialSafety.wageProtectionSystemCompliancePct}%`, '100% Electronic Disbursed', 'Central Bank & Labour Ministries'],
-    ['Summer Midday Work Ban', '0 Violations Permitted', `${payload.socialSafety.middaySummerWorkBanBreaches} Breaches`, 'Zero Non-Compliance', 'MOHRE & Oman Min. Decision'],
-    ['Workforce Gender Diversity', 'Board & Management Target', `${payload.socialSafety.femaleWorkforcePct}% Overall / ${payload.socialSafety.femaleLeadershipPct}% Leadership`, 'Progressing vs 2030 Roadmap', 'ADX S4 / MSX S4 / GRI 405']
+    ['Summer Midday Work Ban', '0 Violations Permitted', `${payload.socialSafety.middaySummerWorkBanBreaches} Breaches`, 'Zero Non-Compliance', 'Oman Ministry of Labour & Oman Min. Decision'],
+    ['Workforce Gender Diversity', 'Board & Management Target', `${payload.socialSafety.femaleWorkforcePct}% Overall / ${payload.socialSafety.femaleLeadershipPct}% Leadership`, 'Progressing vs 2030 Roadmap', 'MSX S4 / MSX S4 / GRI 405']
   ];
 
   autoTable(doc, {
@@ -191,10 +185,10 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
   doc.text('4. GOVERNANCE, ETHICS & EXTERNAL ASSURANCE VERIFICATION', 14, currentY);
 
   const govTableData = [
-    ['Board Independence', `${payload.governance.independentDirectorsPct}% Independent (${payload.governance.independentDirectorsCount}/${payload.governance.boardMembersTotal})`, 'Compliant (Min 33.3% GCC standard)', 'CMA Oman & UAE SCA Governance Code'],
-    ['Board Female Representation', `${payload.governance.femaleBoardDirectorsCount} Female Directors (${payload.governance.femaleBoardDirectorsPct}%)`, 'Compliant with UAE SCA Mandatory Rule', 'UAE SCA Decision 3/RM 2020 / ADX G1'],
-    ['Executive Pay Tied to ESG', `${payload.governance.executivePayLinkedToEsgPct}% of Executive Variable Bonus Pool`, 'Active Incentive Mechanism', 'ADX G3 / DFM G3 / MSX G3'],
-    ['Code of Conduct & Anti-Bribery', `${payload.governance.codeOfConductTrainingCompletionPct}% Staff Certified / Audited`, 'Zero Breaches / Retaliation Free', 'State Audit Institution & UAE Anticorruption'],
+    ['Board Independence', `${payload.governance.independentDirectorsPct}% Independent (${payload.governance.independentDirectorsCount}/${payload.governance.boardMembersTotal})`, 'Compliant (Min 33.3% GCC standard)', 'CMA Oman & Oman CMA Governance Code'],
+    ['Board Female Representation', `${payload.governance.femaleBoardDirectorsCount} Female Directors (${payload.governance.femaleBoardDirectorsPct}%)`, 'Compliant with Oman CMA Mandatory Rule', 'Oman CMA Decision 3/RM 2020 / MSX G1'],
+    ['Executive Pay Tied to ESG', `${payload.governance.executivePayLinkedToEsgPct}% of Executive Variable Bonus Pool`, 'Active Incentive Mechanism', 'MSX G3 / MSX G3 / MSX G3'],
+    ['Code of Conduct & Anti-Bribery', `${payload.governance.codeOfConductTrainingCompletionPct}% Staff Certified / Audited`, 'Zero Breaches / Retaliation Free', 'State Audit Institution & Oman Anticorruption'],
     ['Independent Assurance', `${payload.governance.assuranceLevel} Standard`, `Verified by ${payload.governance.externalAssuranceProvider || 'KPMG'}`, 'ISAE 3000 (Revised) Verification']
   ];
 
@@ -230,7 +224,7 @@ export function generateESGExecutivePDF(payload: ESGReportPayload): void {
   doc.setTextColor(71, 85, 105);
   doc.text(`This ESG Disclosure Pack has been reviewed and logically validated by the Enterprise HSE AI Platform Engine.`, 18, currentY + 11);
   doc.text(`Authorized Sign-off: ${payload.approvedBy || 'Group HSE Director & Board Sustainability Committee'} | Date: ${payload.auditSignOffDate || new Date().toISOString().split('T')[0]}`, 18, currentY + 16);
-  doc.text(`Security Hash: SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()} | Compliance Stamp: UAE / OMAN VERIFIED`, 18, currentY + 20);
+  doc.text(`Security Hash: SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()} | Compliance Stamp: Oman / OMAN VERIFIED`, 18, currentY + 20);
 
   // Save the PDF
   const filename = `AD6_ESG_Disclosure_Report_${payload.standard}_${payload.reportingYear}.pdf`;
@@ -257,15 +251,15 @@ export function generateESGWorkbookXLSX(payload: ESGReportPayload): void {
     ['Scope 2 (Indirect Grid & Cooling)', payload.emissions.filter(e => e.scope === 'Scope 2').reduce((a, b) => a + b.calculatedCO2eTonnes, 0), 'tCO2e', 'Clean Energy PPA Target'],
     ['Scope 3 (Value Chain)', payload.emissions.filter(e => e.scope === 'Scope 3').reduce((a, b) => a + b.calculatedCO2eTonnes, 0), 'tCO2e', 'Supply Chain Engagement'],
     ['Omanisation Rate', payload.omanisation.currentActualPct, '%', `${payload.omanisation.statutoryTargetPct}% Statutory Quota`],
-    ['Emiratisation Rate', payload.emiratisation.currentActualPct, '%', `${payload.emiratisation.statutoryTargetPct}% Statutory Quota`],
+    ['Omanisation Rate', payload.omanisation.currentActualPct, '%', `${payload.omanisation.statutoryTargetPct}% Statutory Quota`],
     ['In-Country Value (ICV Oman)', payload.icvOman.certifiedScorePct, '% Score', 'MoEM Tawreed Baseline'],
-    ['In-Country Value (ICV UAE)', payload.icvUAE.certifiedScorePct, '% Score', 'MoIAT National ICV'],
+    ['In-Country Value (ICV Oman)', payload.icvOman.certifiedScorePct, '% Score', 'MoIAT National ICV'],
     ['Lost Time Injury Frequency Rate (LTIFR)', payload.socialSafety.ltifrRate, 'Per 1M hours', '< 0.15 Industry Gold Standard'],
     ['Zero Fatalities', payload.socialSafety.fatalitiesCount, 'Cases', 'Zero Harm Mandate'],
     ['Wage Protection System (WPS)', payload.socialSafety.wageProtectionSystemCompliancePct, '%', '100% Central Bank Requirement'],
     ['Summer Midday Work Ban Violations', payload.socialSafety.middaySummerWorkBanBreaches, 'Count', '0 Tolerance'],
     ['Board Independence Ratio', payload.governance.independentDirectorsPct, '%', 'Min 33.3% CMA / SCA Mandate'],
-    ['Female Board Representation', payload.governance.femaleBoardDirectorsCount, 'Directors', 'Min 1 Female Director (UAE SCA)']
+    ['Female Board Representation', payload.governance.femaleBoardDirectorsCount, 'Directors', 'Min 1 Female Director (Oman CMA)']
   ];
   const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
   XLSX.utils.book_append_sheet(wb, wsSummary, 'Executive_Summary');
@@ -288,35 +282,35 @@ export function generateESGWorkbookXLSX(payload: ESGReportPayload): void {
 
   // Tab 3: Nationalisation & In-Country Value (ICV)
   const nationalisationData = [
-    ['NATIONALISATION & LOCAL VALUE METRICS (UAE & OMAN)'],
+    ['NATIONALISATION & LOCAL VALUE METRICS (Oman & OMAN)'],
     [],
-    ['METRIC', 'OMAN (MSX & MIN. LABOUR)', 'UAE (ADX, DFM & MOHRE)'],
-    ['Framework Name', payload.omanisation.frameworkName, payload.emiratisation.frameworkName],
-    ['Statutory Target %', payload.omanisation.statutoryTargetPct, payload.emiratisation.statutoryTargetPct],
-    ['Current Actual %', payload.omanisation.currentActualPct, payload.emiratisation.currentActualPct],
-    ['Compliance Status', payload.omanisation.complianceStatus, payload.emiratisation.complianceStatus],
-    ['Total Headcount', payload.omanisation.totalHeadcount, payload.emiratisation.totalHeadcount],
-    ['National Employees Count', payload.omanisation.nationalEmployees, payload.emiratisation.nationalEmployees],
-    ['Female National Employees', payload.omanisation.femaleNationalEmployees, payload.emiratisation.femaleNationalEmployees],
-    ['Management National %', payload.omanisation.managementNationalPct, payload.emiratisation.managementNationalPct],
-    ['Technical National %', payload.omanisation.technicalNationalPct, payload.emiratisation.technicalNationalPct],
-    ['Operational National %', payload.omanisation.operationalNationalPct, payload.emiratisation.operationalNationalPct],
-    ['National Initiative Participation', payload.omanisation.nafisOrRiyadaParticipation ? 'Active (Riyada)' : 'Inactive', payload.emiratisation.nafisOrRiyadaParticipation ? 'Active (Nafis)' : 'Inactive'],
+    ['METRIC', 'OMAN (MSX & MIN. LABOUR)', 'Oman (MSX, MSX & Oman Ministry of Labour)'],
+    ['Framework Name', payload.omanisation.frameworkName, payload.omanisation.frameworkName],
+    ['Statutory Target %', payload.omanisation.statutoryTargetPct, payload.omanisation.statutoryTargetPct],
+    ['Current Actual %', payload.omanisation.currentActualPct, payload.omanisation.currentActualPct],
+    ['Compliance Status', payload.omanisation.complianceStatus, payload.omanisation.complianceStatus],
+    ['Total Headcount', payload.omanisation.totalHeadcount, payload.omanisation.totalHeadcount],
+    ['National Employees Count', payload.omanisation.nationalEmployees, payload.omanisation.nationalEmployees],
+    ['Female National Employees', payload.omanisation.femaleNationalEmployees, payload.omanisation.femaleNationalEmployees],
+    ['Management National %', payload.omanisation.managementNationalPct, payload.omanisation.managementNationalPct],
+    ['Technical National %', payload.omanisation.technicalNationalPct, payload.omanisation.technicalNationalPct],
+    ['Operational National %', payload.omanisation.operationalNationalPct, payload.omanisation.operationalNationalPct],
+    ['National Initiative Participation', payload.omanisation.nafisOrRiyadaParticipation ? 'Active (Riyada)' : 'Inactive', payload.omanisation.nafisOrRiyadaParticipation ? 'Active (Nafis)' : 'Inactive'],
     [],
     ['IN-COUNTRY VALUE (ICV) DATA'],
-    ['ICV Program Name', payload.icvOman.programName, payload.icvUAE.programName],
-    ['Certified ICV Score %', payload.icvOman.certifiedScorePct, payload.icvUAE.certifiedScorePct],
-    ['Total Procurement Spend', payload.icvOman.totalProcurementSpend, payload.icvUAE.totalProcurementSpend],
-    ['Local Procurement Spend', payload.icvOman.localProcurementSpend, payload.icvUAE.localProcurementSpend],
-    ['Local Procurement Ratio %', payload.icvOman.localProcurementPct, payload.icvUAE.localProcurementPct],
-    ['SME Dedicated Allocation %', payload.icvOman.smeSpendAllocationPct, payload.icvUAE.smeSpendAllocationPct],
-    ['Certificate Expiry Date', payload.icvOman.certificateExpiryDate, payload.icvUAE.certificateExpiryDate],
-    ['Certifying Audit Body', payload.icvOman.issuingCertifyingBody, payload.icvUAE.issuingCertifyingBody]
+    ['ICV Program Name', payload.icvOman.programName, payload.icvOman.programName],
+    ['Certified ICV Score %', payload.icvOman.certifiedScorePct, payload.icvOman.certifiedScorePct],
+    ['Total Procurement Spend', payload.icvOman.totalProcurementSpend, payload.icvOman.totalProcurementSpend],
+    ['Local Procurement Spend', payload.icvOman.localProcurementSpend, payload.icvOman.localProcurementSpend],
+    ['Local Procurement Ratio %', payload.icvOman.localProcurementPct, payload.icvOman.localProcurementPct],
+    ['SME Dedicated Allocation %', payload.icvOman.smeSpendAllocationPct, payload.icvOman.smeSpendAllocationPct],
+    ['Certificate Expiry Date', payload.icvOman.certificateExpiryDate, payload.icvOman.certificateExpiryDate],
+    ['Certifying Audit Body', payload.icvOman.issuingCertifyingBody, payload.icvOman.issuingCertifyingBody]
   ];
   const wsNationalisation = XLSX.utils.aoa_to_sheet(nationalisationData);
   XLSX.utils.book_append_sheet(wb, wsNationalisation, 'Nationalisation_ICV');
 
-  // Tab 4: Standard Disclosures (ADX / DFM / MSX indicators)
+  // Tab 4: Standard Disclosures (MSX / MSX / MSX indicators)
   const disclosureHeaders = [
     'Indicator Code', 'Title / Parameter', 'Standard', 'Pillar', 'Unit',
     'FY2022', 'FY2023', 'FY2024', 'Target 2030',
@@ -333,12 +327,12 @@ export function generateESGWorkbookXLSX(payload: ESGReportPayload): void {
   // Tab 5: Decarbonization Roadmap
   const initiativeHeaders = [
     'Project ID', 'Initiative Title', 'Facility', 'Category',
-    'Capex (AED/OMR)', 'Annual Opex Savings', 'Abatement (tCO2e/yr)',
+    'Capex (OMR/OMR)', 'Annual Opex Savings', 'Abatement (tCO2e/yr)',
     'Marginal Cost per tCO2e', 'Payback (Years)', 'Stage', 'Net Zero Alignment'
   ];
   const initiativeRows = payload.initiatives.map(i => [
     i.id, i.title, i.facility, i.category,
-    i.capexInvestmentAEDorOMR, i.annualOpexSavingsAEDorOMR, i.abatementCO2eTonnesPerYear,
+    i.capexInvestmentOMRorOMR, i.annualOpexSavingsOMRorOMR, i.abatementCO2eTonnesPerYear,
     i.marginalAbatementCostPerTonne, i.paybackPeriodYears, i.implementationStage, i.alignmentWithNetZero
   ]);
   const wsInitiatives = XLSX.utils.aoa_to_sheet([initiativeHeaders, ...initiativeRows]);
@@ -350,7 +344,7 @@ export function generateESGWorkbookXLSX(payload: ESGReportPayload): void {
 }
 
 /**
- * Exports machine-readable regulatory JSON formatted for ADX/DFM/MSX digital submission portal
+ * Exports machine-readable regulatory JSON formatted for MSX/MSX/MSX digital submission portal
  */
 export function exportRegulatoryJSON(payload: ESGReportPayload): void {
   const jsonOutput = {
@@ -376,9 +370,7 @@ export function exportRegulatoryJSON(payload: ESGReportPayload): void {
     },
     socialPillar: {
       omanisation: payload.omanisation,
-      emiratisation: payload.emiratisation,
       inCountryValueOman: payload.icvOman,
-      inCountryValueUAE: payload.icvUAE,
       healthAndSafety: {
         fatalities: payload.socialSafety.fatalitiesCount,
         ltifr: payload.socialSafety.ltifrRate,

@@ -32,7 +32,7 @@ model Site {
   id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String
   locationCoords String?      // GeoJSON or Lat/Lng string
-  timezone       String       @default("Asia/Dubai") // GCC Focus
+  timezone       String       @default("Asia/Muscat") // Oman Focus
   
   // Relations
   organizationId String       @db.Uuid

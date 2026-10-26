@@ -120,7 +120,7 @@ const ComplyFlowModule: React.FC = () => {
                 </div>
                 <div className="flex gap-2 mt-4">
                     <span className="px-3 py-1 glass-card/10 rounded-lg text-[9px] font-bold uppercase border border-white/10">DM: Online</span>
-                    <span className="px-3 py-1 glass-card/10 rounded-lg text-[9px] font-bold uppercase border border-white/10">MoHRE: Online</span>
+                    <span className="px-3 py-1 glass-card/10 rounded-lg text-[9px] font-bold uppercase border border-white/10">Ministry of Labour (MoL): Online</span>
                 </div>
             </div>
 
@@ -299,7 +299,7 @@ const ComplyFlowModule: React.FC = () => {
                                   </div>
                                   <div className="text-end glass-card p-4 rounded-2xl border border-red-100 shadow-sm">
                                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Potential Penalty</p>
-                                      <p className="text-2xl font-black text-slate-900">OMR {risk.potentialFineAED.toLocaleString()}</p>
+                                      <p className="text-2xl font-black text-slate-900">OMR {risk.potentialFineOMR.toLocaleString()}</p>
                                   </div>
                               </div>
                           ))}

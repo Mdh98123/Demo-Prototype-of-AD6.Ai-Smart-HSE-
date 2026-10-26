@@ -1,11 +1,11 @@
 const fs = require('fs');
 
 const sites = [
-  "Ruwais Refinery Complex",
+  "Mina Al Fahal Refinery Complex",
   "Jebel Ali Construction Site",
   "Musaffah Industrial Zone",
   "Habshan Gas Complex",
-  "Abu Dhabi HQ"
+  "Muscat HQ"
 ];
 
 function randomDate(start, end) {
@@ -112,7 +112,7 @@ endIdx = content.indexOf('  // Form State', startIdx);
 if (startIdx !== -1 && endIdx !== -1) {
   const audits = [];
   for (let i = 1; i <= 18; i++) {
-    const type = ['ISO 45001', 'ISO 14001', 'ADNOC COP', 'OSHAD-SF', 'Internal HSE'][Math.floor(Math.random() * 5)];
+    const type = ['ISO 45001', 'ISO 14001', 'PDO SP-1143', 'Oman MoL MD 286/2008', 'Internal HSE'][Math.floor(Math.random() * 5)];
     const status = ['Draft', 'Scheduled', 'In_Progress', 'Completed', 'Closed'][Math.floor(Math.random() * 5)];
     const loc = sites[Math.floor(Math.random() * sites.length)];
     const score = Math.floor(Math.random() * 40) + 60;

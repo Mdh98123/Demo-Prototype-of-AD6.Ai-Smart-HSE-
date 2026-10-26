@@ -204,7 +204,7 @@ export const IncidentForm: React.FC<{ initialWorkflowRecordId?: string }> = ({ i
   const [reportStep, setReportStep] = useState<1 | 2 | 3>(1);
   const [formTimestamp, setFormTimestamp] = useState(new Date().toISOString().slice(0, 16));
   const [formSite, setFormSite] = useState(GCC_PRESET_SITES[0].name);
-  const [formJurisdiction, setFormJurisdiction] = useState<'Abu Dhabi' | 'Oman' | 'Dubai' | 'KSA' | 'Qatar'>('Abu Dhabi');
+  const [formJurisdiction, setFormJurisdiction] = useState<'Muscat' | 'Oman' | 'Sohar' | 'KSA' | 'Qatar'>('Muscat');
   const [formLocationArea, setFormLocationArea] = useState('');
   const [formCoordinates, setFormCoordinates] = useState({ lat: 23.7500, lng: 53.5000 });
   const [formClassification, setFormClassification] = useState<Incident['classification']>('Near Miss');
@@ -1478,7 +1478,7 @@ export const IncidentForm: React.FC<{ initialWorkflowRecordId?: string }> = ({ i
                       Grounded AI Statutory Compliance & Deadline Verification
                     </h4>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      Cross-reference incident timeline and severity against local ministerial decrees (Oman MD 286/2008 & ADPHC OSHAD Mechanism 11.0).
+                      Cross-reference incident timeline and severity against local ministerial decrees (Oman MD 286/2008 & Oman MoL OSHD Oman MoL MD 286/2008 & PDO PR-1172).
                     </p>
                   </div>
                   <button

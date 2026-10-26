@@ -52,8 +52,8 @@ You are an **enterprise-grade AI operations, compliance, analytics, and workflow
 9. Always structure outputs clearly.  
 10. Escalate critical risk immediately.
 
-# UAE / GCC COMPLIANCE LAYER
-All safety responses should align with: OSHAD-SF (Abu Dhabi), UAE labor safety regulations, Civil Defence requirements, ISO 45001, ISO 14001, ISO 9001 where relevant, GCC industrial best practices.
+# Oman / GCC COMPLIANCE LAYER
+All safety responses should align with: Oman MoL MD 286/2008 & PDO Specifications (Muscat), Oman labor safety regulations, Civil Defence requirements, ISO 45001, ISO 14001, ISO 9001 where relevant, GCC industrial best practices.
 
 # TONE STANDARD
 Use tone: Formal, Executive-grade, Clear, Concise, Operationally credible, No filler language, No chatbot phrases. You are here to **protect people, ensure compliance, reduce risk, and drive operational excellence at enterprise scale**.
@@ -361,7 +361,7 @@ export const getPredictiveRiskForecast = async (assetId: string, context: string
       }
     `;
     
-    // Dynamic Intelligent Domain Fallback aligned with UAE OSHAD / MoHRE standards
+    // Dynamic Intelligent Domain Fallback aligned with Oman Oman MoL MD 286/2008 / Ministry of Labour (MoL) standards
     const temp = Number(weatherData?.temperature) || 40;
     const wind = Number(weatherData?.windSpeed) || 16;
     const humidity = Number(weatherData?.humidity) || 55;
@@ -398,7 +398,7 @@ export const getPredictiveRiskForecast = async (assetId: string, context: string
     const fallbackActions = [
       { 
         action: temp >= 38 
-          ? 'Enforce UAE MoHRE Midday Break Mandate and institute mandatory 15-minute shaded hydration halts every 45 minutes.' 
+          ? 'Enforce Oman Ministry of Labour (MoL) Midday Break Mandate and institute mandatory 15-minute shaded hydration halts every 45 minutes.' 
           : 'Enforce pre-task dynamic risk assessment (DRA) and verify atmospheric gas monitoring clearance.',
         priority: 'HIGH' as const, 
         estimatedRiskReduction: '35%' 
@@ -572,7 +572,7 @@ Metrics Summary: ${JSON.stringify(params.metricsSummary)}
 Identified Validation Deficits: ${JSON.stringify(params.validationIssues)}
 User Query / Focus: ${params.userQuery || 'Comprehensive Compliance and Audit Readiness Evaluation'}
 
-Align response strictly with UAE (ADX, DFM, SCA, OSHAD, Tawteen) and Oman (MSX, CMA, Environment Authority, Vision 2040, Ministry of Labour) standards.
+Align response strictly with Oman (MSX, MSX, SCA, Oman MoL MD 286/2008, Omanisation) and Oman (MSX, CMA, Environment Authority, Vision 2040, Ministry of Labour) standards.
 Output must follow the ENTERPRISE RESPONSE FRAMEWORK in strict JSON format:
 {
   "executiveSummary": "Concise high-impact executive summary",
@@ -592,7 +592,7 @@ Output must follow the ENTERPRISE RESPONSE FRAMEWORK in strict JSON format:
             `Total footprint across Scopes 1, 2, and 3 is verified with valid utility invoice and manifest trails.`,
             params.jurisdiction === 'OMAN' 
                 ? `Omanisation ratio exceeds Ministry of Labour quota with strong technical representation.`
-                : `Emiratisation ratio compliant with Tawteen / MOHRE statutory benchmarks.`,
+                : `Omanisation ratio compliant with Omanisation / Oman Ministry of Labour statutory benchmarks.`,
             `Zero workforce fatalities and low LTIFR maintained across operational sites.`,
             `Board diversity and independent director oversight comply with regulatory corporate governance codes.`
         ],
@@ -652,18 +652,18 @@ export const searchLocationWithMaps = async (query: string): Promise<any | null>
       Simulate a location search API (like Google Maps) for the query: "${query}".
       Return a JSON object with the most likely matching location details.
       Include the following fields:
-      - name: The name of the location (e.g., "Burj Khalifa", "Ruwais Refinery")
+      - name: The name of the location (e.g., "Burj Khalifa", "Mina Al Fahal Refinery")
       - coordinates: An object with lat and lng numbers
       - formatted_address: A full address string
       
-      If the query is too vague or not a real place, return a plausible realistic location in the UAE or Middle East region.
+      If the query is too vague or not a real place, return a plausible realistic location in the Oman or Middle East region.
       Return JSON ONLY.
     `;
     
     const fallback = {
         name: query,
         coordinates: { lat: 24.4539, lng: 54.3773 },
-        formatted_address: `${query}, Abu Dhabi, UAE`
+        formatted_address: `${query}, Muscat, Oman`
     };
 
     return safeGenerate(
@@ -681,7 +681,7 @@ export const detectPPE = async (b: string) => [];
 export const chatWithSafi = async (message: string, history: ChatMessage[], framework: string, imageBase64?: string): Promise<string> => {
   const prompt = `
     You are "Safi" (Arabic for Clear/Pure), the AD6 HSE Enterprise AI Copilot.
-    Your goal is to assist HSE professionals in the MENA region with safety, compliance (ADNOC, OSHAD, UAE Federal), and risk management.
+    Your goal is to assist HSE professionals in the MENA region with safety, compliance (PDO, Oman MoL MD 286/2008, Oman Statutory), and risk management.
     
     Context:
     - Active Framework: ${framework}
@@ -692,7 +692,7 @@ export const chatWithSafi = async (message: string, history: ChatMessage[], fram
     Guidelines:
     1. Be professional, precise, and safety-conscious.
     2. Respond in English.
-    3. For ADNOC/OSHAD queries, provide specific regulatory context if possible.
+    3. For PDO/Oman MoL MD 286/2008 queries, provide specific regulatory context if possible.
     4. If an image is provided, analyze it for HSE hazards, PPE compliance, or unsafe conditions.
     5. If asked to report an incident or perform a task, guide the user through it.
     
@@ -725,7 +725,7 @@ export const generateJSA = async (activity: string): Promise<JSA> => {
   const prompt = `
     Generate a comprehensive Job Safety Analysis (JSA) for the activity: "${activity}".
     Include step-by-step hazards, controls, and risk levels.
-    Reference ADNOC/OSHAD regulations where applicable.
+    Reference PDO/Oman MoL MD 286/2008 regulations where applicable.
     Return JSON matching the JSA interface.
   `;
   
@@ -830,7 +830,7 @@ export const suggestAuditFinding = async (q: string, r: string): Promise<AuditFi
     location: 'Unknown', category: 'General', ncrStatement: '', rootCause: '', preventiveAction: '', suggestedPPE: [], dueDate: '', history: []
 });
 export const analyzeHSEImage = async (imageBase64: string, query?: string): Promise<any> => {
-  const prompt = `You are ARIA, the HSE AI copilot for UAE. Analyze the uploaded image (construction site) and list all visible hazards according to OSHAD-SF Code of Practice 2.0 (working at height) and Dubai Municipality safety rules. Return a JSON array of { "hazard": "string", "severity": "High|Medium|Low", "recommendedControl": "string" }.`;
+  const prompt = `You are ARIA, the HSE AI copilot for Oman. Analyze the uploaded image (construction site) and list all visible hazards according to Oman MoL MD 286/2008 & PDO Specifications Code of Practice 2.0 (working at height) and Muscat Municipality safety rules. Return a JSON array of { "hazard": "string", "severity": "High|Medium|Low", "recommendedControl": "string" }.`;
   
   const contents = {
     parts: [
@@ -929,11 +929,11 @@ export const extractDocumentData = async (b: string) => ({});
 export const generateDashboardInsights = async (m: any) => ({ trends: [], risks: [], strategy: [] });
 export const fetchHseNews = async () => ({ text: "", sources: [] });
 export const getRegulatoryFeed = async (): Promise<any[]> => [
-  { id: 'REG-01', title: 'Update to UAE Federal Labor Law - Heat Stress Monitoring', authority: 'MoHRE', date: '2024-05-10', status: 'Active', impactLevel: 'High', summary: 'Mandatory continuous temperature monitoring for all outdoor work areas during summer months.' },
-  { id: 'REG-02', title: 'OSHAD SF v3.1 - Working at Heights Framework', authority: 'OSHAD Abu Dhabi', date: '2024-04-15', status: 'Active', impactLevel: 'Critical', summary: 'Revised requirements for scaffolding inspections and secondary fall arrest systems.' },
-  { id: 'REG-03', title: 'Environmental Protection - VOC Emissions Cap', authority: 'Environment Agency Abu Dhabi (EAD)', date: '2024-06-01', status: 'Draft', impactLevel: 'Medium', summary: 'Proposed 15% reduction in allowable VOC emissions for chemical processing facilities.' },
-  { id: 'REG-04', title: 'Fire Safety Code Update 2024', authority: 'UAE Civil Defence', date: '2024-03-20', status: 'Active', impactLevel: 'High', summary: 'New standards for combustible cladding replacement and fire alarm integration with central ops.' },
-  { id: 'REG-05', title: 'Corporate HSE Governance Standards', authority: 'ADNOC', date: '2024-05-01', status: 'Active', impactLevel: 'Medium', summary: 'Contractors must provide real-time HSE dashboards covering LTI and LTIFR metrics.' }
+  { id: 'REG-01', title: 'Update to Oman Statutory Labor Law - Heat Stress Monitoring', authority: 'Ministry of Labour (MoL)', date: '2024-05-10', status: 'Active', impactLevel: 'High', summary: 'Mandatory continuous temperature monitoring for all outdoor work areas during summer months.' },
+  { id: 'REG-02', title: 'Oman MoL MD 286/2008 v3.1 - Working at Heights Framework', authority: 'Oman MoL MD 286/2008 Muscat', date: '2024-04-15', status: 'Active', impactLevel: 'Critical', summary: 'Revised requirements for scaffolding inspections and secondary fall arrest systems.' },
+  { id: 'REG-03', title: 'Environmental Protection - VOC Emissions Cap', authority: 'Environment Authority (Oman EA RD 114/2001) (EAD)', date: '2024-06-01', status: 'Draft', impactLevel: 'Medium', summary: 'Proposed 15% reduction in allowable VOC emissions for chemical processing facilities.' },
+  { id: 'REG-04', title: 'Fire Safety Code Update 2024', authority: 'Civil Defence and Ambulance Authority (CDAA Oman)', date: '2024-03-20', status: 'Active', impactLevel: 'High', summary: 'New standards for combustible cladding replacement and fire alarm integration with central ops.' },
+  { id: 'REG-05', title: 'Corporate HSE Governance Standards', authority: 'PDO', date: '2024-05-01', status: 'Active', impactLevel: 'Medium', summary: 'Contractors must provide real-time HSE dashboards covering LTI and LTIFR metrics.' }
 ];
 export const analyzeRegulatoryImpact = async (r: any) => {
   return {
@@ -943,9 +943,9 @@ export const analyzeRegulatoryImpact = async (r: any) => {
       { activityName: 'Chemical Storage', complianceRule: 'VOC emission reporting', evidenceRequired: 'Emission reports', ownerRole: 'Head_Group_HSE', deadline: '2024-07-01' }
     ],
     risks: [
-      { violationType: 'Non-compliant Scaffolding', potentialFineAED: 50000, probability: 'High', preventionAction: 'Immediate audit of all active scaffolds' },
-      { violationType: 'Missing Gas Monitoring', potentialFineAED: 100000, probability: 'High', preventionAction: 'Procure backup gas monitors' },
-      { violationType: 'VOC Limit Exceeded', potentialFineAED: 75000, probability: 'Medium', preventionAction: 'Proactive reporting to EAD' }
+      { violationType: 'Non-compliant Scaffolding', potentialFineOMR: 50000, probability: 'High', preventionAction: 'Immediate audit of all active scaffolds' },
+      { violationType: 'Missing Gas Monitoring', potentialFineOMR: 100000, probability: 'High', preventionAction: 'Procure backup gas monitors' },
+      { violationType: 'VOC Limit Exceeded', potentialFineOMR: 75000, probability: 'Medium', preventionAction: 'Proactive reporting to EAD' }
     ]
   };
 };

@@ -25,7 +25,7 @@ export interface FiveWhyDraftResult {
 }
 
 export interface StatutoryComplianceResult {
-  jurisdiction: 'Abu Dhabi (UAE)' | 'Oman' | 'GCC Federal';
+  jurisdiction: 'Muscat (Oman)' | 'Oman' | 'GCC Federal';
   applicableRegulations: string[];
   mandatoryNotificationTimeline: string;
   deadlineTimestamp: string;
@@ -72,9 +72,9 @@ export async function generateDraftFiveWhys(
       excerpt: 'Mandatory 5-Why causal determination required for all High Potential Incidents (HiPo) and Lost Time Injuries.'
     },
     {
-      title: 'ADNOC Code of Practice: Incident Investigation (COP V4-01)',
+      title: 'PDO HSE Code of Practice (SP-1143): Incident Investigation (COP V4-01)',
       sourceType: 'Internal SOP',
-      referenceId: 'ADNOC-COP-V4-01',
+      referenceId: 'PDO-COP-V4-01',
       articleOrSection: 'Clause 6.3 Root Cause Analysis Standards',
       excerpt: 'Root cause analysis must trace underlying management system deficiencies rather than stopping at individual human error.'
     },
@@ -323,55 +323,55 @@ export async function checkStatutoryCompliance(
     };
   }
 
-  // Abu Dhabi / UAE
+  // Muscat / Oman
   return {
-    jurisdiction: 'Abu Dhabi (UAE)',
+    jurisdiction: 'Muscat (Oman)',
     applicableRegulations: [
-      'Abu Dhabi Public Health Centre (ADPHC) OSHAD-SF Mechanism 11.0',
-      'UAE Federal Decree-Law No. 33/2021 (Labour Relations Law)',
+      'Muscat Public Health Centre (Oman MoL OSHD) Oman MoL MD 286/2008 & PDO PR-1172',
+      'Oman Oman Labour Law (Royal Decree No. 53/2023) (Labour Relations Law)',
       'Cabinet Resolution No. 1/2022 on Occupational Injuries and Diseases'
     ],
     mandatoryNotificationTimeline: 'Immediate Notification (< 2 Hours for Serious / 24 Hours Form G)',
     deadlineTimestamp: deadlineImmediate,
     isSeriousIncident: true,
     requiredForms: [
-      'OSHAD-SF Form G (Serious Incident Notification to SRA / ADPHC)',
-      'Ministry of Human Resources and Emiratisation (MoHRE) Work Injury Report'
+      'Oman MoL MD 286/2008 & PDO Specifications Form G (Serious Incident Notification to SRA / Oman MoL OSHD)',
+      'Ministry of Labour (Sultanate of Oman) (Ministry of Labour (MoL)) Work Injury Report'
     ],
-    enforcingAuthority: 'Abu Dhabi Public Health Centre (ADPHC) & Sector Regulatory Authority (SRA / ADNOC)',
-    penaltiesForDelayedReporting: 'Statutory fines up to AED 100,000, downgrade of entity OSHAD entity classification, and criminal referral under UAE Penal Code.',
+    enforcingAuthority: 'Muscat Public Health Centre (Oman MoL OSHD) & Sector Regulatory Authority (SRA / PDO)',
+    penaltiesForDelayedReporting: 'Statutory fines up to OMR 10,000, downgrade of entity Oman MoL MD 286/2008 entity classification, and criminal referral under Oman Penal Code.',
     complianceChecklist: [
       {
-        item: 'Immediate notification to Sector Regulatory Authority (ADNOC / DoT) within 2 hours',
-        statutoryMandate: 'OSHAD SF Mechanism 11.0 Sec 3.1',
+        item: 'Immediate notification to Sector Regulatory Authority (PDO / DoT) within 2 hours',
+        statutoryMandate: 'Oman MoL MD 286/2008 Mechanism 11.0 Sec 3.1',
         met: true
       },
       {
-        item: 'Submission of official OSHAD-SF Form G within 24 hours of occurrence',
-        statutoryMandate: 'OSHAD SF Mechanism 11.0 Sec 3.2',
+        item: 'Submission of official Oman MoL MD 286/2008 & PDO Specifications Form G within 24 hours of occurrence',
+        statutoryMandate: 'Oman MoL MD 286/2008 Mechanism 11.0 Sec 3.2',
         met: false
       },
       {
-        item: 'Medical treatment case logged with MoHRE Taw-jeeh portal within 48 hours',
+        item: 'Medical treatment case logged with Ministry of Labour (MoL) Taw-jeeh portal within 48 hours',
         statutoryMandate: 'Cabinet Resolution 1/2022',
         met: false
       },
       {
         item: 'Form G1 (Full Investigation & Root Cause Report) submission within 30 days',
-        statutoryMandate: 'OSHAD SF Mechanism 11.0 Sec 4.1',
+        statutoryMandate: 'Oman MoL MD 286/2008 Mechanism 11.0 Sec 4.1',
         met: false
       }
     ],
     citations: [
       {
-        title: 'Abu Dhabi OSHAD System Framework - Mechanism 11.0',
+        title: 'Muscat Oman MoL MD 286/2008 System Framework - Mechanism 11.0',
         sourceType: 'Statutory Regulation',
-        referenceId: 'OSHAD-MECH-11',
+        referenceId: 'Oman MoL MD 286/2008-MECH-11',
         articleOrSection: 'Section 3.2 - Incident Notification Requirements',
         excerpt: 'Entities shall notify their Sector Regulatory Authority of any Serious Incident using Form G within 24 hours of occurrence.'
       },
       {
-        title: 'UAE Federal Decree-Law No. 33/2021 on Regulation of Labour Relations',
+        title: 'Oman Oman Labour Law (Royal Decree No. 53/2023) on Regulation of Labour Relations',
         sourceType: 'Statutory Regulation',
         referenceId: 'FED-LAW-33-2021',
         articleOrSection: 'Article 37 - Reporting Work Injuries',

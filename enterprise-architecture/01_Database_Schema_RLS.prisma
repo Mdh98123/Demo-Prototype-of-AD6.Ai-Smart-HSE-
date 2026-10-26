@@ -108,14 +108,14 @@ model PermitToWork {
 }
 
 // -----------------------------------------------------------------------------
-// MODULE: ESG / CARBON ACCOUNTING & REGULATORY DISCLOSURES (Oman & UAE)
+// MODULE: ESG / CARBON ACCOUNTING & REGULATORY DISCLOSURES (Sultanate of Oman)
 // -----------------------------------------------------------------------------
 model EsgMetric {
   id                   String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   tenantId             String   @db.Uuid
   tenant               Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   
-  jurisdiction         String   // 'UAE' | 'OMAN'
+  jurisdiction         String   // 'OMAN' | 'COMBINED'
   facilityId           String
   facilityName         String
   reportingPeriod      String   // e.g. '2024-Q2', '2024-Annual'

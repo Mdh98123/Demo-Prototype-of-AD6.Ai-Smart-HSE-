@@ -4,7 +4,7 @@ export interface TenantOrg {
   id: string;
   name: string;
   shortName: string;
-  country: 'UAE' | 'Oman' | 'GCC';
+  country: 'Oman' | 'GCC';
   code: string;
   sector: string;
   brandColor: string;
@@ -16,7 +16,7 @@ export interface OperationalSite {
   tenantId: string;
   name: string;
   code: string;
-  country: 'UAE' | 'Oman' | 'GCC' | 'KSA';
+  country: 'Oman' | 'GCC' | 'KSA';
   location: string;
   coordinates: string;
   type: 'Upstream O&G' | 'Refinery' | 'Gas Processing' | 'Industrial Port' | 'Fabrication Yard' | 'Logistics Hub';

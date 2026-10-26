@@ -42,7 +42,7 @@ const PredictiveRiskDashboard: React.FC = () => {
     } else {
         // Fallback mock project
         const mockProject: Project = {
-            id: 'PRJ-001', name: 'Ruwais Expansion Phase 4', client: 'ADNOC', location: 'Ruwais Zone A',
+            id: 'PRJ-001', name: 'Mina Al Fahal Expansion Phase 4', client: 'PDO', location: 'Mina Al Fahal Zone 1',
             startDate: '2024-01-01', endDate: '2026-12-31', status: 'Active', manager: 'John Doe',
             budget: 5000000, progress: 45, hseScore: 92, openIncidents: 2
         };

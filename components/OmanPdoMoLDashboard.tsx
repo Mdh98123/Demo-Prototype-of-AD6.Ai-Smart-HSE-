@@ -11,7 +11,7 @@ import {
   LineChart, Line, Legend, AreaChart, Area, Cell, PieChart, Pie
 } from 'recharts';
 
-const AdnocOshadDashboard: React.FC = () => {
+const pdoomanMoLDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'PDO' | 'MOL'>('PDO');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
@@ -414,7 +414,7 @@ const AdnocOshadDashboard: React.FC = () => {
   );
 };
 
-export default AdnocOshadDashboard;
+export default pdoomanMoLDashboard;
 
 const Users = ({ size, className }: { size: number, className?: string }) => (
   <svg 

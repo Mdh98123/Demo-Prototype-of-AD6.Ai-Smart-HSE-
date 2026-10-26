@@ -407,7 +407,7 @@ const HealthMonitoringModule: React.FC = () => {
                           <Stethoscope size={64} className="opacity-20" />
                       </div>
                       <h3 className="text-2xl font-black text-slate-700 uppercase tracking-tighter">AI Health Lab Awaiting Execution</h3>
-                      <p className="text-sm text-slate-400 mt-3 max-w-sm font-medium italic">Execute workforce diagnostic to identify occupational health risks and UAE compliance gaps.</p>
+                      <p className="text-sm text-slate-400 mt-3 max-w-sm font-medium italic">Execute workforce diagnostic to identify occupational health risks and Oman compliance gaps.</p>
                       <button 
                           onClick={handleRunAI}
                           className="mt-10 bg-rose-600 text-white px-12 py-5 rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-2xl shadow-rose-500/30 hover:bg-rose-700 transition-all active:scale-95 flex items-center gap-3"

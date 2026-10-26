@@ -28,7 +28,7 @@ const GLOBAL_SEARCH_INDEX = [
   // 3. Control of Work
   { id: 'ptw', title: 'Permit to Work (PTW)', subtitle: 'Electronic permit issuance, hot work, confined space & isolations', type: 'Control of Work', view: View.PERMIT_TO_WORK },
   { id: 'loto', title: 'LOTO Energy Isolations', subtitle: 'Lockout/tagout registers, isolation certificates & boundary tracking', type: 'Control of Work', view: View.LOTO },
-  { id: 'simops', title: 'SIMOPS De-Confliction', subtitle: 'Simultaneous operations matrix & hazardous boundary de-confliction', type: 'Control of Work', view: View.ADNOC_OSHAD },
+  { id: 'simops', title: 'SIMOPS De-Confliction', subtitle: 'Simultaneous operations matrix & hazardous boundary de-confliction', type: 'Control of Work', view: View.PDO_MOL_WORKFLOW },
   { id: 'lifting', title: 'Lifting Operations', subtitle: 'Critical crane lift plans, rigger competency & wind limits', type: 'Control of Work', view: View.LIFTING },
   { id: 'excavation', title: 'Excavation Control', subtitle: 'Underground service detection & trench safety permits', type: 'Control of Work', view: View.EXCAVATION },
   { id: 'rams', title: 'RAMS Method Statements', subtitle: 'Risk assessment method statement builder & reviewer', type: 'Control of Work', view: View.RAMS },
@@ -37,9 +37,9 @@ const GLOBAL_SEARCH_INDEX = [
   // 4. Risk & Governance
   { id: 'hazards', title: 'Hazard Register', subtitle: 'Enterprise 5x5 risk matrix, bowtie links & mitigation tracking', type: 'Risk & Governance', view: View.HAZARDS },
   { id: 'bowtie', title: 'Bowtie Risk Visualizer', subtitle: 'Threat barrier analysis, escalation factors & consequence controls', type: 'Risk & Governance', view: View.BOWTIE },
-  { id: 'legal', title: 'Legal Register (Compliance)', subtitle: 'UAE Federal Law, OSHAD-SF & Oman MD 286/2008 statutory tracker', type: 'Risk & Governance', view: View.COMPLIANCE_INTELLIGENCE },
+  { id: 'legal', title: 'Legal Register (Compliance)', subtitle: 'Oman Royal Decrees & Labour Law, Oman MoL MD 286/2008 & PDO Specifications & Oman MD 286/2008 statutory tracker', type: 'Risk & Governance', view: View.COMPLIANCE_INTELLIGENCE },
   { id: 'moc', title: 'Management of Change (MOC)', subtitle: 'Engineering, operational & organizational change authorization', type: 'Risk & Governance', view: View.MOC },
-  { id: 'esg', title: 'ESG & Carbon Accounting', subtitle: 'ADX, DFM & MSX Oman Scope 1, 2, 3 carbon accounting & ICV', type: 'Risk & Governance', view: View.ESG },
+  { id: 'esg', title: 'ESG & Carbon Accounting', subtitle: 'MSX, MSX & MSX Oman Scope 1, 2, 3 carbon accounting & ICV', type: 'Risk & Governance', view: View.ESG },
   { id: 'env', title: 'Environmental Monitoring', subtitle: 'Effluent discharge, stack emissions & hazardous waste manifests', type: 'Risk & Governance', view: View.ENVIRONMENTAL },
   { id: 'bcms', title: 'Business Continuity (BCMS)', subtitle: 'Crisis recovery playbooks & disaster simulation', type: 'Risk & Governance', view: View.BUSINESS_CONTINUITY },
 
@@ -47,7 +47,7 @@ const GLOBAL_SEARCH_INDEX = [
   { id: 'incident', title: 'Incident Management', subtitle: 'Near-miss, injury & environmental release reporting with statutory escalation', type: 'Incidents & Assurance', view: View.INCIDENT_MANAGEMENT },
   { id: 'rca', title: 'Root Cause Analysis (RCA)', subtitle: '5-Why, Fishbone & TapRoot systematic investigation engine', type: 'Incidents & Assurance', view: View.RCA_TOOL },
   { id: 'capa', title: 'CAPA Action Manager', subtitle: 'Corrective & preventive actions SLA tracking with escalations', type: 'Incidents & Assurance', view: View.CAPA },
-  { id: 'audits', title: 'Audits & Assurance', subtitle: 'ISO 45001, OSHAD-SF & corporate compliance scoring', type: 'Incidents & Assurance', view: View.SAFETY_AUDIT },
+  { id: 'audits', title: 'Audits & Assurance', subtitle: 'ISO 45001, Oman MoL MD 286/2008 & PDO Specifications & corporate compliance scoring', type: 'Incidents & Assurance', view: View.SAFETY_AUDIT },
   { id: 'inspections', title: 'Checklist Inspections', subtitle: 'Routine facility, equipment & scaffolding walkthroughs', type: 'Incidents & Assurance', view: View.INSPECTIONS },
   { id: 'pwa', title: 'Mobile PWA Inspection', subtitle: 'Offline-ready mobile auditor with photo evidence & geo-tagging', type: 'Incidents & Assurance', view: View.PWA_INSPECTIONS },
   { id: 'lessons', title: 'Lessons Learned Base', subtitle: 'Safety alerts, bulletin broadcasts & institutional memory', type: 'Incidents & Assurance', view: View.LESSONS_LEARNED },
@@ -63,15 +63,15 @@ const GLOBAL_SEARCH_INDEX = [
   // 7. Enterprise Admin
   { id: 'facilities', title: 'Facility Configuration', subtitle: 'Sites, concessions, operational zones & GPS boundaries', type: 'Enterprise Admin', view: View.PROJECTS },
   { id: 'iam', title: 'RBAC & IAM Permissions', subtitle: 'Multi-tenant role-based access control, security policies & SSO', type: 'Enterprise Admin', view: View.IAM },
-  { id: 'comply-flow', title: 'GCC Compliance Settings', subtitle: 'Statutory regulation thresholds, OSHAD & PDO standards', type: 'Enterprise Admin', view: View.COMPLY_FLOW },
+  { id: 'comply-flow', title: 'GCC Compliance Settings', subtitle: 'Statutory regulation thresholds, Oman MoL MD 286/2008 & PDO standards', type: 'Enterprise Admin', view: View.COMPLY_FLOW },
   { id: 'dms', title: 'Document Management (DMS)', subtitle: 'Controlled safety procedures, drawings & SOP versioning', type: 'Enterprise Admin', view: View.DMS },
   { id: 'syslogs', title: 'System Audit Logs', subtitle: 'Tamper-evident operational audit trail & security events', type: 'Enterprise Admin', view: View.SYSTEM_LOGS },
   { id: 'design-system', title: 'Design System Gallery', subtitle: 'Enterprise UI component tokens, contrast guides & badges', type: 'Enterprise Admin', view: View.DESIGN_SYSTEM },
 
   // Key Operational Sites Quick Jumps
   { id: 'site-fhd', title: 'Fahud Field - Oman (PDO)', subtitle: 'Switch active operational context to Concession Block 6', type: 'Site Asset', view: View.GIS_MAP },
-  { id: 'site-hbs', title: 'Habshan Asset - UAE (ADNOC)', subtitle: 'Switch active operational context to Habshan Gas Complex', type: 'Site Asset', view: View.GIS_MAP },
-  { id: 'site-ruw', title: 'Ruwais Refinery Complex - UAE', subtitle: 'Downstream refinery and petrochemical industrial area', type: 'Site Asset', view: View.GIS_MAP },
+  { id: 'site-hbs', title: 'Khazzan Gas Asset Asset - Oman (PDO)', subtitle: 'Switch active operational context to Khazzan Tight Gas Complex Block 61', type: 'Site Asset', view: View.GIS_MAP },
+  { id: 'site-ruw', title: 'Mina Al Fahal Refinery Complex - Oman', subtitle: 'Downstream refinery and petrochemical industrial area', type: 'Site Asset', view: View.GIS_MAP },
 ];
 
 export const GlobalCommandPalette: React.FC<GlobalCommandPaletteProps> = ({ isOpen, onClose, onNavigate }) => {

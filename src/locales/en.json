@@ -172,7 +172,7 @@
     "loto_register": "LOTO Energy Isolation Register",
     "issuer_signature": "Permit Issuer Authorization",
     "receiver_signature": "Permit Receiver Acceptance",
-    "export_oshad_form_g": "Export OSHAD-SF Form G (ADPHC)",
+    "export_mol_form_md286": "Export Oman MoL Form MD 286",
     "export_oman_mol_24h": "Export Oman MoL 24-Hour Notice"
   }
 }

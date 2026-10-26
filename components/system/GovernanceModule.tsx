@@ -36,7 +36,7 @@ export const GovernanceModule: React.FC = () => {
 
   const isAdmin = currentUser?.role === 'ADMIN';
 
-  const handleRegionChange = (newRegion: 'UAE' | 'GLOBAL') => {
+  const handleRegionChange = (newRegion: 'OMAN' | 'GLOBAL') => {
     DataResidency.setRegion(newRegion);
     setRegion(newRegion);
   };
@@ -136,8 +136,8 @@ export const GovernanceModule: React.FC = () => {
         <div className="p-6 space-y-6">
           <p className="text-xs text-slate-300 leading-relaxed max-w-4xl">
             This administrative configuration sets the legal and regulatory framework governing the entire platform.
-            It defines statutory notification deadlines (OSHAD vs Oman MoL), high-temperature work-stoppage rules
-            (MoHRE midday break vs PDO SP-1170 TWL), electronic Permit to Work isolation criteria, and jurisdiction-isolated compliance scorecards.
+            It defines statutory notification deadlines (Oman MoL MD 286/2008 vs Oman MoL), high-temperature work-stoppage rules
+            (Ministry of Labour (MoL) midday break vs PDO SP-1170 TWL), electronic Permit to Work isolation criteria, and jurisdiction-isolated compliance scorecards.
           </p>
 
           {/* Configuration Dropdown Selector */}
@@ -167,9 +167,8 @@ export const GovernanceModule: React.FC = () => {
                 }}
                 className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3.5 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer appearance-none"
               >
-                <option value="UAE">United Arab Emirates (UAE)</option>
-                <option value="OMAN">Sultanate of Oman (Oman)</option>
-                <option value="COMBINED">UAE + Oman (Combined Compliance)</option>
+                <option value="OMAN">Sultanate of Oman (National Regulatory Framework)</option>
+                <option value="COMBINED">Oman Energy Concessions & Freezones (PDO & SEZAD)</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-slate-400">
                 <ChevronDown size={18} />
@@ -177,31 +176,23 @@ export const GovernanceModule: React.FC = () => {
             </div>
 
             {/* Interactive Jurisdiction Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               {[
                 { 
-                  id: 'UAE' as const, 
-                  title: 'United Arab Emirates (UAE)', 
-                  flag: '🇦🇪', 
-                  law: 'OSHAD-SF v3.1 & MoHRE', 
-                  desc: 'Form G 24h notice to ADPHC, WBGT ≥ 32.2°C work-stoppage', 
-                  badge: 'OSHAD / ADNOC' 
-                },
-                { 
                   id: 'OMAN' as const, 
-                  title: 'Sultanate of Oman', 
+                  title: 'Sultanate of Oman (National)', 
                   flag: '🇴🇲', 
-                  law: 'RD 53/2023 & MD 286/2008', 
-                  desc: 'MoL 24h Notification, PDO TWL < 115 W/m² stop work', 
-                  badge: 'MoL / PDO SP-1170' 
+                  law: 'Labour Law RD 53/2023 & MD 286/2008 & EA RD 114/2001', 
+                  desc: 'Ministry of Labour Annex 1 (24h SLA), CDAA Fire Safety, MoL Midday Summer Work Ban', 
+                  badge: 'MoL / EA / CDAA' 
                 },
                 { 
                   id: 'COMBINED' as const, 
-                  title: 'UAE + Oman Combined', 
-                  flag: '🇦🇪🇴🇲', 
-                  law: 'Dual-Jurisdiction Engine', 
-                  desc: 'Cross-border multi-tenant compliance across all GCC sites', 
-                  badge: 'Multi-Tenant Dual' 
+                  title: 'Oman Energy & Freezones (PDO & SEZAD)', 
+                  flag: '🇴🇲', 
+                  law: 'PDO Specifications (SP-1143, SP-1170) & SEZAD Regulations', 
+                  desc: 'PDO Electronic PTW, TWL < 115 W/m² stop-work, Duqm & Sohar Environmental Standards', 
+                  badge: 'PDO SP-1143 / SP-1170' 
                 }
               ].map((opt) => {
                 const isSelected = selectedCandidate === opt.id;
@@ -407,9 +398,9 @@ export const GovernanceModule: React.FC = () => {
                      <div className="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <FileText size={24} />
                      </div>
-                     <div>
-                        <div className="font-bold text-slate-800">UAE PDPL - Data Processing Agreement</div>
-                        <div className="text-xs text-slate-500">Standard DPA configured specifically under UAE Federal Decree Law No. 45 of 2021.</div>
+                      <div>
+                        <div className="font-bold text-slate-800">Oman PDPL - Data Processing Agreement</div>
+                        <div className="text-xs text-slate-500">Standard DPA configured specifically under Sultanate of Oman Personal Data Protection Law (Royal Decree No. 6/2022).</div>
                      </div>
                   </div>
                   <button className="text-indigo-600 font-bold text-sm bg-indigo-50 px-4 py-2 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-colors">Generate PDF</button>
@@ -433,14 +424,14 @@ export const GovernanceModule: React.FC = () => {
                   
                   <div className="grid grid-cols-2 gap-4">
                      <button 
-                       onClick={() => handleRegionChange('UAE')}
-                       className={`p-4 rounded-xl border-2 text-left transition-all ${region === 'UAE' ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'}`}
+                       onClick={() => handleRegionChange('OMAN')}
+                       className={`p-4 rounded-xl border-2 text-left transition-all ${region === 'OMAN' ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-200'}`}
                      >
                         <div className="flex justify-between mb-2">
-                           <span className="font-black text-slate-800">🇦🇪 Middle East</span>
-                           {region === 'UAE' && <CheckCircle className="text-emerald-500" size={18} />}
+                           <span className="font-black text-slate-800">🇴🇲 Sultanate of Oman</span>
+                           {region === 'OMAN' && <CheckCircle className="text-emerald-500" size={18} />}
                         </div>
-                        <div className="text-xs text-slate-500 font-medium">UAE North (Dubai). Full compliance with NESA/SIA frameworks.</div>
+                        <div className="text-xs text-slate-500 font-medium">Oman National Cloud (Muscat / Sohar). Full compliance with Oman PDPL RD 6/2022 and MTCIT standards.</div>
                      </button>
 
                      <button 
@@ -448,10 +439,10 @@ export const GovernanceModule: React.FC = () => {
                        className={`p-4 rounded-xl border-2 text-left transition-all ${region === 'GLOBAL' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-200'}`}
                      >
                         <div className="flex justify-between mb-2">
-                           <span className="font-black text-slate-800">🌍 Global</span>
+                           <span className="font-black text-slate-800">🌍 Global Edge</span>
                            {region === 'GLOBAL' && <CheckCircle className="text-blue-500" size={18} />}
                         </div>
-                        <div className="text-xs text-slate-500 font-medium">Auto-distributes edge nodes globally. Fails UAE data localization laws.</div>
+                        <div className="text-xs text-slate-500 font-medium">Auto-distributes edge nodes globally. Fails Oman sovereign data localization laws.</div>
                      </button>
                   </div>
                </div>

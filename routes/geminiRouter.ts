@@ -105,7 +105,7 @@ geminiRouter.post('/chat', async (req: Request, res: Response) => {
 - Mandatory Guidelines: Petroleum Development Oman (PDO) SP-1143 (PTW Specification), PDO SP-1170 (Thermal Stress Management - mandatory stop when TWL < 115 W/m², summer rest hours 12:30-15:30 June through August), Environment Authority Royal Decree 114/2001, Civil Defence & Ambulance Authority (CDAA), Public Authority for Social Insurance (PASI).
 - Data Privacy: Oman Personal Data Protection Law (Royal Decree 6/2022).
 - Currency: Omani Rial (OMR).
-- Rule: Strictly cite and apply Sultanate of Oman statutory requirements. Do NOT cite or apply UAE laws or OSHAD frameworks.`;
+- Rule: Strictly cite and apply Sultanate of Oman statutory requirements (MoL RD 53/2023, MD 286/2008, PDO SP-1143/SP-1170/PR-1172, CDAA, Environment Authority RD 114/2001).`;
 
     const systemInstruction = baseInstruction + regionalDirective;
 
@@ -269,7 +269,7 @@ geminiRouter.post('/transcribe', async (req: Request, res: Response) => {
     };
 
     const textPrompt = prompt || 
-      'Transcribe this spoken audio verbatim with high precision. If it is in Arabic or English, keep the exact spoken language. If safety observations, hazard descriptions, or incident details are spoken, ensure technical safety terminology (PPE, LOTO, OSHAD, PTW, hazard) is transcribed cleanly.';
+      'Transcribe this spoken audio verbatim with high precision. If it is in Arabic or English, keep the exact spoken language. If safety observations, hazard descriptions, or incident details are spoken, ensure technical safety terminology (PPE, LOTO, PDO, MoL, PTW, hazard) is transcribed cleanly.';
 
     const response = await ai.models.generateContent({
       model: 'gemini-3.5-transcribe',

@@ -1,19 +1,19 @@
 {
   "name": "AD6 HSE Enterprise AI Platform",
-  "description": "Next-generation AI-native HSE platform featuring Safi AI Copilot, predictive SIF analytics, and real-time computer vision for ADNOC & OSHAD compliance.",
+  "description": "Next-generation AI-native HSE platform featuring Safi AI Copilot, predictive SIF analytics, and real-time computer vision for Sultanate of Oman Ministry of Labour (MD 286/2008) and PDO compliance.",
   "requestFramePermissions": [
     "camera",
     "microphone",
     "geolocation"
   ],
-  "defaultLocale": "ar-AE",
+  "defaultLocale": "ar-OM",
   "fallbackLocale": "en",
   "direction": "rtl",
   "region": "middle-east1",
   "tailwind": true,
   "secrets": [
     { "name": "GEMINI_API_KEY", "description": "Gemini API key - stored via AI Studio Secrets" },
-    { "name": "OSHAD_API_TOKEN", "description": "Secure token for OSHAD-SF integration" }
+    { "name": "MOL_OMAN_API_TOKEN", "description": "Secure token for Oman Ministry of Labour integration" }
   ],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

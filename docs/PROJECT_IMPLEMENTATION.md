@@ -51,7 +51,7 @@ gantt
 ### Phase 3: Core Workflow Hardening (Weeks 8–10)
 - **WP-3.1 (SIMOPS Engine):** Enhance geometric spatial collision detection for co-located permits within 50-meter zones.
 - **WP-3.2 (Offline PWA Sync):** Full bi-directional conflict resolution in `services/syncEngine.ts` for offline mobile inspections.
-- **WP-3.3 (Statutory PDF Generator):** Production rendering of Abu Dhabi OSHAD Form G and Oman MoL statutory notification packages using server-side Puppeteer / jsPDF.
+- **WP-3.3 (Statutory PDF Generator):** Production rendering of Oman MoL 24-Hour Notice Form (MD 286/2008 Annex 1) and Oman MoL statutory notification packages using server-side Puppeteer / jsPDF.
 
 ### Phase 4: AI Governance & MCP Connectivity (Weeks 11–12)
 - **WP-4.1 (MCP Server):** Build and deploy a secure Node.js MCP server exposing read-only hazard lookups and schema-validated incident query tools.
@@ -76,4 +76,4 @@ gantt
 | **RSK-01** | Field worker connectivity loss during critical permit sign-off | High | High | Offline-first IndexedDB queue with background sync worker and local digital signatures. | Mobile Lead |
 | **RSK-02** | Gemini API quota throttling during plant turnaround surge | High | Medium | Dual-model fallback (`gemini-3.8-flash` ➔ `gemini-3.1-flash-lite`) and intelligent response caching. | AI Architect |
 | **RSK-03** | Segregation of Duties bypass via manipulated client state | Critical | Low | Dual-layer verification: client UI disablement + mandatory server `/api/auth/verify-access` rejection. | Security Lead |
-| **RSK-04** | Discrepancy in statutory heat ban enforcement across borders | High | Low | Isolated regional compliance engine with hardcoded MD 286/2008 and OSHAD-SF clock rules. | Compliance Lead |
+| **RSK-04** | Discrepancy in statutory heat ban enforcement across borders | High | Low | Isolated regional compliance engine with hardcoded MD 286/2008 and Oman MoL MD 286/2008 clock rules. | Compliance Lead |

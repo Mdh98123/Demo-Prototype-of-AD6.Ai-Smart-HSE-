@@ -293,7 +293,7 @@ const ChemicalsModule: React.FC = () => {
             <div className="absolute top-0 end-0 p-8 opacity-10"><AlertOctagon size={120}/></div>
             <h3 className="text-xs font-black text-yellow-400 uppercase tracking-widest mb-4">Mandatory Segregation Matrix</h3>
             <p className="text-xs text-slate-300 mb-6 leading-relaxed">
-              Strict chemical barrier isolation rules aligned with OSHAD-SF CoP 14 and NFPA 400.
+              Strict chemical barrier isolation rules aligned with Oman MoL MD 286/2008 & PDO Specifications CoP 14 and NFPA 400.
             </p>
             <div className="space-y-3.5 relative z-10 text-xs">
               <div className="p-3.5 bg-white/5 rounded-2xl border border-white/10 flex items-start gap-3">
@@ -547,7 +547,7 @@ const ChemicalsModule: React.FC = () => {
                 <input 
                   type="text" 
                   required
-                  placeholder="e.g. Ruwais Chemical Bunker 2"
+                  placeholder="e.g. Mina Al Fahal Chemical Bunker 2"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   className="w-full px-3 py-2 border border-slate-300 rounded-xl font-medium"
@@ -599,7 +599,7 @@ const ChemicalsModule: React.FC = () => {
             </div>
             <div className="p-6 space-y-4 text-xs text-slate-600 leading-relaxed">
               <div className="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 text-indigo-900">
-                <h4 className="font-black text-sm uppercase mb-1">OSHAD-SF Technical Guideline 14</h4>
+                <h4 className="font-black text-sm uppercase mb-1">Oman MoL MD 286/2008 & PDO Specifications Technical Guideline 14</h4>
                 <p>All hazardous chemical substances brought to site must have an approved SDS registered within the platform no older than 3 years.</p>
               </div>
 

@@ -300,7 +300,7 @@ const TrainingModule: React.FC<{ initialWorkflowRecordId?: string }> = ({ initia
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-4">
                     <div>
                         <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Enterprise HSE Learning Academy</h3>
-                        <p className="text-xs text-slate-500 font-medium">10 accredited courses mapped to ISO 45001, OSHAD-SF, and OPITO standards</p>
+                        <p className="text-xs text-slate-500 font-medium">10 accredited courses mapped to ISO 45001, Oman MoL MD 286/2008 & PDO Specifications, and OPITO standards</p>
                     </div>
                 </div>
 
@@ -308,7 +308,7 @@ const TrainingModule: React.FC<{ initialWorkflowRecordId?: string }> = ({ initia
                     {[
                         { id: 'CRS-01', title: 'H2S Gas Safety & Escape BA Operations', provider: 'OPITO Accredited', duration: '8 Hours', level: 'Mandatory', score: '98% Pass Req', modules: 6, enrolled: true, progress: 100, completedDate: '2026-02-14' },
                         { id: 'CRS-02', title: 'IOSH Managing Safely (GCC Edition)', provider: 'IOSH UK', duration: '24 Hours', level: 'Leadership', score: '85% Pass Req', modules: 8, enrolled: true, progress: 75, completedDate: 'In Progress' },
-                        { id: 'CRS-03', title: 'Confined Space Authorized Entrant & Sentry', provider: 'OSHAD Approved', duration: '16 Hours', level: 'High Risk', score: '90% Pass Req', modules: 5, enrolled: false, progress: 0, completedDate: 'Not Started' },
+                        { id: 'CRS-03', title: 'Confined Space Authorized Entrant & Sentry', provider: 'Oman MoL MD 286/2008 Approved', duration: '16 Hours', level: 'High Risk', score: '90% Pass Req', modules: 5, enrolled: false, progress: 0, completedDate: 'Not Started' },
                         { id: 'CRS-04', title: 'Working at Heights & Scaffold Inspection', provider: 'CITB / PASMA', duration: '12 Hours', level: 'High Risk', score: '90% Pass Req', modules: 6, enrolled: true, progress: 100, completedDate: '2026-01-20' },
                         { id: 'CRS-05', title: 'Chemical Hazards & COSHH Risk Assessor', provider: 'BOHS Standards', duration: '14 Hours', level: 'Specialist', score: '85% Pass Req', modules: 7, enrolled: false, progress: 0, completedDate: 'Not Started' },
                         { id: 'CRS-06', title: 'Appointed Person Crane Lifting Operations', provider: 'LEEA Certified', duration: '32 Hours', level: 'Technical', score: '95% Pass Req', modules: 10, enrolled: false, progress: 0, completedDate: 'Not Started' },
@@ -388,11 +388,11 @@ const TrainingModule: React.FC<{ initialWorkflowRecordId?: string }> = ({ initia
                     {[
                         { title: 'Welding & Hot Work Fire Prevention', slides: 14, category: 'Hot Work', date: '2026-04-10', authority: 'NFPA 51B' },
                         { title: 'Compressed Gas Cylinder Handling & Storage', slides: 15, category: 'Equipment', date: '2026-04-08', authority: 'CGA Standards' },
-                        { title: 'Industrial Radiography NDT Exclusion Zones', slides: 20, category: 'Radiation', date: '2026-04-05', authority: 'FANR / IAEA' },
+                        { title: 'Industrial Radiography NDT Exclusion Zones', slides: 20, category: 'Radiation', date: '2026-04-05', authority: 'Ministry of Energy and Minerals (MEM Oman) / IAEA' },
                         { title: 'Offshore Derrick Barge Safety & Man Overboard', slides: 25, category: 'Marine', date: '2026-04-01', authority: 'SOLAS / IMO' },
-                        { title: 'Summer Heat Stress Mitigation & Midday Break', slides: 12, category: 'Wellness', date: '2026-03-28', authority: 'MOHRE Resolution' },
-                        { title: 'Deep Trench Excavation & Hydraulic Shoring', slides: 18, category: 'Civil Safety', date: '2026-03-24', authority: 'DM Code of Practice' },
-                        { title: 'H2S Toxic Gas Inhalation Emergency Protocols', slides: 22, category: 'Process Safety', date: '2026-03-20', authority: 'ADNOC CoP' },
+                        { title: 'Summer Heat Stress Mitigation & Midday Break', slides: 12, category: 'Wellness', date: '2026-03-28', authority: 'Oman Ministry of Labour Resolution' },
+                        { title: 'Deep Trench Excavation & Hydraulic Shoring', slides: 18, category: 'Civil Safety', date: '2026-03-24', authority: 'Oman Environment Authority of Practice' },
+                        { title: 'H2S Toxic Gas Inhalation Emergency Protocols', slides: 22, category: 'Process Safety', date: '2026-03-20', authority: 'PDO SP-1143 Specification' },
                         { title: 'Heavy Mobile Plant & Pedestrian Segregation', slides: 16, category: 'Logistics', date: '2026-03-16', authority: 'ISO 39001' },
                         { title: 'Lockout/Tagout (LOTO) Energy Isolation Standard', slides: 19, category: 'Electrical', date: '2026-03-12', authority: 'OSHA 1910.147' },
                         { title: 'Hazardous Waste Classification & EAD Manifests', slides: 15, category: 'Environmental', date: '2026-03-08', authority: 'EAD Law 16' }

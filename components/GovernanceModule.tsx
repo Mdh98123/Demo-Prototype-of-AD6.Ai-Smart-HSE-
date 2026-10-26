@@ -365,9 +365,9 @@ const GovernanceModule: React.FC = () => {
                       }}
                       className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3.5 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer appearance-none"
                     >
-                      <option value="UAE">United Arab Emirates (UAE)</option>
+                      <option value="OMAN">United Arab Sultanate of Oman (Oman)</option>
                       <option value="OMAN">Sultanate of Oman (Oman)</option>
-                      <option value="COMBINED">UAE + Oman (Combined Compliance)</option>
+                      <option value="COMBINED">Oman + Oman (Combined Compliance)</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-slate-400">
                       <ChevronDown size={18} />
@@ -418,7 +418,7 @@ const GovernanceModule: React.FC = () => {
                           </li>
                           <li className="flex items-center gap-2">
                               <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
-                              <span><strong>Al-Ruwais Polyolefin Asset</strong> (UAE Petrochem)</span>
+                              <span><strong>Mina Al Fahal Refinery Asset</strong> (Oman Petrochem)</span>
                           </li>
                           <li className="flex items-center gap-2">
                               <span className="w-2 h-2 rounded-full bg-amber-500"></span>
@@ -479,7 +479,7 @@ const GovernanceModule: React.FC = () => {
                       </div>
                       <div>
                           <h5 className="text-sm font-black text-slate-800 uppercase tracking-tight">GCC Regulatory Compliance Pre-Populated</h5>
-                          <p className="text-xs text-slate-500 mt-0.5">Pre-configured statutory mappings for Abu Dhabi ADPHC OSHAD Form G & Oman MoL MD 286/2008.</p>
+                          <p className="text-xs text-slate-500 mt-0.5">Pre-configured statutory mappings for Muscat Oman MoL OSHD Oman MoL Form MD 286 & Oman MoL MD 286/2008.</p>
                       </div>
                   </div>
 

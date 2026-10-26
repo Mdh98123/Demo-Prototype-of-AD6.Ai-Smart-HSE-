@@ -472,7 +472,7 @@ const INITIAL_WORKFORCE_CERTS: EmployeeCertificationRecord[] = [
     daysRemaining: 130,
     status: 'Valid',
     statutoryRequirementLevel: 'Mandatory Statutory',
-    verificationDocUrl: '/docs/certs/oshad-alice.pdf',
+    verificationDocUrl: '/docs/certs/omanMoL-alice.pdf',
     escalationStatus: 'Normal'
   }
 ];

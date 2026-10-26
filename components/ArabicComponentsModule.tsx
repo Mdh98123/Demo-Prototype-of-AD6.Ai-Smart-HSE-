@@ -91,7 +91,7 @@ export const ArabicComponentsDemo: React.FC = () => {
                     Mixed-Language & Bilingual Document Generator
                  </h3>
                  <p className="text-sm text-slate-500 max-w-lg">
-                    Generates standardized OSHAD/ADNOC reports featuring dual-column layouts.
+                    Generates standardized Oman MoL MD 286/2008/PDO reports featuring dual-column layouts.
                     English technical terms (e.g. "CAPA", "PPE") remain LTR within RTL Arabic paragraphs automatically.
                  </p>
               </div>

@@ -848,7 +848,7 @@ export const MyWorkCockpit: React.FC = () => {
           <div className="flex items-center gap-3 text-[10px] text-slate-500 font-mono">
             <span>SLA Engine Active</span>
             <span>•</span>
-            <span>ISO 45001 / OSHAD Aligned</span>
+            <span>ISO 45001 / Oman MoL MD 286/2008 Aligned</span>
             <span>•</span>
             <span className="text-blue-700 font-bold">Synced with Central Store</span>
           </div>

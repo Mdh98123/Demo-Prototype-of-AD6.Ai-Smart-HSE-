@@ -1,6 +1,6 @@
 /* ==========================================================================
    AD6 HSE Enterprise AI Platform — Centralized Design System
-   Standard: ADNOC & OSHAD-SF v3.1 / GCC Industrial Safety Operations
+   Standard: Sultanate of Oman (MoL MD 286/2008 & PDO SP-1143 / SP-1170) Industrial Safety Operations
    ========================================================================== */
 
 :root {
@@ -61,7 +61,7 @@
 
   /* --- TYPOGRAPHY SCALE --- */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-arabic: 'Cairo', 'IBM Plex Sans Arabic', 'Dubai', system-ui, sans-serif;
+  --font-arabic: 'Cairo', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 
   /* --- SPACING & GRID SCALE (4px/8px Base) --- */

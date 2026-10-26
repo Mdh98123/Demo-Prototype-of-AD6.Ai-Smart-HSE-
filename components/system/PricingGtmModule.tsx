@@ -52,7 +52,7 @@ const PLANS = [
 ];
 
 export const PricingGtmModule: React.FC = () => {
-  const [currency, setCurrency] = useState<'AED' | 'SAR' | 'USD'>('AED');
+  const [currency, setCurrency] = useState<'OMR' | 'SAR' | 'USD'>('OMR');
   const [prepHours, setPrepHours] = useState<number>(40);
   const [incidentCost, setIncidentCost] = useState<number>(50000);
 
@@ -67,7 +67,7 @@ export const PricingGtmModule: React.FC = () => {
 
   const getPrice = (plan: typeof PLANS[0]) => {
     if (plan.priceAed === null) return 'Custom Pricing';
-    if (currency === 'AED') return `AED ${plan.priceAed} /mo`;
+    if (currency === 'OMR') return `OMR ${plan.priceAed} /mo`;
     if (currency === 'SAR') return `SAR ${plan.priceSar} /mo`;
     return `$ ${plan.priceUsd} /mo`;
   };
@@ -79,10 +79,10 @@ export const PricingGtmModule: React.FC = () => {
       {/* Header */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <h1 className="text-4xl font-black text-slate-800 tracking-tight">Scale Your Safety Intelligence</h1>
-        <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Choose the right tier for your enterprise. Deployed via Azure UAE for full PDPL compliance.</p>
+        <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Choose the right tier for your enterprise. Deployed via Azure Oman for full PDPL compliance.</p>
         
         <div className="mt-8 inline-flex glass-card rounded-xl shadow-sm border border-slate-200 p-1">
-           {['AED', 'SAR', 'USD'].map(cur => (
+           {['OMR', 'SAR', 'USD'].map(cur => (
              <button 
                 key={cur}
                 onClick={() => setCurrency(cur as any)}
@@ -153,15 +153,15 @@ export const PricingGtmModule: React.FC = () => {
               </div>
               <div>
                 <label className="flex justify-between text-sm font-bold text-slate-700 mb-2">
-                  <span>Avg Cost per HSE Incident Drop (AED)</span>
-                  <span className="text-indigo-600">AED {incidentCost.toLocaleString()}</span>
+                  <span>Avg Cost per HSE Incident Drop (OMR)</span>
+                  <span className="text-indigo-600">OMR {incidentCost.toLocaleString()}</span>
                 </label>
                 <input type="range" min="10000" max="500000" step="5000" value={incidentCost} onChange={e => setIncidentCost(Number(e.target.value))} className="w-full accent-indigo-600" />
               </div>
 
               <div className="mt-8 bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center">
                  <p className="text-emerald-800 font-bold text-sm uppercase tracking-wider">Estimated Annual Savings</p>
-                 <p className="text-4xl font-black text-emerald-600 mt-2">AED {roiSavings.toLocaleString()}</p>
+                 <p className="text-4xl font-black text-emerald-600 mt-2">OMR {roiSavings.toLocaleString()}</p>
                  <p className="text-xs text-emerald-600/70 mt-2">*Based on 40% reduction in admin tasks and avoiding 2 incidents annually.</p>
               </div>
            </div>
@@ -183,7 +183,7 @@ export const PricingGtmModule: React.FC = () => {
                    <div className="bg-slate-700 p-2 rounded-lg text-slate-300 group-hover:text-white"><FileText size={20} /></div>
                    <div className="text-left">
                       <div className="font-bold text-sm">Security & Compliance</div>
-                      <div className="text-xs text-slate-400 mt-1">SOC 2, ISO 27001, UAE PDPL</div>
+                      <div className="text-xs text-slate-400 mt-1">SOC 2, ISO 27001, Oman PDPL</div>
                    </div>
                  </div>
                  <Download size={20} className="text-slate-500 group-hover:text-indigo-400" />

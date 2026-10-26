@@ -340,7 +340,7 @@ export const EnterpriseGlobalHeader: React.FC<EnterpriseGlobalHeaderProps> = ({
             title="Switch Language / تبديل اللغة"
           >
             <Globe size={14} className="text-blue-600" />
-            <span className="font-dubai text-xs font-bold">{language === 'ar' ? 'English' : 'العربية'}</span>
+            <span className="font-Sohar text-xs font-bold">{language === 'ar' ? 'English' : 'العربية'}</span>
           </button>
 
           {/* AI Safety Copilot Trigger */}

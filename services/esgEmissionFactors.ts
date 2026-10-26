@@ -1,6 +1,6 @@
 // Regional GCC Emission Factors Library
 // Verified values according to:
-// - UAE: DEWA 2024 Sustainability Report, EWEC (Emirates Water & Electricity Co) 2024 Grid Factor, Empower / Tabreed District Cooling factors
+// - Oman: Nama Power 2024 Sustainability Report, Nama Power (Sultanate of Oman Water & Electricity Co) 2024 Grid Factor, Empower / Tabreed District Cooling factors
 // - Oman: Nama Power & Water Procurement (MIS & Dhofar grid factor), Oman Environment Authority Climate Affairs guidelines
 // - International: IPCC AR6 Sixth Assessment Report, UK DEFRA 2024 Conversion Factors
 
@@ -8,7 +8,7 @@ export interface RegionalEmissionFactor {
   id: string;
   sourceName: string;
   category: string;
-  jurisdiction: 'UAE' | 'OMAN' | 'GLOBAL';
+  jurisdiction: 'OMAN' | 'OMAN' | 'GLOBAL';
   factor: number; // in kg CO2e per unit
   unit: string;
   referenceSource: string;
@@ -24,7 +24,7 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     jurisdiction: 'GLOBAL',
     factor: 2.02, // kg CO2e / m3
     unit: 'm3',
-    referenceSource: 'IPCC AR6 / UAE MOCCAE Guidelines',
+    referenceSource: 'IPCC AR6 / Oman MOCCAE Guidelines',
     vintageYear: 2024
   },
   'DIESEL_GENERATOR_STATIONARY': {
@@ -34,7 +34,7 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     jurisdiction: 'GLOBAL',
     factor: 2.68, // kg CO2e / Litre
     unit: 'Litre',
-    referenceSource: 'DEFRA 2024 / ADNOC HSE Standards',
+    referenceSource: 'DEFRA 2024 / PDO HSE Standards',
     vintageYear: 2024
   },
   'HEAVY_FUEL_OIL_INDUSTRIAL': {
@@ -54,7 +54,7 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     jurisdiction: 'GLOBAL',
     factor: 2.85, // kg CO2e / m3 flared
     unit: 'm3',
-    referenceSource: 'Oman PDO / ADNOC Zero Routine Flaring by 2030 Standard',
+    referenceSource: 'Oman PDO / PDO Zero Routine Flaring by 2030 Standard',
     vintageYear: 2024
   },
 
@@ -102,32 +102,32 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     vintageYear: 2024
   },
 
-  // --- Scope 2: UAE Grid Electricity & District Cooling ---
-  'GRID_ELECTRICITY_DEWA_DUBAI': {
-    id: 'GRID_ELECTRICITY_DEWA_DUBAI',
-    sourceName: 'DEWA Grid Electricity (Dubai)',
+  // --- Scope 2: Oman Grid Electricity & District Cooling ---
+  'GRID_ELECTRICITY_Nama Power_Sohar': {
+    id: 'GRID_ELECTRICITY_Nama Power_Sohar',
+    sourceName: 'Nama Power Grid Electricity (Sohar)',
     category: 'Grid_Electricity',
-    jurisdiction: 'UAE',
+    jurisdiction: 'OMAN',
     factor: 0.416, // kg CO2e / kWh
     unit: 'kWh',
-    referenceSource: 'Dubai Electricity & Water Authority (DEWA) Sustainability Report 2024',
+    referenceSource: 'Sohar Electricity & Water Authority (Nama Power) Sustainability Report 2024',
     vintageYear: 2024
   },
-  'GRID_ELECTRICITY_EWEC_ABU_DHABI': {
-    id: 'GRID_ELECTRICITY_EWEC_ABU_DHABI',
-    sourceName: 'EWEC Grid Electricity (Abu Dhabi & Northern Emirates)',
+  'GRID_ELECTRICITY_Nama Power_ABU_DHABI': {
+    id: 'GRID_ELECTRICITY_Nama Power_ABU_DHABI',
+    sourceName: 'Nama Power Grid Electricity (Muscat & Northern Sultanate of Oman)',
     category: 'Grid_Electricity',
-    jurisdiction: 'UAE',
+    jurisdiction: 'OMAN',
     factor: 0.395, // kg CO2e / kWh (reflecting Barakah Nuclear + Al Dhafra Solar mix)
     unit: 'kWh',
-    referenceSource: 'Emirates Water and Electricity Company (EWEC) Clean Energy Grid Factor 2024',
+    referenceSource: 'Sultanate of Oman Water and Electricity Company (Nama Power) Clean Energy Grid Factor 2024',
     vintageYear: 2024
   },
   'DISTRICT_COOLING_EMPOWER_TABREED': {
     id: 'DISTRICT_COOLING_EMPOWER_TABREED',
-    sourceName: 'District Cooling Chilled Water (Empower / Tabreed UAE)',
+    sourceName: 'District Cooling Chilled Water (Empower / Tabreed Oman)',
     category: 'District_Cooling',
-    jurisdiction: 'UAE',
+    jurisdiction: 'OMAN',
     factor: 0.185, // kg CO2e / Ton-Hour of cooling
     unit: 'Ton-Hour',
     referenceSource: 'Tabreed & Empower Verified Environmental Factsheets 2024',
@@ -164,7 +164,7 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     jurisdiction: 'GLOBAL',
     factor: 0.58, // kg CO2e / kg
     unit: 'kg',
-    referenceSource: 'Tadweer (UAE) / Be\'ah (Oman) Landfill Emission Factors',
+    referenceSource: 'Beah (Oman) (Oman) / Be\'ah (Oman) Landfill Emission Factors',
     vintageYear: 2024
   },
   'WASTE_RECYCLED_CREDIT': {
@@ -184,7 +184,7 @@ export const REGIONAL_EMISSION_FACTORS: Record<string, RegionalEmissionFactor> =
     jurisdiction: 'GLOBAL',
     factor: 1.84, // kg CO2e / kg
     unit: 'kg',
-    referenceSource: 'Tadweer / Be\'ah Industrial Hazardous Waste Facility Benchmark',
+    referenceSource: 'Beah (Oman) / Be\'ah Industrial Hazardous Waste Facility Benchmark',
     vintageYear: 2024
   },
   'AIR_TRAVEL_REGIONAL_GCC': {

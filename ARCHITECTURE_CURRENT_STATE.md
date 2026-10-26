@@ -24,7 +24,7 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 6. `/routes/predictiveMaintenanceRouter.ts` — Industrial asset integrity and sensor telemetry validation (ISO 10816, API 670).
 7. `/contexts/UserContext.tsx` — Client-side user session, mock user registry, role privileges state, explicit demo mode initializer.
 8. `/contexts/LanguageContext.tsx` — English / Arabic bilingual state, RTL text direction binding.
-9. `/contexts/RegionalComplianceContext.tsx` — Multi-jurisdiction state (UAE, Oman, Combined), statutory framework switches.
+9. `/contexts/RegionalComplianceContext.tsx` — Multi-jurisdiction state (Oman, Oman, Combined), statutory framework switches.
 10. `/contexts/TenantContext.tsx` — Multi-tenant organization and multi-site concession switcher.
 11. `/services/authService.ts` — Authentication simulation, dummy JWT generator, explicit demo login, Firebase popup integration.
 12. `/lib/firebase.ts` — Firebase App, Auth, and Firestore client initialization.
@@ -34,7 +34,7 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 16. `/services/simopsService.ts` — Haversine spatial clash detection and simultaneous operations conflict engine.
 17. `/services/permissionService.ts` — RBAC engine, 18 UserRoles, 60+ granular permissions, navigation hierarchy builder.
 18. `/services/userProfileService.ts` — User profile retrieval, stats calculation, and persistence.
-19. `/services/regionalComplianceService.ts` — UAE / Oman statutory compliance rules engine and audit service.
+19. `/services/regionalComplianceService.ts` — Oman / Oman statutory compliance rules engine and audit service.
 20. `/services/esgDataStore.ts` & `/services/esgReportingService.ts` — GHG Protocol Scope 1-3 carbon accounting and environmental reporting.
 21. `/services/offlineStorage.ts` & `/services/syncEngine.ts` — IndexedDB caching, offline queue, background replay.
 22. `/services/audit.js` & `/services/auditLogger.ts` — Structured audit ledger ring-buffer and Google Cloud Logging adapter.
@@ -53,7 +53,7 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 35. `/test/health.test.mjs` — Health check payload and port resolution tests.
 36. `/test/auth_regression.test.mjs` — Unauthenticated session gating, zero admin fallback, and SoD tests.
 37. `/test/rbac_navigation.test.mjs` — Granular role-based navigation and permission unit tests.
-38. `/database/oshad_schema.sql` — Reference PostgreSQL schema with RLS policies and audit tables.
+38. `/database/omanMoL_schema.sql` — Reference PostgreSQL schema with RLS policies and audit tables.
 39. `/enterprise-architecture/01_Database_Schema_RLS.prisma` — Strategic Prisma ORM schema specification.
 40. `/enterprise-export/README.md` — Monorepo export and migration instructions.
 41. `/Dockerfile` — Multi-stage Node 22 Cloud Run container configuration.
@@ -97,8 +97,8 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 - **Lazy Module Loading (`/components/App.tsx` lines 12–50, 86–100):**
   - All heavy presentation views are loaded via `React.lazy()` inside a central `React.Suspense` wrapper (fallback: industrial skeleton loader).
 - **Verified Module List:**
-  1. *Dashboard & KPIs:* `/components/Dashboard.tsx`, `/components/ComplianceDashboard.tsx`, `/components/system/ExecutiveDashboard.tsx`, `/components/AdnocOshadDashboard.tsx`.
-  2. *Incidents & Investigations:* `/components/IncidentForm.tsx` (captures 5-Whys, Fishbone, SIF precursor analysis, UAE Form G, Oman 24h Notice).
+  1. *Dashboard & KPIs:* `/components/Dashboard.tsx`, `/components/ComplianceDashboard.tsx`, `/components/system/ExecutiveDashboard.tsx`, `/components/pdoomanMoLDashboard.tsx`.
+  2. *Incidents & Investigations:* `/components/IncidentForm.tsx` (captures 5-Whys, Fishbone, SIF precursor analysis, Oman Form G, Oman 24h Notice).
   3. *Control of Work & PTW:* `/components/controlOfWork/ControlOfWorkModule.tsx` (Level 1/2/3 permits, SIMOPS conflict matrix, electronic LOTO, AGT gas testing).
   4. *Corrective Actions (CAPA):* `/components/CAPAModule.tsx` (SMART action register, SLA countdown, evidence uploads, SoD enforcement).
   5. *Audits & Inspections:* `/components/AuditModule.tsx`, `/components/InspectionModule.tsx`, `/components/pwa/MobileInspectionApp.tsx`.
@@ -136,10 +136,10 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 | `GET` | `/api/audit/trail` | `/server.ts` | Returns recent 50 audit entries |
 | `POST` | `/api/auth/verify-access` | `/server.ts` | Server-side authorization check against user roles & permissions |
 | `GET` | `/api/auth/role-permissions/:role` | `/server.ts` | Returns permission list for a specific role |
-| `GET` | `/api/admin/regional-compliance` | `/server.ts` | Fetches active regional mode (UAE / OMAN / COMBINED) and audit log |
+| `GET` | `/api/admin/regional-compliance` | `/server.ts` | Fetches active regional mode (Oman / OMAN / COMBINED) and audit log |
 | `POST` | `/api/admin/regional-compliance` | `/server.ts` | Updates regional mode with strict ADMIN role requirement |
 | `POST` | `/api/cron/reminder` | `/server.ts` | Cloud Scheduler webhook for permit expiry and compliance alerts |
-| `GET` | `/api/oshad/risk/:riskId` | `/server.ts` | Simulated OSHAD-SF v3.1 risk classification connector |
+| `GET` | `/api/omanMoL/risk/:riskId` | `/server.ts` | Simulated Oman MoL MD 286/2008 & PDO Specifications risk classification connector |
 | `GET` | `/api/oman/regulatory/status/:siteId` | `/server.ts` | Simulated Oman MoL & PDO SP-1143 compliance connector |
 
 ---
@@ -184,7 +184,7 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
    - Initialized with project ID `gen-lang-client-0550864622` and database `ai-studio-5b5a1037-02f3-432b-9dda-3ffca9f637f0`.
 
 ### Unverified / Strategic Blueprints
-- **PostgreSQL Database (`/database/oshad_schema.sql`):** 123 lines of reference DDL containing tables for tenants, users, mechanisms, requirements, workflow tasks, and audit logs with RLS policies. Not actively connected to a live database driver in the current Vite/Express prototype sandbox.
+- **PostgreSQL Database (`/database/omanMoL_schema.sql`):** 123 lines of reference DDL containing tables for tenants, users, mechanisms, requirements, workflow tasks, and audit logs with RLS policies. Not actively connected to a live database driver in the current Vite/Express prototype sandbox.
 - **Prisma Schema (`/enterprise-architecture/01_Database_Schema_RLS.prisma`):** Comprehensive enterprise relational schema specified for Phase 1 enterprise monorepo migration.
 
 ---
@@ -214,8 +214,8 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
 | `PORT` | Optional | `3000` (dev) / `8080` (prod Cloud Run) | `/server.ts` lines 21–53 |
 | `GEMINI_API_KEY` | **Required for AI** | Gemini API key for server routes | `/routes/geminiRouter.ts` line 8 |
 | `ENABLE_CLOUD_LOGGING` | Optional | `false` (defaults to local memory ledger) | `/services/audit.js` line 2 |
-| `OSHAD_API_TOKEN` | Optional | Token for UAE statutory connector | `/.env.example` line 21 |
-| `ADNOC_SAFETY_TOKEN` | Optional | Token for ADNOC CoP connector | `/.env.example` line 22 |
+| `Oman MoL_API_TOKEN` | Optional | Token for Oman statutory connector | `/.env.example` line 21 |
+| `PDO_SAFETY_TOKEN` | Optional | Token for PDO SP-1143 connector | `/.env.example` line 22 |
 | `VITE_FIREBASE_API_KEY` | Optional | Client Firebase API key override | `/lib/firebase.ts` line 9 |
 | `VITE_FIREBASE_PROJECT_ID` | Optional | Client Firebase Project ID override | `/lib/firebase.ts` line 11 |
 
@@ -239,7 +239,7 @@ This document details the exact, verified technical reality of the **AD6.Ai Smar
   - `GULF_ENERGY_TENANT`: Enterprise holding entity "Gulf Energy & Infrastructure Group" (GCC-GEIG-01).
   - `GULF_ENERGY_SITES`:
     1. *Fahud-West Gas Station (Oman)* — OMN-FHD-02, Block 6 PDO concession.
-    2. *Al-Ruwais Polyolefin Asset (UAE)* — UAE-RUW-03, Abu Dhabi industrial complex.
+    2. *Al-Mina Al Fahal Polyolefin Asset (Oman)* — OMN-MAF-01, Muscat industrial complex.
     3. *Ras Al-Khair Maritime Yard (KSA)* — KSA-RAK-01.
   - `GULF_ENERGY_USERS`: 12 personas representing frontline workers, supervisors, officers, managers, and executives.
   - `GULF_ENERGY_INCIDENTS`, `GULF_ENERGY_PERMITS`, `GULF_ENERGY_CAPAS`: Seed records with real GCC coordinates and statutory citations.

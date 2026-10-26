@@ -1,5 +1,5 @@
 // Client-Side and Server-Sync Validation Service for Predictive Maintenance
-// Codifies ISO 10816-3 (Mechanical Vibration), API 670 (Machinery Protection), and OSHAD-SF CoP 14.0 (LOTO)
+// Codifies ISO 10816-3 (Mechanical Vibration), API 670 (Machinery Protection), and Oman MoL MD 286/2008 & PDO Specifications CoP 14.0 (LOTO)
 
 export interface FieldValidationState {
   isValid: boolean;
@@ -414,8 +414,8 @@ export class PredictiveMaintenanceValidationService {
     // 5. LOTO Check
     const isCriticalAsset = equipment?.status === 'Critical' || (equipment?.sensors?.temperature > 85) || (equipment?.sensors?.vibration > 7.0);
     if (isCriticalAsset && !values.lotoRequired) {
-      errors.lotoRequired = 'MANDATORY HSE REQUIREMENT: Critical asset intervention requires Lockout/Tagout (LOTO) energy isolation (OSHA 1910.147 / OSHAD CoP 14.0).';
-      fieldStates.lotoRequired = { isValid: false, message: errors.lotoRequired, type: 'error', standardRef: 'OSHAD CoP 14.0' };
+      errors.lotoRequired = 'MANDATORY HSE REQUIREMENT: Critical asset intervention requires Lockout/Tagout (LOTO) energy isolation (OSHA 1910.147 / PDO SP-1231.0).';
+      fieldStates.lotoRequired = { isValid: false, message: errors.lotoRequired, type: 'error', standardRef: 'PDO SP-1231.0' };
     } else {
       fieldStates.lotoRequired = { isValid: true };
     }

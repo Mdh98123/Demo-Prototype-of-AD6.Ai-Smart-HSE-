@@ -52,10 +52,10 @@ export class PDPLCompliance {
 
 // Data Residency Toggle
 export class DataResidency {
-  static setRegion(region: 'UAE' | 'GLOBAL') {
+  static setRegion(region: 'OMAN' | 'GLOBAL') {
     localStorage.setItem('data_residency_region', region);
   }
   static getRegion(): string {
-    return localStorage.getItem('data_residency_region') || 'UAE';
+    return localStorage.getItem('data_residency_region') || 'OMAN';
   }
 }

@@ -122,7 +122,7 @@ export const PERMISSIONS = {
   SYSTEM_LOGS_VIEW: 'system_logs:view',
   DESIGN_SYSTEM_VIEW: 'design_system:view',
   PRICING_GTM_VIEW: 'pricing_gtm:view',
-  ADNOC_OSHAD_VIEW: 'adnoc_oshad:view',
+  PDO_MOL_WORKFLOW_VIEW: 'pdo_mol_workflow:view',
   COMPLIANCE_ASSISTANT_VIEW: 'compliance_assistant:view',
 
   // Full administrative bypass
@@ -178,7 +178,7 @@ export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
     PERMISSIONS.IAM_VIEW, PERMISSIONS.IAM_MANAGE,
     PERMISSIONS.INTEGRATIONS_VIEW, PERMISSIONS.INTEGRATIONS_MANAGE,
     PERMISSIONS.SYSTEM_LOGS_VIEW, PERMISSIONS.DESIGN_SYSTEM_VIEW,
-    PERMISSIONS.PRICING_GTM_VIEW, PERMISSIONS.ADNOC_OSHAD_VIEW,
+    PERMISSIONS.PRICING_GTM_VIEW, PERMISSIONS.PDO_MOL_WORKFLOW_VIEW,
     PERMISSIONS.COMPLIANCE_ASSISTANT_VIEW
   ],
 
@@ -263,7 +263,7 @@ export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
     PERMISSIONS.LESSONS_LEARNED_VIEW,
     PERMISSIONS.LESSONS_LEARNED_MANAGE,
     PERMISSIONS.COMPLIANCE_ASSISTANT_VIEW,
-    PERMISSIONS.ADNOC_OSHAD_VIEW
+    PERMISSIONS.PDO_MOL_WORKFLOW_VIEW
   ],
 
   // 5. Regional HSE Director
@@ -297,7 +297,7 @@ export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
     PERMISSIONS.CONNECTED_WORKER_VIEW,
     PERMISSIONS.LESSONS_LEARNED_VIEW,
     PERMISSIONS.COMPLIANCE_ASSISTANT_VIEW,
-    PERMISSIONS.ADNOC_OSHAD_VIEW
+    PERMISSIONS.PDO_MOL_WORKFLOW_VIEW
   ],
 
   // 6. Site HSE Manager
@@ -355,7 +355,7 @@ export const ROLE_PERMISSIONS_MAP: Record<UserRole, Permission[]> = {
     PERMISSIONS.LESSONS_LEARNED_VIEW,
     PERMISSIONS.LESSONS_LEARNED_MANAGE,
     PERMISSIONS.COMPLIANCE_ASSISTANT_VIEW,
-    PERMISSIONS.ADNOC_OSHAD_VIEW
+    PERMISSIONS.PDO_MOL_WORKFLOW_VIEW
   ],
 
   // 7. Field HSE Officer
@@ -833,7 +833,7 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
       },
       {
         id: 'nav-simops-clash',
-        view: View.ADNOC_OSHAD,
+        view: View.PDO_MOL_WORKFLOW,
         icon: Flame,
         labelKey: 'SIMOPS De-Confliction',
         subtitle: 'Simultaneous operations matrix & hazardous boundary clearance',
@@ -908,7 +908,7 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
     view: View.SAFETY_AUDIT,
     icon: ShieldCheck,
     labelKey: 'Audits & Field Checks',
-    subtitle: 'ISO 45001, OSHAD-SF & corporate compliance scoring',
+    subtitle: 'ISO 45001, Oman MoL MD 286/2008 & PDO Specifications & corporate compliance scoring',
     sectionId: 'hse-monitor',
     sectionTitle: 'Monitor: Audits & Surveillance',
     sectionSubtitle: 'Statutory audits, routine inspections, PWA & computer vision',
@@ -1036,7 +1036,7 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
     view: View.ESG,
     icon: Globe,
     labelKey: 'ESG & Carbon Accounting',
-    subtitle: 'ADX, DFM & MSX Scope 1, 2, 3 carbon accounting & Net Zero',
+    subtitle: 'MSX, MSX & MSX Scope 1, 2, 3 carbon accounting & Net Zero',
     sectionId: 'hse-report-learn',
     sectionTitle: 'Report & Learn: Actions & BI',
     requiredPermissions: [PERMISSIONS.ESG_VIEW],
@@ -1051,7 +1051,7 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
     view: View.COMPLY_FLOW,
     icon: Scale,
     labelKey: 'Statutory Compliance Register',
-    subtitle: 'UAE Federal Law, OSHAD-SF & Oman MD 286 statutory tracker',
+    subtitle: 'Oman Royal Decrees & Labour Law, Oman MoL MD 286/2008 & PDO Specifications & Oman MD 286 statutory tracker',
     sectionId: 'enterprise-admin',
     sectionTitle: 'Enterprise Governance & System',
     sectionSubtitle: 'Statutory compliance, IAM, security audit logs & settings',
@@ -1215,7 +1215,7 @@ export const VIEW_PERMISSION_REQUIREMENTS: Partial<Record<View, Permission[]>> =
   [View.PERMIT_TO_WORK]: [PERMISSIONS.PTW_VIEW, PERMISSIONS.PTW_CREATE, PERMISSIONS.PTW_APPROVE],
   [View.PERMITS]: [PERMISSIONS.PTW_VIEW, PERMISSIONS.PTW_CREATE, PERMISSIONS.PTW_APPROVE],
   [View.LOTO]: [PERMISSIONS.LOTO_VIEW],
-  [View.ADNOC_OSHAD]: [PERMISSIONS.SIMOPS_VIEW, PERMISSIONS.ADNOC_OSHAD_VIEW],
+  [View.PDO_MOL_WORKFLOW]: [PERMISSIONS.SIMOPS_VIEW, PERMISSIONS.PDO_MOL_WORKFLOW_VIEW],
   [View.LIFTING]: [PERMISSIONS.LIFTING_VIEW],
   [View.EXCAVATION]: [PERMISSIONS.EXCAVATION_VIEW],
   [View.RAMS]: [PERMISSIONS.RAMS_VIEW],

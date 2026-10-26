@@ -20,7 +20,7 @@ export const ExecutiveDashboard: React.FC = () => {
   const { currentTenant, currentSite } = useTenant();
 
   // Filters & State
-  const [selectedAssetFilter, setSelectedAssetFilter] = useState<'ALL' | 'OMAN' | 'UAE' | 'KSA'>('ALL');
+  const [selectedAssetFilter, setSelectedAssetFilter] = useState<'ALL' | 'OMAN' | 'KSA'>('ALL');
   const [selectedPeriod, setSelectedPeriod] = useState<'12M' | 'YTD' | 'Q3_Q4'>('12M');
   const [exposureBasis, setExposureBasis] = useState<'1M' | '200K'>('1M'); // Configurable exposure basis: 1,000,000 hrs (PDO/OQ standard) vs 200,000 hrs (OSHA)
   const [isAiBriefingOpen, setIsAiBriefingOpen] = useState(false);
@@ -52,11 +52,8 @@ export const ExecutiveDashboard: React.FC = () => {
     let filtered = incidents;
     let hours = 2450000;
     if (selectedAssetFilter === 'OMAN') {
-      filtered = incidents.filter(i => (i.location && i.location.includes('Oman')) || i.jurisdiction === 'Oman');
-      hours = 850000;
-    } else if (selectedAssetFilter === 'UAE') {
-      filtered = incidents.filter(i => (i.location && (i.location.includes('UAE') || i.location.includes('Ruwais'))) || i.jurisdiction === 'Abu Dhabi');
-      hours = 1120000;
+      filtered = incidents.filter(i => (i.location && (i.location.includes('Oman') || i.location.includes('Mina Al Fahal') || i.location.includes('Muscat'))) || i.jurisdiction === 'Oman');
+      hours = 1970000;
     } else if (selectedAssetFilter === 'KSA') {
       filtered = incidents.filter(i => (i.location && (i.location.includes('KSA') || i.location.includes('Khair'))) || i.jurisdiction === 'KSA');
       hours = 480000;
@@ -134,7 +131,7 @@ export const ExecutiveDashboard: React.FC = () => {
     { month: 'Oct 26', rate: 94.6, target: 90.0, open: 15, closedOnTime: 14 },
   ], []);
 
-  // Multi-Country Compliance Scorecard (Oman, UAE, KSA as specified in Task 3)
+  // Multi-Country Compliance Scorecard (Oman, Oman, KSA as specified in Task 3)
   const countryScorecard = useMemo(() => [
     {
       id: 'om-01',
@@ -154,10 +151,10 @@ export const ExecutiveDashboard: React.FC = () => {
     },
     {
       id: 'ae-01',
-      country: 'United Arab Emirates',
-      asset: 'Al-Ruwais Polyolefin Asset',
-      operator: 'Abu Dhabi Industrial Complex (ADNOC Onshore Alignment)',
-      statutoryCode: 'Abu Dhabi OSHAD-SF Mechanism 11.0 / Al-Adaa alignment',
+      country: 'United Arab Sultanate of Oman',
+      asset: 'Mina Al Fahal Refinery Asset',
+      operator: 'Muscat Industrial Complex (PDO Onshore Alignment)',
+      statutoryCode: 'Oman MoL MD 286/2008 & PDO PR-1172 / Al-Adaa alignment',
       auditScore: 99.1,
       status: 'Compliant',
       safeHours: '1,120,000 hrs',
@@ -190,9 +187,7 @@ export const ExecutiveDashboard: React.FC = () => {
   const filteredScorecard = useMemo(() => {
     let list = countryScorecard;
     if (selectedAssetFilter === 'OMAN') {
-      list = list.filter(s => s.country.includes('Oman'));
-    } else if (selectedAssetFilter === 'UAE') {
-      list = list.filter(s => s.country.includes('Emirates'));
+      list = list.filter(s => s.country.includes('Oman') || s.country.includes('Sultanate'));
     } else if (selectedAssetFilter === 'KSA') {
       list = list.filter(s => s.country.includes('Saudi'));
     }
@@ -238,7 +233,7 @@ export const ExecutiveDashboard: React.FC = () => {
             </span>
           </h1>
           <p className="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
-            Consolidated lagging and leading safety indicators, statutory audit readiness scorecards, and CAPA closure SLAs across Oman, UAE, and KSA industrial operating concessions.
+            Consolidated lagging and leading safety indicators, statutory audit readiness scorecards, and CAPA closure SLAs across Oman, Oman, and KSA industrial operating concessions.
           </p>
         </div>
 
@@ -504,7 +499,6 @@ export const ExecutiveDashboard: React.FC = () => {
           {[
             { id: 'ALL', label: 'All Territories' },
             { id: 'OMAN', label: 'Sultanate of Oman' },
-            { id: 'UAE', label: 'United Arab Emirates' },
             { id: 'KSA', label: 'Kingdom of Saudi Arabia' }
           ].map(tab => (
             <button
@@ -761,7 +755,7 @@ export const ExecutiveDashboard: React.FC = () => {
 
       </div>
 
-      {/* 6. Multi-Country Compliance Scorecard (Oman, UAE, KSA as specified in Task 3) */}
+      {/* 6. Multi-Country Compliance Scorecard (Oman, Oman, KSA as specified in Task 3) */}
       <div className="p-6 bg-white/80 backdrop-blur-md backdrop-saturate-150 rounded-3xl border border-slate-200/70 shadow-sm shadow-slate-200/50 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
@@ -770,7 +764,7 @@ export const ExecutiveDashboard: React.FC = () => {
               Multi-Country Statutory Compliance Scorecard
             </h3>
             <p className="text-xs text-slate-600 mt-0.5">
-              Audited regulatory readiness comparing Oman Ministry of Labour, Abu Dhabi OSHAD-SF / Al-Adaa, and Saudi MHRSD / NCOSH
+              Audited regulatory readiness comparing Oman Ministry of Labour, Oman MoL MD 286/2008 & PDO SP-1143 / Al-Adaa, and Saudi MHRSD / NCOSH
             </p>
           </div>
 
@@ -838,7 +832,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center shrink-0 font-bold text-xs">
-                          {item.country.includes('Oman') ? 'OM' : item.country.includes('Emirates') ? 'AE' : 'SA'}
+                          {item.country.includes('Oman') ? 'OM' : item.country.includes('Sultanate of Oman') ? 'AE' : 'SA'}
                         </div>
                         <div>
                           <span className="block font-bold text-slate-900">{item.country}</span>
@@ -928,7 +922,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     TRIR = (Total Recordable Incidents × {exposureBasis === '1M' ? '1,000,000' : '200,000'}) / Total Safe Exposure Hours
                   </div>
                   <p className="leading-relaxed text-slate-600">
-                    Calculated in accordance with OSHA 1904 and ADNOC Code of Practice using the active {exposureBasis === '1M' ? '1M-hour GCC' : '200k-hour OSHA'} basis.
+                    Calculated in accordance with OSHA 1904 and PDO HSE Code of Practice (SP-1143) using the active {exposureBasis === '1M' ? '1M-hour GCC' : '200k-hour OSHA'} basis.
                   </p>
                   <div className="p-2.5 bg-blue-50/60 rounded-lg text-blue-800 text-[11px] font-medium">
                     Current Period: ({recordableCount} Recordables × {exposureBasis === '1M' ? '1,000,000' : '200,000'}) / {currentExposureHours.toLocaleString()} = <strong>{currentTrir}</strong>
@@ -942,7 +936,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     LTIFR = (Lost Time Injuries × {exposureBasis === '1M' ? '1,000,000' : '200,000'}) / Total Safe Exposure Hours
                   </div>
                   <p className="leading-relaxed text-slate-600">
-                    Standard normalized frequency rate per {exposureBasis === '1M' ? 'million' : '200k'} hours worked under OSHAD-SF Mechanism 11.0 and PDO SP-1230 standards.
+                    Standard normalized frequency rate per {exposureBasis === '1M' ? 'million' : '200k'} hours worked under Oman MoL MD 286/2008 & PDO PR-1172 and PDO SP-1230 standards.
                   </p>
                   <div className="p-2.5 bg-amber-50/60 rounded-lg text-amber-900 text-[11px] font-medium">
                     Current Period: ({ltiCount} LTI × {exposureBasis === '1M' ? '1,000,000' : '200,000'}) / {currentExposureHours.toLocaleString()} = <strong>{currentLtifr}</strong>
@@ -970,7 +964,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     Safe Hours = ∑(Shift Badged Clock-in × Concession Operational Factor)
                   </div>
                   <p className="leading-relaxed text-slate-600">
-                    Aggregated in real-time from IoT access control turnstiles across Fahud-West, Al-Ruwais, and Ras Al-Khair facilities.
+                    Aggregated in real-time from IoT access control turnstiles across Fahud-West, Mina Al Fahal, and Ras Al-Khair facilities.
                   </p>
                   <div className="p-2.5 bg-emerald-50/60 rounded-lg text-emerald-900 text-[11px] font-medium">
                     Cumulative: <strong>2,450,000 Safe Hours</strong> with 412 consecutive zero-fatality days.
@@ -1022,7 +1016,7 @@ export const ExecutiveDashboard: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span> 1. Executive Summary
                 </h4>
                 <p className="text-slate-700 leading-relaxed">
-                  Overall enterprise safety performance remains strong with a <strong>TRIR of 0.24</strong> (14% YoY reduction) and <strong>2,450,000 safe man-hours</strong> accrued. Audit readiness index across Oman (98.4%), UAE (99.1%), and KSA (97.8%) concessions averages <strong>98.4%</strong>. The single LTI in Oman has been contained with immediate statutory Ministry of Labour notification submitted within the 24-hour mandatory window.
+                  Overall enterprise safety performance remains strong with a <strong>TRIR of 0.24</strong> (14% YoY reduction) and <strong>2,450,000 safe man-hours</strong> accrued. Audit readiness index across Oman (98.4%), Oman (99.1%), and KSA (97.8%) concessions averages <strong>98.4%</strong>. The single LTI in Oman has been contained with immediate statutory Ministry of Labour notification submitted within the 24-hour mandatory window.
                 </p>
               </div>
 
@@ -1032,7 +1026,7 @@ export const ExecutiveDashboard: React.FC = () => {
                 </h4>
                 <ul className="space-y-1.5 text-slate-700 list-disc list-inside">
                   <li><strong>Fahud-West (Oman):</strong> Ruptured flexible hydraulic line (3,200 PSI); secondary whip-check restraint verified; statutory Form G completed.</li>
-                  <li><strong>Al-Ruwais (UAE):</strong> Proactive H2S near-miss detection during confined space purge; Al-Adaa digital synchronization achieved 99.1%.</li>
+                  <li><strong>Mina Al Fahal (Oman):</strong> Proactive H2S near-miss detection during confined space purge; Al-Adaa digital synchronization achieved 99.1%.</li>
                   <li><strong>Ras Al-Khair (KSA):</strong> Heavy lift crane outrigger 45mm soil settlement stopped safely prior to load pick; NCOSH summer heat ban logs verified 97.8%.</li>
                 </ul>
               </div>
@@ -1057,7 +1051,7 @@ export const ExecutiveDashboard: React.FC = () => {
                   </div>
                   <div className="flex items-start gap-2 text-slate-700">
                     <strong className="text-slate-900 shrink-0">• Action 2:</strong>
-                    <span>Enforce dual P&ID line tracing walkdown before sign-off on LOTO positive isolations in UAE (Owner: Eng. Mansoor, Due: Oct 12).</span>
+                    <span>Enforce dual P&ID line tracing walkdown before sign-off on LOTO positive isolations in Oman (Owner: Eng. Mansoor, Due: Oct 12).</span>
                   </div>
                   <div className="flex items-start gap-2 text-slate-700">
                     <strong className="text-slate-900 shrink-0">• Action 3:</strong>

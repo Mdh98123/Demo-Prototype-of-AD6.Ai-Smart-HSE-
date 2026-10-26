@@ -5,8 +5,8 @@ export const MOCK_AUDIT_TEMPLATES: AuditTemplate[] = [
         id: 'TPL-001',
         name: 'General Facility & PPE Safety Audit',
         type: 'General',
-        description: 'Comprehensive multi-site general safety inspection aligned with OSHAD-SF v4.0',
-        frameworks: ['OSHAD-SF', 'UAE Labour Law', 'ISO 45001'],
+        description: 'Comprehensive multi-site general safety inspection aligned with Oman MoL MD 286/2008 & PDO Specifications v4.0',
+        frameworks: ['Oman MoL MD 286/2008 & PDO Specifications', 'Oman Labour Law', 'ISO 45001'],
         sections: [
             {
                 id: 'S-001',
@@ -30,7 +30,7 @@ export const MOCK_AUDIT_TEMPLATES: AuditTemplate[] = [
         name: 'Heavy Construction & Critical Lifting Audit',
         type: 'Construction',
         description: 'Structural installation, scaffolding, and lifting operations verification',
-        frameworks: ['ADNOC HSE', 'OSHAD-SF', 'LEEA Standards'],
+        frameworks: ['PDO HSE', 'Oman MoL MD 286/2008 & PDO Specifications', 'LEEA Standards'],
         sections: [
             {
                 id: 'S-003',
@@ -75,7 +75,7 @@ export const MOCK_AUDITORS: AuditorProfile[] = [
     {
         id: 'A-002',
         name: 'Ahmed Al-Mansoori',
-        certifications: ['NEBOSH Oil & Gas', 'OSHAD Practitioner Grade A'],
+        certifications: ['NEBOSH Oil & Gas', 'Oman MoL MD 286/2008 Practitioner Grade A'],
         experienceYears: 14,
         department: 'Operations HSE',
         assignedAudits: 11,
@@ -99,7 +99,7 @@ export const MOCK_AUDITS: SafetyAudit[] = [
         id: 'SA-2024-001',
         templateId: 'TPL-001',
         title: 'Weekly Polyolefin Sector 4 General Safety Audit',
-        location: 'Ruwais Industrial Complex',
+        location: 'Mina Al Fahal Industrial Complex',
         department: 'Operations',
         auditorId: 'A-001',
         auditorName: 'Sarah Jones',
@@ -133,15 +133,15 @@ export const MOCK_AUDITS: SafetyAudit[] = [
                     rootCause: 'Turnstile PPE visual verification did not mandate strap fastening check.',
                     preventiveAction: 'Deploy AI CCTV gate monitor with mandatory chin-strap detection.'
                 },
-                regulationRef: 'OSHAD-SF CoP 2.0 PPE Clause 4.2'
+                regulationRef: 'Oman MoL MD 286/2008 & PDO Specifications CoP 2.0 PPE Clause 4.2'
             }
         ]
     },
     {
         id: 'SA-2024-002',
         templateId: 'TPL-002',
-        title: 'Habshan Sulfur Recovery Flare Modernization Audit',
-        location: 'Habshan Gas Complex',
+        title: 'Khazzan Gas Asset Sulfur Recovery Flare Modernization Audit',
+        location: 'Khazzan Tight Gas Complex Block 61',
         department: 'Construction',
         contractor: 'Gulf Technical Services',
         auditorId: 'A-002',
@@ -170,7 +170,7 @@ export const MOCK_AUDITS: SafetyAudit[] = [
                     targetDate: '2026-04-16',
                     status: 'Pending'
                 },
-                regulationRef: 'BS EN 12811 / ADNOC HSE CoP'
+                regulationRef: 'BS EN 12811 / PDO HSE CoP'
             }
         ]
     },
@@ -212,7 +212,7 @@ export const MOCK_AUDITS: SafetyAudit[] = [
                     rootCause: 'Surge container cargo lacked designated overflow buffer zone.',
                     preventiveAction: 'Establish dedicated buffer staging yard B with clear demarcation lines.'
                 },
-                regulationRef: 'UAE Civil Defence Fire & Life Safety Code'
+                regulationRef: 'Civil Defence and Ambulance Authority (CDAA Oman) Fire & Life Safety Code'
             }
         ]
     },
@@ -268,8 +268,8 @@ export const MOCK_AUDITS: SafetyAudit[] = [
     {
         id: 'SA-2024-006',
         templateId: 'TPL-001',
-        title: 'Jebel Ali Logistics Distribution Center Forklift Safety Audit',
-        location: 'Jebel Ali Logistics Hub',
+        title: 'Duqm Industrial Port Logistics Distribution Center Forklift Safety Audit',
+        location: 'Duqm Industrial Port Logistics Hub',
         department: 'Warehousing',
         auditorId: 'A-001',
         auditorName: 'Sarah Jones',
@@ -347,7 +347,7 @@ export const MOCK_AUDITS: SafetyAudit[] = [
                     targetDate: '2026-04-01',
                     status: 'Verified'
                 },
-                regulationRef: 'Kyoto Protocol / UAE Climate Neutrality 2050 Framework'
+                regulationRef: 'Kyoto Protocol / Oman Climate Neutrality 2050 Framework'
             }
         ]
     },
@@ -383,7 +383,7 @@ export const MOCK_AUDITS: SafetyAudit[] = [
                     targetDate: '2026-03-28',
                     status: 'Verified'
                 },
-                regulationRef: 'OSHAD-SF CoP 3.0 Occupational Noise'
+                regulationRef: 'Oman MoL MD 286/2008 & PDO Specifications CoP 3.0 Occupational Noise'
             }
         ]
     },

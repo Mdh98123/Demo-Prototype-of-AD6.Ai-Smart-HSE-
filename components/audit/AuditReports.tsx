@@ -13,10 +13,10 @@ export const AuditReports: React.FC<Props> = ({ audits }) => {
     
     // Mock mappings to regulations
     const regulatoryMappings = [
-        { reg: 'OSHAD SF v3.1', area: 'Working at Heights', complianceScore: 85, findings: 3, status: 'Needs Review' },
-        { reg: 'ADNOC HSE Standard', area: 'Permit to Work', complianceScore: 92, findings: 1, status: 'Compliant' },
+        { reg: 'Oman MoL MD 286/2008 v3.1', area: 'Working at Heights', complianceScore: 85, findings: 3, status: 'Needs Review' },
+        { reg: 'PDO HSE Standard', area: 'Permit to Work', complianceScore: 92, findings: 1, status: 'Compliant' },
         { reg: 'ISO 45001', area: 'Hazard Identification', complianceScore: 78, findings: 5, status: 'At Risk' },
-        { reg: 'OSHAD CoP 53', area: 'Contractor Management', complianceScore: 88, findings: 2, status: 'Compliant' },
+        { reg: 'PDO SP-1143 53', area: 'Contractor Management', complianceScore: 88, findings: 2, status: 'Compliant' },
     ];
 
     const generateReport = (format: 'PDF' | 'EXCEL') => {

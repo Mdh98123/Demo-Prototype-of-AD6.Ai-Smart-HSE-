@@ -48,7 +48,7 @@ graph LR
 ## 3. Tool Catalog & Schemas
 
 ### Tool 1: `query_concession_incidents`
-- **Purpose:** Search historical incidents across Oman, UAE, and KSA concessions with severity and date range filters.
+- **Purpose:** Search historical incidents across Oman and GCC concessions with severity and date range filters.
 - **Access Level:** Read-Only (`SCOPE_READ_INCIDENTS`).
 - **Input Schema:**
 ```json
@@ -58,7 +58,7 @@ graph LR
   "properties": {
     "jurisdiction": {
       "type": "string",
-      "enum": ["UAE", "Oman", "KSA", "All"]
+      "enum": ["Oman", "GCC", "KSA", "All"]
     },
     "severity": {
       "type": "string",
@@ -133,7 +133,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: {
           type: "object",
           properties: {
-            jurisdiction: { type: "string", enum: ["UAE", "Oman", "KSA", "All"] },
+            jurisdiction: { type: "string", enum: ["Oman", "GCC", "KSA", "All"] },
             severity: { type: "string", enum: ["Low", "Medium", "High", "Critical"] },
           },
           required: ["jurisdiction"],

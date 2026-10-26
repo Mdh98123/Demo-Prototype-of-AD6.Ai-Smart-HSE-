@@ -1,6 +1,6 @@
 export class ReportEngine {
   static generateExecutiveReport(period: string) {
-    const reportSummary = `Executive HSE Performance Report: ${period}\n\n1. Highlights:\n- Incident rates decreased by 12% overall.\n- 95% of active contractors meet UAE ICV metrics.\n\n2. Key Risks:\n- High temperatures triggering heat stress protocols in Fujairah.\n- OSHAD Audit compliance for Zone C is currently tracking yellow (82%).`;
+    const reportSummary = `Executive HSE Performance Report: ${period}\n\n1. Highlights:\n- Incident rates decreased by 12% overall.\n- 95% of active contractors meet Oman ICV metrics.\n\n2. Key Risks:\n- High temperatures triggering heat stress protocols in Fujairah.\n- Oman MoL MD 286/2008 Audit compliance for Zone C is currently tracking yellow (82%).`;
 
     const blob = new Blob([reportSummary], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);

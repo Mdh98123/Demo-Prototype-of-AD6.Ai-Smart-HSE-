@@ -259,7 +259,7 @@ export const AICopilotDrawer: React.FC<AICopilotDrawerProps> = ({
         image: currentImg || undefined
       });
 
-      // Default UAE Coordinates if browser geolocation is unavailable
+      // Default Oman Coordinates if browser geolocation is unavailable
       const userLatLng = isOmanMode 
         ? { latitude: 22.3167, longitude: 56.4833 }
         : { latitude: 24.1107, longitude: 52.7306 };
@@ -531,7 +531,7 @@ export const AICopilotDrawer: React.FC<AICopilotDrawerProps> = ({
                     <Sparkles size={11} className="text-amber-400 shrink-0" />
                     <span>AI-Generated Safety Intelligence</span>
                     <span className="text-slate-500 font-mono">· {msg.modelUsed || 'gemini-3.5-flash'}</span>
-                    <span className="text-emerald-400 font-medium">· OSHAD Verified</span>
+                    <span className="text-emerald-400 font-medium">· Oman MoL MD 286/2008 Verified</span>
                   </div>
                 )}
                 {msg.text}
@@ -592,7 +592,7 @@ export const AICopilotDrawer: React.FC<AICopilotDrawerProps> = ({
                       5-Why Causal Tree Draft
                     </span>
                     <span className="text-[10px] text-slate-400 font-mono">
-                      Ref: PDO PR-1172 / ADNOC V4-01
+                      Ref: PDO PR-1172 / PDO V4-01
                     </span>
                   </div>
 

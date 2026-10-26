@@ -30,7 +30,7 @@
 
 ### 1.4 Client-Side Evidence Generation (`jsPDF 2.5.1` & `XLSX 0.18.5`)
 - **Status:** **Implemented & Verified**
-- **Purpose:** Instant client-side compilation of Abu Dhabi OSHAD Form G statutory reporting packets, Oman MoL notices, and Excel CAPA registers.
+- **Purpose:** Instant client-side compilation of Oman MoL 24-Hour Notice Form (MD 286/2008 Annex 1) statutory reporting packets, Oman MoL notices, and Excel CAPA registers.
 
 ---
 
@@ -41,7 +41,7 @@ graph TD
     AD6[AD6.Ai Enterprise Core]
 
     subgraph Operational Portals [Government & Statutory]
-        AlAdaa[Abu Dhabi OSHAD Al-Adaa Portal]
+        AlAdaa[Oman Ministry of Labour Digital Portal]
         OmanMoL[Oman Ministry of Labour Portal]
     end
 

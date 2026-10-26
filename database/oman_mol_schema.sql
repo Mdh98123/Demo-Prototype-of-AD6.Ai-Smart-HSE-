@@ -1,4 +1,4 @@
--- OSHAD-SF Framework PostgreSQL Enterprise Schema
+-- Sultanate of Oman Ministry of Labour (MD 286/2008) & PDO PostgreSQL Enterprise Schema
 -- Features: Row-Level Security (RLS), Versioning, Append-Only Tamper-Evident Audit Logs
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -21,7 +21,7 @@ CREATE TABLE users (
     CONSTRAINT fk_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id)
 );
 
-CREATE TABLE oshad_mechanisms (
+CREATE TABLE mol_mechanisms (
     id SERIAL PRIMARY KEY,
     mechanism_number INT NOT NULL, -- e.g., 1 to 11
     title VARCHAR(255) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE oshad_mechanisms (
 CREATE TABLE tenant_mechanism_config (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     tenant_id UUID REFERENCES tenants(id),
-    mechanism_id INT REFERENCES oshad_mechanisms(id),
+    mechanism_id INT REFERENCES mol_mechanisms(id),
     is_enabled BOOLEAN DEFAULT TRUE,
     custom_workflow_json JSONB, -- Stores the workflow designer sequence
     UNIQUE(tenant_id, mechanism_id)
@@ -45,8 +45,8 @@ CREATE TABLE tenant_mechanism_config (
 -- ==========================================
 CREATE TABLE mechanism_requirements (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    mechanism_id INT REFERENCES oshad_mechanisms(id),
-    requirement_code VARCHAR(100) NOT NULL, -- e.g., "OSHAD-M1-R2"
+    mechanism_id INT REFERENCES mol_mechanisms(id),
+    requirement_code VARCHAR(100) NOT NULL, -- e.g., "MOL-MD286-R1"
     description TEXT NOT NULL,
     is_hard_gate BOOLEAN DEFAULT TRUE, -- TRUE = Cannot proceed without it
     mandatory_evidence_types JSONB
@@ -55,7 +55,7 @@ CREATE TABLE mechanism_requirements (
 CREATE TABLE workflow_tasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     tenant_id UUID REFERENCES tenants(id),
-    mechanism_id INT REFERENCES oshad_mechanisms(id),
+    mechanism_id INT REFERENCES mol_mechanisms(id),
     assigned_to UUID REFERENCES users(id),
     status VARCHAR(50) DEFAULT 'PENDING',
     due_date TIMESTAMP WITH TIME ZONE,

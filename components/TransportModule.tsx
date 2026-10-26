@@ -11,15 +11,15 @@ const TransportModule: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'JMP' | 'Violations' | 'Checks'>('JMP');
   
   const [journeys, setJourneys] = useState<JourneyPlan[]>([
-    { id: 'JMP-101', vehicleId: 'B-2910', driverId: 'u6', driverName: 'Rahul Gupta', routeFrom: 'Camp A', routeTo: 'Ruwais Refinery', departureTime: '06:00', arrivalTime: '07:30', passengers: ['Team Alpha'], restStops: [], status: 'Completed', nightDrivingApproval: false },
-    { id: 'JMP-102', vehicleId: 'T-4421', driverId: 'u7', driverName: 'Marcus Chen', routeFrom: 'Habshan', routeTo: 'Fujairah Port', departureTime: '08:00', arrivalTime: '12:00', passengers: [], restStops: ['Al Ain Stop'], status: 'Active', nightDrivingApproval: false },
-    { id: 'JMP-103', vehicleId: 'B-5501', driverId: 'u6', driverName: 'Rahul Gupta', routeFrom: 'Ruwais', routeTo: 'Camp A', departureTime: '18:00', arrivalTime: '19:30', passengers: ['Team Alpha'], restStops: [], status: 'Active', nightDrivingApproval: true },
+    { id: 'JMP-101', vehicleId: 'B-2910', driverId: 'u6', driverName: 'Rahul Gupta', routeFrom: 'Camp A', routeTo: 'Mina Al Fahal Refinery', departureTime: '06:00', arrivalTime: '07:30', passengers: ['Team Alpha'], restStops: [], status: 'Completed', nightDrivingApproval: false },
+    { id: 'JMP-102', vehicleId: 'T-4421', driverId: 'u7', driverName: 'Marcus Chen', routeFrom: 'Khazzan Gas Asset', routeTo: 'Fujairah Port', departureTime: '08:00', arrivalTime: '12:00', passengers: [], restStops: ['Al Ain Stop'], status: 'Active', nightDrivingApproval: false },
+    { id: 'JMP-103', vehicleId: 'B-5501', driverId: 'u6', driverName: 'Rahul Gupta', routeFrom: 'Mina Al Fahal', routeTo: 'Camp A', departureTime: '18:00', arrivalTime: '19:30', passengers: ['Team Alpha'], restStops: [], status: 'Active', nightDrivingApproval: true },
     { id: 'JMP-104', vehicleId: 'V-9922', driverId: 'u11', driverName: 'John Doe', routeFrom: 'HQ', routeTo: 'Site C', departureTime: '09:00', arrivalTime: '10:00', passengers: ['Inspectors'], restStops: [], status: 'Completed', nightDrivingApproval: false },
-    { id: 'JMP-105', vehicleId: 'T-3310', driverId: 'u5', driverName: 'Ahmed Salem', routeFrom: 'Mussafah', routeTo: 'Ruwais', departureTime: '05:00', arrivalTime: '08:00', passengers: [], restStops: ['Mafraq'], status: 'Completed', nightDrivingApproval: true },
+    { id: 'JMP-105', vehicleId: 'T-3310', driverId: 'u5', driverName: 'Ahmed Salem', routeFrom: 'Mussafah', routeTo: 'Mina Al Fahal', departureTime: '05:00', arrivalTime: '08:00', passengers: [], restStops: ['Mafraq'], status: 'Completed', nightDrivingApproval: true },
     { id: 'JMP-106', vehicleId: 'C-1102', driverId: 'u10', driverName: 'Khalid Al-Dhaheri', routeFrom: 'Zone A', routeTo: 'Zone B', departureTime: '11:00', arrivalTime: '11:15', passengers: ['Materials'], restStops: [], status: 'Completed', nightDrivingApproval: false },
     { id: 'JMP-107', vehicleId: 'B-2910', driverId: 'u6', driverName: 'Rahul Gupta', routeFrom: 'Camp A', routeTo: 'City Mall', departureTime: '20:00', arrivalTime: '21:00', passengers: ['Recreation'], restStops: [], status: 'Delayed', nightDrivingApproval: true },
-    { id: 'JMP-108', vehicleId: 'T-4421', driverId: 'u7', driverName: 'Marcus Chen', routeFrom: 'Fujairah', routeTo: 'Habshan', departureTime: '14:00', arrivalTime: 'Pending', passengers: [], restStops: ['Al Ain'], status: 'Active', nightDrivingApproval: false },
-    { id: 'JMP-109', vehicleId: 'V-1001', driverId: 'u4', driverName: 'Sarah Jones', routeFrom: 'HQ', routeTo: 'Ruwais Admin', departureTime: '07:00', arrivalTime: '09:30', passengers: [], restStops: [], status: 'Completed', nightDrivingApproval: false },
+    { id: 'JMP-108', vehicleId: 'T-4421', driverId: 'u7', driverName: 'Marcus Chen', routeFrom: 'Fujairah', routeTo: 'Khazzan Gas Asset', departureTime: '14:00', arrivalTime: 'Pending', passengers: [], restStops: ['Al Ain'], status: 'Active', nightDrivingApproval: false },
+    { id: 'JMP-109', vehicleId: 'V-1001', driverId: 'u4', driverName: 'Sarah Jones', routeFrom: 'HQ', routeTo: 'Mina Al Fahal Admin', departureTime: '07:00', arrivalTime: '09:30', passengers: [], restStops: [], status: 'Completed', nightDrivingApproval: false },
     { id: 'JMP-110', vehicleId: 'C-5521', driverId: 'u11', driverName: 'John Doe', routeFrom: 'Site C', routeTo: 'Warehouse', departureTime: '15:30', arrivalTime: '16:00', passengers: [], restStops: [], status: 'Completed', nightDrivingApproval: false }
   ]);
   
@@ -59,8 +59,8 @@ const TransportModule: React.FC = () => {
       vehicleId: 'T-4402',
       driverId: currentUser.id,
       driverName: currentUser.name,
-      routeFrom: 'HQ Abu Dhabi',
-      routeTo: 'Ruwais Polyolefin Unit',
+      routeFrom: 'HQ Muscat',
+      routeTo: 'Mina Al Fahal Polyolefin Unit',
       departureTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       arrivalTime: 'Pending',
       passengers: ['Audit Team'],

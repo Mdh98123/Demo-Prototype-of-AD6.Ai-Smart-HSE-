@@ -17,7 +17,7 @@ export const InspectionChecklist: React.FC<{ onComplete: () => void }> = ({ onCo
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Dynamic template based on OSHAD requirements
+  // Dynamic template based on Oman MoL MD 286/2008 requirements
   const questions = [
     { id: 'q1', type: 'select', title: 'Work Area Assessment', options: ['Safe', 'At Risk', 'Critical Danger'] },
     { id: 'q2', type: 'text', title: 'Observation Notes', voiceEnabled: true },
@@ -118,7 +118,7 @@ export const InspectionChecklist: React.FC<{ onComplete: () => void }> = ({ onCo
       const recordId = crypto.randomUUID();
       const payload = {
         id: recordId,
-        templateId: 'OSHAD_M7',
+        templateId: 'Oman MoL MD 286/2008_M7',
         status: 'DRAFT' as const,
         data: { ...data, photos },
         location: finalLocation ? { lat: finalLocation.lat, lng: finalLocation.lng } : undefined,
@@ -149,7 +149,7 @@ export const InspectionChecklist: React.FC<{ onComplete: () => void }> = ({ onCo
       const recordId = crypto.randomUUID();
       const payload = {
         id: recordId,
-        templateId: 'OSHAD_M7',
+        templateId: 'Oman MoL MD 286/2008_M7',
         status: 'PENDING_SYNC' as const,
         priority: isUrgentSync ? ('URGENT' as const) : ('NORMAL' as const),
         data: { ...data, photos },
@@ -167,7 +167,7 @@ export const InspectionChecklist: React.FC<{ onComplete: () => void }> = ({ onCo
         action: 'SUBMIT_INSPECTION',
         entityType: 'INSPECTION',
         priority: isUrgentSync ? 'URGENT' : 'NORMAL',
-        title: `OSHAD M7 Field Inspection (${isUrgentSync ? '⚡ Urgent Priority' : 'Standard'})`,
+        title: `Oman MoL MD 286/2008 M7 Field Inspection (${isUrgentSync ? '⚡ Urgent Priority' : 'Standard'})`,
         payload: payload,
         retryCount: 0,
         createdAt: new Date().toISOString()
@@ -190,7 +190,7 @@ export const InspectionChecklist: React.FC<{ onComplete: () => void }> = ({ onCo
        
        <div className="p-4 glass-card border-b border-slate-200">
          <div className="flex justify-between items-center text-xs font-bold text-slate-500 mb-2">
-            <span>OSHAD Mechanism 7</span>
+            <span>Oman MoL MD 286/2008 Mechanism 7</span>
             <span>Step {step + 1} of {questions.length}</span>
          </div>
          <div className="w-full bg-slate-100 rounded-full h-1.5">

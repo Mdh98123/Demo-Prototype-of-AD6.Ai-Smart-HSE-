@@ -6,7 +6,7 @@ export const ContractorOnboarding: React.FC<{ onComplete: () => void, onCancel: 
   const [formData, setFormData] = useState({
     companyName: '',
     tradeLicense: '',
-    adnocIcv: '',
+    pdoIcv: '',
     contactName: '',
     contactEmail: ''
   });
@@ -50,8 +50,8 @@ export const ContractorOnboarding: React.FC<{ onComplete: () => void, onCancel: 
                      <input type="text" value={formData.tradeLicense} onChange={e => setFormData({ ...formData, tradeLicense: e.target.value })} className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-indigo-600 focus:outline-none" />
                    </div>
                    <div>
-                     <label className="block text-xs font-bold text-slate-600 mb-1 uppercase">ADNOC ICV No. (Optional)</label>
-                     <input type="text" value={formData.adnocIcv} onChange={e => setFormData({ ...formData, adnocIcv: e.target.value })} className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-indigo-600 focus:outline-none" />
+                     <label className="block text-xs font-bold text-slate-600 mb-1 uppercase">PDO ICV No. (Optional)</label>
+                     <input type="text" value={formData.pdoIcv} onChange={e => setFormData({ ...formData, pdoIcv: e.target.value })} className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-indigo-600 focus:outline-none" />
                    </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-slate-100">
@@ -76,7 +76,7 @@ export const ContractorOnboarding: React.FC<{ onComplete: () => void, onCancel: 
                 </div>
                 <div className="p-4 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-500 glass-panel hover:bg-slate-100 transition-colors cursor-pointer">
                    <Upload size={32} className="mb-2 text-indigo-500" />
-                   <p className="font-bold text-sm">Upload OSHAD / ISO 45001 Certificate</p>
+                   <p className="font-bold text-sm">Upload Oman MoL MD 286/2008 / ISO 45001 Certificate</p>
                    <p className="text-xs">Required for High Risk vendors</p>
                 </div>
              </div>
@@ -91,7 +91,7 @@ export const ContractorOnboarding: React.FC<{ onComplete: () => void, onCancel: 
                     <div className="text-xs font-bold text-slate-600 uppercase mb-2">Automated Checks Passed:</div>
                     <ul className="text-sm text-slate-600 space-y-1">
                       <li className="flex items-center gap-2"><CheckCircle size={14} className="text-emerald-500" /> Trade License format valid</li>
-                      <li className="flex items-center gap-2"><CheckCircle size={14} className="text-emerald-500" /> MOHRE Integration (Stub) reachable</li>
+                      <li className="flex items-center gap-2"><CheckCircle size={14} className="text-emerald-500" /> Oman Ministry of Labour Integration (Stub) reachable</li>
                     </ul>
                 </div>
              </div>

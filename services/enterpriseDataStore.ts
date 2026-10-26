@@ -54,19 +54,19 @@ export interface InspectionRecord {
 }
 
 // -------------------------------------------------------------------
-// 10+ REALISTIC SEED INCIDENTS (OMAN, UAE, KSA)
+// 10+ REALISTIC SEED INCIDENTS (OMAN, Oman, KSA)
 // -------------------------------------------------------------------
 export const EXPANDED_ENTERPRISE_INCIDENTS: Incident[] = [
   ...GULF_ENERGY_INCIDENTS,
-  // Incident 7: Near Miss - Scaffolding Coupler Drop (UAE)
+  // Incident 7: Near Miss - Scaffolding Coupler Drop (Oman)
   {
-    id: 'INC-2026-UAE-0622',
+    id: 'INC-2026-OMN-0622',
     type: 'Near Miss',
     classification: 'Near Miss',
     description: 'During 18m scaffolding erection on the Polyethylene Reactor Tower (R-201), an unsecured swivel scaffolding coupler slipped from a rigger\'s hand and fell 14 meters onto the secondary containment deck. The drop zone was barricaded; no workers were struck.',
     immediateActionsTaken: 'Work stopped immediately at height; rigger tethering bags and 100% tool lanyard compliance verified; scaffold crew stood down for 30-minute drop prevention toolbox talk; safety net installed below working platform.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Reactor R-201 Structure',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Reactor R-201 Structure',
+    jurisdiction: 'Muscat',
     severity: 'Medium',
     potentialSeverity: 'Critical',
     status: 'Under Investigation',
@@ -93,8 +93,8 @@ export const EXPANDED_ENTERPRISE_INCIDENTS: Incident[] = [
     fishboneFactors: { manpower: ['Worker carried loose fittings'], machine: [], method: ['Lacking mandatory parts pouch rule'], material: [], measurement: [], environment: [] },
     capaActions: [
       {
-        id: 'capa-uae-07',
-        description: 'Provide certified zip-lock tether pouches for all scaffolding crews across Al-Ruwais asset.',
+        id: 'capa-omn-07',
+        description: 'Provide certified zip-lock tether pouches for all scaffolding crews across Mina Al Fahal asset.',
         assignee: 'Marcus Chen',
         targetDate: '2026-10-14',
         priority: 'P2 - High',
@@ -216,8 +216,8 @@ export const EXPANDED_ENTERPRISE_INCIDENTS: Incident[] = [
     classification: 'Near Miss',
     description: 'During continuous production on Polymer Extruder Unit EX-04 in Zone C, an anomalous thermal rise to 142°C caused bearing friction and an audible high-temperature smoke detector alarm. Emergency power stop tripped automatically with zero flame or toxic release.',
     immediateActionsTaken: 'Extruder drive motor powered down; fire warden deployed dry powder standby; cooling cycle engaged; LOTO padlock applied by maintenance crew; zero flames or toxic gas release verified.',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Extrusion Hall Zone C',
-    jurisdiction: 'Abu Dhabi',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Extrusion Hall Zone C',
+    jurisdiction: 'Muscat',
     severity: 'Medium',
     potentialSeverity: 'High',
     status: 'Closed',
@@ -253,7 +253,7 @@ export const EXPANDED_ENTERPRISE_INCIDENTS: Incident[] = [
       { timestamp: '2026-09-29T14:20:00Z', actorId: 'u4', actorName: 'Sarah Jones', action: 'CAPA Approved', details: 'Approved corrective action plan #CA-2026-0287 and allocated replacement telemetry sensors.' },
       { timestamp: '2026-10-02T16:00:00Z', actorId: 'u6', actorName: 'Rahul Gupta', action: 'CAPA Executed', details: 'Installed dual infrared sensors and high-temp grease.' },
       { timestamp: '2026-10-03T10:00:00Z', actorId: 'u7', actorName: 'Marcus Chen', action: 'Verification Signed', details: 'Physically inspected installation and verified 68°C steady temperature under load.' },
-      { timestamp: '2026-10-04T15:30:00Z', actorId: 'u2', actorName: 'Dr. Layla Hassan', action: 'Executive Closure', details: 'Verified root cause containment, closed incident #INC-2026-0142, and submitted OSHAD summary.' }
+      { timestamp: '2026-10-04T15:30:00Z', actorId: 'u2', actorName: 'Dr. Layla Hassan', action: 'Executive Closure', details: 'Verified root cause containment, closed incident #INC-2026-0142, and submitted Oman MoL MD 286/2008 summary.' }
     ]
   }
 ];
@@ -338,7 +338,7 @@ export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
     type: 'Working at Height',
     status: 'Active',
     zone: 'Zone 1 - Main Flare Stack',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · 65m Flare Tip Platform',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · 65m Flare Tip Platform',
     contractor: 'Al Jaber Industrial Services',
     crewSize: 3,
     validFrom: '2026-10-06T06:00:00Z',
@@ -377,7 +377,7 @@ export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
     type: 'Cold Work',
     status: 'Active',
     zone: 'Zone 3 - Water Treatment Area',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Water Treatment Train B',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Water Treatment Train B',
     contractor: 'Gulf Energy Internal Maintenance',
     crewSize: 4,
     validFrom: '2026-10-06T08:00:00Z',
@@ -395,7 +395,7 @@ export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
         h2s: 0.0,
         co: 0.0,
         testerName: 'Hamad Al-Kaabi',
-        testerCertNo: 'ADNOC-AGT-441',
+        testerCertNo: 'PDO-AGT-441',
         detectorSerial: 'BW-GAS-102',
         status: 'SAFE',
         bumpTested: true
@@ -482,7 +482,7 @@ export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
     type: 'Hot Work',
     status: 'Authorized',
     zone: 'Zone C - Hydrocarbon Processing Header',
-    exactLocation: 'Al-Ruwais Polyolefin Asset (UAE) · Header Manifold HM-03',
+    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Header Manifold HM-03',
     contractor: 'Gulf Energy Technical Services',
     crewSize: 6,
     validFrom: '2026-10-08T06:00:00Z',
@@ -550,28 +550,28 @@ export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
 // -------------------------------------------------------------------
 export const EXPANDED_ENTERPRISE_INSPECTIONS: InspectionRecord[] = [
   { id: 'INSP-2026-001', type: 'Scaffolding & Work at Height', location: 'Fahud-West Gas Station (Oman) · Manifold 6', inspector: 'Marcus Chen', inspectorId: 'u7', date: '2026-10-06T09:00:00Z', score: 92, status: 'Completed', items: [] },
-  { id: 'INSP-2026-002', type: 'Electrical & LOTO Isolation', location: 'Al-Ruwais Polyolefin Asset (UAE) · Substation 3', inspector: 'Fatima Al-Zaabi', inspectorId: 'u5', date: '2026-10-06T10:30:00Z', score: 98, status: 'Completed', items: [] },
+  { id: 'INSP-2026-002', type: 'Electrical & LOTO Isolation', location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Substation 3', inspector: 'Fatima Al-Zaabi', inspectorId: 'u5', date: '2026-10-06T10:30:00Z', score: 98, status: 'Completed', items: [] },
   { id: 'INSP-2026-003', type: 'Heavy Lifting & Crane Rigging', location: 'Ras Al-Khair Facility (KSA) · Berth 2', inspector: 'Zaid Al-Otaibi', inspectorId: 'usr-zaid-otaibi', date: '2026-10-05T14:00:00Z', score: 86, status: 'Flagged', items: [] },
-  { id: 'INSP-2026-004', type: 'Confined Space Life Safety', location: 'Al-Ruwais Polyolefin Asset (UAE) · Column C-102', inspector: 'Tariq Al-Hashemi', inspectorId: 'usr-tariq-hashemi', date: '2026-10-05T08:15:00Z', score: 96, status: 'Completed', items: [] },
+  { id: 'INSP-2026-004', type: 'Confined Space Life Safety', location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Column C-102', inspector: 'Tariq Al-Hashemi', inspectorId: 'usr-tariq-hashemi', date: '2026-10-05T08:15:00Z', score: 96, status: 'Completed', items: [] },
   { id: 'INSP-2026-005', type: 'Fire Protection & Deluge Systems', location: 'Fahud-West Gas Station (Oman) · Tank Farm', inspector: 'Salim Al-Harthy', inspectorId: 'usr-salim-harthy', date: '2026-10-04T11:00:00Z', score: 94, status: 'Completed', items: [] },
-  { id: 'INSP-2026-006', type: 'Hazardous Chemical Storage', location: 'Al-Ruwais Polyolefin Asset (UAE) · Warehouse Bay 2', inspector: 'Fatima Al-Zaabi', inspectorId: 'u5', date: '2026-10-04T15:20:00Z', score: 88, status: 'Completed', items: [] },
+  { id: 'INSP-2026-006', type: 'Hazardous Chemical Storage', location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Warehouse Bay 2', inspector: 'Fatima Al-Zaabi', inspectorId: 'u5', date: '2026-10-04T15:20:00Z', score: 88, status: 'Completed', items: [] },
   { id: 'INSP-2026-007', type: 'Contractor Camp & Welfare', location: 'Ras Al-Khair Facility (KSA) · Construction Village', inspector: 'Abdulaziz Al-Ghamdi', inspectorId: 'usr-abdulaziz-ghamdi', date: '2026-10-03T16:00:00Z', score: 91, status: 'Completed', items: [] },
   { id: 'INSP-2026-008', type: 'Mobile Equipment & Forklifts', location: 'Fahud-West Gas Station (Oman) · Logistics Yard', inspector: 'Rahul Gupta', inspectorId: 'u6', date: '2026-10-03T07:45:00Z', score: 89, status: 'Completed', items: [] },
-  { id: 'INSP-2026-009', type: 'Emergency Eye Wash & Drench Showers', location: 'Al-Ruwais Polyolefin Asset (UAE) · Acid Skid', inspector: 'Khalid Al-Dhaheri', inspectorId: 'usr-khalid-dhaheri', date: '2026-10-02T13:30:00Z', score: 95, status: 'Completed', items: [] },
+  { id: 'INSP-2026-009', type: 'Emergency Eye Wash & Drench Showers', location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Acid Skid', inspector: 'Khalid Al-Dhaheri', inspectorId: 'usr-khalid-dhaheri', date: '2026-10-02T13:30:00Z', score: 95, status: 'Completed', items: [] },
   { id: 'INSP-2026-010', type: 'Excavation & Trench Shoring', location: 'Ras Al-Khair Facility (KSA) · Berth 1 Trench', inspector: 'Zaid Al-Otaibi', inspectorId: 'usr-zaid-otaibi', date: '2026-10-02T08:00:00Z', score: 90, status: 'Completed', items: [] },
-  { id: 'INS-2026-0314', type: 'Quarterly Scaffolding & Working at Height Field Inspection', location: 'Al-Ruwais Polyolefin Asset (UAE) · Berth 1 & Reactor Tower', inspector: 'Fatima Al-Kaabi', inspectorId: 'u5', date: '2026-10-05T08:00:00Z', score: 96, status: 'Completed', items: [] }
+  { id: 'INS-2026-0314', type: 'Quarterly Scaffolding & Working at Height Field Inspection', location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Berth 1 & Reactor Tower', inspector: 'Fatima Al-Kaabi', inspectorId: 'u5', date: '2026-10-05T08:00:00Z', score: 96, status: 'Completed', items: [] }
 ];
 
 // -------------------------------------------------------------------
-// 10+ REALISTIC SAFETY AUDITS (WITH ISO 45001 & OSHAD FINDINGS)
+// 10+ REALISTIC SAFETY AUDITS (WITH ISO 45001 & Oman MoL MD 286/2008 FINDINGS)
 // -------------------------------------------------------------------
 export const EXPANDED_ENTERPRISE_AUDITS: SafetyAudit[] = [
   ...MOCK_AUDITS,
   {
     id: 'AUD-2026-0047',
     templateId: 'TPL-001',
-    title: 'ISO 45001 / OSHAD CoP 2.0 Statutory Compliance Surveillance Audit (#AUD-2026-0047)',
-    location: 'Al-Ruwais Polyolefin Asset (UAE) · Extrusion & Control of Work',
+    title: 'ISO 45001 / PDO SP-1143 Statutory Compliance Surveillance Audit (#AUD-2026-0047)',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Extrusion & Control of Work',
     department: 'Polymer Operations & Health, Safety, Environment',
     auditorId: 'u12',
     auditorName: 'Alice Smith (Lead Quality & Safety Auditor)',
@@ -599,7 +599,7 @@ export const EXPANDED_ENTERPRISE_AUDITS: SafetyAudit[] = [
           targetDate: '2026-10-02',
           status: 'Completed'
         },
-        regulationRef: 'ISO 45001:2018 Clause 8.1.2 & OSHAD-SF Mechanism 11'
+        regulationRef: 'ISO 45001:2018 Clause 8.1.2 & Oman MoL MD 286/2008 & PDO PR-1172'
       }
     ]
   },
@@ -642,8 +642,8 @@ export const EXPANDED_ENTERPRISE_AUDITS: SafetyAudit[] = [
   {
     id: 'AUD-2026-004',
     templateId: 'TPL-002',
-    title: 'Abu Dhabi OSHAD-SF Mechanism 11.0 Verification Audit',
-    location: 'Al-Ruwais Polyolefin Asset (UAE)',
+    title: 'Oman MoL MD 286/2008 & PDO PR-1172 Verification Audit',
+    location: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman)',
     department: 'Refining & Petrochemical Processing',
     auditorId: 'u12',
     auditorName: 'Sarah Jenkins',
@@ -671,7 +671,7 @@ export const EXPANDED_ENTERPRISE_AUDITS: SafetyAudit[] = [
           targetDate: '2026-10-10',
           status: 'In Progress'
         },
-        regulationRef: 'OSHAD-SF CoP 17.0 Confined Space'
+        regulationRef: 'Oman MoL MD 286/2008 & PDO Specifications CoP 17.0 Confined Space'
       }
     ]
   },
@@ -848,7 +848,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `Reported ${incident.severity} incident ${incident.id} (${incident.type}) at ${incident.location}`,
       reason: incident.description,
-      regulatoryFramework: ['OSHAD-SF CoP 2.0', 'ISO 45001:2018 Cl. 10.2'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 2.0', 'ISO 45001:2018 Cl. 10.2'],
       severity: incident.severity === 'Critical' ? 'Critical' : 'High'
     }).catch(console.warn);
 
@@ -913,7 +913,7 @@ export class EnterpriseDataStore {
         ? `Incident ${incident.id} status changed: '${oldIncident?.status}' ➔ '${incident.status}' by ${user.name}`
         : `Incident ${incident.id} record updated by ${user.name}`,
       reason: `Operational update by ${user.name}`,
-      regulatoryFramework: ['OSHAD-SF Mechanism 11.0', 'ISO 45001:2018'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO PR-1172', 'ISO 45001:2018'],
       severity: incident.severity
     }).catch(console.warn);
 
@@ -981,7 +981,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `Permit ${permit.permitNumber} created (${permit.type}) in ${permit.zone}`,
       reason: `Permit request submitted for ${permit.contractor}`,
-      regulatoryFramework: ['OSHAD-SF CoP 21.0 PTW', 'ADNOC CoP PTW'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 21.0 PTW', 'PDO SP-1143 Specification PTW'],
       severity: permit.riskRating === 'High' ? 'High' : 'Medium'
     }).catch(console.warn);
 
@@ -1061,7 +1061,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `Permit ${permitId} authorized by Area Authority ${issuer.name}; status transitioned to Active.`,
       reason: remarks || 'Area Authority digital sign-off completed',
-      regulatoryFramework: ['OSHAD-SF CoP 21.0', 'ADNOC Life-Saving Rules'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 21.0', 'PDO Life-Saving Rules'],
       severity: 'High'
     }).catch(console.warn);
 
@@ -1143,7 +1143,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `Field Receiver ${receiver.name} acknowledged safety briefing and accepted custody of ${permitId}.`,
       reason: 'Field custody acceptance after toolbox talk',
-      regulatoryFramework: ['OSHAD-SF CoP 21.0'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 21.0'],
       severity: 'Low'
     }).catch(console.warn);
 
@@ -1211,7 +1211,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `Created CAPA ${capa.id}: ${capa.title} assigned to ${capa.ownerName}`,
       reason: capa.details || capa.title,
-      regulatoryFramework: ['ISO 45001:2018 Cl. 10.2', 'OSHAD-SF Mechanism 11.0'],
+      regulatoryFramework: ['ISO 45001:2018 Cl. 10.2', 'Oman MoL MD 286/2008 & PDO PR-1172'],
       severity: capa.priority === 'P1 - Critical' ? 'Critical' : 'High'
     }).catch(console.warn);
 
@@ -1267,7 +1267,7 @@ export class EnterpriseDataStore {
       evidence || `Transitioned to ${status}`,
       {
         additionalData: { closureEvidence: evidence },
-        regulatoryFramework: ['ISO 45001:2018 Cl. 10.2', 'OSHAD-SF Mechanism 11.0'],
+        regulatoryFramework: ['ISO 45001:2018 Cl. 10.2', 'Oman MoL MD 286/2008 & PDO PR-1172'],
         severity: status === 'Closed' ? 'Low' : 'Medium'
       }
     ).catch(console.warn);
@@ -1419,7 +1419,7 @@ export class EnterpriseDataStore {
       },
       changeSummary: `🚨 CRITICAL SWA TRIGGERED by ${reporter.name} at ${location}: ${hazard}`,
       reason: hazard,
-      regulatoryFramework: ['OSHAD-SF CoP 2.0', 'ADNOC SWA Policy', 'ISO 45001 Cl. 5.4'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 2.0', 'PDO SWA Policy', 'ISO 45001 Cl. 5.4'],
       severity: 'Critical'
     }).catch(console.warn);
 
@@ -1481,7 +1481,7 @@ export class EnterpriseDataStore {
       newValue: { status: 'RESOLVED', resumedBy: user.name },
       changeSummary: `✅ Stop Work condition lifted by ${user.name}. All imminent hazards mitigated; operations resumed.`,
       reason: 'Area Authority verified mitigation of hazards',
-      regulatoryFramework: ['OSHAD-SF CoP 2.0', 'ISO 45001 Cl. 5.4'],
+      regulatoryFramework: ['Oman MoL MD 286/2008 & PDO Specifications CoP 2.0', 'ISO 45001 Cl. 5.4'],
       severity: 'Low'
     }).catch(console.warn);
 

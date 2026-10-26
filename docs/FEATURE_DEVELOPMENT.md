@@ -53,7 +53,7 @@ Every feature added to the AD6.Ai Smart HSE platform must follow a disciplined 8
 
 ## 1. Business Objective & HSE Rationale
 - **Problem Statement:** What field safety gap or compliance friction does this solve?
-- **Regulatory Framework:** Which clause of ISO 45001, OSHAD, or Oman MoL applies?
+- **Regulatory Framework:** Which clause of ISO 45001, Oman MoL, or Oman MoL applies?
 
 ## 2. User Story & Personas
 - **As a** [Role / Persona]

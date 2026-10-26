@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, FileSpreadsheet, Lock, Search, PlayCircle, Settings2, Download, AlertTriangle } from 'lucide-react';
-import { OshadWorkflowEngine } from '../../services/oshadWorkflowEngine';
+import { omanMoLWorkflowEngine } from '../../services/omanMoLWorkflowEngine';
 import { ImmutableAuditLogger, AuditLogEntry } from '../../services/immutableAuditLogger';
-import { OshadReportGenerator } from '../../services/oshadReportGenerator';
+import { omanMoLReportGenerator } from '../../services/omanMoLReportGenerator';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-export const OshadWorkflowDesigner: React.FC = () => {
+export const OmanWorkflowDesigner: React.FC = () => {
    const { dir } = useLanguage();
    const [activeTab, setActiveTab] = useState<'CONFIG' | 'DESIGNER' | 'REPORTS' | 'AUDIT'>('CONFIG');
 
@@ -51,9 +51,9 @@ export const OshadWorkflowDesigner: React.FC = () => {
              <div>
                 <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
                    <ShieldCheck className="text-indigo-600" />
-                   OSHAD-SF Workflow Engine
+                   Oman MoL & PDO Workflow Engine
                 </h1>
-                <p className="text-slate-500 font-medium mt-1">Configurable Compliance & Enforcement Architect</p>
+                <p className="text-slate-500 font-medium mt-1">Configurable Compliance & Enforcement Architect · Sultanate of Oman</p>
              </div>
              
              <div className="flex bg-slate-100 p-1 rounded-xl shadow-inner w-full md:w-auto overflow-x-auto custom-scrollbar">
@@ -63,7 +63,7 @@ export const OshadWorkflowDesigner: React.FC = () => {
                        onClick={() => setActiveTab(tab as any)}
                        className={`px-6 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap transition-all ${activeTab === tab ? 'glass-card shadow-sm text-indigo-700' : 'text-slate-500 hover:text-slate-700'}`}
                     >
-                       {tab === 'CONFIG' ? 'Mechanisms' : tab === 'DESIGNER' ? 'Logic Builder' : tab === 'REPORTS' ? 'SF-7 Exports' : 'Immutable Ledger'}
+                       {tab === 'CONFIG' ? 'Statutory Elements' : tab === 'DESIGNER' ? 'Logic Builder' : tab === 'REPORTS' ? 'MoL Returns' : 'Immutable Ledger'}
                     </button>
                 ))}
              </div>
@@ -117,7 +117,7 @@ export const OshadWorkflowDesigner: React.FC = () => {
                       <div className="absolute top-0 inset-x-0 h-4 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-20"></div>
                       <Settings2 size={48} className="text-slate-300 mb-4" />
                       <h3 className="text-lg font-bold text-slate-700">Drag Elements to Build Flow</h3>
-                      <p className="text-slate-500 text-sm mt-2 max-w-sm">Use the visual designer to enforce hard gates on Mechanism 11 incidents or mandate evidence uploads.</p>
+                      <p className="text-slate-500 text-sm mt-2 max-w-sm">Use the visual designer to enforce hard gates on MoL MD 286/2008 & PDO PR-1172 incidents or mandate evidence uploads.</p>
                       
                       <div className="mt-8 glass-card p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4 w-full max-w-md">
                           <div className="p-3 bg-red-50 text-red-600 rounded-lg"><AlertTriangle size={20} /></div>
@@ -136,18 +136,17 @@ export const OshadWorkflowDesigner: React.FC = () => {
                <FileSpreadsheet size={48} className="text-emerald-500" />
                <div>
                   <h2 className="text-xl font-black text-slate-800">Generate Statutory Reports</h2>
-                  <p className="text-slate-500 max-w-md mx-auto mt-2">Export your automated workflow data directly into official OSHAD SF-7 formatting required by the Competent Authority.</p>
+                  <p className="text-slate-500 max-w-md mx-auto mt-2">Export your automated workflow data directly into official Oman Ministry of Labour (MD 286/2008) & PDO formatting required by the Competent Authority.</p>
                </div>
-               
-               <div className="flex gap-4">
+                              <div className="flex gap-4">
                   <button 
-                     onClick={() => OshadReportGenerator.generateSF7Excel({ name: 'Demo Corp LLC', fatalities: 0, lti: 2, ltifr: 0.14 }, 2026)}
+                     onClick={() => omanMoLReportGenerator.generateSF7Excel({ name: 'Demo Corp LLC', fatalities: 0, lti: 2, ltifr: 0.14 }, 2026)}
                      className="px-6 py-3 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold rounded-xl flex items-center gap-2 transition-colors border border-emerald-200"
                   >
-                      <FileSpreadsheet size={18} /> Export SF-7 to Excel
+                      <FileSpreadsheet size={18} /> Export MoL Return to Excel
                   </button>
                   <button 
-                     onClick={() => OshadReportGenerator.generateMechanismConfigPDF(mechanisms.reduce((acc, curr) => ({...acc, [curr.id]: curr}), {}))}
+                     onClick={() => omanMoLReportGenerator.generateMechanismConfigPDF(mechanisms.reduce((acc, curr) => ({...acc, [curr.id]: curr}), {}))}
                      className="px-6 py-3 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold rounded-xl flex items-center gap-2 transition-colors border border-indigo-200"
                   >
                       <Download size={18} /> Download Audit PDF

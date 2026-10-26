@@ -24,7 +24,7 @@ const DigitalTwinViewer: React.FC = () => {
   const handleSimulate = async () => {
       setSimulating(true);
       try {
-          const result = await simulateDigitalTwinScenario('H2S Leak - Zone A', 'Ruwais Complex');
+          const result = await simulateDigitalTwinScenario('H2S Leak - Zone A', 'Mina Al Fahal Complex');
           setSimulationResult(result);
       } catch (e) {
           console.error(e);
