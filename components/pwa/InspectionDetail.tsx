@@ -4,7 +4,7 @@ import {
   Camera, ArrowLeft, Image as ImageIcon, X, Sparkles, 
   MapPin, Mic, Calendar, User, FileText, CheckCircle2, 
   ShieldAlert, RefreshCw, ZoomIn, Eye, MessageSquare, Download,
-  SwitchCamera, Trash2, StopCircle
+  SwitchCamera, Trash2, StopCircle, PenTool
 } from 'lucide-react';
 import { PhotoEvidence, AIHazardItem, AIHazardAnalysisResult } from '../../types/mediaTypes';
 import { CameraCaptureModal } from '../media/CameraCaptureModal';
@@ -13,6 +13,7 @@ import { AIHazardAnalysisCard } from '../media/AIHazardAnalysisCard';
 import { useUser } from '../../contexts/UserContext';
 import { EnterpriseDataStore } from '../../services/enterpriseDataStore';
 import { compressImageClientSide } from '../../utils/imageCompression';
+import { InspectionPdfReportService } from '../../services/inspectionPdfReportService';
 
 interface InspectionDetailProps {
   record: any;
@@ -67,6 +68,23 @@ export const InspectionDetail: React.FC<InspectionDetailProps> = ({ record, onBa
   const [analyzingPhotoId, setAnalyzingPhotoId] = useState<string | null>(null);
   const [isAnalyzingAll, setIsAnalyzingAll] = useState(false);
   const [actionSuccessNotice, setActionSuccessNotice] = useState<string | null>(null);
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
+
+  const handleDownloadPdfReport = async () => {
+    setIsExportingPdf(true);
+    try {
+      await InspectionPdfReportService.downloadInspectionPdf(record, {
+        inspectorName: currentUser?.name || 'Lead Safety Officer',
+        facilityOrSite: record.data?.site || 'Industrial Site Zone 4'
+      });
+      setActionSuccessNotice('Formal Inspection PDF Report generated and downloaded successfully.');
+    } catch (err: any) {
+      console.error('[PDF Export Error]', err);
+      alert('Failed to generate PDF report: ' + (err.message || 'Unknown error'));
+    } finally {
+      setIsExportingPdf(false);
+    }
+  };
 
   const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -508,8 +526,22 @@ export const InspectionDetail: React.FC<InspectionDetailProps> = ({ record, onBa
           </div>
         </div>
 
-        {/* Global Photo Actions in Header */}
+        {/* Global Photo & Report Actions in Header */}
         <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={handleDownloadPdfReport}
+            disabled={isExportingPdf}
+            className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            title="Download Official Statutory PDF Report"
+          >
+            {isExportingPdf ? (
+              <RefreshCw size={15} className="animate-spin text-emerald-400" />
+            ) : (
+              <Download size={15} className="text-emerald-400" />
+            )}
+            <span className="hidden sm:inline">Export PDF</span>
+            <span className="sm:hidden">PDF</span>
+          </button>
           <button
             onClick={() => setIsCameraModalOpen(true)}
             className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
@@ -1001,21 +1033,137 @@ export const InspectionDetail: React.FC<InspectionDetailProps> = ({ record, onBa
           </div>
         </div>
 
-        {/* Existing Inspection Checklist Form Data */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-3">
-            Checklist Responses & Field Parameters
-          </h3>
-          <div className="space-y-2">
-            {Object.keys(record.data || {})
-              .filter(k => !['photos', 'observations', 'inspectorNotes', 'notes'].includes(k))
-              .map(key => (
-                <div key={key} className="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                  <span className="font-bold text-slate-600 capitalize">{key.replace(/_/g, ' ')}:</span>
-                  <span className="text-slate-900 font-medium">{String(record.data[key])}</span>
-                </div>
-              ))}
+        {/* Dynamic Inspection Checklist Form Data & Digital Signatures */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600" />
+                <span>Dynamic Checklist Responses</span>
+              </h3>
+              {record.data?.regulatoryStandard && (
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Governed by: <span className="font-bold text-slate-700">{record.data.regulatoryStandard}</span>
+                </p>
+              )}
+            </div>
+            {record.data?.category && (
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-indigo-50 text-indigo-700 border border-indigo-200">
+                {record.data.category}
+              </span>
+            )}
           </div>
+
+          {/* Form Answers (Text & Booleans) */}
+          {record.data?.answers && Object.keys(record.data.answers).length > 0 ? (
+            <div className="space-y-2">
+              {Object.entries(record.data.answers).map(([key, val]) => {
+                const isPass = val === 'PASS' || val === 'Compliant' || val === 'Yes';
+                const isFail = val === 'FAIL' || val === 'Deficient' || val === 'No';
+                const isNA = val === 'NA' || val === 'N/A';
+
+                return (
+                  <div key={key} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs gap-2">
+                    <span className="font-bold text-slate-700">{key.replace(/^(item-|q\d+[-_]?)/, '').replace(/[-_]/g, ' ')}:</span>
+                    {isPass ? (
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">
+                        ✓ Pass / Compliant
+                      </span>
+                    ) : isFail ? (
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-red-100 text-red-800 border border-red-300 w-fit">
+                        ✕ Fail / Deficient
+                      </span>
+                    ) : isNA ? (
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-bold uppercase bg-slate-200 text-slate-700 w-fit">
+                        N/A
+                      </span>
+                    ) : (
+                      <span className="text-slate-900 font-medium bg-white px-3 py-1 rounded-lg border border-slate-200">
+                        {String(val)}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {Object.keys(record.data || {})
+                .filter(k => !['photos', 'observations', 'inspectorNotes', 'notes', 'signatures', 'answers', 'templateId', 'templateName', 'category', 'regulatoryStandard'].includes(k))
+                .map(key => (
+                  <div key={key} className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-xs">
+                    <span className="font-bold text-slate-600 capitalize">{key.replace(/_/g, ' ')}:</span>
+                    <span className="text-slate-900 font-medium">{String(record.data[key])}</span>
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {/* Captured Digital Signatures */}
+          {record.data?.signatures && Object.keys(record.data.signatures).length > 0 && (
+            <div className="pt-4 border-t border-slate-100 space-y-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <PenTool size={13} className="text-indigo-600" />
+                <span>Authorized Digital Sign-offs</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {Object.entries(record.data.signatures).map(([key, sigUrl]) => (
+                  <div key={key} className="p-3 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-slate-700 capitalize">
+                        {key.replace(/^(item-|q\d+[-_]?)/, '').replace(/[-_]/g, ' ')}
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        Verified Signature
+                      </span>
+                    </div>
+                    <div className="h-24 bg-white rounded-lg border border-slate-200 p-1 flex items-center justify-center overflow-hidden">
+                      {typeof sigUrl === 'string' && sigUrl.startsWith('data:image') ? (
+                        <img src={sigUrl} alt="Inspector signature" className="max-h-full max-w-full object-contain" />
+                      ) : (
+                        <span className="text-xs font-mono text-slate-400">Electronic Sign-off Recorded</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+        </div>
+
+        {/* Statutory Formal PDF Report Generator Card */}
+        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 rounded-2xl p-5 text-white shadow-md border border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold tracking-wider uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                Statutory Output
+              </span>
+              <span className="text-xs text-slate-400 font-mono">ISO 45001 / GCC HSE Standard</span>
+            </div>
+            <h4 className="text-sm font-black tracking-tight text-white flex items-center gap-2">
+              <FileText size={16} className="text-emerald-400" />
+              Formal HSE Inspection Audit PDF Report
+            </h4>
+            <p className="text-xs text-slate-300 max-w-xl">
+              Generates a printable A4 PDF compliance document with timestamped metadata, GPS coordinates, checklist findings, annotated photographic evidence, and verified digital signatures.
+            </p>
+          </div>
+          <button
+            onClick={handleDownloadPdfReport}
+            disabled={isExportingPdf}
+            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-50"
+          >
+            {isExportingPdf ? (
+              <>
+                <RefreshCw size={16} className="animate-spin text-slate-950" />
+                <span>Generating PDF...</span>
+              </>
+            ) : (
+              <>
+                <Download size={16} className="text-slate-950" />
+                <span>Download Formal PDF Report</span>
+              </>
+            )}
+          </button>
         </div>
 
       </div>

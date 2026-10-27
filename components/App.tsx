@@ -107,7 +107,7 @@ const ContractorPortal = React.lazy(() => import('./contractors/ContractorPortal
 const ExecutiveDashboard = React.lazy(() => import('./system/ExecutiveDashboard').then(m => ({ default: m.ExecutiveDashboard })));
 const PricingGtmModule = React.lazy(() => import('./system/PricingGtmModule').then(m => ({ default: m.PricingGtmModule })));
 const DesignSystemGallery = React.lazy(() => import('./DesignSystemGallery'));
-const RegulatoryUpdatesDashboard = React.lazy(() => import('./regulatory/RegulatoryUpdatesDashboard').then(m => ({ default: m.RegulatoryUpdatesDashboard })));
+const RegulatoryUpdatesDashboard = React.lazy(() => import('./regulatory/RegulatoryUpdatesDashboard').then(m => ({ default: m.default || m.RegulatoryUpdatesDashboard })));
 
 // Mock Data for Global Search Indexing
 const GLOBAL_SEARCH_INDEX = [

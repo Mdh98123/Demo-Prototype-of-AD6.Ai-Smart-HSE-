@@ -1008,3 +1008,5 @@ export const RegulatoryUpdatesDashboard: React.FC<RegulatoryUpdatesDashboardProp
     </div>
   );
 };
+
+export default RegulatoryUpdatesDashboard;

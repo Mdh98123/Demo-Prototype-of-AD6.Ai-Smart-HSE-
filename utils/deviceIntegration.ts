@@ -70,6 +70,7 @@ export class DeviceIntegration {
     imageSource: File | Blob | string,
     metadata?: {
       caption?: string;
+      tags?: string[];
       location?: { lat: number; lng: number };
       uploader?: string;
     }
@@ -116,7 +117,8 @@ export class DeviceIntegration {
         status: 'DRAFT',
         data: {
           answers: {},
-          photos: []
+          photos: [],
+          tags: []
         },
         location: metadata?.location,
         createdAt: new Date().toISOString(),
@@ -127,11 +129,30 @@ export class DeviceIntegration {
     const currentPhotos = Array.isArray(record.data?.photos) ? [...record.data.photos] : [];
     currentPhotos.push(compressedBase64);
 
+    // Merge existing and new ML auto-tags
+    const currentTags: string[] = Array.isArray(record.data?.tags) ? [...record.data.tags] : [];
+    const newTags: string[] = Array.isArray(metadata?.tags) ? metadata.tags : [];
+    const mergedTags = Array.from(new Set([...currentTags, ...newTags]));
+
+    // Maintain detailed photo evidence metadata list with tags
+    const photoDetails = Array.isArray(record.data?.photoDetails) ? [...record.data.photoDetails] : [];
+    photoDetails.push({
+      id: `photo-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      url: compressedBase64,
+      caption: metadata?.caption || '',
+      tags: newTags,
+      timestamp: new Date().toISOString(),
+      compressedSizeKb: Math.round(compressedSize / 1024),
+      uploader: metadata?.uploader || 'Field Inspector'
+    });
+
     const updatedRecord: InspectionRecord = {
       ...record,
       data: {
         ...record.data,
         photos: currentPhotos,
+        tags: mergedTags,
+        photoDetails,
         ...(metadata?.caption ? { lastEvidenceCaption: metadata.caption } : {})
       },
       ...(metadata?.location ? { location: metadata.location } : {}),
@@ -163,10 +184,15 @@ export class DeviceIntegration {
   // VOICE INPUT (Web Speech API)
   // ============================
   public static startSpeechRecognition(
-    lang: 'en-US' | 'ar-AE',
+    lang: 'en-US' | 'ar-AE' | 'ar-OM' | string,
     onResult: (text: string) => void,
     onError: (err: any) => void,
-    onEnd: () => void
+    onEnd: () => void,
+    options?: {
+      continuous?: boolean;
+      interimResults?: boolean;
+      onInterimResult?: (interim: string) => void;
+    }
   ) {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     
@@ -176,19 +202,25 @@ export class DeviceIntegration {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = true;
+    recognition.continuous = options?.continuous ?? false;
+    recognition.interimResults = options?.interimResults ?? true;
     recognition.lang = lang;
 
     recognition.onresult = (event: any) => {
       let finalTranscript = '';
+      let interimTranscript = '';
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
           finalTranscript += event.results[i][0].transcript;
+        } else {
+          interimTranscript += event.results[i][0].transcript;
         }
       }
+      if (interimTranscript && options?.onInterimResult) {
+        options.onInterimResult(interimTranscript);
+      }
       if (finalTranscript) {
-         onResult(finalTranscript);
+        onResult(finalTranscript);
       }
     };
 
@@ -198,7 +230,7 @@ export class DeviceIntegration {
     };
 
     recognition.onend = () => {
-       onEnd();
+      onEnd();
     };
 
     recognition.start();

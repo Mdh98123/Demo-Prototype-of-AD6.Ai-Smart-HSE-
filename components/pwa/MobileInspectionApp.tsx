@@ -6,13 +6,17 @@ import { InspectionDetail } from './InspectionDetail';
 import { ConflictResolver } from './ConflictResolver';
 import { InspectionRecord, offlineStorage } from '../../services/offlineStorage';
 import { HeatmapLayer, HeatmapMetric, METRIC_CONFIGS, METRIC_GRADIENTS } from './HeatmapLayer';
+import { ImageAnnotationTool } from './ImageAnnotationTool';
+import { InspectionTemplateBuilder } from './InspectionTemplateBuilder';
 import { 
   Plus, ListChecks, MapPin, ChevronRight, AlertTriangle, Camera, Zap,
   Layers, RefreshCw, Eye, CheckCircle2, SlidersHorizontal, Info, ShieldCheck, Flame,
-  SwitchCamera, X, Check, Image as ImageIcon, RotateCcw, Sparkles
+  SwitchCamera, X, Check, Image as ImageIcon, RotateCcw, Sparkles,
+  Tag, Search, Filter, Cpu, Bot, Download
 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { DeviceIntegration } from '../../utils/deviceIntegration';
+import { InspectionPdfReportService } from '../../services/inspectionPdfReportService';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -50,10 +54,12 @@ function deg2rad(deg: number) {
 
 export const MobileInspectionApp: React.FC = () => {
   const { dir } = useLanguage();
-  const [view, setView] = useState<'LIST' | 'INSPECT' | 'DETAIL'>('LIST');
+  const [view, setView] = useState<'LIST' | 'INSPECT' | 'DETAIL' | 'TEMPLATE_BUILDER'>('LIST');
+  const [selectedInspectionTemplateId, setSelectedInspectionTemplateId] = useState<string | undefined>(undefined);
   const [selectedRecord, setSelectedRecord] = useState<InspectionRecord | null>(null);
   const [inspections, setInspections] = useState<InspectionRecord[]>([]);
   const [userLoc, setUserLoc] = useState<{lat: number, lng: number} | null>(null);
+  const [pdfDownloadingId, setPdfDownloadingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -235,8 +241,9 @@ export const MobileInspectionApp: React.FC = () => {
     startCameraStream(facingMode);
   };
 
-  const handleSaveCapturedEvidence = async () => {
-    if (!capturedPreview) return;
+  const handleSaveCapturedEvidence = async (annotatedDataUrl?: string, customCaption?: string, tags?: string[]) => {
+    const photoToSave = annotatedDataUrl || capturedPreview;
+    if (!photoToSave) return;
     setIsCompressingAndSaving(true);
 
     try {
@@ -246,11 +253,14 @@ export const MobileInspectionApp: React.FC = () => {
         targetId = activeDraft ? activeDraft.id : `INSP-${Date.now().toString().slice(-6)}`;
       }
 
+      const finalCaption = (customCaption !== undefined ? customCaption : capturedCaption).trim() || undefined;
+
       const result = await DeviceIntegration.compressAndStoreInspectionPhoto(
         targetId,
-        capturedPreview,
+        photoToSave,
         {
-          caption: capturedCaption.trim() || undefined,
+          caption: finalCaption,
+          tags: tags && tags.length > 0 ? tags : undefined,
           location: userLoc || undefined
         }
       );
@@ -261,9 +271,10 @@ export const MobileInspectionApp: React.FC = () => {
         savingsPct: result.savingsPct
       });
 
+      const tagsLabel = tags && tags.length > 0 ? ` • ML Tags: ${tags.slice(0, 3).join(', ')}` : '';
       setCameraToast({
-        title: 'Evidence Compressed & Stored Offline',
-        subtitle: `DeviceIntegration: ${result.originalSizeKb} KB → ${result.compressedSizeKb} KB (${result.savingsPct}% saved) in hse-offline-db`
+        title: 'Evidence Auto-Tagged & Stored Offline',
+        subtitle: `TensorFlow.js Edge ML: ${result.originalSizeKb} KB → ${result.compressedSizeKb} KB (${result.savingsPct}% saved)${tagsLabel}`
       });
       setTimeout(() => setCameraToast(null), 5000);
 
@@ -287,19 +298,13 @@ export const MobileInspectionApp: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    try {
-      const result = await DeviceIntegration.compressAndStoreInspectionPhoto(record.id, file, {
-        location: userLoc || undefined
-      });
-      setCameraToast({
-        title: 'Photo Evidence Stored',
-        subtitle: `Compressed: ${result.originalSizeKb} KB → ${result.compressedSizeKb} KB via DeviceIntegration`
-      });
-      setTimeout(() => setCameraToast(null), 4000);
-      loadInspections();
-    } catch (err) {
-      console.error(err);
-    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCameraTargetRecord(record);
+      setCapturedPreview(reader.result as string);
+      setIsCameraModalOpen(true);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleToggleUrgent = async (record: InspectionRecord) => {
@@ -349,6 +354,68 @@ export const MobileInspectionApp: React.FC = () => {
   const pendingCount = inspections.filter(i => i.status === 'PENDING_SYNC').length;
   const urgentCount = inspections.filter(i => i.status === 'PENDING_SYNC' && i.priority === 'URGENT').length;
   const syncedCount = inspections.filter(i => i.status === 'SYNCED').length;
+
+  // ML Keyword & Tag Search Filtering in Offline Database
+  const [tagSearchQuery, setTagSearchQuery] = useState<string>('');
+  const [selectedTagFilter, setSelectedTagFilter] = useState<string>('ALL');
+
+  // Extract all unique tags present across offline records and photos
+  const availableTags = React.useMemo(() => {
+    const tagSet = new Set<string>();
+    ['scaffolding', 'PPE', 'corrosion', 'electrical', 'work at height'].forEach(t => tagSet.add(t));
+    
+    inspections.forEach(record => {
+      if (Array.isArray(record.data?.tags)) {
+        record.data.tags.forEach((t: string) => {
+          if (t && typeof t === 'string') tagSet.add(t.toLowerCase().trim());
+        });
+      }
+      if (Array.isArray(record.data?.photos)) {
+        record.data.photos.forEach((p: any) => {
+          if (Array.isArray(p?.tags)) {
+            p.tags.forEach((t: string) => {
+              if (t && typeof t === 'string') tagSet.add(t.toLowerCase().trim());
+            });
+          }
+        });
+      }
+    });
+    return Array.from(tagSet).filter(Boolean);
+  }, [inspections]);
+
+  // Filtered records matching search query and active tag filter
+  const filteredInspections = React.useMemo(() => {
+    return inspections.filter(record => {
+      if (record.status === 'CONFLICT') return false;
+
+      // Tag filter
+      if (selectedTagFilter !== 'ALL') {
+        const recordTags: string[] = [
+          ...(Array.isArray(record.data?.tags) ? record.data.tags : []),
+          ...(Array.isArray(record.data?.photos) ? record.data.photos.flatMap((p: any) => p?.tags || []) : [])
+        ].map(t => (typeof t === 'string' ? t.toLowerCase() : ''));
+
+        const matchesTag = recordTags.some(t => t.includes(selectedTagFilter.toLowerCase()));
+        if (!matchesTag) return false;
+      }
+
+      // Query search
+      if (tagSearchQuery.trim()) {
+        const query = tagSearchQuery.toLowerCase().trim();
+        const inId = record.id.toLowerCase().includes(query);
+        const inTemplate = (record.templateId || '').toLowerCase().includes(query);
+        const inCaption = (record.data?.photoDetails?.caption || '').toLowerCase().includes(query);
+        const recordTags = [
+          ...(Array.isArray(record.data?.tags) ? record.data.tags : []),
+          ...(Array.isArray(record.data?.photos) ? record.data.photos.flatMap((p: any) => p?.tags || []) : [])
+        ].map(t => (typeof t === 'string' ? t.toLowerCase() : ''));
+        const inTags = recordTags.some(t => t.includes(query));
+        return inId || inTemplate || inCaption || inTags;
+      }
+
+      return true;
+    });
+  }, [inspections, selectedTagFilter, tagSearchQuery]);
 
   return (
     <div className={`flex flex-col h-full relative overflow-hidden ${dir === 'rtl' ? 'rtl font-arabic' : 'ltr font-sans'}`}>
@@ -408,15 +475,29 @@ export const MobileInspectionApp: React.FC = () => {
                  <h1 className="text-2xl font-black text-slate-800 tracking-tight">Field Inspections</h1>
                  <p className="text-xs font-medium text-slate-500">Offline PWA with compressed photo evidence</p>
                </div>
-               <button
-                 type="button"
-                 onClick={() => openNativeCamera()}
-                 className="px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 flex items-center gap-2 active:scale-95 transition-all shrink-0"
-                 title="Open native camera for field evidence"
-               >
-                 <Camera size={15} />
-                 <span>Evidence Camera</span>
-               </button>
+               <div className="flex items-center gap-2 shrink-0">
+                 <button
+                   type="button"
+                   onClick={() => setView('TEMPLATE_BUILDER')}
+                   className="px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 active:scale-95 transition-all"
+                   title="Open dynamic checklist template builder"
+                 >
+                   <SlidersHorizontal size={14} className="text-indigo-600" />
+                   <span className="hidden sm:inline">Template Builder</span>
+                   <span className="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-1.5 py-0.2 rounded border border-indigo-200">
+                     Admin
+                   </span>
+                 </button>
+                 <button
+                   type="button"
+                   onClick={() => openNativeCamera()}
+                   className="px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 flex items-center gap-2 active:scale-95 transition-all shrink-0"
+                   title="Open native camera for field evidence"
+                 >
+                   <Camera size={15} />
+                   <span>Evidence Camera</span>
+                 </button>
+               </div>
              </div>
              
              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -629,19 +710,101 @@ export const MobileInspectionApp: React.FC = () => {
                </div>
              )}
              
+             {/* TensorFlow.js ML Tag & Offline Database Search Bar */}
+             <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xs space-y-2.5">
+               <div className="flex items-center gap-2">
+                 <div className="relative flex-1">
+                   <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                   <input
+                     type="text"
+                     value={tagSearchQuery}
+                     onChange={(e) => setTagSearchQuery(e.target.value)}
+                     placeholder="Search offline database by keyword, tag, or ID..."
+                     className="w-full pl-8.5 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                   />
+                   {tagSearchQuery && (
+                     <button 
+                       onClick={() => setTagSearchQuery('')}
+                       className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                     >
+                       <X size={13} />
+                     </button>
+                   )}
+                 </div>
+                 <div className="flex items-center gap-1.5 px-2.5 py-2 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-xl text-[11px] font-bold shrink-0">
+                   <Bot size={13} className="text-indigo-600" />
+                   <span>ML Auto-Tagger</span>
+                 </div>
+               </div>
+
+               {/* Filter Tag Chips */}
+               <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+                 <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 shrink-0">Filter:</span>
+                 <button
+                   type="button"
+                   onClick={() => setSelectedTagFilter('ALL')}
+                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 ${
+                     selectedTagFilter === 'ALL'
+                       ? 'bg-indigo-600 text-white shadow-xs'
+                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                   }`}
+                 >
+                   All ({inspections.filter(i => i.status !== 'CONFLICT').length})
+                 </button>
+                 {availableTags.map(tag => {
+                   const count = inspections.filter(i => {
+                     const tags = [
+                       ...(Array.isArray(i.data?.tags) ? i.data.tags : []),
+                       ...(Array.isArray(i.data?.photos) ? i.data.photos.flatMap((p: any) => p?.tags || []) : [])
+                     ].map(t => (typeof t === 'string' ? t.toLowerCase() : ''));
+                     return tags.some(t => t.includes(tag.toLowerCase()));
+                   }).length;
+
+                   return (
+                     <button
+                       key={tag}
+                       type="button"
+                       onClick={() => setSelectedTagFilter(selectedTagFilter === tag ? 'ALL' : tag)}
+                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 flex items-center gap-1.5 border ${
+                         selectedTagFilter === tag
+                           ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                           : 'bg-white text-slate-700 border-slate-200 hover:border-indigo-300'
+                       }`}
+                     >
+                       <Tag size={10} className={selectedTagFilter === tag ? 'text-white' : 'text-indigo-500'} />
+                       <span>{tag}</span>
+                       {count > 0 && (
+                         <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono ${
+                           selectedTagFilter === tag ? 'bg-indigo-700 text-indigo-100' : 'bg-slate-100 text-slate-500'
+                         }`}>
+                           {count}
+                         </span>
+                       )}
+                     </button>
+                   );
+                 })}
+               </div>
+             </div>
+             
              <div className="space-y-4">
                {inspections.filter(i => i.status === 'CONFLICT').map(record => (
                   <ConflictResolver key={record.id} record={record} onResolved={loadInspections} />
                ))}
 
-               {inspections.filter(i => i.status !== 'CONFLICT').length === 0 && (
-                  <div className="text-center py-12 text-slate-400 font-bold flex flex-col items-center">
-                     <ListChecks size={48} className="mb-4 opacity-50" />
-                     No offline records. Tap + to begin.
+               {filteredInspections.length === 0 && (
+                  <div className="text-center py-12 text-slate-400 font-bold flex flex-col items-center glass-card rounded-2xl border border-slate-200/80 p-8">
+                     <ListChecks size={42} className="mb-3 opacity-40 text-slate-500" />
+                     <p className="text-sm text-slate-700 font-bold">No offline records match the selected tag or search.</p>
+                     <button
+                       onClick={() => { setSelectedTagFilter('ALL'); setTagSearchQuery(''); }}
+                       className="mt-3 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold hover:bg-indigo-100 transition-colors"
+                     >
+                       Clear Filters & Show All
+                     </button>
                   </div>
                )}
 
-               {inspections.filter(i => i.status !== 'CONFLICT').map(record => (
+               {filteredInspections.map(record => (
                   <div 
                      key={record.id} 
                      className="w-full glass-card p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col gap-2 hover:border-indigo-300 transition-colors group relative"
@@ -657,6 +820,29 @@ export const MobileInspectionApp: React.FC = () => {
                               {record.status === 'PENDING_SYNC' && <span className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Pending</span>}
                               {record.status === 'DRAFT' && <span className="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Draft</span>}
                            </div>
+                           <button 
+                              type="button"
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                try {
+                                  setPdfDownloadingId(record.id);
+                                  await InspectionPdfReportService.downloadInspectionPdf(record);
+                                } catch (err: any) {
+                                  alert('Failed to generate PDF: ' + (err.message || 'Unknown error'));
+                                } finally {
+                                  setPdfDownloadingId(null);
+                                }
+                              }}
+                              disabled={pdfDownloadingId === record.id}
+                              className="p-2 bg-slate-100 hover:bg-slate-200 active:scale-95 rounded-full transition-all text-slate-700 hover:text-slate-950 shadow-xs cursor-pointer disabled:opacity-50" 
+                              title="Download Formal PDF Report"
+                           >
+                              {pdfDownloadingId === record.id ? (
+                                <RefreshCw size={15} className="animate-spin text-emerald-600" />
+                              ) : (
+                                <Download size={15} />
+                              )}
+                           </button>
                            <button 
                               type="button"
                               onClick={(e) => {
@@ -708,6 +894,36 @@ export const MobileInspectionApp: React.FC = () => {
                         </div>
                      )}
 
+                     {/* ML Auto-Tagger Suggested Keywords & Badges */}
+                     {((record.data?.tags && record.data.tags.length > 0) || (record.data?.photoDetails?.tags && record.data.photoDetails.tags.length > 0)) && (
+                        <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100">
+                           <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
+                              <Tag size={10} className="text-indigo-500" />
+                              ML Tags:
+                           </span>
+                           {Array.from(new Set([
+                              ...(Array.isArray(record.data?.tags) ? record.data.tags : []),
+                              ...(Array.isArray(record.data?.photoDetails?.tags) ? record.data.photoDetails.tags : [])
+                           ])).map((tag: string, idx: number) => (
+                              <span 
+                                 key={idx} 
+                                 onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedTagFilter(selectedTagFilter.toLowerCase() === tag.toLowerCase() ? 'ALL' : tag);
+                                 }}
+                                 className={`px-2 py-0.5 rounded-md text-[10px] font-bold cursor-pointer transition-colors border ${
+                                    selectedTagFilter.toLowerCase() === tag.toLowerCase()
+                                       ? 'bg-indigo-600 text-white border-indigo-600'
+                                       : 'bg-indigo-50 text-indigo-700 border-indigo-200/80 hover:bg-indigo-100'
+                                 }`}
+                                 title={`Filter offline records by #${tag}`}
+                              >
+                                 #{tag}
+                              </span>
+                           ))}
+                        </div>
+                     )}
+
                      {/* Urgent Sync Priority Queue Banner & Controller */}
                      {record.status === 'PENDING_SYNC' && (
                         <div className="flex items-center justify-between pt-2 border-t border-slate-100 mt-1">
@@ -754,6 +970,25 @@ export const MobileInspectionApp: React.FC = () => {
 
        {/* Framer Motion Overlay Panels with Exit Animations */}
        <AnimatePresence>
+         {view === 'TEMPLATE_BUILDER' && (
+           <motion.div
+             initial={{ opacity: 0, scale: 0.98 }}
+             animate={{ opacity: 1, scale: 1 }}
+             exit={{ opacity: 0, scale: 0.98 }}
+             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+             className="absolute inset-0 glass-card z-[100] flex flex-col"
+           >
+              <SyncStatusBar />
+              <InspectionTemplateBuilder 
+                onBack={() => setView('LIST')}
+                onSelectTemplateToInspect={(tmplId) => {
+                  setSelectedInspectionTemplateId(tmplId);
+                  setView('INSPECT');
+                }}
+              />
+           </motion.div>
+         )}
+
          {view === 'INSPECT' && (
            <motion.div
              initial={{ opacity: 0, y: 30 }}
@@ -763,7 +998,11 @@ export const MobileInspectionApp: React.FC = () => {
              className="absolute inset-0 glass-card z-[100] flex flex-col"
            >
               <SyncStatusBar />
-              <InspectionChecklist onComplete={handleComplete} />
+              <InspectionChecklist 
+                initialTemplateId={selectedInspectionTemplateId}
+                onCancel={() => setView('LIST')}
+                onComplete={handleComplete} 
+              />
            </motion.div>
          )}
 
@@ -802,154 +1041,123 @@ export const MobileInspectionApp: React.FC = () => {
              exit={{ opacity: 0 }}
              className="fixed inset-0 z-[250] bg-slate-950/95 backdrop-blur-xl flex flex-col justify-between overflow-hidden select-none font-sans"
            >
-             {/* Flash Effect Animation */}
-             {capturedFlash && (
-               <div className="absolute inset-0 bg-white z-[300] pointer-events-none animate-pulse" />
-             )}
-
-             {/* Modal Header */}
-             <div className="p-4 pt-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between z-20">
-               <div className="flex items-center gap-3">
-                 <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
-                   <Camera size={18} />
-                 </div>
-                 <div>
-                   <h3 className="text-white font-black text-sm tracking-wide flex items-center gap-2">
-                     <span>Evidence Camera</span>
-                     <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
-                       Offline DB
-                     </span>
-                   </h3>
-                   <p className="text-slate-400 text-[11px] truncate max-w-[200px] sm:max-w-xs">
-                     {cameraTargetRecord ? `Target: ${cameraTargetRecord.templateId}` : 'Active Field Evidence'}
-                   </p>
-                 </div>
-               </div>
-
-               <div className="flex items-center gap-2">
-                 {!capturedPreview && (
-                   <button
-                     type="button"
-                     onClick={toggleFacingMode}
-                     className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
-                     title="Switch Front/Rear Camera"
-                   >
-                     <SwitchCamera size={18} />
-                   </button>
+             {capturedPreview ? (
+               <ImageAnnotationTool
+                 imageSrc={capturedPreview}
+                 onSave={handleSaveCapturedEvidence}
+                 onRetake={handleRetake}
+                 onClose={closeNativeCamera}
+                 isSaving={isCompressingAndSaving}
+                 initialCaption={capturedCaption}
+                 targetRecordTitle={cameraTargetRecord ? `Target: ${cameraTargetRecord.templateId}` : undefined}
+               />
+             ) : (
+               <>
+                 {/* Flash Effect Animation */}
+                 {capturedFlash && (
+                   <div className="absolute inset-0 bg-white z-[300] pointer-events-none animate-pulse" />
                  )}
-                 <button
-                   type="button"
-                   onClick={closeNativeCamera}
-                   className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
-                   title="Close Camera"
-                 >
-                   <X size={18} />
-                 </button>
-               </div>
-             </div>
 
-             {/* Viewfinder Canvas / Review Area */}
-             <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
-               {!capturedPreview ? (
-                 <div className="relative w-full max-w-md aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl flex items-center justify-center">
-                   {/* Live Video Stream */}
-                   <video
-                     ref={videoRef}
-                     autoPlay
-                     playsInline
-                     muted
-                     className="w-full h-full object-cover"
-                   />
-
-                   {/* Framing Reticle Overlays */}
-                   <div className="absolute inset-6 border border-white/20 rounded-2xl pointer-events-none flex flex-col justify-between p-3">
-                     <div className="flex justify-between items-start">
-                       <div className="w-6 h-6 border-t-2 border-l-2 border-indigo-400 rounded-tl-lg" />
-                       <div className="w-6 h-6 border-t-2 border-r-2 border-indigo-400 rounded-tr-lg" />
+                 {/* Modal Header */}
+                 <div className="p-4 pt-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between z-20">
+                   <div className="flex items-center gap-3">
+                     <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
+                       <Camera size={18} />
                      </div>
-                     <div className="flex items-center justify-center opacity-40">
-                       <div className="w-8 h-8 rounded-full border border-dashed border-white" />
-                     </div>
-                     <div className="flex justify-between items-end">
-                       <div className="w-6 h-6 border-b-2 border-l-2 border-indigo-400 rounded-bl-lg" />
-                       <div className="w-6 h-6 border-b-2 border-r-2 border-indigo-400 rounded-br-lg" />
-                     </div>
-                   </div>
-
-                   {/* Geotag & Time Badge Overlay */}
-                   <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[10px] text-white/80 font-mono bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
-                     <div className="flex items-center gap-1.5">
-                       <MapPin size={11} className="text-indigo-400" />
-                       <span>{userLoc ? `${userLoc.lat.toFixed(4)}, ${userLoc.lng.toFixed(4)}` : 'Geotagging Ready'}</span>
-                     </div>
-                     <span>{new Date().toLocaleTimeString()}</span>
-                   </div>
-
-                   {/* Fallback & Permission Warning Overlay */}
-                   {cameraError && (
-                     <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-center z-30">
-                       <div className="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center mb-3">
-                         <AlertTriangle size={28} />
-                       </div>
-                       <h4 className="text-white font-bold text-sm mb-1">Direct Stream Unavailable</h4>
-                       <p className="text-slate-400 text-xs max-w-xs mb-4 leading-relaxed">
-                         {cameraError}
+                     <div>
+                       <h3 className="text-white font-black text-sm tracking-wide flex items-center gap-2">
+                         <span>Evidence Camera</span>
+                         <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
+                           Offline DB
+                         </span>
+                       </h3>
+                       <p className="text-slate-400 text-[11px] truncate max-w-[200px] sm:max-w-xs">
+                         {cameraTargetRecord ? `Target: ${cameraTargetRecord.templateId}` : "Active Field Evidence"}
                        </p>
-                       <button
-                         type="button"
-                         onClick={() => fallbackFileInputRef.current?.click()}
-                         className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-all"
-                       >
-                         <Camera size={16} />
-                         <span>Open Device Camera</span>
-                       </button>
                      </div>
-                   )}
+                   </div>
+
+                   <div className="flex items-center gap-2">
+                     <button
+                       type="button"
+                       onClick={toggleFacingMode}
+                       className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
+                       title="Switch Front/Rear Camera"
+                     >
+                       <SwitchCamera size={18} />
+                     </button>
+                     <button
+                       type="button"
+                       onClick={closeNativeCamera}
+                       className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
+                       title="Close Camera"
+                     >
+                       <X size={18} />
+                     </button>
+                   </div>
                  </div>
-               ) : (
-                 <div className="w-full max-w-md flex flex-col items-center gap-3 max-h-full">
-                   <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl">
-                     <img
-                       src={capturedPreview}
-                       alt="Captured Evidence Preview"
-                       className="w-full h-full object-contain"
+
+                 {/* Viewfinder Canvas Area */}
+                 <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
+                   <div className="relative w-full max-w-md aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl flex items-center justify-center">
+                     {/* Live Video Stream */}
+                     <video
+                       ref={videoRef}
+                       autoPlay
+                       playsInline
+                       muted
+                       className="w-full h-full object-cover"
                      />
-                     <div className="absolute top-3 end-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/15 text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                       <Sparkles size={11} />
-                       <span>Ready for Offline DB</span>
-                     </div>
-                   </div>
 
-                   {/* Compression Details & Caption Input */}
-                   <div className="w-full space-y-2">
-                     <div className="flex items-center justify-between text-[11px] text-slate-300 bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800">
-                       <span className="flex items-center gap-1.5 text-slate-400">
-                         <ShieldCheck size={14} className="text-indigo-400" />
-                         <span>Compression Engine:</span>
-                       </span>
-                       <span className="font-mono font-bold text-indigo-300">
-                         DeviceIntegration (max 1280px, &lt;500KB)
-                       </span>
+                     {/* Framing Reticle Overlays */}
+                     <div className="absolute inset-6 border border-white/20 rounded-2xl pointer-events-none flex flex-col justify-between p-3">
+                       <div className="flex justify-between items-start">
+                         <div className="w-6 h-6 border-t-2 border-l-2 border-indigo-400 rounded-tl-lg" />
+                         <div className="w-6 h-6 border-t-2 border-r-2 border-indigo-400 rounded-tr-lg" />
+                       </div>
+                       <div className="flex items-center justify-center opacity-40">
+                         <div className="w-8 h-8 rounded-full border border-dashed border-white" />
+                       </div>
+                       <div className="flex justify-between items-end">
+                         <div className="w-6 h-6 border-b-2 border-l-2 border-indigo-400 rounded-bl-lg" />
+                         <div className="w-6 h-6 border-b-2 border-r-2 border-indigo-400 rounded-br-lg" />
+                       </div>
                      </div>
 
-                     <div className="relative">
-                       <input
-                         type="text"
-                         value={capturedCaption}
-                         onChange={(e) => setCapturedCaption(e.target.value)}
-                         placeholder="Optional: Enter evidence note, location, or tag..."
-                         className="w-full px-4 py-2.5 bg-slate-900/90 border border-slate-700/80 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors"
-                       />
+                     {/* Geotag & Time Badge Overlay */}
+                     <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[10px] text-white/80 font-mono bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                       <div className="flex items-center gap-1.5">
+                         <MapPin size={11} className="text-indigo-400" />
+                         <span>{userLoc ? `${userLoc.lat.toFixed(4)}, ${userLoc.lng.toFixed(4)}` : "Geotagging Ready"}</span>
+                       </div>
+                       <span>{new Date().toLocaleTimeString()}</span>
                      </div>
+
+                     {/* Fallback & Permission Warning Overlay */}
+                     {cameraError && (
+                       <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-center z-30">
+                         <div className="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center mb-3">
+                           <AlertTriangle size={28} />
+                         </div>
+                         <h4 className="text-white font-bold text-sm mb-1">Direct Stream Unavailable</h4>
+                         <p className="text-slate-400 text-xs max-w-xs mb-4 leading-relaxed">
+                           {cameraError}
+                         </p>
+                         <button
+                           type="button"
+                           onClick={() => fallbackFileInputRef.current?.click()}
+                           className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-all"
+                         >
+                           <Camera size={16} />
+                           <span>Open Device Camera</span>
+                         </button>
+                       </div>
+                     )}
                    </div>
                  </div>
-               )}
-             </div>
 
-             {/* Modal Bottom Action Controls */}
-             <div className="p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-around z-20">
-               {!capturedPreview ? (
-                 <>
+                 {/* Modal Bottom Action Controls */}
+                 <div className="p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-around z-20">
                    <button
                      type="button"
                      onClick={() => fallbackFileInputRef.current?.click()}
@@ -983,40 +1191,9 @@ export const MobileInspectionApp: React.FC = () => {
                      </div>
                      <span className="text-[10px] font-bold">Flip</span>
                    </button>
-                 </>
-               ) : (
-                 <div className="flex items-center gap-4 w-full max-w-md">
-                   <button
-                     type="button"
-                     onClick={handleRetake}
-                     disabled={isCompressingAndSaving}
-                     className="flex-1 py-3 px-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
-                   >
-                     <RotateCcw size={15} />
-                     <span>Retake</span>
-                   </button>
-
-                   <button
-                     type="button"
-                     onClick={handleSaveCapturedEvidence}
-                     disabled={isCompressingAndSaving}
-                     className="flex-2 py-3 px-5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-95 disabled:opacity-50"
-                   >
-                     {isCompressingAndSaving ? (
-                       <>
-                         <RefreshCw size={15} className="animate-spin" />
-                         <span>Compressing & Saving...</span>
-                       </>
-                     ) : (
-                       <>
-                         <Check size={16} />
-                         <span>Save to Offline DB</span>
-                       </>
-                     )}
-                   </button>
                  </div>
-               )}
-             </div>
+               </>
+             )}
            </motion.div>
          )}
        </AnimatePresence>

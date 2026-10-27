@@ -8,7 +8,7 @@
     "start": "node dist/server.cjs",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "lint": "tsc --noEmit",
-    "test": "node --import tsx --test test/health.test.mjs test/auth_regression.test.mjs test/pdf-export.test.mjs test/workflow.test.mjs test/workflow-server.test.mjs",
+    "test": "node --import tsx --test test/health.test.mjs test/auth_regression.test.mjs test/pdf-export.test.mjs test/workflow.test.mjs test/workflow-server.test.mjs test/inspection_template.test.mjs test/ml_autotagger.test.mjs test/speech_commands.test.mjs test/inspection_pdf.test.mjs",
     "preview": "vite preview",
     "prepare": "husky || true"
   },
@@ -20,6 +20,8 @@
   "dependencies": {
     "@google-cloud/logging": "11.4.0",
     "@google/genai": "1.42.0",
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.22.0",
     "browser-image-compression": "2.0.2",
     "canvas-confetti": "1.9.3",
     "class-variance-authority": "0.7.1",
