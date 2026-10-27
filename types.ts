@@ -746,6 +746,30 @@ export interface MOCRequest {
   approvals: { role: string; name: string; date: string; status: string }[];
 }
 
+export type RegulatoryBadgeType = 'OFFICIAL' | 'REPORTED';
+
+export interface RegulatoryAnnouncementItem {
+  id: string;
+  title: string;
+  titleAr?: string;
+  authority: string;
+  jurisdiction: string;
+  badgeType: RegulatoryBadgeType;
+  topicChips: string[];
+  publicationDate: string;
+  effectiveDate: string;
+  summary: string;
+  keyObligations: string[];
+  sourceUrl: string;
+  sourceName: string;
+  impactLevel: 'Critical' | 'High' | 'Medium' | 'Low';
+  statutoryFine: string;
+  penaltyExposureAed: number;
+  category: string;
+  inLegalRegister?: boolean;
+  legalRegisterObligationId?: string;
+}
+
 export interface RegulatoryUpdate {
   id: string;
   title: string;

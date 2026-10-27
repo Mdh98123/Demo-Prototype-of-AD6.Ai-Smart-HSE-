@@ -16,9 +16,10 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts';
+import { RegulatoryUpdatesDashboard } from './regulatory/RegulatoryUpdatesDashboard';
 
 const ComplyFlowModule: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'Radar' | 'Matrix' | 'Fines' | 'Reporting'>('Radar');
+  const [activeTab, setActiveTab] = useState<'Radar' | 'Matrix' | 'Fines' | 'Reporting' | 'Latest Updates'>('Radar');
   const [regulations, setRegulations] = useState<RegulatoryUpdate[]>([]);
   const [mappings, setMappings] = useState<OperationalMapping[]>([]);
   const [risks, setRisks] = useState<FineRisk[]>([]);
@@ -90,16 +91,16 @@ const ComplyFlowModule: React.FC = () => {
             <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2 border-s-4 border-teal-500 ps-4">Automated Regulatory Intelligence & Fine Prevention</p>
           </div>
         </div>
-        <div className="flex gap-2 bg-slate-100 p-1.5 rounded-2xl">
-          {['Radar', 'Matrix', 'Fines', 'Reporting'].map(tab => (
+        <div className="flex flex-wrap gap-2 bg-slate-100 p-1.5 rounded-2xl">
+          {['Radar', 'Latest Updates', 'Matrix', 'Fines', 'Reporting'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
-              className={`px-8 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${
+              className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${
                 activeTab === tab ? 'glass-card text-teal-900 shadow-lg' : 'text-slate-500 hover:text-slate-700'
               }`}
             >
-              {tab}
+              {tab === 'Latest Updates' ? 'Latest Updates (Live Feed)' : tab}
             </button>
           ))}
         </div>
@@ -211,6 +212,12 @@ const ComplyFlowModule: React.FC = () => {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'Latest Updates' && (
+        <div className="space-y-6">
+          <RegulatoryUpdatesDashboard />
         </div>
       )}
 

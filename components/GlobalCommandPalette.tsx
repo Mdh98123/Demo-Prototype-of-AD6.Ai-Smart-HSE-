@@ -36,6 +36,7 @@ const GLOBAL_SEARCH_INDEX = [
 
   // 4. Risk & Governance
   { id: 'hazards', title: 'Hazard Register', subtitle: 'Enterprise 5x5 risk matrix, bowtie links & mitigation tracking', type: 'Risk & Governance', view: View.HAZARDS },
+  { id: 'regulatory-updates', title: 'Latest Regulatory Updates & Announcements', subtitle: 'Live gazettes, ministerial decrees & legal register sync (/api/regulatory/latest)', type: 'Risk & Governance', view: View.REGULATORY_INTELLIGENCE },
   { id: 'bowtie', title: 'Bowtie Risk Visualizer', subtitle: 'Threat barrier analysis, escalation factors & consequence controls', type: 'Risk & Governance', view: View.BOWTIE },
   { id: 'legal', title: 'Legal Register (Compliance)', subtitle: 'Oman Royal Decrees & Labour Law, Oman MoL MD 286/2008 & PDO Specifications & Oman MD 286/2008 statutory tracker', type: 'Risk & Governance', view: View.COMPLIANCE_INTELLIGENCE },
   { id: 'moc', title: 'Management of Change (MOC)', subtitle: 'Engineering, operational & organizational change authorization', type: 'Risk & Governance', view: View.MOC },

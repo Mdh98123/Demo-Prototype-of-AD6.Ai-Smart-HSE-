@@ -12,8 +12,7 @@
   "region": "middle-east1",
   "tailwind": true,
   "secrets": [
-    { "name": "GEMINI_API_KEY", "description": "Gemini API key - stored via AI Studio Secrets" },
-    { "name": "MOL_OMAN_API_TOKEN", "description": "Secure token for Oman Ministry of Labour integration" }
+    { "name": "GEMINI_API_KEY", "description": "Gemini API key - stored via AI Studio Secrets" }
   ],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

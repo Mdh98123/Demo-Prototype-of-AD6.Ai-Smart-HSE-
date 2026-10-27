@@ -107,6 +107,7 @@ const ContractorPortal = React.lazy(() => import('./contractors/ContractorPortal
 const ExecutiveDashboard = React.lazy(() => import('./system/ExecutiveDashboard').then(m => ({ default: m.ExecutiveDashboard })));
 const PricingGtmModule = React.lazy(() => import('./system/PricingGtmModule').then(m => ({ default: m.PricingGtmModule })));
 const DesignSystemGallery = React.lazy(() => import('./DesignSystemGallery'));
+const RegulatoryUpdatesDashboard = React.lazy(() => import('./regulatory/RegulatoryUpdatesDashboard').then(m => ({ default: m.RegulatoryUpdatesDashboard })));
 
 // Mock Data for Global Search Indexing
 const GLOBAL_SEARCH_INDEX = [
@@ -146,6 +147,9 @@ const App: React.FC = () => {
       }
       if (window.location.pathname === '/analytics') {
         return View.EXECUTIVE_DASHBOARD;
+      }
+      if (window.location.pathname === '/regulatory-updates') {
+        return View.REGULATORY_INTELLIGENCE;
       }
     }
     return View.TASKS; // Primary operational landing hub for enterprise users
@@ -206,8 +210,12 @@ const App: React.FC = () => {
         if (window.location.pathname !== '/analytics') {
           window.history.pushState({}, '', '/analytics');
         }
+      } else if (view === View.REGULATORY_INTELLIGENCE) {
+        if (window.location.pathname !== '/regulatory-updates') {
+          window.history.pushState({}, '', '/regulatory-updates');
+        }
       } else {
-        if (window.location.pathname === '/my-work' || window.location.pathname === '/control-of-work' || window.location.pathname === '/incidents' || window.location.pathname === '/ai-assistant' || window.location.pathname === '/predictive-safety' || window.location.pathname === '/analytics') {
+        if (window.location.pathname === '/my-work' || window.location.pathname === '/control-of-work' || window.location.pathname === '/incidents' || window.location.pathname === '/ai-assistant' || window.location.pathname === '/predictive-safety' || window.location.pathname === '/analytics' || window.location.pathname === '/regulatory-updates') {
           window.history.pushState({}, '', '/');
         }
       }
@@ -259,6 +267,8 @@ const App: React.FC = () => {
           setCurrentView(View.PREDICTIVE_SAFETY);
         } else if (window.location.pathname === '/analytics') {
           setCurrentView(View.EXECUTIVE_DASHBOARD);
+        } else if (window.location.pathname === '/regulatory-updates') {
+          setCurrentView(View.REGULATORY_INTELLIGENCE);
         }
       };
 
@@ -478,6 +488,7 @@ const App: React.FC = () => {
                 {currentView === View.EXECUTIVE_DASHBOARD && <ExecutiveDashboard />}
                 {currentView === View.PRICING_GTM && <PricingGtmModule />}
                 {currentView === View.DESIGN_SYSTEM && <DesignSystemGallery />}
+                {currentView === View.REGULATORY_INTELLIGENCE && <RegulatoryUpdatesDashboard onNavigate={handleNav} />}
               </React.Suspense>
             )}
           </div>

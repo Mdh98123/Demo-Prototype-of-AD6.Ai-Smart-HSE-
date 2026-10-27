@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SyncStatusBar } from './SyncStatusBar';
 import { InspectionChecklist } from './InspectionChecklist';
@@ -8,7 +8,8 @@ import { InspectionRecord, offlineStorage } from '../../services/offlineStorage'
 import { HeatmapLayer, HeatmapMetric, METRIC_CONFIGS, METRIC_GRADIENTS } from './HeatmapLayer';
 import { 
   Plus, ListChecks, MapPin, ChevronRight, AlertTriangle, Camera, Zap,
-  Layers, RefreshCw, Eye, CheckCircle2, SlidersHorizontal, Info, ShieldCheck, Flame
+  Layers, RefreshCw, Eye, CheckCircle2, SlidersHorizontal, Info, ShieldCheck, Flame,
+  SwitchCamera, X, Check, Image as ImageIcon, RotateCcw, Sparkles
 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { DeviceIntegration } from '../../utils/deviceIntegration';
@@ -106,27 +107,196 @@ export const MobileInspectionApp: React.FC = () => {
     setView('DETAIL');
   };
 
+  // ==========================================
+  // NATIVE CAMERA CAPTURE FOR INSPECTION EVIDENCE
+  // ==========================================
+  const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
+  const [cameraTargetRecord, setCameraTargetRecord] = useState<InspectionRecord | null>(null);
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const [capturedPreview, setCapturedPreview] = useState<string | null>(null);
+  const [capturedCaption, setCapturedCaption] = useState<string>('');
+  const [compressionStats, setCompressionStats] = useState<{ originalKb: number; compressedKb: number; savingsPct: number } | null>(null);
+  const [isCompressingAndSaving, setIsCompressingAndSaving] = useState(false);
+  const [capturedFlash, setCapturedFlash] = useState(false);
+  const [cameraToast, setCameraToast] = useState<{ title: string; subtitle?: string } | null>(null);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const fallbackFileInputRef = useRef<HTMLInputElement>(null);
+
+  const stopCameraStream = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) { /* ignore */ }
+      });
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    setIsStreaming(false);
+  }, []);
+
+  const startCameraStream = useCallback(async (mode: 'environment' | 'user' = 'environment') => {
+    stopCameraStream();
+    setCameraError(null);
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setCameraError('WebRTC live camera streaming requires HTTPS or browser permission. You can still capture evidence using the native camera app below.');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: mode },
+          width: { ideal: 1920 },
+          height: { ideal: 1080 }
+        },
+        audio: false
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(e => console.warn('[Camera] Autoplay caught:', e));
+      }
+      setIsStreaming(true);
+    } catch (err: any) {
+      console.warn('[Camera] getUserMedia failed:', err);
+      setCameraError(err.message || 'Camera permission denied or camera device in use. Use system camera fallback below.');
+      setIsStreaming(false);
+    }
+  }, [stopCameraStream]);
+
+  const openNativeCamera = (record?: InspectionRecord) => {
+    setCameraTargetRecord(record || null);
+    setCapturedPreview(null);
+    setCapturedCaption('');
+    setCompressionStats(null);
+    setIsCameraModalOpen(true);
+    startCameraStream(facingMode);
+  };
+
+  const closeNativeCamera = () => {
+    stopCameraStream();
+    setIsCameraModalOpen(false);
+    setCapturedPreview(null);
+    setCameraTargetRecord(null);
+    setCompressionStats(null);
+    setIsCompressingAndSaving(false);
+  };
+
+  const toggleFacingMode = () => {
+    const nextMode = facingMode === 'environment' ? 'user' : 'environment';
+    setFacingMode(nextMode);
+    startCameraStream(nextMode);
+  };
+
+  const handleCaptureFrame = () => {
+    if (!videoRef.current) return;
+    try {
+      const video = videoRef.current;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth || 1280;
+      canvas.height = video.videoHeight || 720;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+      setCapturedFlash(true);
+      setTimeout(() => setCapturedFlash(false), 200);
+
+      stopCameraStream();
+      setCapturedPreview(dataUrl);
+    } catch (err) {
+      console.error('[Camera] Capture frame error:', err);
+    }
+  };
+
+  const handleNativeFallbackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCapturedPreview(reader.result as string);
+      stopCameraStream();
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRetake = () => {
+    setCapturedPreview(null);
+    setCompressionStats(null);
+    startCameraStream(facingMode);
+  };
+
+  const handleSaveCapturedEvidence = async () => {
+    if (!capturedPreview) return;
+    setIsCompressingAndSaving(true);
+
+    try {
+      let targetId = cameraTargetRecord?.id;
+      if (!targetId) {
+        const activeDraft = inspections.find(i => i.status === 'DRAFT');
+        targetId = activeDraft ? activeDraft.id : `INSP-${Date.now().toString().slice(-6)}`;
+      }
+
+      const result = await DeviceIntegration.compressAndStoreInspectionPhoto(
+        targetId,
+        capturedPreview,
+        {
+          caption: capturedCaption.trim() || undefined,
+          location: userLoc || undefined
+        }
+      );
+
+      setCompressionStats({
+        originalKb: result.originalSizeKb,
+        compressedKb: result.compressedSizeKb,
+        savingsPct: result.savingsPct
+      });
+
+      setCameraToast({
+        title: 'Evidence Compressed & Stored Offline',
+        subtitle: `DeviceIntegration: ${result.originalSizeKb} KB → ${result.compressedSizeKb} KB (${result.savingsPct}% saved) in hse-offline-db`
+      });
+      setTimeout(() => setCameraToast(null), 5000);
+
+      await loadInspections();
+      closeNativeCamera();
+    } catch (err: any) {
+      console.error('[Camera] Error saving evidence:', err);
+      alert(err.message || 'Failed to compress and save evidence into offline database.');
+    } finally {
+      setIsCompressingAndSaving(false);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopCameraStream();
+    };
+  }, [stopCameraStream]);
+
   const handleQuickPhoto = async (record: InspectionRecord, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
-      const compressed = await DeviceIntegration.compressImage(file);
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Photo = reader.result as string;
-        const updatedRecord = {
-          ...record,
-          data: {
-             ...record.data,
-             photos: [...(record.data?.photos || []), base64Photo]
-          },
-          updatedAt: new Date().toISOString()
-        };
-        await offlineStorage.saveInspection(updatedRecord);
-        loadInspections();
-      };
-      reader.readAsDataURL(compressed);
+      const result = await DeviceIntegration.compressAndStoreInspectionPhoto(record.id, file, {
+        location: userLoc || undefined
+      });
+      setCameraToast({
+        title: 'Photo Evidence Stored',
+        subtitle: `Compressed: ${result.originalSizeKb} KB → ${result.compressedSizeKb} KB via DeviceIntegration`
+      });
+      setTimeout(() => setCameraToast(null), 4000);
+      loadInspections();
     } catch (err) {
       console.error(err);
     }
@@ -187,6 +357,31 @@ export const MobileInspectionApp: React.FC = () => {
           <SyncStatusBar />
           
           <AnimatePresence>
+            {cameraToast && (
+              <motion.div 
+                initial={{ opacity: 0, y: -16, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                className="mx-6 mt-4 p-4 bg-emerald-50/95 backdrop-blur-md border border-emerald-200 rounded-2xl shadow-xl flex items-start gap-3 z-50"
+              >
+                 <div className="bg-emerald-500 text-white p-2 rounded-xl shadow-sm shrink-0">
+                    <CheckCircle2 size={18} />
+                 </div>
+                 <div className="flex-1 min-w-0">
+                    <h4 className="text-emerald-950 font-black text-xs uppercase tracking-wider">{cameraToast.title}</h4>
+                    {cameraToast.subtitle && (
+                      <p className="text-emerald-800/90 text-xs font-semibold mt-0.5 leading-relaxed">{cameraToast.subtitle}</p>
+                    )}
+                 </div>
+                 <button 
+                   onClick={() => setCameraToast(null)} 
+                   className="p-1 text-emerald-600 hover:text-emerald-900 rounded-lg hover:bg-emerald-100 transition-colors"
+                 >
+                   <X size={15} />
+                 </button>
+              </motion.div>
+            )}
+
             {nearbyPendingRecord && view === 'LIST' && (
               <motion.div 
                 initial={{ opacity: 0, y: -20 }}
@@ -208,7 +403,21 @@ export const MobileInspectionApp: React.FC = () => {
 
           
           <div className="p-6 pb-24 overflow-y-auto h-full">
-             <h1 className="text-2xl font-black text-slate-800 mb-6">Field Inspections</h1>
+             <div className="flex items-center justify-between gap-3 mb-6">
+               <div>
+                 <h1 className="text-2xl font-black text-slate-800 tracking-tight">Field Inspections</h1>
+                 <p className="text-xs font-medium text-slate-500">Offline PWA with compressed photo evidence</p>
+               </div>
+               <button
+                 type="button"
+                 onClick={() => openNativeCamera()}
+                 className="px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 flex items-center gap-2 active:scale-95 transition-all shrink-0"
+                 title="Open native camera for field evidence"
+               >
+                 <Camera size={15} />
+                 <span>Evidence Camera</span>
+               </button>
+             </div>
              
              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
                 <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-3 flex flex-col items-center justify-center">
@@ -448,12 +657,17 @@ export const MobileInspectionApp: React.FC = () => {
                               {record.status === 'PENDING_SYNC' && <span className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Pending</span>}
                               {record.status === 'DRAFT' && <span className="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Draft</span>}
                            </div>
-                           {record.status === 'DRAFT' && (
-                              <label className="cursor-pointer p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors text-slate-600" title="Quick Photo">
-                                 <Camera size={16} />
-                                 <input type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => handleQuickPhoto(record, e)} />
-                              </label>
-                           )}
+                           <button 
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openNativeCamera(record);
+                              }}
+                              className="p-2 bg-indigo-50 hover:bg-indigo-100 active:scale-95 rounded-full transition-all text-indigo-600 shadow-xs" 
+                              title="Capture Evidence Photo"
+                           >
+                              <Camera size={15} />
+                           </button>
                            <ChevronRight size={18} className="text-slate-400 cursor-pointer" onClick={() => handleViewDetail(record)} />
                         </div>
                      </div>
@@ -464,11 +678,33 @@ export const MobileInspectionApp: React.FC = () => {
                         </div>
                      )}
                      
-                     {/* Show miniature photo preview dots if there are photos */}
-                     {record.data?.photos?.length > 0 && (
-                        <div className="flex items-center gap-1 mt-2 cursor-pointer" onClick={() => handleViewDetail(record)}>
-                           <Camera size={12} className="text-slate-400" />
-                           <span className="text-[10px] text-slate-500 font-bold">{record.data.photos.length} Photo{record.data.photos.length !== 1 ? 's' : ''} Attached</span>
+                     {/* Show miniature photo preview gallery if there are photos */}
+                     {record.data?.photos && record.data.photos.length > 0 && (
+                        <div className="mt-2 pt-2 border-t border-slate-100">
+                           <div className="flex items-center justify-between gap-2 mb-1.5 cursor-pointer" onClick={() => handleViewDetail(record)}>
+                              <span className="text-[10px] text-slate-500 font-bold flex items-center gap-1">
+                                 <Camera size={12} className="text-indigo-500" />
+                                 {record.data.photos.length} Offline Evidence Photo{record.data.photos.length !== 1 ? 's' : ''}
+                              </span>
+                              <span className="text-[9px] text-emerald-600 font-extrabold uppercase bg-emerald-50 px-1.5 py-0.5 rounded">
+                                 Compressed
+                              </span>
+                           </div>
+                           <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
+                              {record.data.photos.map((p: any, idx: number) => {
+                                 const src = typeof p === 'string' ? p : (p?.data || p?.url);
+                                 return (
+                                    <div key={idx} className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shrink-0 shadow-xs">
+                                       <img src={src} alt={p?.caption || 'Evidence photo'} className="w-full h-full object-cover" />
+                                       {p?.compressedKb && (
+                                          <span className="absolute bottom-0 inset-x-0 bg-black/60 text-[8px] text-white text-center font-mono py-0.2">
+                                             {p.compressedKb}K
+                                          </span>
+                                       )}
+                                    </div>
+                                 );
+                              })}
+                           </div>
                         </div>
                      )}
 
@@ -544,6 +780,243 @@ export const MobileInspectionApp: React.FC = () => {
                 onBack={() => setView('LIST')} 
                 onUpdate={loadInspections}
               />
+           </motion.div>
+         )}
+       </AnimatePresence>
+
+       {/* Native Camera Capture & Offline Compression Modal */}
+       <input 
+         type="file" 
+         ref={fallbackFileInputRef} 
+         accept="image/*" 
+         capture="environment" 
+         className="hidden" 
+         onChange={handleNativeFallbackChange} 
+       />
+
+       <AnimatePresence>
+         {isCameraModalOpen && (
+           <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }}
+             className="fixed inset-0 z-[250] bg-slate-950/95 backdrop-blur-xl flex flex-col justify-between overflow-hidden select-none font-sans"
+           >
+             {/* Flash Effect Animation */}
+             {capturedFlash && (
+               <div className="absolute inset-0 bg-white z-[300] pointer-events-none animate-pulse" />
+             )}
+
+             {/* Modal Header */}
+             <div className="p-4 pt-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between z-20">
+               <div className="flex items-center gap-3">
+                 <div className="w-9 h-9 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
+                   <Camera size={18} />
+                 </div>
+                 <div>
+                   <h3 className="text-white font-black text-sm tracking-wide flex items-center gap-2">
+                     <span>Evidence Camera</span>
+                     <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">
+                       Offline DB
+                     </span>
+                   </h3>
+                   <p className="text-slate-400 text-[11px] truncate max-w-[200px] sm:max-w-xs">
+                     {cameraTargetRecord ? `Target: ${cameraTargetRecord.templateId}` : 'Active Field Evidence'}
+                   </p>
+                 </div>
+               </div>
+
+               <div className="flex items-center gap-2">
+                 {!capturedPreview && (
+                   <button
+                     type="button"
+                     onClick={toggleFacingMode}
+                     className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
+                     title="Switch Front/Rear Camera"
+                   >
+                     <SwitchCamera size={18} />
+                   </button>
+                 )}
+                 <button
+                   type="button"
+                   onClick={closeNativeCamera}
+                   className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-200 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90"
+                   title="Close Camera"
+                 >
+                   <X size={18} />
+                 </button>
+               </div>
+             </div>
+
+             {/* Viewfinder Canvas / Review Area */}
+             <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
+               {!capturedPreview ? (
+                 <div className="relative w-full max-w-md aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl flex items-center justify-center">
+                   {/* Live Video Stream */}
+                   <video
+                     ref={videoRef}
+                     autoPlay
+                     playsInline
+                     muted
+                     className="w-full h-full object-cover"
+                   />
+
+                   {/* Framing Reticle Overlays */}
+                   <div className="absolute inset-6 border border-white/20 rounded-2xl pointer-events-none flex flex-col justify-between p-3">
+                     <div className="flex justify-between items-start">
+                       <div className="w-6 h-6 border-t-2 border-l-2 border-indigo-400 rounded-tl-lg" />
+                       <div className="w-6 h-6 border-t-2 border-r-2 border-indigo-400 rounded-tr-lg" />
+                     </div>
+                     <div className="flex items-center justify-center opacity-40">
+                       <div className="w-8 h-8 rounded-full border border-dashed border-white" />
+                     </div>
+                     <div className="flex justify-between items-end">
+                       <div className="w-6 h-6 border-b-2 border-l-2 border-indigo-400 rounded-bl-lg" />
+                       <div className="w-6 h-6 border-b-2 border-r-2 border-indigo-400 rounded-br-lg" />
+                     </div>
+                   </div>
+
+                   {/* Geotag & Time Badge Overlay */}
+                   <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[10px] text-white/80 font-mono bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                     <div className="flex items-center gap-1.5">
+                       <MapPin size={11} className="text-indigo-400" />
+                       <span>{userLoc ? `${userLoc.lat.toFixed(4)}, ${userLoc.lng.toFixed(4)}` : 'Geotagging Ready'}</span>
+                     </div>
+                     <span>{new Date().toLocaleTimeString()}</span>
+                   </div>
+
+                   {/* Fallback & Permission Warning Overlay */}
+                   {cameraError && (
+                     <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-center z-30">
+                       <div className="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center mb-3">
+                         <AlertTriangle size={28} />
+                       </div>
+                       <h4 className="text-white font-bold text-sm mb-1">Direct Stream Unavailable</h4>
+                       <p className="text-slate-400 text-xs max-w-xs mb-4 leading-relaxed">
+                         {cameraError}
+                       </p>
+                       <button
+                         type="button"
+                         onClick={() => fallbackFileInputRef.current?.click()}
+                         className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-all"
+                       >
+                         <Camera size={16} />
+                         <span>Open Device Camera</span>
+                       </button>
+                     </div>
+                   )}
+                 </div>
+               ) : (
+                 <div className="w-full max-w-md flex flex-col items-center gap-3 max-h-full">
+                   <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl">
+                     <img
+                       src={capturedPreview}
+                       alt="Captured Evidence Preview"
+                       className="w-full h-full object-contain"
+                     />
+                     <div className="absolute top-3 end-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/15 text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                       <Sparkles size={11} />
+                       <span>Ready for Offline DB</span>
+                     </div>
+                   </div>
+
+                   {/* Compression Details & Caption Input */}
+                   <div className="w-full space-y-2">
+                     <div className="flex items-center justify-between text-[11px] text-slate-300 bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800">
+                       <span className="flex items-center gap-1.5 text-slate-400">
+                         <ShieldCheck size={14} className="text-indigo-400" />
+                         <span>Compression Engine:</span>
+                       </span>
+                       <span className="font-mono font-bold text-indigo-300">
+                         DeviceIntegration (max 1280px, &lt;500KB)
+                       </span>
+                     </div>
+
+                     <div className="relative">
+                       <input
+                         type="text"
+                         value={capturedCaption}
+                         onChange={(e) => setCapturedCaption(e.target.value)}
+                         placeholder="Optional: Enter evidence note, location, or tag..."
+                         className="w-full px-4 py-2.5 bg-slate-900/90 border border-slate-700/80 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors"
+                       />
+                     </div>
+                   </div>
+                 </div>
+               )}
+             </div>
+
+             {/* Modal Bottom Action Controls */}
+             <div className="p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-around z-20">
+               {!capturedPreview ? (
+                 <>
+                   <button
+                     type="button"
+                     onClick={() => fallbackFileInputRef.current?.click()}
+                     className="flex flex-col items-center gap-1 text-slate-300 hover:text-white transition-colors"
+                     title="Select from gallery or device"
+                   >
+                     <div className="w-11 h-11 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center">
+                       <ImageIcon size={18} />
+                     </div>
+                     <span className="text-[10px] font-bold">Fallback</span>
+                   </button>
+
+                   {/* Primary Shutter Button */}
+                   <button
+                     type="button"
+                     onClick={handleCaptureFrame}
+                     className="w-20 h-20 rounded-full border-4 border-white/80 p-1 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-2xl shadow-indigo-600/30"
+                     title="Capture Photo"
+                   >
+                     <div className="w-full h-full rounded-full bg-white transition-all shadow-inner" />
+                   </button>
+
+                   <button
+                     type="button"
+                     onClick={toggleFacingMode}
+                     className="flex flex-col items-center gap-1 text-slate-300 hover:text-white transition-colors"
+                     title="Flip camera"
+                   >
+                     <div className="w-11 h-11 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center">
+                       <SwitchCamera size={18} />
+                     </div>
+                     <span className="text-[10px] font-bold">Flip</span>
+                   </button>
+                 </>
+               ) : (
+                 <div className="flex items-center gap-4 w-full max-w-md">
+                   <button
+                     type="button"
+                     onClick={handleRetake}
+                     disabled={isCompressingAndSaving}
+                     className="flex-1 py-3 px-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+                   >
+                     <RotateCcw size={15} />
+                     <span>Retake</span>
+                   </button>
+
+                   <button
+                     type="button"
+                     onClick={handleSaveCapturedEvidence}
+                     disabled={isCompressingAndSaving}
+                     className="flex-2 py-3 px-5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-95 disabled:opacity-50"
+                   >
+                     {isCompressingAndSaving ? (
+                       <>
+                         <RefreshCw size={15} className="animate-spin" />
+                         <span>Compressing & Saving...</span>
+                       </>
+                     ) : (
+                       <>
+                         <Check size={16} />
+                         <span>Save to Offline DB</span>
+                       </>
+                     )}
+                   </button>
+                 </div>
+               )}
+             </div>
            </motion.div>
          )}
        </AnimatePresence>

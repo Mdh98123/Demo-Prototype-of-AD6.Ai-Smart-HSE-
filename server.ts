@@ -15,6 +15,7 @@ import { createWorkflowRouter } from "./routes/workflowRouter";
 import { healthRouter } from "./routes/healthz";
 import { geminiRouter } from "./routes/geminiRouter";
 import { predictiveMaintenanceRouter } from "./routes/predictiveMaintenanceRouter";
+import { regulatoryRouter } from "./routes/regulatoryRouter";
 import { ROLE_PERMISSIONS_MAP, VIEW_PERMISSION_REQUIREMENTS } from "./services/permissionService";
 import { UserRole, View } from "./types";
 
@@ -90,6 +91,9 @@ async function startServer() {
 
   // Predictive Maintenance & Asset Integrity Validation Router (ISO 10816, API 670, PDO SP-1231 & MD 286/2008)
   app.use("/api/predictive-maintenance", predictiveMaintenanceRouter);
+
+  // Enterprise Regulatory Intelligence Router (/api/regulatory/latest, /api/regulatory/add-legal-register)
+  app.use("/api/regulatory", regulatoryRouter);
 
   // GCC Enterprise Procurement - Security Headers & Hardening (Mozilla Observatory A+)
   app.use((req, res, next) => {

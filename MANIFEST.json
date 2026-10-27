@@ -34,14 +34,6 @@
   ],
   "optionalEnvVars": [
     {
-      "name": "Oman MoL_API_TOKEN",
-      "description": "Muscat Oman MoL MD 286/2008 API authentication token"
-    },
-    {
-      "name": "PDO_SAFETY_TOKEN",
-      "description": "PDO HSE Portal Integration token"
-    },
-    {
       "name": "VITE_FIREBASE_API_KEY",
       "description": "Custom Firebase Web API Key for external Firestore/Auth deployment"
     },

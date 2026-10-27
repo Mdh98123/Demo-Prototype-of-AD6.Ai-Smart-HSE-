@@ -10,7 +10,7 @@ import {
   Briefcase, HeartPulse, HardHat, Truck,
   Building2, Landmark, FolderTree, FileClock, ChevronDown, ChevronRight,
   Search, X, Zap, Users, User, ArrowRight, TrendingUp, BarChart3, Settings, MapPin,
-  Wrench, FlaskConical, AlertTriangle, Key
+  Wrench, FlaskConical, AlertTriangle, Key, Bell
 } from 'lucide-react';
 import { UserRole, View, UserProfile } from '../types';
 
@@ -1061,6 +1061,34 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
     order: 600
   },
   {
+    id: 'nav-compliance-monitor',
+    view: View.COMPLIANCE,
+    icon: ShieldCheck,
+    labelKey: 'Compliance Monitor & Adherence Hub',
+    subtitle: 'Department-tailored compliance tracking & live regional updates',
+    sectionId: 'enterprise-admin',
+    sectionTitle: 'Enterprise Governance & System',
+    sectionSubtitle: 'Statutory compliance, IAM, security audit logs & settings',
+    requiredPermissions: [PERMISSIONS.COMPLY_FLOW_VIEW],
+    badge: 'Tailored',
+    badgeColor: 'emerald',
+    order: 601
+  },
+  {
+    id: 'nav-regulatory-updates',
+    view: View.REGULATORY_INTELLIGENCE,
+    icon: Bell,
+    labelKey: 'Latest Regulatory Updates & Announcements',
+    subtitle: 'Live gazettes, ministerial decrees & legal register sync (/api/regulatory/latest)',
+    sectionId: 'enterprise-admin',
+    sectionTitle: 'Enterprise Governance & System',
+    sectionSubtitle: 'Statutory compliance, IAM, security audit logs & settings',
+    requiredPermissions: [PERMISSIONS.COMPLY_FLOW_VIEW],
+    badge: 'Live',
+    badgeColor: 'emerald',
+    order: 602
+  },
+  {
     id: 'nav-projects',
     view: View.PROJECTS,
     icon: Building2,
@@ -1225,6 +1253,7 @@ export const VIEW_PERMISSION_REQUIREMENTS: Partial<Record<View, Permission[]>> =
   [View.COMPLY_FLOW]: [PERMISSIONS.COMPLY_FLOW_VIEW],
   [View.COMPLIANCE]: [PERMISSIONS.COMPLY_FLOW_VIEW],
   [View.COMPLIANCE_INTELLIGENCE]: [PERMISSIONS.COMPLY_FLOW_VIEW],
+  [View.REGULATORY_INTELLIGENCE]: [PERMISSIONS.COMPLY_FLOW_VIEW],
   [View.BOWTIE]: [PERMISSIONS.BOWTIE_VIEW],
   [View.MOC]: [PERMISSIONS.MOC_VIEW],
   [View.ESG]: [PERMISSIONS.ESG_VIEW],

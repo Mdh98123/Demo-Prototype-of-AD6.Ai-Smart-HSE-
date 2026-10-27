@@ -973,4 +973,81 @@ export class RegulatoryIntelligenceService {
     }
     return newEntry;
   }
+
+  // 9. Enterprise Legal Register Methods
+  static isRegulationInLegalRegister(regulationId: string): boolean {
+    const obligations = this.getRegulatoryObligations();
+    return obligations.some(o => o.regulationId === regulationId);
+  }
+
+  static getObligationForRegulation(regulationId: string): RegulatoryObligation | undefined {
+    const obligations = this.getRegulatoryObligations();
+    return obligations.find(o => o.regulationId === regulationId);
+  }
+
+  static addObligationToLegalRegister(data: {
+    regulationId: string;
+    regulationTitle: string;
+    authority: string;
+    obligationText: string;
+    operationalCategory?: 'Workforce Safety' | 'Plant & Machinery' | 'Environmental ESG' | 'Reporting & Audit';
+    penaltyExposureAed?: number;
+    responsibleRole?: string;
+    assignedSite?: string;
+    complianceStatus?: 'Fully Compliant' | 'Partially Compliant' | 'At Risk / Non-Compliant';
+    nextAuditDueDate?: string;
+    linkedCapaId?: string;
+  }): RegulatoryObligation {
+    const obligations = this.getRegulatoryObligations();
+    
+    // Check if already in register
+    const existing = obligations.find(o => o.regulationId === data.regulationId);
+    if (existing) {
+      return existing;
+    }
+
+    const newObligation: RegulatoryObligation = {
+      id: `OBL-${Date.now().toString().slice(-6)}`,
+      regulationId: data.regulationId,
+      regulationTitle: data.regulationTitle,
+      authority: data.authority,
+      obligationText: data.obligationText,
+      operationalCategory: data.operationalCategory || 'Workforce Safety',
+      penaltyExposureAed: data.penaltyExposureAed !== undefined ? data.penaltyExposureAed : 5000,
+      responsibleRole: data.responsibleRole || 'Site HSE Manager',
+      assignedSite: data.assignedSite || 'Mina Al Fahal Refinery & Terminal',
+      complianceStatus: data.complianceStatus || 'Fully Compliant',
+      nextAuditDueDate: data.nextAuditDueDate || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0],
+      linkedCapaId: data.linkedCapaId
+    };
+
+    obligations.unshift(newObligation);
+
+    if (typeof window !== 'undefined') {
+      // Dual-sync storage keys per AGENTS.md rules
+      localStorage.setItem(STORAGE_KEYS.OBLIGATIONS, JSON.stringify(obligations));
+      localStorage.setItem('ad6_enterprise_reg_obligations', JSON.stringify(obligations));
+      
+      // Dispatch mutation notification event
+      window.dispatchEvent(new CustomEvent('ad6-reg-obligations-updated', { detail: newObligation }));
+    }
+
+    return newObligation;
+  }
+
+  static async fetchLatestRegulatoryAnnouncements(refresh = false): Promise<{
+    status: string;
+    lastChecked: string;
+    totalCount: number;
+    officialCount: number;
+    reportedCount: number;
+    updates: any[];
+  }> {
+    const url = `/api/regulatory/latest${refresh ? '?refresh=true' : ''}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch regulatory updates: HTTP ${response.status}`);
+    }
+    return response.json();
+  }
 }
