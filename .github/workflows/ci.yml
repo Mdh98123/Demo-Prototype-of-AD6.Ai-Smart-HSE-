@@ -1,0 +1,43 @@
+name: AD6.Ai Smart HSE Enterprise CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-and-test:
+    name: Verify Typecheck, Lint, Tests, and Migrations
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 20.x, 22.x ]
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: TypeScript Static Typecheck (Zero Errors)
+        run: npm run typecheck
+
+      - name: Codebase Lint Verification
+        run: npm run lint
+
+      - name: Run Enterprise Regression Test Harness (G-3 Invariants)
+        run: npm test
+
+      - name: Migration Dry-Run & RLS Policy Validation (Guardrail G-6)
+        run: node infra/migrations-runner.mjs --dry-run
+
+      - name: Verify Production Bundle Compilation
+        run: npm run build

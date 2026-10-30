@@ -1,0 +1,14 @@
+{
+  "name": "@ad6/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ad6/shared": "workspace:*",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}

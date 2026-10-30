@@ -3,12 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node dist/server.cjs",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "lint": "tsc --noEmit",
-    "test": "node --import tsx --test test/health.test.mjs test/auth_regression.test.mjs test/pdf-export.test.mjs test/workflow.test.mjs test/workflow-server.test.mjs test/inspection_template.test.mjs test/ml_autotagger.test.mjs test/speech_commands.test.mjs test/inspection_pdf.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/health.test.mjs test/auth_regression.test.mjs test/pdf-export.test.mjs test/workflow.test.mjs test/workflow-server.test.mjs test/inspection_template.test.mjs test/ml_autotagger.test.mjs test/speech_commands.test.mjs test/inspection_pdf.test.mjs test/phase1_enterprise.test.mjs test/phase0_g3_regression.test.mjs test/phase1_postgres_tenancy.test.mjs",
+    "test:phase1": "node --import tsx --test test/phase1_postgres_tenancy.test.mjs",
+    "test:g3": "node --import tsx --test test/phase0_g3_regression.test.mjs",
     "preview": "vite preview",
     "prepare": "husky || true"
   },
@@ -22,6 +29,7 @@
     "@google/genai": "1.42.0",
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.22.0",
+    "@types/pg": "^8.23.1",
     "browser-image-compression": "2.0.2",
     "canvas-confetti": "1.9.3",
     "class-variance-authority": "0.7.1",
@@ -38,6 +46,8 @@
     "leaflet": "1.9.4",
     "leaflet.heat": "0.2.0",
     "lucide-react": "0.561.0",
+    "pg": "^8.23.1",
+    "pg-mem": "^3.0.14",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-i18next": "17.0.4",

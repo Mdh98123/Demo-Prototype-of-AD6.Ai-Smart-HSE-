@@ -3,7 +3,7 @@
 // 1. Oman / Muscat: Oman MoL OSHD Oman MoL MD 286/2008 & PDO PR-1172 (Form G - Serious Incident Notification)
 // 2. Sultanate of Oman: Ministry of Labour MD 286/2008 & Royal Decree 53/2023 (24-Hour Notice)
 
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Incident } from '../types';
 
@@ -152,7 +152,13 @@ export function exportomanMoLFormGPdf(incident: Incident, entity: EntityContext)
   doc.setTextColor(148, 163, 184);
   doc.text('This document constitutes an official statutory notification pursuant to Muscat Public Health Centre (Oman MoL OSHD) Oman MoL MD 286/2008 & PDO PR-1172. All particulars are recorded under audit trail integrity.', 14, 288);
 
-  doc.save(`Oman MoL OSHD_Oman MoL MD 286/2008_Form_G_${incident.id}.pdf`);
+  try {
+    const safeId = incident.id.replace(/[/\\?%*:|"<>]/g, '_');
+    doc.save(`Oman_MoL_OSHD_MD_286_2008_Form_G_${safeId}.pdf`);
+  } catch {
+    // In headless Node test environments
+  }
+  return doc;
 }
 
 export function exportOmanMolNoticePdf(incident: Incident, entity: EntityContext) {

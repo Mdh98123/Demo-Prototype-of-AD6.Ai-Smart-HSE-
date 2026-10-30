@@ -8,6 +8,7 @@ import { AuditLogger } from './auditLogger';
 import { UnifiedAuditTrailService } from './unifiedAuditTrailService';
 import { UserProfileService } from './userProfileService';
 import { UserProfile } from '../types';
+import { EncryptedOfflineQueue } from './encryptedOfflineQueue';
 
 export interface CockpitTask {
   id: string;
@@ -261,289 +262,17 @@ export const EXPANDED_ENTERPRISE_INCIDENTS: Incident[] = [
 // -------------------------------------------------------------------
 // 12+ REALISTIC PERMITS TO WORK (WITH LOTO & GAS TESTS)
 // -------------------------------------------------------------------
-export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = [
-  ...GULF_ENERGY_PERMITS,
-  // Permit 9: Hot Work - Flare Knockout Drum Welding
-  {
-    id: 'ptw-geig-009',
-    permitNumber: 'PTW-2026-8848',
-    title: 'Flare Knockout Drum Relief Header Structural Welding',
-    type: 'Hot Work',
-    status: 'Requested',
-    zone: 'Zone 1 - Main Flare Header Base',
-    exactLocation: 'Fahud-West Gas Station (Oman) · Flare Knockout Skid K-101',
-    contractor: 'Oman Special Technical Services (STS)',
-    crewSize: 4,
-    validFrom: '2026-10-07T07:00:00Z',
-    validTo: '2026-10-07T17:00:00Z',
-    description: 'SMAW structural welding of pipe shoe support on 16-inch flare discharge line with certified fire blanket habitat and pressurized water hose on standby.',
-    riskScore: 18,
-    riskRating: 'High',
-    flammableVentingOrHydrocarbonRisk: true,
-    gasTestingLog: [
-      {
-        id: 'gas-009',
-        timestamp: '2026-10-07T06:45:00Z',
-        oxygen: 20.9,
-        lel: 0.0,
-        h2s: 0.0,
-        co: 0.0,
-        testerName: 'Salim Al-Harthy',
-        testerCertNo: 'PDO-AGT-098',
-        detectorSerial: 'BW-GAS-9912',
-        bumpTested: true,
-        status: 'SAFE',
-        notes: '0.0% LEL verified across 15m radius around habitat.'
-      }
-    ],
-    lotoIsolations: [
-      {
-        id: 'loto-hw-09',
-        tagNumber: 'LOTO-HW-409',
-        isolationPoint: 'Header Block Valve HV-101',
-        equipmentName: 'Flare K.O. Drum K-101',
-        isolationType: 'Mechanical',
-        status: 'Zero Energy Verified',
-        isolatorSignature: 'Salim Al-Harthy',
-        isolatorId: 'u7',
-        isolatorTimestamp: '2026-10-07T06:15:00Z',
-        verifierSignature: 'Marcus Chen'
-      }
-    ],
-    issuerSignature: {
-      signed: false,
-      signatoryName: 'Marcus Chen',
-      signatoryRole: 'Area Authority / Permit Issuer',
-      signatoryOrg: 'Gulf Energy Maritime',
-      timestamp: '2026-10-07T06:00:00Z',
-      checklistConfirmed: false
-    },
-    receiverSignature: {
-      signed: true,
-      signatoryName: 'Rahul Gupta',
-      signatoryRole: 'Lead Welder & Permit Receiver',
-      signatoryOrg: 'STS Oman',
-      timestamp: '2026-10-07T06:50:00Z',
-      checklistConfirmed: true
-    },
-    simopsClashLocked: false,
-    createdAt: '2026-10-07T06:00:00Z',
-    updatedAt: '2026-10-07T06:50:00Z'
-  },
-  // Permit 10: Working at Height - Flare Tip Thermocouple Replacement
-  {
-    id: 'ptw-geig-010',
-    permitNumber: 'PTW-2026-8852',
-    title: 'Flare Tip Thermocouple Sensor Replacement & Cable Pulling',
-    type: 'Working at Height',
-    status: 'Active',
-    zone: 'Zone 1 - Main Flare Stack',
-    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · 65m Flare Tip Platform',
-    contractor: 'Al Jaber Industrial Services',
-    crewSize: 3,
-    validFrom: '2026-10-06T06:00:00Z',
-    validTo: '2026-10-06T18:00:00Z',
-    description: 'Rope access certified technicians replacing redundant temperature transmitters on top flare shroud.',
-    riskScore: 16,
-    riskRating: 'High',
-    flammableVentingOrHydrocarbonRisk: false,
-    gasTestingLog: [],
-    lotoIsolations: [],
-    issuerSignature: {
-      signed: true,
-      signatoryName: 'Eng. Mansoor Al-Ketbi',
-      signatoryRole: 'Permit Issuer',
-      signatoryOrg: 'Gulf Energy Maritime',
-      timestamp: '2026-10-06T05:45:00Z',
-      checklistConfirmed: true
-    },
-    receiverSignature: {
-      signed: true,
-      signatoryName: 'Tariq Al-Hashemi',
-      signatoryRole: 'Rope Access Lead',
-      signatoryOrg: 'Al Jaber Industrial',
-      timestamp: '2026-10-06T05:55:00Z',
-      checklistConfirmed: true
-    },
-    simopsClashLocked: false,
-    createdAt: '2026-10-06T05:00:00Z',
-    updatedAt: '2026-10-06T05:55:00Z'
-  },
-  // Permit 11: Cold Work - Centrifugal Pump Impeller Overhaul
-  {
-    id: 'ptw-geig-011',
-    permitNumber: 'PTW-2026-8809',
-    title: 'Cold Work & Mechanical Isolation: Pump P-204 Impeller Replacement',
-    type: 'Cold Work',
-    status: 'Active',
-    zone: 'Zone 3 - Water Treatment Area',
-    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Water Treatment Train B',
-    contractor: 'Gulf Energy Internal Maintenance',
-    crewSize: 4,
-    validFrom: '2026-10-06T08:00:00Z',
-    validTo: '2026-10-07T18:00:00Z',
-    description: 'Pump uncoupling, casing split, and impeller replacement under mechanical padlocks Box #LOTO-14.',
-    riskScore: 8,
-    riskRating: 'Medium',
-    flammableVentingOrHydrocarbonRisk: false,
-    gasTestingLog: [
-      {
-        id: 'gas-011',
-        timestamp: '2026-10-06T07:45:00Z',
-        oxygen: 20.9,
-        lel: 0.0,
-        h2s: 0.0,
-        co: 0.0,
-        testerName: 'Hamad Al-Kaabi',
-        testerCertNo: 'PDO-AGT-441',
-        detectorSerial: 'BW-GAS-102',
-        status: 'SAFE',
-        bumpTested: true
-      }
-    ],
-    lotoIsolations: [
-      {
-        id: 'loto-cw-11',
-        tagNumber: 'LOTO-MEC-204',
-        isolationPoint: 'Suction and Discharge Butterfly Valves',
-        equipmentName: 'Pump P-204',
-        isolationType: 'Mechanical',
-        status: 'Zero Energy Verified',
-        isolatorSignature: 'Marcus Chen',
-        isolatorId: 'u7',
-        isolatorTimestamp: '2026-10-06T07:30:00Z',
-        verifierSignature: 'Eng. Mansoor Al-Ketbi'
-      }
-    ],
-    issuerSignature: {
-      signed: true,
-      signatoryName: 'Marcus Chen',
-      signatoryRole: 'Area Authority',
-      signatoryOrg: 'Gulf Energy Maritime',
-      timestamp: '2026-10-06T07:50:00Z',
-      checklistConfirmed: true
-    },
-    receiverSignature: {
-      signed: true,
-      signatoryName: 'Rahul Gupta',
-      signatoryRole: 'Lead Mechanical Technician',
-      signatoryOrg: 'Gulf Energy',
-      timestamp: '2026-10-06T07:55:00Z',
-      checklistConfirmed: true
-    },
-    simopsClashLocked: false,
-    createdAt: '2026-10-06T07:00:00Z',
-    updatedAt: '2026-10-06T07:55:00Z'
-  },
-  // Permit 12: Excavation - Trenching for Subsea Cable Conduit
-  {
-    id: 'ptw-geig-012',
-    permitNumber: 'PTW-2026-8860',
-    title: 'Underground Cable Trench Excavation (Depth 2.2m)',
-    type: 'Excavation',
-    status: 'Active',
-    zone: 'Zone 5 - Coastal Utility Corridor',
-    exactLocation: 'Ras Al-Khair Facility (KSA) · Subsea Interconnector Trench',
-    contractor: 'Petrofac Civil Subcontractors',
-    crewSize: 6,
-    validFrom: '2026-10-05T07:00:00Z',
-    validTo: '2026-10-08T18:00:00Z',
-    description: 'Mechanical hydraulic excavator digging 2.2m deep trench with aluminum hydraulic shoring trench boxes installed.',
-    riskScore: 14,
-    riskRating: 'High',
-    flammableVentingOrHydrocarbonRisk: false,
-    gasTestingLog: [],
-    lotoIsolations: [],
-    issuerSignature: {
-      signed: true,
-      signatoryName: 'Abdulaziz Al-Ghamdi',
-      signatoryRole: 'Permit Issuer',
-      signatoryOrg: 'Gulf Energy Maritime',
-      timestamp: '2026-10-05T06:30:00Z',
-      checklistConfirmed: true
-    },
-    receiverSignature: {
-      signed: true,
-      signatoryName: 'Zaid Al-Otaibi',
-      signatoryRole: 'Civil Site Supervisor',
-      signatoryOrg: 'Petrofac Civil',
-      timestamp: '2026-10-05T06:40:00Z',
-      checklistConfirmed: true
-    },
-    simopsClashLocked: false,
-    createdAt: '2026-10-05T06:00:00Z',
-    updatedAt: '2026-10-05T06:40:00Z'
-  },
-  // Permit 13: Interconnected Hot Work & Line Breaking (#PTW-2026-0186)
-  {
-    id: 'ptw-geig-0186',
-    permitNumber: 'PTW-2026-0186',
-    title: 'Hot Work & Line Breaking on 24-Inch Hydrocarbon Trunkline',
-    type: 'Hot Work',
-    status: 'Authorized',
-    zone: 'Zone C - Hydrocarbon Processing Header',
-    exactLocation: 'Mina Al Fahal Refinery & Petrochemical Asset (Oman) · Header Manifold HM-03',
-    contractor: 'Gulf Energy Technical Services',
-    crewSize: 6,
-    validFrom: '2026-10-08T06:00:00Z',
-    validTo: '2026-10-08T18:00:00Z',
-    description: 'Hot tap tie-in, spool piece installation, and positive mechanical isolation on trunkline header HM-03.',
-    riskScore: 20,
-    riskRating: 'Critical',
-    flammableVentingOrHydrocarbonRisk: true,
-    gasTestingLog: [
-      {
-        id: 'gas-0186',
-        timestamp: '2026-10-08T05:30:00Z',
-        oxygen: 20.9,
-        lel: 0.0,
-        h2s: 0.0,
-        co: 0.0,
-        testerName: 'Marcus Chen',
-        testerCertNo: 'AGT-III-8891',
-        detectorSerial: 'BW-GAS-9912',
-        bumpTested: true,
-        status: 'SAFE',
-        notes: 'Pre-entry gas test 0.0% LEL verified across 25m perimeter.'
-      }
-    ],
-    lotoIsolations: [
-      {
-        id: 'loto-0186-01',
-        tagNumber: 'LOTO-HM03-01',
-        isolationPoint: 'Upstream Isolation Valve V-101',
-        equipmentName: 'Header Manifold HM-03',
-        isolationType: 'Mechanical',
-        status: 'Applied & Padlocked',
-        isolatorSignature: 'Rahul Gupta',
-        isolatorId: 'u6',
-        isolatorTimestamp: '2026-10-08T05:15:00Z',
-        verifierSignature: 'Marcus Chen',
-        verifierId: 'u7',
-        verifierTimestamp: '2026-10-08T05:30:00Z'
-      }
-    ],
-    issuerSignature: {
-      signed: true,
-      signatoryName: 'Sarah Jones',
-      signatoryRole: 'Site HSE Manager / Issuing Authority',
-      signatoryOrg: 'Gulf Energy',
-      timestamp: '2026-10-08T06:00:00Z',
-      checklistConfirmed: true
-    },
-    receiverSignature: {
-      signed: true,
-      signatoryName: 'Marcus Chen',
-      signatoryRole: 'Area Authority / Performing Authority',
-      signatoryOrg: 'Gulf Energy',
-      timestamp: '2026-10-08T05:45:00Z',
-      checklistConfirmed: true
-    },
-    simopsClashLocked: false,
-    createdAt: '2026-10-07T14:00:00Z',
-    updatedAt: '2026-10-08T06:00:00Z'
+export const EXPANDED_ENTERPRISE_PERMITS: Permit[] = (() => {
+  const seenIds = new Set<string>();
+  const list: Permit[] = [];
+  for (const p of GULF_ENERGY_PERMITS) {
+    if (!seenIds.has(p.id)) {
+      seenIds.add(p.id);
+      list.push(p);
+    }
   }
-];
+  return list;
+})();
 
 // -------------------------------------------------------------------
 // 10+ REALISTIC SITE CHECKLIST INSPECTIONS
@@ -733,53 +462,95 @@ export class EnterpriseDataStore {
   public static readonly KEY_AUDITS = 'ad6_audits';
   public static readonly KEY_AUDITS_ALT = 'ad6_enterprise_audits';
   public static readonly KEY_SWA = 'ad6_active_swa_record';
-  public static readonly KEY_INITIALIZED = 'ad6_store_initialized_v3';
+  public static readonly KEY_INITIALIZED = 'ad6_store_initialized_v4';
+
+  // In-Memory canonical stores decoupled from localStorage (G-1 Compliance)
+  private static inMemoryIncidents: Incident[] = [...EXPANDED_ENTERPRISE_INCIDENTS];
+  private static inMemoryPermits: Permit[] = [...EXPANDED_ENTERPRISE_PERMITS];
+  private static inMemoryCapas: EnterpriseCapa[] = [...GULF_ENERGY_CAPAS];
+  private static inMemoryInspections: InspectionRecord[] = [...EXPANDED_ENTERPRISE_INSPECTIONS];
+  private static inMemoryAudits: SafetyAudit[] = [...EXPANDED_ENTERPRISE_AUDITS];
+  private static inMemorySwa: StopWorkRecord | null = null;
 
   public static initialize(force = false): void {
     if (typeof window === 'undefined') return;
 
+    // G-1 Compliance: Purge legacy localStorage business data keys.
+    // localStorage is permitted ONLY for UI preferences and the encrypted offline submission queue.
+    const keysToPurge = [
+      this.KEY_INCIDENTS, this.KEY_INCIDENTS_ALT,
+      this.KEY_PERMITS, this.KEY_PERMITS_ALT,
+      this.KEY_CAPAS, this.KEY_CAPAS_ALT,
+      this.KEY_INSPECTIONS, this.KEY_INSPECTIONS_ALT,
+      this.KEY_AUDITS, this.KEY_AUDITS_ALT,
+      this.KEY_SWA
+    ];
+    for (const key of keysToPurge) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        // ignore
+      }
+    }
+
     const alreadyInit = localStorage.getItem(this.KEY_INITIALIZED) === 'true';
-    if (alreadyInit && !force) return;
-
-    console.log('[EnterpriseDataStore] Initializing unified enterprise database with 10+ records per module...');
-
-    // Incidents - write to both canonical and legacy keys
-    const existingIncidents = localStorage.getItem(this.KEY_INCIDENTS) || localStorage.getItem(this.KEY_INCIDENTS_ALT);
-    if (!existingIncidents || force) {
-      localStorage.setItem(this.KEY_INCIDENTS, JSON.stringify(EXPANDED_ENTERPRISE_INCIDENTS));
-      localStorage.setItem(this.KEY_INCIDENTS_ALT, JSON.stringify(EXPANDED_ENTERPRISE_INCIDENTS));
+    if (!alreadyInit || force) {
+      console.log('[EnterpriseDataStore] Initialized in-memory enterprise records decoupled from localStorage (G-1 compliant)...');
+      localStorage.setItem(this.KEY_INITIALIZED, 'true');
     }
 
-    // Permits - write to both canonical and legacy keys
-    const existingPermits = localStorage.getItem(this.KEY_PERMITS) || localStorage.getItem(this.KEY_PERMITS_ALT);
-    if (!existingPermits || force) {
-      localStorage.setItem(this.KEY_PERMITS, JSON.stringify(EXPANDED_ENTERPRISE_PERMITS));
-      localStorage.setItem(this.KEY_PERMITS_ALT, JSON.stringify(EXPANDED_ENTERPRISE_PERMITS));
-    }
-
-    // CAPAs - write to both canonical and legacy keys
-    const existingCapas = localStorage.getItem(this.KEY_CAPAS) || localStorage.getItem(this.KEY_CAPAS_ALT);
-    if (!existingCapas || force) {
-      localStorage.setItem(this.KEY_CAPAS, JSON.stringify(GULF_ENERGY_CAPAS));
-      localStorage.setItem(this.KEY_CAPAS_ALT, JSON.stringify(GULF_ENERGY_CAPAS));
-    }
-
-    // Inspections
-    const existingInspections = localStorage.getItem(this.KEY_INSPECTIONS) || localStorage.getItem(this.KEY_INSPECTIONS_ALT);
-    if (!existingInspections || force) {
-      localStorage.setItem(this.KEY_INSPECTIONS, JSON.stringify(EXPANDED_ENTERPRISE_INSPECTIONS));
-      localStorage.setItem(this.KEY_INSPECTIONS_ALT, JSON.stringify(EXPANDED_ENTERPRISE_INSPECTIONS));
-    }
-
-    // Audits
-    const existingAudits = localStorage.getItem(this.KEY_AUDITS) || localStorage.getItem(this.KEY_AUDITS_ALT);
-    if (!existingAudits || force) {
-      localStorage.setItem(this.KEY_AUDITS, JSON.stringify(EXPANDED_ENTERPRISE_AUDITS));
-      localStorage.setItem(this.KEY_AUDITS_ALT, JSON.stringify(EXPANDED_ENTERPRISE_AUDITS));
-    }
-
-    localStorage.setItem(this.KEY_INITIALIZED, 'true');
+    // Hydrate asynchronously from backend REST API and flush encrypted offline queue
+    this.hydrateFromBackend();
     this.broadcastMutation('system', 'initialize', 'all');
+  }
+
+  public static async hydrateFromBackend(): Promise<void> {
+    if (typeof window === 'undefined') return;
+    try {
+      const [incRes, ptwRes, capaRes, auditRes] = await Promise.allSettled([
+        fetch('/api/v1/incidents'),
+        fetch('/api/v1/permits'),
+        fetch('/api/v1/capas'),
+        fetch('/api/v1/audits')
+      ]);
+
+      if (incRes.status === 'fulfilled' && incRes.value.ok) {
+        const json = await incRes.value.json();
+        if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+          this.inMemoryIncidents = json.data;
+          this.broadcastMutation('incident', 'sync', 'all');
+        }
+      }
+
+      if (ptwRes.status === 'fulfilled' && ptwRes.value.ok) {
+        const json = await ptwRes.value.json();
+        if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+          this.inMemoryPermits = json.data;
+          this.broadcastMutation('permit', 'sync', 'all');
+        }
+      }
+
+      if (capaRes.status === 'fulfilled' && capaRes.value.ok) {
+        const json = await capaRes.value.json();
+        if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+          this.inMemoryCapas = json.data;
+          this.broadcastMutation('capa', 'sync', 'all');
+        }
+      }
+
+      if (auditRes.status === 'fulfilled' && auditRes.value.ok) {
+        const json = await auditRes.value.json();
+        if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+          this.inMemoryAudits = json.data;
+          this.broadcastMutation('audit', 'sync', 'all');
+        }
+      }
+
+      // Replay any queued offline submissions
+      await EncryptedOfflineQueue.flushQueue();
+    } catch (err) {
+      console.warn('[EnterpriseDataStore] Notice while hydrating from backend API:', err);
+    }
   }
 
   // ---------------------------------------------------------------
@@ -796,23 +567,36 @@ export class EnterpriseDataStore {
   }
 
   // ---------------------------------------------------------------
-  // INCIDENTS
+  // INCIDENTS (G-1 Decoupled from localStorage)
   // ---------------------------------------------------------------
   public static getIncidents(): Incident[] {
-    if (typeof window === 'undefined') return EXPANDED_ENTERPRISE_INCIDENTS;
-    try {
-      const data = localStorage.getItem(this.KEY_INCIDENTS) || localStorage.getItem(this.KEY_INCIDENTS_ALT);
-      return data ? JSON.parse(data) : EXPANDED_ENTERPRISE_INCIDENTS;
-    } catch {
-      return EXPANDED_ENTERPRISE_INCIDENTS;
-    }
+    return this.inMemoryIncidents;
   }
 
   public static createIncident(incident: Incident, user: UserProfile): Incident {
-    const list = this.getIncidents();
-    const updated = [incident, ...list];
-    localStorage.setItem(this.KEY_INCIDENTS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_INCIDENTS_ALT, JSON.stringify(updated));
+    this.inMemoryIncidents = [incident, ...this.inMemoryIncidents];
+
+    // Asynchronously synchronize with enterprise backend API
+    if (typeof window !== 'undefined') {
+      fetch('/api/v1/incidents', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(incident)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: '/api/v1/incidents',
+          method: 'POST',
+          entityType: 'Incident',
+          entityId: incident.id,
+          payload: incident
+        });
+      });
+    }
 
     // Legacy Audit Log
     AuditLogger.log(
@@ -878,11 +662,29 @@ export class EnterpriseDataStore {
   }
 
   public static updateIncident(incident: Incident, user: UserProfile): void {
-    const list = this.getIncidents();
-    const oldIncident = list.find(i => i.id === incident.id);
-    const updated = list.map(i => i.id === incident.id ? incident : i);
-    localStorage.setItem(this.KEY_INCIDENTS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_INCIDENTS_ALT, JSON.stringify(updated));
+    const oldIncident = this.inMemoryIncidents.find(i => i.id === incident.id);
+    this.inMemoryIncidents = this.inMemoryIncidents.map(i => i.id === incident.id ? incident : i);
+
+    if (typeof window !== 'undefined') {
+      fetch(`/api/v1/incidents/${encodeURIComponent(incident.id)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(incident)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: `/api/v1/incidents/${encodeURIComponent(incident.id)}`,
+          method: 'PUT',
+          entityType: 'Incident',
+          entityId: incident.id,
+          payload: incident
+        });
+      });
+    }
 
     AuditLogger.log(
       user.id,
@@ -930,23 +732,35 @@ export class EnterpriseDataStore {
   }
 
   // ---------------------------------------------------------------
-  // PERMITS (PTW)
+  // PERMITS (PTW - G-1 Decoupled from localStorage)
   // ---------------------------------------------------------------
   public static getPermits(): Permit[] {
-    if (typeof window === 'undefined') return EXPANDED_ENTERPRISE_PERMITS;
-    try {
-      const data = localStorage.getItem(this.KEY_PERMITS) || localStorage.getItem(this.KEY_PERMITS_ALT);
-      return data ? JSON.parse(data) : EXPANDED_ENTERPRISE_PERMITS;
-    } catch {
-      return EXPANDED_ENTERPRISE_PERMITS;
-    }
+    return this.inMemoryPermits;
   }
 
   public static createPermit(permit: Permit, user: UserProfile): Permit {
-    const list = this.getPermits();
-    const updated = [permit, ...list];
-    localStorage.setItem(this.KEY_PERMITS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_PERMITS_ALT, JSON.stringify(updated));
+    this.inMemoryPermits = [permit, ...this.inMemoryPermits];
+
+    if (typeof window !== 'undefined') {
+      fetch('/api/v1/permits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(permit)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: '/api/v1/permits',
+          method: 'POST',
+          entityType: 'Permit',
+          entityId: permit.id,
+          payload: permit
+        });
+      });
+    }
 
     AuditLogger.log(
       user.id,
@@ -1001,11 +815,12 @@ export class EnterpriseDataStore {
   }
 
   public static authorizePermit(permitId: string, issuer: UserProfile, remarks?: string): void {
-    const list = this.getPermits();
-    const oldPermit = list.find(p => p.id === permitId || p.permitNumber === permitId);
-    const updated = list.map(p => {
+    const oldPermit = this.inMemoryPermits.find(p => p.id === permitId || p.permitNumber === permitId);
+    let updatedPermitObj: Permit | null = null;
+
+    this.inMemoryPermits = this.inMemoryPermits.map(p => {
       if (p.id === permitId || p.permitNumber === permitId) {
-        return {
+        updatedPermitObj = {
           ...p,
           status: 'Active' as const,
           issuerSignature: {
@@ -1018,12 +833,31 @@ export class EnterpriseDataStore {
             digestHash: 'sha256-verified-authorization-digest'
           }
         };
+        return updatedPermitObj;
       }
       return p;
     });
 
-    localStorage.setItem(this.KEY_PERMITS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_PERMITS_ALT, JSON.stringify(updated));
+    if (updatedPermitObj && typeof window !== 'undefined') {
+      fetch(`/api/v1/permits/${encodeURIComponent(permitId)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': issuer.id,
+          'X-User-Name': issuer.name,
+          'X-User-Role': issuer.role
+        },
+        body: JSON.stringify(updatedPermitObj)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: `/api/v1/permits/${encodeURIComponent(permitId)}`,
+          method: 'PUT',
+          entityType: 'Permit',
+          entityId: permitId,
+          payload: updatedPermitObj
+        });
+      });
+    }
 
     AuditLogger.log(
       issuer.id,
@@ -1088,11 +922,12 @@ export class EnterpriseDataStore {
   }
 
   public static acknowledgePermitCustody(permitId: string, receiver: UserProfile): void {
-    const list = this.getPermits();
-    const oldPermit = list.find(p => p.id === permitId || p.permitNumber === permitId);
-    const updated = list.map(p => {
+    const oldPermit = this.inMemoryPermits.find(p => p.id === permitId || p.permitNumber === permitId);
+    let updatedPermitObj: Permit | null = null;
+
+    this.inMemoryPermits = this.inMemoryPermits.map(p => {
       if (p.id === permitId || p.permitNumber === permitId) {
-        return {
+        updatedPermitObj = {
           ...p,
           receiverSignature: {
             signed: true,
@@ -1103,12 +938,31 @@ export class EnterpriseDataStore {
             checklistConfirmed: true
           }
         };
+        return updatedPermitObj;
       }
       return p;
     });
 
-    localStorage.setItem(this.KEY_PERMITS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_PERMITS_ALT, JSON.stringify(updated));
+    if (updatedPermitObj && typeof window !== 'undefined') {
+      fetch(`/api/v1/permits/${encodeURIComponent(permitId)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': receiver.id,
+          'X-User-Name': receiver.name,
+          'X-User-Role': receiver.role
+        },
+        body: JSON.stringify(updatedPermitObj)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: `/api/v1/permits/${encodeURIComponent(permitId)}`,
+          method: 'PUT',
+          entityType: 'Permit',
+          entityId: permitId,
+          payload: updatedPermitObj
+        });
+      });
+    }
 
     AuditLogger.log(
       receiver.id,
@@ -1162,21 +1016,36 @@ export class EnterpriseDataStore {
   // ---------------------------------------------------------------
   // CORRECTIVE ACTIONS (CAPA)
   // ---------------------------------------------------------------
+  // ---------------------------------------------------------------
+  // CORRECTIVE ACTIONS (CAPA - G-1 Decoupled from localStorage)
+  // ---------------------------------------------------------------
   public static getCapas(): EnterpriseCapa[] {
-    if (typeof window === 'undefined') return GULF_ENERGY_CAPAS;
-    try {
-      const data = localStorage.getItem(this.KEY_CAPAS) || localStorage.getItem(this.KEY_CAPAS_ALT);
-      return data ? JSON.parse(data) : GULF_ENERGY_CAPAS;
-    } catch {
-      return GULF_ENERGY_CAPAS;
-    }
+    return this.inMemoryCapas;
   }
 
   public static createCapa(capa: EnterpriseCapa, user: UserProfile): EnterpriseCapa {
-    const list = this.getCapas();
-    const updated = [capa, ...list];
-    localStorage.setItem(this.KEY_CAPAS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_CAPAS_ALT, JSON.stringify(updated));
+    this.inMemoryCapas = [capa, ...this.inMemoryCapas];
+
+    if (typeof window !== 'undefined') {
+      fetch('/api/v1/capas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(capa)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: '/api/v1/capas',
+          method: 'POST',
+          entityType: 'CAPA',
+          entityId: capa.id,
+          payload: capa
+        });
+      });
+    }
 
     AuditLogger.log(
       user.id,
@@ -1230,21 +1099,41 @@ export class EnterpriseDataStore {
   }
 
   public static updateCapaStatus(capaId: string, status: EnterpriseCapa['status'], user: UserProfile, evidence?: string): void {
-    const list = this.getCapas();
-    const oldCapa = list.find(c => c.id === capaId);
-    const updated = list.map(c => {
+    const oldCapa = this.inMemoryCapas.find(c => c.id === capaId);
+    let updatedCapaObj: EnterpriseCapa | null = null;
+
+    this.inMemoryCapas = this.inMemoryCapas.map(c => {
       if (c.id === capaId) {
-        return {
+        updatedCapaObj = {
           ...c,
           status,
           closureEvidence: status === 'Closed' ? (evidence || `Verified closed by ${user.name} on ${new Date().toLocaleDateString()}`) : c.closureEvidence
         };
+        return updatedCapaObj;
       }
       return c;
     });
 
-    localStorage.setItem(this.KEY_CAPAS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_CAPAS_ALT, JSON.stringify(updated));
+    if (updatedCapaObj && typeof window !== 'undefined') {
+      fetch(`/api/v1/capas/${encodeURIComponent(capaId)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(updatedCapaObj)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: `/api/v1/capas/${encodeURIComponent(capaId)}`,
+          method: 'PUT',
+          entityType: 'CAPA',
+          entityId: capaId,
+          payload: updatedCapaObj
+        });
+      });
+    }
 
     AuditLogger.log(
       user.id,
@@ -1295,20 +1184,40 @@ export class EnterpriseDataStore {
   }
 
   public static reassignCapa(capaId: string, newOwnerName: string, user: UserProfile): void {
-    const list = this.getCapas();
-    const oldCapa = list.find(c => c.id === capaId);
-    const updated = list.map(c => {
+    const oldCapa = this.inMemoryCapas.find(c => c.id === capaId);
+    let updatedCapaObj: EnterpriseCapa | null = null;
+
+    this.inMemoryCapas = this.inMemoryCapas.map(c => {
       if (c.id === capaId) {
-        return {
+        updatedCapaObj = {
           ...c,
           ownerName: newOwnerName
         };
+        return updatedCapaObj;
       }
       return c;
     });
 
-    localStorage.setItem(this.KEY_CAPAS, JSON.stringify(updated));
-    localStorage.setItem(this.KEY_CAPAS_ALT, JSON.stringify(updated));
+    if (updatedCapaObj && typeof window !== 'undefined') {
+      fetch(`/api/v1/capas/${encodeURIComponent(capaId)}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': user.id,
+          'X-User-Name': user.name,
+          'X-User-Role': user.role
+        },
+        body: JSON.stringify(updatedCapaObj)
+      }).catch(() => {
+        EncryptedOfflineQueue.enqueue({
+          endpoint: `/api/v1/capas/${encodeURIComponent(capaId)}`,
+          method: 'PUT',
+          entityType: 'CAPA',
+          entityId: capaId,
+          payload: updatedCapaObj
+        });
+      });
+    }
 
     AuditLogger.log(
       user.id,
@@ -1358,16 +1267,10 @@ export class EnterpriseDataStore {
   }
 
   // ---------------------------------------------------------------
-  // STOP WORK AUTHORITY (SWA)
+  // STOP WORK AUTHORITY (SWA - G-1 Decoupled from localStorage)
   // ---------------------------------------------------------------
   public static getActiveSwa(): StopWorkRecord | null {
-    if (typeof window === 'undefined') return null;
-    try {
-      const data = localStorage.getItem(this.KEY_SWA);
-      return data ? JSON.parse(data) : null;
-    } catch {
-      return null;
-    }
+    return this.inMemorySwa;
   }
 
   public static triggerSwa(location: string, hazard: string, action: string, reporter: UserProfile): StopWorkRecord {
@@ -1382,7 +1285,7 @@ export class EnterpriseDataStore {
       status: 'ACTIVE_STOPPAGE'
     };
 
-    localStorage.setItem(this.KEY_SWA, JSON.stringify(swaRecord));
+    this.inMemorySwa = swaRecord;
 
     // Audit Log
     AuditLogger.log(
@@ -1450,7 +1353,7 @@ export class EnterpriseDataStore {
 
   public static resolveSwa(user: UserProfile): void {
     const activeSwa = this.getActiveSwa();
-    localStorage.removeItem(this.KEY_SWA);
+    this.inMemorySwa = null;
 
     AuditLogger.log(
       user.id,
@@ -1504,6 +1407,14 @@ export class EnterpriseDataStore {
       details: `Hazard mitigated and verified. Operations authorized to resume.`,
       impactResult: 'All high-risk permits reactivated.'
     }).catch(console.warn);
+  }
+
+  public static getAudits(): SafetyAudit[] {
+    return this.inMemoryAudits;
+  }
+
+  public static getInspections(): InspectionRecord[] {
+    return this.inMemoryInspections;
   }
 
   // ---------------------------------------------------------------
@@ -1663,6 +1574,14 @@ export class EnterpriseDataStore {
       });
     }
 
-    return tasks;
+    const seenTaskIds = new Set<string>();
+    const uniqueTasks: CockpitTask[] = [];
+    for (const t of tasks) {
+      if (!seenTaskIds.has(t.id)) {
+        seenTaskIds.add(t.id);
+        uniqueTasks.push(t);
+      }
+    }
+    return uniqueTasks;
   }
 }

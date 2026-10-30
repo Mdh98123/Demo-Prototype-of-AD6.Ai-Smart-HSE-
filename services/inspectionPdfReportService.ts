@@ -5,7 +5,7 @@
  * digital signatures, GPS coordinates, and timestamped audit metadata.
  */
 
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { InspectionRecord } from './offlineStorage';
 
@@ -486,7 +486,7 @@ export class InspectionPdfReportService {
     // ==========================================
     // 8. DOCUMENT CONTROL FOOTER (ALL PAGES)
     // ==========================================
-    const totalPages = doc.internal.getNumberOfPages();
+    const totalPages = doc.getNumberOfPages();
     for (let p = 1; p <= totalPages; p++) {
       doc.setPage(p);
       doc.setDrawColor(226, 232, 240);

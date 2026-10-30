@@ -16,6 +16,8 @@ import { healthRouter } from "./routes/healthz";
 import { geminiRouter } from "./routes/geminiRouter";
 import { predictiveMaintenanceRouter } from "./routes/predictiveMaintenanceRouter";
 import { regulatoryRouter } from "./routes/regulatoryRouter";
+import { enterpriseDataRouter } from "./routes/enterpriseDataRouter";
+import { v1Router, checkDatabaseHealth } from "./apps/api/src";
 import { ROLE_PERMISSIONS_MAP, VIEW_PERMISSION_REQUIREMENTS } from "./services/permissionService";
 import { UserRole, View } from "./types";
 
@@ -94,6 +96,27 @@ async function startServer() {
 
   // Enterprise Regulatory Intelligence Router (/api/regulatory/latest, /api/regulatory/add-legal-register)
   app.use("/api/regulatory", regulatoryRouter);
+
+  // Phase 1 PostgreSQL 16 REST Data Layer (/api/v1/incidents, /capas, /permits, /inspections, etc.)
+  app.use("/api/v1", v1Router);
+
+  // Enterprise Data & Audit Ledger REST Router (Incidents, Permits, CAPAs, Audits, Statutory Form G)
+  app.use("/api/v1", enterpriseDataRouter);
+
+  // Database Connectivity Probe (PostgreSQL readiness probe for container orchestration)
+  app.get(["/health/ready", "/api/v1/health/ready"], async (req, res) => {
+    const health = await checkDatabaseHealth();
+    if (health.connected) {
+      return res.status(200).json({
+        status: "ready",
+        database: health
+      });
+    }
+    return res.status(503).json({
+      status: "unready",
+      database: health
+    });
+  });
 
   // GCC Enterprise Procurement - Security Headers & Hardening (Mozilla Observatory A+)
   app.use((req, res, next) => {

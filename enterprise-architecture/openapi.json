@@ -1,0 +1,354 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AD6.Ai Smart HSE Enterprise Platform — Phase 1 REST Data Layer",
+    "version": "1.0.0",
+    "description": "Enterprise PostgreSQL 16 REST endpoints with Multi-Tenant Row-Level Security (RLS) and Segregation of Duties (SoD) enforcement. Fully compliant with Sultanate of Oman (MD 286/2008, RD 53/2023, PDO SP-1143, PDO SP-1170) and GCC industrial regulations."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local Development Server"
+    },
+    {
+      "url": "https://api.hse-enterprise.om/v1",
+      "description": "Production Sovereign Cloud (Oman Data Park)"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "TenantHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Tenant-ID",
+        "description": "Required UUID specifying tenant context. Bound to PostgreSQL session RLS via current_setting('app.tenant_id')::uuid."
+      }
+    },
+    "schemas": {
+      "PaginationEnvelope": {
+        "type": "object",
+        "properties": {
+          "page": { "type": "integer", "example": 1 },
+          "limit": { "type": "integer", "example": 50 },
+          "total": { "type": "integer", "example": 12 },
+          "totalPages": { "type": "integer", "example": 1 }
+        },
+        "required": ["page", "limit", "total", "totalPages"]
+      },
+      "ErrorEnvelope": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string", "example": "VALIDATION_ERROR" },
+              "message": { "type": "string", "example": "Field 'title' is required" },
+              "details": { "type": "array", "items": { "type": "object" } }
+            },
+            "required": ["code", "message"]
+          }
+        },
+        "required": ["success", "error"]
+      },
+      "Incident": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "incident_number": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+          "status": { "type": "string", "enum": ["Open", "Under Investigation", "Action Pending", "Closed"] },
+          "location": { "type": "string" },
+          "incident_timestamp": { "type": "string", "format": "date-time" },
+          "form_g_submitted": { "type": "boolean" },
+          "form_g_receipt_number": { "type": "string", "nullable": true },
+          "form_g_deadline": { "type": "string", "format": "date-time", "nullable": true },
+          "details": { "type": "object" }
+        },
+        "required": ["title", "severity", "location"]
+      },
+      "Capa": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "action_number": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "priority": { "type": "string", "enum": ["P1 - Critical", "P2 - High", "P3 - Medium", "P4 - Low"] },
+          "status": { "type": "string", "enum": ["Open", "In Progress", "Verified", "Closed"] },
+          "owner_name": { "type": "string" },
+          "verified_by_name": { "type": "string", "nullable": true },
+          "due_date": { "type": "string", "format": "date" },
+          "hierarchy": { "type": "string", "enum": ["Elimination", "Substitution", "Engineering", "Administrative", "PPE"] },
+          "details": { "type": "object" }
+        },
+        "required": ["title", "owner_name", "due_date"]
+      },
+      "Permit": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "permit_number": { "type": "string" },
+          "permit_type": { "type": "string", "enum": ["Hot Work", "Cold Work", "Confined Space Entry", "Work at Height", "Radiography", "Electrical Isolation"] },
+          "status": { "type": "string", "enum": ["Draft", "Pending", "Active", "Suspended", "Surrendered", "Closed"] },
+          "zone": { "type": "string" },
+          "exact_location": { "type": "string" },
+          "valid_from": { "type": "string", "format": "date-time" },
+          "valid_to": { "type": "string", "format": "date-time" },
+          "issuer_name": { "type": "string", "nullable": true },
+          "receiver_name": { "type": "string", "nullable": true },
+          "details": { "type": "object" }
+        },
+        "required": ["permit_type", "exact_location", "valid_to"]
+      },
+      "Inspection": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "template_type": { "type": "string" },
+          "site_name": { "type": "string" },
+          "inspector_name": { "type": "string" },
+          "status": { "type": "string", "enum": ["Scheduled", "In Progress", "Completed"] },
+          "score": { "type": "number", "nullable": true }
+        },
+        "required": ["title", "template_type", "site_name", "inspector_name"]
+      },
+      "Observation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "observation_number": { "type": "string" },
+          "observer_name": { "type": "string" },
+          "observation_type": { "type": "string", "enum": ["Safe Act", "Unsafe Act", "Unsafe Condition", "Positive Recognition"] },
+          "location": { "type": "string" },
+          "description": { "type": "string" },
+          "immediate_action": { "type": "string", "nullable": true },
+          "status": { "type": "string", "default": "Logged" }
+        },
+        "required": ["observer_name", "observation_type", "location", "description"]
+      },
+      "Contractor": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "company_name": { "type": "string" },
+          "trade": { "type": "string" },
+          "contact_email": { "type": "string", "format": "email", "nullable": true },
+          "contact_phone": { "type": "string", "nullable": true },
+          "compliance_status": { "type": "string", "enum": ["Approved", "Conditional", "Suspended"] },
+          "cr_number": { "type": "string", "nullable": true }
+        },
+        "required": ["company_name", "trade"]
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "doc_number": { "type": "string" },
+          "title": { "type": "string" },
+          "category": { "type": "string" },
+          "status": { "type": "string", "default": "Active" },
+          "current_version": { "type": "string", "default": "1.0" },
+          "owner_name": { "type": "string" },
+          "file_url": { "type": "string" }
+        },
+        "required": ["title", "category", "owner_name", "file_url"]
+      },
+      "TrainingRecord": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "tenant_id": { "type": "string", "format": "uuid" },
+          "course_title": { "type": "string" },
+          "course_code": { "type": "string" },
+          "trainee_name": { "type": "string" },
+          "civil_id": { "type": "string" },
+          "completion_date": { "type": "string", "format": "date" },
+          "expiry_date": { "type": "string", "format": "date", "nullable": true },
+          "score": { "type": "number", "nullable": true },
+          "certificate_url": { "type": "string", "nullable": true }
+        },
+        "required": ["course_title", "course_code", "trainee_name", "civil_id", "completion_date"]
+      }
+    }
+  },
+  "security": [
+    {
+      "TenantHeader": []
+    }
+  ],
+  "paths": {
+    "/health/ready": {
+      "get": {
+        "summary": "Check PostgreSQL database connectivity",
+        "responses": {
+          "200": { "description": "Database is ready" },
+          "503": { "description": "Database connection unavailable" }
+        }
+      }
+    },
+    "/import/localstorage": {
+      "post": {
+        "summary": "One-time migration importer from client localStorage into PostgreSQL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incidents": { "type": "array", "items": { "type": "object" } },
+                  "permits": { "type": "array", "items": { "type": "object" } },
+                  "capas": { "type": "array", "items": { "type": "object" } },
+                  "inspections": { "type": "array", "items": { "type": "object" } },
+                  "contractors": { "type": "array", "items": { "type": "object" } }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Import succeeded and client store frozen as read-only" }
+        }
+      }
+    },
+    "/incidents": {
+      "get": {
+        "summary": "List incidents with pagination and filtering",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 50 } },
+          { "name": "status", "in": "query", "schema": { "type": "string" } },
+          { "name": "severity", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "List of incidents" }
+        }
+      },
+      "post": {
+        "summary": "Create a new incident",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Incident" } } }
+        },
+        "responses": {
+          "201": { "description": "Incident created" }
+        }
+      }
+    },
+    "/capas": {
+      "get": {
+        "summary": "List corrective and preventive actions",
+        "responses": { "200": { "description": "List of CAPAs" } }
+      },
+      "post": {
+        "summary": "Create a new CAPA with Segregation of Duties validation",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Capa" } } }
+        },
+        "responses": {
+          "201": { "description": "CAPA created" },
+          "403": { "description": "SoD Violation: Action Owner cannot verify and close own action" }
+        }
+      }
+    },
+    "/permits": {
+      "get": {
+        "summary": "List Safe Systems of Work permits",
+        "responses": { "200": { "description": "List of permits" } }
+      },
+      "post": {
+        "summary": "Create permit with Segregation of Duties check",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Permit" } } }
+        },
+        "responses": {
+          "201": { "description": "Permit created" },
+          "403": { "description": "SoD Violation: Permit Receiver cannot self-authorize as Area Authority" }
+        }
+      }
+    },
+    "/inspections": {
+      "get": {
+        "summary": "List inspections",
+        "responses": { "200": { "description": "List of inspections" } }
+      },
+      "post": {
+        "summary": "Create inspection",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Inspection" } } }
+        },
+        "responses": { "201": { "description": "Inspection created" } }
+      }
+    },
+    "/observations": {
+      "get": {
+        "summary": "List BBS observations",
+        "responses": { "200": { "description": "List of observations" } }
+      },
+      "post": {
+        "summary": "Create observation",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Observation" } } }
+        },
+        "responses": { "201": { "description": "Observation created" } }
+      }
+    },
+    "/contractors": {
+      "get": {
+        "summary": "List contractors",
+        "responses": { "200": { "description": "List of contractors" } }
+      },
+      "post": {
+        "summary": "Create contractor",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Contractor" } } }
+        },
+        "responses": { "201": { "description": "Contractor created" } }
+      }
+    },
+    "/documents": {
+      "get": {
+        "summary": "List documents",
+        "responses": { "200": { "description": "List of documents" } }
+      },
+      "post": {
+        "summary": "Create document",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Document" } } }
+        },
+        "responses": { "201": { "description": "Document created" } }
+      }
+    },
+    "/training": {
+      "get": {
+        "summary": "List training records",
+        "responses": { "200": { "description": "List of training records" } }
+      },
+      "post": {
+        "summary": "Create training record",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TrainingRecord" } } }
+        },
+        "responses": { "201": { "description": "Training record created" } }
+      }
+    }
+  }
+}

@@ -132,7 +132,7 @@ export const MyWorkCockpit: React.FC = () => {
 
   // Tabbed Filtering Logic
   const filteredTasks = useMemo(() => {
-    return tasks.filter(task => {
+    const matched = tasks.filter(task => {
       // Tab filter
       if (activeTab === 'Urgent / Overdue') {
         if (!task.isOverdue && task.status !== 'Overdue' && task.priority !== 'P1 - Critical') {
@@ -163,6 +163,13 @@ export const MyWorkCockpit: React.FC = () => {
         }
       }
 
+      return true;
+    });
+
+    const seenIds = new Set<string>();
+    return matched.filter(t => {
+      if (seenIds.has(t.id)) return false;
+      seenIds.add(t.id);
       return true;
     });
   }, [tasks, activeTab, priorityFilter, searchQuery]);
@@ -700,9 +707,9 @@ export const MyWorkCockpit: React.FC = () => {
                   </td>
                 </tr>
               ) : (
-                filteredTasks.map(task => (
+                filteredTasks.map((task, idx) => (
                   <tr 
-                    key={task.id} 
+                    key={`${task.id}-${idx}`} 
                     className="hover:bg-blue-50/40 transition-colors group"
                   >
                     {/* Status Badge */}

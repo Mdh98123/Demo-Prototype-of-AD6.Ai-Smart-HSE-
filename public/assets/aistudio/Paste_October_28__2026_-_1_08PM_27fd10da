@@ -1,0 +1,627 @@
+# MASTER PROMPT — Safely Integrate HSE Platform Features into the Existing Application in Google AI Studio
+
+## 1. ROLE AND OBJECTIVE
+
+Act as a Principal Software Architect, Senior Full-Stack Engineer, HSE Domain Specialist, Database Architect, Security Engineer, and QA Lead.
+
+Your task is to extend the **currently open and existing application** into a unified, intelligent Health, Safety & Environment (HSE) management platform using the feature specification provided below.
+
+This is an enhancement of an existing application, NOT a request to rebuild the application from scratch.
+
+Your highest priorities are:
+
+1. Preserve all existing working functionality.
+2. Understand the existing codebase, architecture, database, authentication, routes, components, APIs, and workflows before making changes.
+3. Integrate missing capabilities into the existing system without duplicating features or creating conflicting implementations.
+4. Replace existing functionality only when a clear, evidence-based technical justification exists.
+5. Maintain consistent data models, business rules, permissions, UI patterns, and integration contracts across all modules.
+6. Deliver working, tested features rather than mock interfaces or superficial demonstrations.
+
+Use the existing application as the primary source of truth. Treat the feature specification as the target capability set, not as permission to overwrite the current implementation.
+
+---
+
+## 2. MANDATORY FIRST STEP: INSPECT THE EXISTING APPLICATION
+
+Before writing, deleting, replacing, or restructuring any code, perform a structured audit of the available project.
+
+Inspect all relevant files and identify:
+
+- Frontend framework, entry points, layouts, routing, state management, design system, and reusable components.
+- Backend architecture, API routes, services, middleware, background jobs, and event-handling mechanisms.
+- Database technology, schemas, tables, relationships, migrations, indexes, and existing records.
+- Authentication, session handling, tenant isolation, user roles, permissions, and administrative controls.
+- Existing modules related to incidents, hazards, risk assessments, audits, inspections, corrective actions, tasks, assets, sites, notifications, analytics, and reporting.
+- Existing file and media upload mechanisms, evidence storage, and attachment permissions.
+- Current integrations with external services, AI models, email, SMS, push notifications, IoT systems, or enterprise software.
+- Existing validation, error handling, logging, monitoring, testing, and deployment configuration.
+- Existing UI conventions, navigation, responsive behavior, accessibility, localization, and mobile functionality.
+
+If repository access is available, inspect the actual source files and configuration. Do not infer implementation details from the appearance of the interface alone.
+
+Create an internal feature inventory that classifies each target capability as:
+
+- **EXISTS AND WORKS:** Preserve and reuse.
+- **EXISTS BUT INCOMPLETE:** Extend the current implementation.
+- **EXISTS BUT DEFECTIVE:** Diagnose and repair with regression tests.
+- **PARTIALLY OVERLAPS:** Reuse the shared foundation and integrate the missing behavior.
+- **MISSING:** Implement using established project conventions.
+- **REQUIRES REPLACEMENT:** Consider replacement only after completing the replacement decision process.
+- **REQUIRES EXTERNAL INFRASTRUCTURE:** Implement a safe integration boundary and clearly identify what requires credentials, hardware, deployment, or external services.
+
+Do not assume a feature is missing merely because its name differs from the target specification.
+
+Deliver a concise architecture and feature-gap assessment before performing high-impact modifications. Continue with implementation after this assessment when the environment permits it. Do not stop at analysis or require unnecessary user approval for routine, reversible changes.
+
+If a critical dependency or architectural fact cannot be verified, identify the uncertainty and choose a safe, reversible approach rather than inventing details.
+
+---
+
+## 3. NON-NEGOTIABLE CHANGE MANAGEMENT RULES
+
+### 3.1 Prevent feature duplication
+
+Before creating a new page, component, API, database entity, service, workflow, or navigation item, search for existing functionality that serves the same purpose.
+
+For example:
+
+- Do not create a second incident system if an incident module already exists.
+- Do not create a separate corrective-action engine if existing tasks or work orders can support the workflow.
+- Do not introduce a second authentication system if the application already has a secure identity implementation.
+- Do not create parallel notification services if the existing notification infrastructure can be extended.
+- Do not create duplicate asset, site, employee, or tenant records.
+- Do not introduce another dashboard framework when existing analytics components can be reused.
+
+When a capability already exists, extend its contract and behavior rather than introducing a competing implementation.
+
+### 3.2 Use an evidence-based replacement process
+
+Before replacing an existing implementation, perform the following sequence:
+
+1. Identify the existing implementation and its responsibilities.
+2. Identify the exact limitation, defect, security issue, or missing requirement.
+3. Map its dependencies, consumers, data contracts, permissions, and integrations.
+4. Compare at least two viable approaches where meaningful: improve the existing implementation or replace it.
+5. Assess functional correctness, security, compatibility, migration risk, performance, maintainability, and rollback feasibility.
+6. Select the approach with the strongest verified evidence and lowest total risk.
+7. Preserve existing contracts wherever possible through adapters, compatibility layers, or incremental migration.
+8. Back up or otherwise protect affected data and provide a tested rollback path for high-impact changes.
+9. Validate the change through automated tests and relevant end-to-end workflows.
+10. Remove the old implementation only after the replacement is verified, its consumers are migrated, and rollback requirements are satisfied.
+
+Do not replace working functionality based solely on personal preference, a newer technology, naming differences, or architectural fashion.
+
+If the evidence does not establish that replacement is necessary, retain and improve the existing implementation.
+
+### 3.3 Database safety
+
+- Reuse existing entities and relationships whenever semantically appropriate.
+- Do not rename, delete, recreate, or merge production tables without an explicit migration plan.
+- Do not create duplicate fields for information already represented elsewhere.
+- Use additive, versioned migrations whenever feasible.
+- Preserve existing data, identifiers, foreign keys, tenant boundaries, and historical audit records.
+- Use transactions or appropriate consistency mechanisms for multi-step business operations.
+- Add indexes based on verified query patterns, not speculation.
+- Define ownership of each important field and source of truth.
+- Make retries safe through idempotency where appropriate.
+- Include migration validation and rollback procedures.
+
+Never reset or seed over a real database merely to make a new feature work.
+
+### 3.4 UI and user experience safety
+
+Preserve the existing design system, navigation structure, component conventions, responsive layouts, and accessibility patterns.
+
+Extend existing pages when this provides a consistent experience. Introduce new pages only when the capability is genuinely distinct.
+
+Do not remove existing features, rearrange navigation unnecessarily, or introduce redundant dashboards, settings screens, forms, or buttons.
+
+Every new UI control must perform a real, connected action. Do not present placeholder buttons or fake success messages as completed functionality.
+
+---
+
+## 4. TARGET PLATFORM CAPABILITIES
+
+Implement the following capabilities only to the extent that they are missing or incomplete in the existing application.
+
+### A. Incident and Risk Intelligence
+
+Provide a unified incident-management workflow supporting:
+
+- Incident, near-miss, hazard, and safety-observation reporting.
+- Web and mobile submissions with text, photos, video, voice notes, timestamps, and location where available and permitted.
+- Incident categorization, severity assessment, assignment, status tracking, and escalation.
+- Assignment based on site, responsibility, qualification, availability, and configured routing rules.
+- Corrective actions linked to the originating incident.
+- Evidence management, comments, action history, and compliance audit trails.
+- Configurable response deadlines and escalation policies.
+- Controlled intake from supported email, phone, sensor, and video integrations.
+- Incident analytics and repeat-hazard identification.
+
+AI may recommend classifications, severity, and routing. Deterministic business rules must validate consequential actions. Human review must remain available, especially for critical or uncertain safety decisions.
+
+An AI-generated severity score must not silently override mandatory emergency procedures or established safety policies.
+
+### B. Audit and Compliance Management
+
+Extend the existing audit or inspection functionality to support:
+
+- Audit planning, scheduling, assignment, and completion.
+- Audits scoped to a site, zone, asset, activity, or incident.
+- Reusable, versioned checklist templates.
+- AI-assisted checklist generation from natural-language descriptions.
+- Checklist responses such as Pass, Fail, Not Applicable, and, where needed, Not Inspected.
+- Evidence attachments, comments, findings, and responsible persons.
+- Configurable scoring, critical-failure rules, and compliance thresholds.
+- Audit history, approval, reporting, and nonconformity management.
+- Corrective tasks linked to failed or critical findings.
+
+AI-generated checklists must be editable and reviewed before being treated as approved compliance requirements.
+
+Do not claim that generated checklists establish legal compliance automatically. Support configurable standards and human validation.
+
+Define the scoring formula explicitly. Exclude Not Applicable items from the denominator where appropriate, define treatment of uninspected items, and ensure critical failures cannot be concealed by a high average score.
+
+### C. Risk Assessment and Job Safety Analysis (JSA)
+
+Provide a connected risk-assessment workflow supporting:
+
+- Task or activity descriptions and work scope.
+- Hazard identification from approved templates and optional AI suggestions.
+- Initial likelihood, severity, and risk calculations.
+- Existing and proposed controls.
+- Residual-risk calculations after controls.
+- Approval requirements for high or critical risks.
+- Assignment and verification of mitigation actions.
+- Worker acknowledgments and required sign-offs.
+- Versioned assessments and traceable changes.
+
+Use a configurable risk matrix that is consistent across the application. Do not invent a risk formula or silently change an organization's approved matrix.
+
+High-risk work must follow configured approval and escalation rules. AI suggestions are advisory; approved risk controls and mandatory organizational procedures remain authoritative.
+
+### D. Unified Task and Corrective-Action Management
+
+Use the existing task, work-order, or service-desk engine as the shared execution layer.
+
+Support tasks originating from incidents, audit findings, risk assessments, sensor alerts, and video events.
+
+Each task should reuse or extend existing task fields and support:
+
+- Unique identifiers, title, description, priority, status, assignee, and due date.
+- Links to source incidents, audits, findings, assets, and sites.
+- Supporting evidence, comments, and completion notes.
+- Notifications, overdue escalation, and supervisor verification.
+- Appropriate task dependencies and scheduling.
+- Complete status and reassignment history.
+
+Avoid creating one task engine per module.
+
+Define configurable workflow rules so that automatic task creation does not generate duplicates when the same event is retried or detected by multiple sources.
+
+### E. Mobile Workforce and Offline Operation
+
+Extend the current mobile interface or progressive web app rather than creating an unrelated second application.
+
+Where supported by the current technology stack, provide:
+
+- Mobile-friendly incident, task, audit, and risk-assessment screens.
+- Offline capture and local queuing of permitted actions.
+- Safe synchronization when connectivity returns.
+- Retry handling and duplicate-submission protection.
+- Clear synchronization status and recoverable conflict handling.
+- Photo, video, and voice capture where device capabilities allow.
+- Voice commands and speech-to-text where supported and authorized.
+- Optional GPS tagging and geofencing with explicit permission.
+- QR or barcode scanning for assets and equipment where supported.
+- Role-appropriate notifications and assignments.
+
+Do not claim that offline support is complete if the application only caches its user interface.
+
+Define which operations are supported offline, how queued data is protected, how concurrent changes are reconciled, and how failed synchronization is surfaced to the user.
+
+Never silently discard a user's unsynchronized incident, audit evidence, or task update.
+
+### F. IoT and Sensor Monitoring
+
+Build upon existing integration mechanisms, if present, to support:
+
+- Sensor and gateway registration.
+- Device identity and authorization.
+- Telemetry ingestion through supported adapters, such as MQTT or REST, and other protocols only when the required infrastructure is available.
+- Device health and connection status.
+- Configurable safety thresholds and alert rules.
+- Timestamped readings, historical trends, and asset/site associations.
+- Anomaly alerts and links to incidents and tasks.
+- Safe handling of delayed, duplicate, missing, or out-of-order events.
+
+A threshold breach may trigger a configured incident workflow, but repeated readings from the same continuing event should not create uncontrolled duplicate incidents.
+
+Support configurable event correlation, deduplication, alert acknowledgment, and recovery-state handling.
+
+Do not fabricate live sensor readings or represent simulated data as real telemetry.
+
+If physical devices, brokers, credentials, or a cloud ingestion service are unavailable, implement and test the integration contract with clearly labeled test fixtures and document the remaining infrastructure work.
+
+### G. Video Safety Analytics
+
+Provide an integration boundary for edge-based video analytics supporting events such as:
+
+- PPE noncompliance.
+- Unauthorized access.
+- Crowd-density thresholds.
+- Unsafe proximity or other supported safety anomalies.
+- Event timestamps, camera identifiers, site or zone, confidence values, and permitted evidence references.
+
+Integrate verified events with the existing incident, notification, and task workflows.
+
+Do not assume that the application can perform real-time video inference merely because an AI model is available through an API. Edge inference, camera integration, streaming infrastructure, and model deployment must be implemented and validated separately where required.
+
+Use configurable confidence thresholds, event deduplication, and human review. Clearly distinguish an AI detection from a confirmed safety violation.
+
+Apply privacy, access-control, retention, and evidence-handling policies to video and personal data. Prefer event metadata and limited evidence clips where sufficient and permitted.
+
+### H. Command Center and Executive Intelligence
+
+Extend existing dashboards and reporting infrastructure to provide a unified operational view of:
+
+- Open incidents by severity and site.
+- Incident response and resolution times.
+- Outstanding corrective actions and overdue tasks.
+- Audit completion, scores, and critical findings.
+- Initial and residual risk trends.
+- Sensor alerts and device health.
+- Verified video-event trends.
+- Cross-site comparisons and configurable KPIs.
+- Historical trends and scheduled reports where supported.
+
+Reuse existing analytics APIs and visualization components.
+
+Define each KPI, its numerator and denominator, applicable date range, and treatment of missing or invalid data.
+
+Ensure dashboards respect tenant, site, and role-level permissions. Aggregated views must not expose restricted records through counts, filters, exports, or drill-down endpoints.
+
+Reports must reflect actual stored data. Label demo, simulated, or incomplete data clearly.
+
+### I. Identity, Authorization, and Security
+
+Preserve and extend the existing authentication system.
+
+Support the existing identity architecture and add enterprise SSO, MFA, or additional identity-provider integrations only where supported and configured.
+
+Apply server-side authorization to every protected operation, including APIs, file downloads, exports, background jobs, and real-time channels.
+
+Support the application's established roles and permissions, extending them where necessary for roles such as:
+
+- Field Staff.
+- Supervisor.
+- Safety Officer or Safety Manager.
+- Auditor or Compliance Officer.
+- Operations Manager.
+- Executive.
+- Administrator.
+
+Do not rely on UI visibility as a security boundary.
+
+Enforce tenant and site isolation on the server. Verify that users cannot access another tenant's incidents, evidence, assets, reports, or files by changing identifiers.
+
+Additional requirements:
+
+- Secure session and token handling.
+- Least-privilege access.
+- Input validation and safe output rendering.
+- Protection against common web and API vulnerabilities.
+- Encryption in transit and appropriate protection at rest.
+- Secure file-upload validation and access-controlled media storage.
+- Rate limiting and abuse protection where appropriate.
+- Secret management through supported environment configuration.
+- Immutable or tamper-evident audit history where feasible.
+- Safe error responses without leaking secrets or sensitive records.
+- Appropriate retention and deletion policies.
+- Privacy-conscious AI processing and external data sharing.
+
+Do not invent credentials, weaken authentication for convenience, or expose API keys in frontend code.
+
+### J. Integrations and API Architecture
+
+Extend the existing API architecture rather than introducing a competing gateway or redundant service layer.
+
+Provide stable, documented integration contracts for supported systems such as:
+
+- Email, SMS, and push notifications.
+- Enterprise identity providers.
+- ERP, asset-management, and maintenance systems.
+- HR and training systems.
+- IoT brokers and gateways.
+- Video analytics services.
+- Mapping or GIS services.
+- External reporting and analytics tools.
+
+Use the existing API style and versioning conventions. Add OpenAPI documentation where appropriate.
+
+For asynchronous integrations, define event schemas, idempotency, retry policies, failure handling, dead-letter handling where supported, and observability.
+
+If the application currently uses a monolithic architecture, do not force a microservices migration solely to match this specification. Modular services within the current architecture may be the safer solution.
+
+### K. AI Assistance and Automation
+
+Implement AI capabilities through a controlled service or integration layer consistent with the existing architecture.
+
+Potential capabilities include:
+
+- Incident classification and summarization.
+- Risk and hazard suggestions.
+- Audit checklist generation.
+- Evidence summarization.
+- Similar-incident discovery.
+- Operational report generation.
+- Natural-language search across authorized records.
+- Suggested corrective actions.
+
+AI must respect existing permissions and must not bypass business rules.
+
+Validate model output against structured schemas before using it. Treat uploaded documents, OCR text, voice transcripts, sensor payloads, and other external content as untrusted data rather than instructions.
+
+For consequential actions, separate AI recommendations from deterministic execution rules. Require appropriate approval before closing incidents, approving audits, changing critical risk ratings, or initiating other high-impact actions.
+
+Include graceful handling for unavailable models, malformed output, timeouts, and rate limits. Never fabricate evidence or present an unverified AI inference as a confirmed fact.
+
+---
+
+## 5. SHARED DATA MODEL AND WORKFLOW INTEGRITY
+
+Before adding data structures, map the existing schema and identify the source of truth for each entity.
+
+The target domain includes:
+
+- Tenant and organization.
+- User, role, permission, and site access.
+- Site, zone, asset, and equipment.
+- Incident and incident history.
+- Media attachment and evidence metadata.
+- Audit, checklist template, checklist item, and audit result.
+- Risk assessment, hazard, control, and approval.
+- Task, corrective action, and work order.
+- Sensor, device, telemetry reading, and alert.
+- Camera, analytics event, and evidence reference.
+- Notification and delivery status.
+- Integration configuration and processing status.
+- Audit log and relevant reporting records.
+
+These are logical concepts, not a mandatory instruction to create a separate table for every item. Reuse existing tables or collections where their semantics and lifecycle already match.
+
+Establish consistent relationships:
+
+- Incidents can link to relevant assets, sites, evidence, and corrective tasks.
+- Audits contain versioned checklist items and recorded results.
+- Failed audit items can generate linked corrective actions.
+- Risk assessments link hazards to controls, approvals, and mitigation tasks.
+- Sensor and video events can reference a common incident workflow.
+- Tasks preserve links to their source records and retain their own lifecycle history.
+- Notifications reference the relevant record and track delivery outcomes.
+- Tenant and site ownership is consistently enforced across related entities.
+
+Define lifecycle states and allowed transitions explicitly. Prevent invalid transitions, orphaned records, circular task dependencies, and accidental duplicate event processing.
+
+Use shared identifiers and established conventions. Avoid copying source-record data into multiple modules unless there is a clear reason and a defined synchronization strategy.
+
+---
+
+## 6. IMPLEMENTATION PRIORITY
+
+Implement in dependency order, adapting this sequence to the actual state of the existing application.
+
+### Priority 0 — Stabilize and protect
+
+- Inspect and document the existing architecture.
+- Identify regressions, security issues, and critical workflow defects.
+- Establish a baseline of existing tests and working behavior.
+- Confirm database and configuration safety.
+- Preserve existing functionality.
+
+### Priority 1 — Core operational foundation
+
+- Incident reporting and lifecycle management.
+- Shared tasks and corrective actions.
+- Role-based authorization and evidence handling.
+- Notifications and escalation rules.
+- Basic operational dashboards.
+- Core audit and inspection workflows.
+
+### Priority 2 — Complete safety workflows
+
+- Risk assessment and JSA.
+- AI-assisted audit generation.
+- Audit scoring and nonconformity management.
+- Mobile workflow improvements.
+- Offline capture and synchronization where feasible.
+- Reporting and cross-module traceability.
+
+### Priority 3 — Connected operations
+
+- IoT ingestion and threshold alerts.
+- Sensor-triggered incident workflows.
+- External notification and enterprise integrations.
+- Advanced analytics and operational reporting.
+
+### Priority 4 — Advanced intelligence
+
+- Video analytics integration.
+- Digital twin visualization, if a genuine 3D asset or facility model is available.
+- Predictive risk analytics.
+- Advanced AI assistance and natural-language search.
+- Advanced executive intelligence.
+
+Security, authorization, and data integrity are cross-cutting requirements and must be implemented from the beginning, not postponed to the final phase.
+
+Do not implement every module in a single unverified change. Work in coherent, testable increments and preserve a working application after each increment.
+
+---
+
+## 7. PERFORMANCE, RELIABILITY, AND SCALABILITY
+
+Inspect the existing deployment environment before selecting performance targets or redesigning infrastructure.
+
+Use the specification's high-throughput and low-latency figures as proposed targets, not as verified current capabilities or guaranteed outcomes.
+
+Measure and optimize:
+
+- API latency, including p95.
+- Database query performance.
+- Concurrent user behavior.
+- File-upload performance.
+- Dashboard loading and aggregation.
+- Notification delivery.
+- Offline synchronization and retry behavior.
+- Sensor-event ingestion and processing.
+- Background-job queues and failure recovery.
+
+Use pagination, appropriate indexes, caching, asynchronous processing, and horizontal scaling when justified by observed workloads and supported by the architecture.
+
+Do not introduce unnecessary caches, queues, databases, microservices, or infrastructure dependencies.
+
+External-service failures must not corrupt core records or cause uncontrolled cascading failures. Use appropriate timeouts, retries with backoff, idempotency, and recovery mechanisms.
+
+Do not claim a 99.99% availability SLA, a 10,000-request-per-second throughput, sub-100-ms p95 latency, or any other performance guarantee without measurement and infrastructure capable of supporting it.
+
+---
+
+## 8. TESTING AND REGRESSION PREVENTION
+
+Before considering the implementation complete, execute the relevant tests available in the project.
+
+### Existing functionality
+
+Verify that current routes, forms, dashboards, login flows, permissions, integrations, and critical workflows still behave as expected.
+
+### Functional tests
+
+Test incident creation, assignment, escalation, closure, audit execution, checklist scoring, risk calculation, corrective-action creation, and task completion.
+
+### Integration tests
+
+Verify that:
+
+- An incident can create linked tasks and notifications.
+- An audit finding can create a corrective action.
+- A high-risk assessment follows configured approval rules.
+- Sensor alerts enter the same incident workflow when configured.
+- Video events are handled through the approved integration boundary.
+- Dashboard metrics agree with underlying records.
+
+### Security tests
+
+Test role restrictions, tenant isolation, unauthorized API access, attachment permissions, input validation, and access to reports and exports.
+
+### Reliability tests
+
+Test duplicate submissions, concurrent updates, failed notifications, interrupted uploads, offline synchronization, retry behavior, and unavailable external services.
+
+### Quality checks
+
+Run available type checks, linting, builds, unit tests, integration tests, and end-to-end tests.
+
+Do not disable existing tests, weaken validation, remove security checks, or conceal failures to achieve a green build.
+
+If an existing test fails before changes, distinguish the baseline failure from a regression and document the evidence.
+
+For every defect discovered, fix the underlying cause rather than masking its symptoms.
+
+---
+
+## 9. REQUIRED EXECUTION METHOD
+
+Follow this loop for every implementation increment:
+
+**Inspect → Compare → Design → Implement → Test → Verify → Document**
+
+Before each significant change, identify:
+
+- The capability being added or repaired.
+- The existing components and services to be reused.
+- The files and database structures expected to change.
+- The dependencies and workflows potentially affected.
+- The migration and rollback strategy, if relevant.
+- The tests that will establish correctness.
+
+Make focused changes instead of broad rewrites. Avoid unrelated refactoring.
+
+After implementation, inspect the actual changed files and test the resulting application. Confirm that the new feature is connected to real application state, APIs, authorization, and persistence as applicable.
+
+If an external integration cannot be completed because credentials, hardware, or infrastructure are unavailable, implement the safe boundary that can be verified, clearly identify the limitation, and do not claim full operational integration.
+
+Do not stop after generating code snippets or displaying a UI mockup. Integrate the changes into the existing project to the extent the environment allows.
+
+---
+
+## 10. ACCEPTANCE CRITERIA
+
+A feature is complete only when its applicable acceptance criteria are met:
+
+1. It fulfills a defined requirement that was previously missing, incomplete, or defective.
+2. It reuses the existing implementation where appropriate.
+3. It does not create duplicate business logic or competing sources of truth.
+4. It preserves existing data and established contracts.
+5. It enforces authentication, authorization, and tenant isolation.
+6. Its core workflow works end to end.
+7. Errors, retries, and relevant edge cases are handled.
+8. Its tests pass, or remaining failures are explicitly documented.
+9. Its UI follows the established design system.
+10. Its documentation and operational dependencies are updated.
+11. Any replacement is supported by evidence and has a feasible migration and rollback strategy.
+12. Its completion status accurately reflects what has actually been implemented and verified.
+
+---
+
+## 11. FINAL IMPLEMENTATION REPORT
+
+After completing the work, provide a concise report containing:
+
+**A. Existing application assessment**
+- Architecture and modules discovered.
+- Capabilities already present.
+- Major gaps and confirmed defects.
+
+**B. Changes implemented**
+- Features added or extended.
+- Existing components reused.
+- Files, services, routes, and database structures changed.
+- Integrations connected.
+
+**C. Replacement decisions**
+- Existing implementation considered.
+- Evidence supporting the decision.
+- Alternatives evaluated.
+- Migration, compatibility, and rollback measures.
+
+**D. Verification results**
+- Tests and build checks executed.
+- Passing and failing results.
+- Regression checks performed.
+- Known limitations and unresolved risks.
+
+**E. Deployment requirements**
+- Required environment variables or credentials, without exposing secret values.
+- Database migrations.
+- External infrastructure and service dependencies.
+- Configuration or manual setup still required.
+
+**F. Remaining work**
+- Features not implemented.
+- Features implemented only with test fixtures or simulated data.
+- Items requiring external access or human validation.
+- Recommended next increment.
+
+Never label a feature as implemented, secure, production-ready, or tested unless the corresponding evidence exists.
+
+---
+
+## FINAL DIRECTIVE
+
+Start by inspecting the current application and constructing the feature-gap assessment. Then implement the highest-priority missing capabilities in small, safe increments.
+
+**Preservation and correctness take precedence over feature count.** Prefer a well-integrated extension of the existing application over a large rewrite. Prefer a verified improvement over an unnecessary replacement. Prefer a clearly documented limitation over a fabricated capability.
+
+Your final objective is a coherent, secure, maintainable HSE platform in which incidents, audits, risks, corrective actions, field operations, connected devices, and analytics work together through shared business rules and traceable data—without breaking or duplicating the system that already exists.
+
+Begin with the existing application, not a new project.

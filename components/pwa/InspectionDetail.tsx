@@ -1128,6 +1128,7 @@ export const InspectionDetail: React.FC<InspectionDetailProps> = ({ record, onBa
                 ))}
               </div>
             </div>
+          )}
         </div>
 
         {/* Statutory Formal PDF Report Generator Card */}

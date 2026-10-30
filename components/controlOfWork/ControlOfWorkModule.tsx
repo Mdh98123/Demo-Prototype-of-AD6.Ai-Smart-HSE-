@@ -1613,14 +1613,14 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
 
           {/* Permit Cards List */}
           <div className="space-y-3">
-            {filteredPermits.map((permit) => {
+            {filteredPermits.map((permit, idx) => {
               const badge = getTypeBadge(permit.type);
               const Icon = badge.icon;
               const isSelected = selectedPermitId === permit.id;
 
               return (
                 <div
-                  key={permit.id}
+                  key={`${permit.id}-${idx}`}
                   onClick={() => {
                     setSelectedPermitId(permit.id);
                     setActiveTab('DETAIL');
@@ -1787,9 +1787,9 @@ export const ControlOfWorkModule: React.FC<ControlOfWorkModuleProps> = ({ initia
                     {zone.permitsInZone.length === 0 ? (
                       <div className="text-[11px] text-slate-600 py-2">No active permits in zone</div>
                     ) : (
-                      zone.permitsInZone.map(p => (
+                      zone.permitsInZone.map((p, pIdx) => (
                         <div 
-                          key={p.id}
+                          key={`${p.id}-${pIdx}`}
                           onClick={() => {
                             setSelectedPermitId(p.id);
                             setActiveTab('DETAIL');
