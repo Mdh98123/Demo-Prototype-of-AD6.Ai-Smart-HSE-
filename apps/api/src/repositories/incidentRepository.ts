@@ -1,18 +1,25 @@
 /**
  * Incident Repository Interface and PostgreSQL Implementation
+ * Integrated with append-only hash-chained audit trail and Oman statutory clock.
  */
 
 import { withTenantContext } from '../db/connection';
 import { IncidentRecord } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
+import { startStatutoryClock } from '../clock/statutoryClock';
 
 export interface IIncidentRepository {
   findMany(tenantId: string, options?: { limit?: number; offset?: number; status?: string; severity?: string }): Promise<{ items: IncidentRecord[]; total: number }>;
   findById(tenantId: string, id: string): Promise<IncidentRecord | null>;
-  create(tenantId: string, data: Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }): Promise<IncidentRecord>;
-  update(tenantId: string, id: string, data: Partial<Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at'>>): Promise<IncidentRecord | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }, actorId?: string): Promise<IncidentRecord>;
+  update(tenantId: string, id: string, data: Partial<Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string): Promise<IncidentRecord | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
+
+const SERIOUS_SEVERITIES = new Set([
+  'Critical', 'Major', 'High', 'Fatal', 'Level 4', 'Level 5', 'Catastrophic', 'Tier 1'
+]);
 
 export class PostgresIncidentRepository implements IIncidentRepository {
   public async findMany(
@@ -64,7 +71,8 @@ export class PostgresIncidentRepository implements IIncidentRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }
+    data: Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string },
+    actorId?: string
   ): Promise<IncidentRecord> {
     return withTenantContext(tenantId, async (client) => {
       const id = ensureUuid(data.id);
@@ -95,14 +103,46 @@ export class PostgresIncidentRepository implements IIncidentRepository {
         JSON.stringify(data.details || {})
       ];
       const res = await client.query<IncidentRecord>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      // Audit trail write (append-only hash-chained)
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'INCIDENT_CREATED',
+        entityType: 'INCIDENT',
+        entityId: created.id,
+        afterState: created,
+        metadata: { incident_number: created.incident_number, severity: created.severity }
+      });
+
+      // Statutory clock initiation per Oman MD 286/2008
+      // Clock starts strictly on incident confirmation (not on draft creation)
+      const isConfirmed = created.status !== 'Draft';
+      const isSerious = SERIOUS_SEVERITIES.has(created.severity);
+      if (isConfirmed && isSerious) {
+        try {
+          await startStatutoryClock({
+            incidentId: created.id,
+            tenantId,
+            severity: created.severity,
+            startedAt: created.incident_timestamp,
+            actorId: actorId || 'system'
+          });
+        } catch (clockErr) {
+          console.warn('[INCIDENT REPO] Could not start statutory clock:', clockErr);
+        }
+      }
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<IncidentRecord, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string
   ): Promise<IncidentRecord | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -133,17 +173,64 @@ export class PostgresIncidentRepository implements IIncidentRepository {
         tenantId
       ];
       const res = await client.query<IncidentRecord>(query, params);
-      return res.rows[0] || null;
+      const result = res.rows[0] || null;
+
+      if (result) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'INCIDENT_UPDATED',
+          entityType: 'INCIDENT',
+          entityId: result.id,
+          beforeState: existing,
+          afterState: result,
+          metadata: { incident_number: result.incident_number, statusTransition: `${existing.status} -> ${result.status}` }
+        });
+
+        // If transitioning from Draft to Confirmed/Open, or newly marked serious
+        if (existing.status === 'Draft' && result.status !== 'Draft' && SERIOUS_SEVERITIES.has(result.severity)) {
+          try {
+            await startStatutoryClock({
+              incidentId: result.id,
+              tenantId,
+              severity: result.severity,
+              startedAt: result.incident_timestamp,
+              actorId: actorId || 'system'
+            });
+          } catch (clockErr) {
+            console.warn('[INCIDENT REPO] Could not start statutory clock on update:', clockErr);
+          }
+        }
+      }
+
+      return result;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
       const res = await client.query(
         'DELETE FROM incidents WHERE (id::text = $1 OR incident_number = $1) AND tenant_id = $2',
         [id, tenantId]
       );
-      return res.rowCount > 0;
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'INCIDENT_DELETED',
+          entityType: 'INCIDENT',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { incident_number: existing.incident_number }
+        });
+      }
+
+      return deleted;
     });
   }
 }

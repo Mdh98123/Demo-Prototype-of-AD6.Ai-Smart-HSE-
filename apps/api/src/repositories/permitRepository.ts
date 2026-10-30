@@ -1,18 +1,20 @@
 /**
  * Permit (PTW) Repository Interface and PostgreSQL Implementation
  * Enforces Segregation of Duties (Permit Receiver cannot self-authorize as Permit Issuer).
+ * Integrated with append-only hash-chained audit trail.
  */
 
 import { withTenantContext } from '../db/connection';
 import { PermitRecord } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
 
 export interface IPermitRepository {
   findMany(tenantId: string, options?: { limit?: number; offset?: number; status?: string; permit_type?: string }): Promise<{ items: PermitRecord[]; total: number }>;
   findById(tenantId: string, id: string): Promise<PermitRecord | null>;
-  create(tenantId: string, data: Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }): Promise<PermitRecord>;
-  update(tenantId: string, id: string, data: Partial<Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at'>>): Promise<PermitRecord | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }, actorId?: string): Promise<PermitRecord>;
+  update(tenantId: string, id: string, data: Partial<Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string, auditMetadata?: Record<string, any>): Promise<PermitRecord | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
 
 export class PostgresPermitRepository implements IPermitRepository {
@@ -65,7 +67,8 @@ export class PostgresPermitRepository implements IPermitRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }
+    data: Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string },
+    actorId?: string
   ): Promise<PermitRecord> {
     const issuer = data.issuer_name || data.issuer_signature?.signatoryName;
     const receiver = data.receiver_name || data.receiver_signature?.signatoryName;
@@ -103,14 +106,28 @@ export class PostgresPermitRepository implements IPermitRepository {
         JSON.stringify(data.details || {})
       ];
       const res = await client.query<PermitRecord>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'PERMIT_CREATED',
+        entityType: 'PERMIT',
+        entityId: created.id,
+        afterState: created,
+        metadata: { permit_number: created.permit_number, permit_type: created.permit_type }
+      });
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<PermitRecord, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string,
+    auditMetadata?: Record<string, any>
   ): Promise<PermitRecord | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -149,17 +166,49 @@ export class PostgresPermitRepository implements IPermitRepository {
         tenantId
       ];
       const res = await client.query<PermitRecord>(query, params);
-      return res.rows[0] || null;
+      const updated = res.rows[0] || null;
+
+      if (updated) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'PERMIT_UPDATED',
+          entityType: 'PERMIT',
+          entityId: updated.id,
+          beforeState: existing,
+          afterState: updated,
+          metadata: { permit_number: updated.permit_number, status: updated.status, ...(auditMetadata || {}) }
+        });
+      }
+
+      return updated;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
       const res = await client.query(
         'DELETE FROM permits WHERE (id::text = $1 OR permit_number = $1) AND tenant_id = $2',
         [id, tenantId]
       );
-      return res.rowCount > 0;
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'PERMIT_DELETED',
+          entityType: 'PERMIT',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { permit_number: existing.permit_number }
+        });
+      }
+
+      return deleted;
     });
   }
 }

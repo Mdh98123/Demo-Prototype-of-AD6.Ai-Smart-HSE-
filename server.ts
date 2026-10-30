@@ -8,7 +8,9 @@ try {
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
-import { logAccess } from "./services/audit.js";
+import { logAccess, getAuditLogs } from "./services/audit.js";
+import { verifyAuditChain } from "./apps/api/src/audit";
+import { startStatutoryClockWorker } from "./apps/api/src/clock";
 import http from "http";
 import { Server } from "socket.io";
 import { createWorkflowRouter } from "./routes/workflowRouter";
@@ -156,33 +158,43 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
-  // Enterprise Compliance Audit Trail API
-  const inMemoryAuditTrail: any[] = [];
-
+  // Enterprise Compliance Audit Trail API (Durable PostgreSQL Hash-Chained Ledger)
   app.post(["/api/audit-log", "/api/audit/log"], async (req, res) => {
     try {
       const { userId, operation, payload } = req.body;
-      inMemoryAuditTrail.unshift({
-        userId: userId || 'anonymous',
-        operation: operation || 'SYSTEM_ACTION',
-        payload: payload || {},
-        timestamp: new Date().toISOString()
-      });
-      if (inMemoryAuditTrail.length > 500) inMemoryAuditTrail.pop();
       await logAccess(userId || 'anonymous', operation || 'SYSTEM_ACTION', payload || {});
-      res.json({ success: true, count: inMemoryAuditTrail.length });
+      res.json({ success: true });
     } catch (err) {
       console.warn('[AUDIT API] Non-blocking audit logger warning:', err);
       res.json({ success: true });
     }
   });
 
-  app.get("/api/audit/trail", (req, res) => {
-    res.json({
-      status: "success",
-      totalRecords: inMemoryAuditTrail.length,
-      records: inMemoryAuditTrail.slice(0, 50)
-    });
+  app.get("/api/audit/trail", async (req, res) => {
+    try {
+      const tenantId = (req.headers['x-tenant-id'] as string) || '00000000-0000-0000-0000-000000000001';
+      const records = await getAuditLogs(50, tenantId);
+      res.json({
+        status: "success",
+        totalRecords: records.length,
+        records
+      });
+    } catch (err: any) {
+      res.status(500).json({ status: "error", message: err.message });
+    }
+  });
+
+  // Root-level Admin Audit Verification endpoint
+  app.get(["/admin/audit/verify", "/api/admin/audit/verify"], async (req, res) => {
+    try {
+      const tenantId = (req.headers['x-tenant-id'] as string) || '00000000-0000-0000-0000-000000000001';
+      const fromId = req.query.fromId ? parseInt(req.query.fromId as string, 10) : undefined;
+      const toId = req.query.toId ? parseInt(req.query.toId as string, 10) : undefined;
+      const result = await verifyAuditChain(tenantId, fromId, toId);
+      res.status(200).json(result);
+    } catch (err: any) {
+      res.status(500).json({ ok: false, error: err.message });
+    }
   });
 
   // Enterprise RBAC Server-Side Authorization Verification Endpoint
@@ -399,9 +411,13 @@ async function startServer() {
     console.log(`[RUNTIME STABILITY] Server successfully bound to 0.0.0.0:${PORT} (NODE_ENV: ${process.env.NODE_ENV || 'development'})`);
   });
 
+  // Start background statutory clock escalation worker (Oman MD 286/2008 & RD 53/2023)
+  const clockWorker = startStatutoryClockWorker(60000);
+
   // Graceful termination handling for container orchestrators (SIGTERM / SIGINT)
   const gracefulShutdown = (signal: string) => {
     console.log(`[RUNTIME STABILITY] Received ${signal}. Closing HTTP/WebSocket server...`);
+    clockWorker.stop();
     server.close(() => {
       console.log("[RUNTIME STABILITY] Server closed cleanly. Exiting process.");
       process.exit(0);

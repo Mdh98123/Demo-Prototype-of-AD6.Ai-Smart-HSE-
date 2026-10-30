@@ -420,10 +420,50 @@ export interface AuditLogRecord {
   action: string;
   entity_type: string;
   entity_id: string;
-  payload_hash: string;
+  before_hash: string;
+  after_hash: string;
+  prev_hash: string;
   entry_hash: string;
+  occurred_at: string;
+  request_id?: string;
+  ip?: string;
+  user_agent?: string;
+  metadata: Record<string, any>;
   signature?: string;
   timestamp: string;
+  created_at: string;
+}
+
+export interface IncidentStatutoryClockRecord {
+  id: string;
+  tenant_id: string;
+  incident_id: string;
+  started_at: string;
+  due_at: string;
+  severity: string;
+  status: 'RUNNING' | 'ACKNOWLEDGED' | 'BREACHED' | 'SUBMITTED' | string;
+  acknowledged_at?: string;
+  acknowledged_by?: string;
+  submission_id?: string;
+  escalation_stage: string;
+  last_escalated_at?: string;
+  details: Record<string, any>;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NotificationOutboxRecord {
+  id: string;
+  tenant_id: string;
+  event_type: string;
+  entity_type: string;
+  entity_id: string;
+  recipient_role: string;
+  payload: Record<string, any>;
+  status: 'PENDING' | 'SENT' | 'FAILED' | string;
+  scheduled_for: string;
+  sent_at?: string;
+  error_message?: string;
   created_at: string;
 }
 
@@ -439,3 +479,63 @@ export interface AiOutputRecord {
   reviewed_at?: string;
   created_at: string;
 }
+
+export interface AuthSessionRecord {
+  id: string;
+  tenant_id: string;
+  user_id: string;
+  session_token: string;
+  mfa_verified: boolean;
+  mfa_method?: string;
+  ip_address?: string;
+  user_agent?: string;
+  expires_at: string;
+  revoked_at?: string;
+  revoked_by?: string;
+  revocation_reason?: string;
+  created_at: string;
+}
+
+export interface SodRuleRecord {
+  id: string;
+  tenant_id: string;
+  rule_code: string;
+  name: string;
+  entity_type: string;
+  predicate_sql: string;
+  severity: string;
+  error_message: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RoleDelegationRecord {
+  id: string;
+  tenant_id: string;
+  delegator_id: string;
+  delegate_id: string;
+  role: string;
+  starts_at: string;
+  ends_at: string;
+  reason: string;
+  is_active: boolean;
+  revoked_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EscalationRuleRecord {
+  id: string;
+  tenant_id: string;
+  rule_code: string;
+  entity_type: string;
+  condition: string;
+  level: number;
+  target_role: string;
+  delay_minutes: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+

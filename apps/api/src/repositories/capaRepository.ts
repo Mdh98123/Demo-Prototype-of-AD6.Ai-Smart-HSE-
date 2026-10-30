@@ -1,18 +1,20 @@
 /**
  * CAPA Repository Interface and PostgreSQL Implementation
  * Enforces Segregation of Duties (Action Owner cannot self-verify and close action).
+ * Integrated with append-only hash-chained audit trail.
  */
 
 import { withTenantContext } from '../db/connection';
 import { CapaRecord } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
 
 export interface ICapaRepository {
   findMany(tenantId: string, options?: { limit?: number; offset?: number; status?: string; priority?: string }): Promise<{ items: CapaRecord[]; total: number }>;
   findById(tenantId: string, id: string): Promise<CapaRecord | null>;
-  create(tenantId: string, data: Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }): Promise<CapaRecord>;
-  update(tenantId: string, id: string, data: Partial<Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at'>>): Promise<CapaRecord | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }, actorId?: string): Promise<CapaRecord>;
+  update(tenantId: string, id: string, data: Partial<Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string): Promise<CapaRecord | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
 
 export class PostgresCapaRepository implements ICapaRepository {
@@ -65,7 +67,8 @@ export class PostgresCapaRepository implements ICapaRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }
+    data: Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string },
+    actorId?: string
   ): Promise<CapaRecord> {
     // SoD Check
     if (data.status === 'Closed' && data.owner_name && data.verified_by_name) {
@@ -101,14 +104,27 @@ export class PostgresCapaRepository implements ICapaRepository {
         JSON.stringify(data.details || {})
       ];
       const res = await client.query<CapaRecord>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'CAPA_CREATED',
+        entityType: 'CAPA',
+        entityId: created.id,
+        afterState: created,
+        metadata: { action_number: created.action_number, priority: created.priority }
+      });
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<CapaRecord, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string
   ): Promise<CapaRecord | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -143,17 +159,49 @@ export class PostgresCapaRepository implements ICapaRepository {
         tenantId
       ];
       const res = await client.query<CapaRecord>(query, params);
-      return res.rows[0] || null;
+      const updated = res.rows[0] || null;
+
+      if (updated) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'CAPA_UPDATED',
+          entityType: 'CAPA',
+          entityId: updated.id,
+          beforeState: existing,
+          afterState: updated,
+          metadata: { action_number: updated.action_number, status: updated.status }
+        });
+      }
+
+      return updated;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
       const res = await client.query(
         'DELETE FROM capas WHERE (id::text = $1 OR action_number = $1) AND tenant_id = $2',
         [id, tenantId]
       );
-      return res.rowCount > 0;
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'CAPA_DELETED',
+          entityType: 'CAPA',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { action_number: existing.action_number }
+        });
+      }
+
+      return deleted;
     });
   }
 }

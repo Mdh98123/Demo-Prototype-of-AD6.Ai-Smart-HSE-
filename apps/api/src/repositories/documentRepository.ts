@@ -1,17 +1,19 @@
 /**
  * Document Repository Interface and PostgreSQL Implementation
+ * Integrated with append-only hash-chained audit trail.
  */
 
 import { withTenantContext } from '../db/connection';
 import { DocumentRecord } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
 
 export interface IDocumentRepository {
   findMany(tenantId: string, options?: { limit?: number; offset?: number; category?: string; status?: string }): Promise<{ items: DocumentRecord[]; total: number }>;
   findById(tenantId: string, id: string): Promise<DocumentRecord | null>;
-  create(tenantId: string, data: Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }): Promise<DocumentRecord>;
-  update(tenantId: string, id: string, data: Partial<Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at'>>): Promise<DocumentRecord | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }, actorId?: string): Promise<DocumentRecord>;
+  update(tenantId: string, id: string, data: Partial<Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string): Promise<DocumentRecord | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
 
 export class PostgresDocumentRepository implements IDocumentRepository {
@@ -42,7 +44,7 @@ export class PostgresDocumentRepository implements IDocumentRepository {
       const query = `
         SELECT * FROM documents 
         ${whereClause} 
-        ORDER BY doc_number ASC 
+        ORDER BY created_at DESC 
         LIMIT $${paramIndex++} OFFSET $${paramIndex++}
       `;
       params.push(limit, offset);
@@ -64,7 +66,8 @@ export class PostgresDocumentRepository implements IDocumentRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }
+    data: Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string },
+    actorId?: string
   ): Promise<DocumentRecord> {
     return withTenantContext(tenantId, async (client) => {
       const id = ensureUuid(data.id);
@@ -90,14 +93,27 @@ export class PostgresDocumentRepository implements IDocumentRepository {
         data.file_url
       ];
       const res = await client.query<DocumentRecord>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'DOCUMENT_CREATED',
+        entityType: 'DOCUMENT',
+        entityId: created.id,
+        afterState: created,
+        metadata: { doc_number: created.doc_number, title: created.title }
+      });
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<DocumentRecord, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string
   ): Promise<DocumentRecord | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -123,17 +139,46 @@ export class PostgresDocumentRepository implements IDocumentRepository {
         tenantId
       ];
       const res = await client.query<DocumentRecord>(query, params);
-      return res.rows[0] || null;
+      const updated = res.rows[0] || null;
+
+      if (updated) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'DOCUMENT_UPDATED',
+          entityType: 'DOCUMENT',
+          entityId: updated.id,
+          beforeState: existing,
+          afterState: updated,
+          metadata: { doc_number: updated.doc_number, version: updated.current_version }
+        });
+      }
+
+      return updated;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
-      const res = await client.query(
-        'DELETE FROM documents WHERE (id::text = $1 OR doc_number = $1) AND tenant_id = $2',
-        [id, tenantId]
-      );
-      return res.rowCount > 0;
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
+      const res = await client.query('DELETE FROM documents WHERE (id::text = $1 OR doc_number = $1) AND tenant_id = $2', [id, tenantId]);
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'DOCUMENT_DELETED',
+          entityType: 'DOCUMENT',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { doc_number: existing.doc_number }
+        });
+      }
+
+      return deleted;
     });
   }
 }

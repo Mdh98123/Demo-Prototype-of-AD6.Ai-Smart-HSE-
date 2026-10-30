@@ -1,17 +1,19 @@
 /**
  * Inspection Repository Interface and PostgreSQL Implementation
+ * Integrated with append-only hash-chained audit trail.
  */
 
 import { withTenantContext } from '../db/connection';
 import { InspectionRecord } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
 
 export interface IInspectionRepository {
   findMany(tenantId: string, options?: { limit?: number; offset?: number; status?: string }): Promise<{ items: InspectionRecord[]; total: number }>;
   findById(tenantId: string, id: string): Promise<InspectionRecord | null>;
-  create(tenantId: string, data: Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }): Promise<InspectionRecord>;
-  update(tenantId: string, id: string, data: Partial<Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at'>>): Promise<InspectionRecord | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }, actorId?: string): Promise<InspectionRecord>;
+  update(tenantId: string, id: string, data: Partial<Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string): Promise<InspectionRecord | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
 
 export class PostgresInspectionRepository implements IInspectionRepository {
@@ -60,7 +62,8 @@ export class PostgresInspectionRepository implements IInspectionRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string }
+    data: Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'> & { id?: string },
+    actorId?: string
   ): Promise<InspectionRecord> {
     return withTenantContext(tenantId, async (client) => {
       const id = ensureUuid(data.id);
@@ -85,14 +88,27 @@ export class PostgresInspectionRepository implements IInspectionRepository {
         JSON.stringify(data.details || {})
       ];
       const res = await client.query<InspectionRecord>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'INSPECTION_CREATED',
+        entityType: 'INSPECTION',
+        entityId: created.id,
+        afterState: created,
+        metadata: { title: created.title, template_type: created.template_type }
+      });
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<InspectionRecord, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string
   ): Promise<InspectionRecord | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -119,14 +135,46 @@ export class PostgresInspectionRepository implements IInspectionRepository {
         tenantId
       ];
       const res = await client.query<InspectionRecord>(query, params);
-      return res.rows[0] || null;
+      const updated = res.rows[0] || null;
+
+      if (updated) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'INSPECTION_UPDATED',
+          entityType: 'INSPECTION',
+          entityId: updated.id,
+          beforeState: existing,
+          afterState: updated,
+          metadata: { title: updated.title, status: updated.status }
+        });
+      }
+
+      return updated;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
       const res = await client.query('DELETE FROM inspections WHERE id::text = $1 AND tenant_id = $2', [id, tenantId]);
-      return res.rowCount > 0;
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'INSPECTION_DELETED',
+          entityType: 'INSPECTION',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { title: existing.title }
+        });
+      }
+
+      return deleted;
     });
   }
 }

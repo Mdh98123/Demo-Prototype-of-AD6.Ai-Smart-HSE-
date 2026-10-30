@@ -11,6 +11,7 @@
 import pg from 'pg';
 import fs from 'node:fs';
 import path from 'node:path';
+import { checkSqlSodInvariants } from '../sod/sodDatabaseEnforcer.js';
 
 export interface DatabaseHealthResult {
   connected: boolean;
@@ -74,6 +75,7 @@ export async function getDatabaseClient(): Promise<{ isRealPostgres: boolean; po
     memoryDb.public.registerFunction({
       name: 'gen_random_uuid',
       returns: memoryDb.public.getType('uuid'),
+      impure: true,
       implementation: () => {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
           const r = Math.random() * 16 | 0;
@@ -101,29 +103,37 @@ export async function getDatabaseClient(): Promise<{ isRealPostgres: boolean; po
       }
     });
 
-    // Execute schema migrations into in-memory engine
-    const schemaPath = path.resolve(process.cwd(), 'migrations/0002_phase1_full_schema.up.sql');
-    if (fs.existsSync(schemaPath)) {
-      const rawSql = fs.readFileSync(schemaPath, 'utf8');
-      const cleanSql = rawSql.replace(/--.*$/gm, '');
-      // Clean statements that pg-mem doesn't need to parse (like extensions and RLS policies)
-      const executableStatements = cleanSql
-        .split(';')
-        .map(s => s.trim())
-        .filter(s => s.length > 0 && 
-          !s.toUpperCase().startsWith('CREATE EXTENSION') &&
-          !s.toUpperCase().startsWith('ALTER TABLE') &&
-          !s.toUpperCase().startsWith('CREATE POLICY')
-        );
+    // Execute all schema migrations into in-memory engine
+    const migrationsDir = path.resolve(process.cwd(), 'migrations');
+    if (fs.existsSync(migrationsDir)) {
+      const upFiles = fs.readdirSync(migrationsDir)
+        .filter(f => f.endsWith('.up.sql') && !f.startsWith('0001_'))
+        .sort();
+      for (const upFile of upFiles) {
+        const rawSql = fs.readFileSync(path.join(migrationsDir, upFile), 'utf8');
+        const cleanSql = rawSql.replace(/--.*$/gm, '');
+        const executableStatements = cleanSql
+          .split(';')
+          .map(s => s.trim())
+          .filter(s => s.length > 0 && 
+            !s.toUpperCase().startsWith('CREATE EXTENSION') &&
+            !s.toUpperCase().startsWith('ALTER TABLE') &&
+            !s.toUpperCase().startsWith('CREATE POLICY') &&
+            !s.toUpperCase().startsWith('DROP POLICY') &&
+            !s.toUpperCase().startsWith('CREATE TRIGGER') &&
+            !s.toUpperCase().startsWith('DROP TRIGGER') &&
+            !s.toUpperCase().startsWith('CREATE OR REPLACE FUNCTION')
+          );
 
-      for (const statement of executableStatements) {
-        try {
-          memoryDb.public.none(statement);
-        } catch (e: any) {
-          // ignore minor DDL unsupported features in memory engine
+        for (const statement of executableStatements) {
+          try {
+            memoryDb.public.none(statement);
+          } catch (e: any) {
+            // Ignore minor DDL syntax variations in memory engine
+          }
         }
       }
-      console.log('[DB] Initialized in-memory PostgreSQL 16 schema with 34 tables.');
+      console.log(`[DB] Initialized in-memory PostgreSQL 16 schema with ${upFiles.length} migration suites.`);
     }
   }
 
@@ -149,6 +159,7 @@ export async function withTenantContext<T>(
 
       const wrapper: DatabaseClient = {
         query: async (text, params) => {
+          checkSqlSodInvariants(text, params);
           const res = await pgClient.query(text, params);
           return { rows: res.rows, rowCount: res.rowCount || 0 };
         }
@@ -174,6 +185,14 @@ export async function withTenantContext<T>(
   try {
     const wrapper: DatabaseClient = {
       query: async (text: string, params?: any[]) => {
+        const trimmed = text.trim();
+        // Emulate PostgreSQL trigger `reject_audit_log_mutation`
+        if (/^(UPDATE|DELETE\s+FROM)\s+audit_log/i.test(trimmed)) {
+          throw new Error('Audit log is strictly append-only: UPDATE and DELETE operations are prohibited (Guardrail G-3).');
+        }
+
+        checkSqlSodInvariants(text, params);
+
         let processedText = text;
         const res = await client.query(processedText, params || []);
         
@@ -235,3 +254,37 @@ export async function checkDatabaseHealth(): Promise<DatabaseHealthResult> {
     };
   }
 }
+
+/**
+ * Returns a system-level query interface or pool for cross-tenant maintenance workers.
+ */
+export function getPool(): { query: <R = any>(text: string, params?: any[]) => Promise<{ rows: R[]; rowCount: number }> } {
+  return {
+    query: async <R = any>(text: string, params?: any[]) => {
+      const trimmed = text.trim();
+      if (/^(UPDATE|DELETE\s+FROM)\s+audit_log/i.test(trimmed)) {
+        throw new Error('Audit log is strictly append-only: UPDATE and DELETE operations are prohibited (Guardrail G-3).');
+      }
+      checkSqlSodInvariants(text, params);
+      const { isRealPostgres, poolOrDb } = await getDatabaseClient();
+      if (isRealPostgres && poolOrDb) {
+        const res = await poolOrDb.query(text, params);
+        return { rows: res.rows, rowCount: res.rowCount || 0 };
+      }
+      const memoryAdapter = poolOrDb.adapters.createPg();
+      const client = new memoryAdapter.Client();
+      await client.connect();
+      try {
+        const res = await client.query(text, params || []);
+        return { rows: res.rows || [], rowCount: res.rowCount || 0 };
+      } finally {
+        await client.end();
+      }
+    }
+  };
+}
+
+export function getMemoryDb(): any {
+  return memoryDb;
+}
+

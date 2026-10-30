@@ -1,26 +1,35 @@
+/**
+ * Audit Trail Service - PostgreSQL Hash-Chained Durable Audit Writer
+ * 
+ * Replaces legacy in-memory buffer with append-only hash-chained PostgreSQL persistence.
+ */
+
+import { writeAudit } from '../apps/api/src/audit/writeAudit';
+import { withTenantContext } from '../apps/api/src/db/connection';
+
 let cloudLogger = null;
 let cloudLoggingDisabled = process.env.ENABLE_CLOUD_LOGGING !== 'true';
 
-// In-memory audit ring-buffer to guarantee enterprise compliance traceability
-const inMemoryAuditLedger = [];
-const MAX_LEDGER_ENTRIES = 500;
+const DEFAULT_TENANT_ID = '00000000-0000-0000-0000-000000000001';
 
-export async function logAccess(userId, operation, payload) {
-  const auditRecord = {
-    id: `audit-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-    userId: userId || 'anonymous',
-    operation: operation || 'SYSTEM_ACTION',
-    payload: payload || {},
-    timestamp: new Date().toISOString()
-  };
+export async function logAccess(userId, operation, payload = {}) {
+  const tenantId = (payload && payload.tenantId) || DEFAULT_TENANT_ID;
 
-  // Always store in local structured ledger
-  inMemoryAuditLedger.unshift(auditRecord);
-  if (inMemoryAuditLedger.length > MAX_LEDGER_ENTRIES) {
-    inMemoryAuditLedger.pop();
+  try {
+    // Durable, append-only hash-chained audit record in PostgreSQL
+    await writeAudit({
+      tenantId,
+      actorId: userId || 'anonymous',
+      action: operation || 'SYSTEM_ACTION',
+      entityType: (payload && payload.entityType) || 'SYSTEM',
+      entityId: (payload && (payload.entityId || payload.id)) || `sys-${Date.now()}`,
+      metadata: payload || {}
+    });
+  } catch (err) {
+    console.warn('[AUDIT] Failed to persist audit record to database:', err);
   }
 
-  // Attempt Google Cloud Logging only if explicitly enabled and not disabled by previous failure
+  // Attempt Google Cloud Logging only if explicitly enabled
   if (!cloudLoggingDisabled && process.env.ENABLE_CLOUD_LOGGING === 'true') {
     try {
       if (!cloudLogger) {
@@ -30,22 +39,35 @@ export async function logAccess(userId, operation, payload) {
 
       const entry = cloudLogger.entry(
         { resource: { type: 'global' } },
-        auditRecord
+        {
+          userId: userId || 'anonymous',
+          operation: operation || 'SYSTEM_ACTION',
+          payload: payload || {},
+          timestamp: new Date().toISOString()
+        }
       );
       await cloudLogger.write(entry);
     } catch (error) {
-      // If Cloud Logging API is not enabled (e.g. PERMISSION_DENIED / code 7) or credentials lack permission,
-      // permanently switch to local audit ledger to prevent error cascade.
       cloudLoggingDisabled = true;
-      console.info('[AUDIT] Cloud Logging API is not enabled or permitted for this project. Operating with local structured audit ledger.');
+      console.info('[AUDIT] Cloud Logging API disabled. Persisting to PostgreSQL hash-chained ledger only.');
     }
   }
 
   // Structured audit event to stdout for standard container logging
-  console.log(`[AUDIT] ${auditRecord.timestamp} - ${auditRecord.operation} by ${auditRecord.userId}`);
+  console.log(`[AUDIT] ${new Date().toISOString()} - ${operation || 'SYSTEM_ACTION'} by ${userId || 'anonymous'}`);
 }
 
-export function getAuditLogs(limit = 100) {
-  return inMemoryAuditLedger.slice(0, limit);
+export async function getAuditLogs(limit = 100, tenantId = DEFAULT_TENANT_ID) {
+  try {
+    return await withTenantContext(tenantId, async (client) => {
+      const res = await client.query(
+        'SELECT * FROM audit_log WHERE tenant_id = $1 ORDER BY id DESC LIMIT $2',
+        [tenantId, limit]
+      );
+      return res.rows;
+    });
+  } catch (err) {
+    console.warn('[AUDIT] Failed to query audit log table:', err);
+    return [];
+  }
 }
-

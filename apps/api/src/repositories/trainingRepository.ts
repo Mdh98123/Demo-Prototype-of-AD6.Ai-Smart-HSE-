@@ -1,23 +1,25 @@
 /**
- * Training Record Repository Interface and PostgreSQL Implementation
+ * Training & Competency Repository Interface and PostgreSQL Implementation
+ * Integrated with append-only hash-chained audit trail.
  */
 
 import { withTenantContext } from '../db/connection';
 import { TrainingRecordEntity } from '../db/schema';
 import { ensureUuid } from '../utils/uuid';
+import { writeAudit } from '../audit/writeAudit';
 
 export interface ITrainingRepository {
-  findMany(tenantId: string, options?: { limit?: number; offset?: number; course_code?: string; trainee_name?: string }): Promise<{ items: TrainingRecordEntity[]; total: number }>;
+  findMany(tenantId: string, options?: { limit?: number; offset?: number; civil_id?: string; course_code?: string; trainee_name?: string }): Promise<{ items: TrainingRecordEntity[]; total: number }>;
   findById(tenantId: string, id: string): Promise<TrainingRecordEntity | null>;
-  create(tenantId: string, data: Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'> & { id?: string }): Promise<TrainingRecordEntity>;
-  update(tenantId: string, id: string, data: Partial<Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'>>): Promise<TrainingRecordEntity | null>;
-  delete(tenantId: string, id: string): Promise<boolean>;
+  create(tenantId: string, data: Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'> & { id?: string }, actorId?: string): Promise<TrainingRecordEntity>;
+  update(tenantId: string, id: string, data: Partial<Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'>>, actorId?: string): Promise<TrainingRecordEntity | null>;
+  delete(tenantId: string, id: string, actorId?: string): Promise<boolean>;
 }
 
 export class PostgresTrainingRepository implements ITrainingRepository {
   public async findMany(
     tenantId: string,
-    options: { limit?: number; offset?: number; course_code?: string; trainee_name?: string } = {}
+    options: { limit?: number; offset?: number; civil_id?: string; course_code?: string; trainee_name?: string } = {}
   ): Promise<{ items: TrainingRecordEntity[]; total: number }> {
     return withTenantContext(tenantId, async (client) => {
       const limit = options.limit ?? 50;
@@ -27,6 +29,10 @@ export class PostgresTrainingRepository implements ITrainingRepository {
       const params: any[] = [tenantId];
       let paramIndex = 2;
 
+      if (options.civil_id) {
+        whereClause += ` AND civil_id = $${paramIndex++}`;
+        params.push(options.civil_id);
+      }
       if (options.course_code) {
         whereClause += ` AND course_code = $${paramIndex++}`;
         params.push(options.course_code);
@@ -64,7 +70,8 @@ export class PostgresTrainingRepository implements ITrainingRepository {
 
   public async create(
     tenantId: string,
-    data: Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'> & { id?: string }
+    data: Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'> & { id?: string },
+    actorId?: string
   ): Promise<TrainingRecordEntity> {
     return withTenantContext(tenantId, async (client) => {
       const id = ensureUuid(data.id);
@@ -89,14 +96,27 @@ export class PostgresTrainingRepository implements ITrainingRepository {
         data.certificate_url || null
       ];
       const res = await client.query<TrainingRecordEntity>(query, params);
-      return res.rows[0];
+      const created = res.rows[0];
+
+      await writeAudit({
+        tenantId,
+        actorId: actorId || 'system',
+        action: 'TRAINING_CREATED',
+        entityType: 'TRAINING_RECORD',
+        entityId: created.id,
+        afterState: created,
+        metadata: { course_title: created.course_title, trainee_name: created.trainee_name }
+      });
+
+      return created;
     });
   }
 
   public async update(
     tenantId: string,
     id: string,
-    data: Partial<Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'>>
+    data: Partial<Omit<TrainingRecordEntity, 'id' | 'tenant_id' | 'created_at'>>,
+    actorId?: string
   ): Promise<TrainingRecordEntity | null> {
     return withTenantContext(tenantId, async (client) => {
       const existing = await this.findById(tenantId, id);
@@ -123,14 +143,46 @@ export class PostgresTrainingRepository implements ITrainingRepository {
         tenantId
       ];
       const res = await client.query<TrainingRecordEntity>(query, params);
-      return res.rows[0] || null;
+      const updated = res.rows[0] || null;
+
+      if (updated) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'TRAINING_UPDATED',
+          entityType: 'TRAINING_RECORD',
+          entityId: updated.id,
+          beforeState: existing,
+          afterState: updated,
+          metadata: { course_title: updated.course_title, civil_id: updated.civil_id }
+        });
+      }
+
+      return updated;
     });
   }
 
-  public async delete(tenantId: string, id: string): Promise<boolean> {
+  public async delete(tenantId: string, id: string, actorId?: string): Promise<boolean> {
     return withTenantContext(tenantId, async (client) => {
+      const existing = await this.findById(tenantId, id);
+      if (!existing) return false;
+
       const res = await client.query('DELETE FROM training_records WHERE id::text = $1 AND tenant_id = $2', [id, tenantId]);
-      return res.rowCount > 0;
+      const deleted = res.rowCount > 0;
+
+      if (deleted) {
+        await writeAudit({
+          tenantId,
+          actorId: actorId || 'system',
+          action: 'TRAINING_DELETED',
+          entityType: 'TRAINING_RECORD',
+          entityId: existing.id,
+          beforeState: existing,
+          metadata: { course_title: existing.course_title }
+        });
+      }
+
+      return deleted;
     });
   }
 }
