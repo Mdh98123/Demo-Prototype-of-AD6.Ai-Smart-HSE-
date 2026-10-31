@@ -1,0 +1,702 @@
+[
+  {
+    "id": "GOLDEN-CITE-01",
+    "topic": "Work at Height Fall Protection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 19",
+    "query": "What is the legal mandate governing work at height fall protection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 19",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 19, mandatory requirement specifies 2 meters.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-02",
+    "topic": "Confined Space Gas Testing Interval",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 4.2",
+    "query": "What is the legal mandate governing confined space gas testing interval in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 4.2",
+      "text": "Pursuant to PDO SP-1143 Section 4.2, mandatory requirement specifies Continuous for H2S.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-03",
+    "topic": "Permit Receiver and Issuer Separation",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 3.1.4",
+    "query": "What is the legal mandate governing permit receiver and issuer separation in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 3.1.4",
+      "text": "Pursuant to PDO SP-1143 Section 3.1.4, mandatory requirement specifies Absolute SoD.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-04",
+    "topic": "Summer Midday Work Ban (Heat Stress)",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman Labor Law RD 53/2023",
+    "expected_article": "Article 16",
+    "query": "What is the legal mandate governing summer midday work ban (heat stress) in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman Labor Law RD 53/2023",
+      "article": "Article 16",
+      "text": "Pursuant to Oman Labor Law RD 53/2023 Article 16, mandatory requirement specifies 12:30 - 15:30.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-05",
+    "topic": "Fatality Statutory 24-Hour Reporting",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 18",
+    "query": "What is the legal mandate governing fatality statutory 24-hour reporting in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 18",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 18, mandatory requirement specifies 24 Hours Clock.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-06",
+    "topic": "Emergency Eyewash & Deluge Shower Inspection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 32",
+    "query": "What is the legal mandate governing emergency eyewash & deluge shower inspection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 32",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 32, mandatory requirement specifies Weekly Testing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-07",
+    "topic": "Contractor Safety Passport & HSE Induction",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1230",
+    "expected_article": "Section 5.1",
+    "query": "What is the legal mandate governing contractor safety passport & hse induction in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1230",
+      "article": "Section 5.1",
+      "text": "Pursuant to PDO SP-1230 Section 5.1, mandatory requirement specifies Mandatory Prior to Gate Access.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-08",
+    "topic": "LOTO Multi-Lock Hasps & Key Custody",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 6.8",
+    "query": "What is the legal mandate governing loto multi-lock hasps & key custody in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 6.8",
+      "text": "Pursuant to PDO SP-1143 Section 6.8, mandatory requirement specifies Zero Key Sharing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-09",
+    "topic": "Scaffold Inspection & Green Tagging",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 22",
+    "query": "What is the legal mandate governing scaffold inspection & green tagging in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 22",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 22, mandatory requirement specifies Every 7 Days.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-10",
+    "topic": "Pressure Relief Valve Recertification",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 8.4",
+    "query": "What is the legal mandate governing pressure relief valve recertification in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 8.4",
+      "text": "Pursuant to PDO SP-1143 Section 8.4, mandatory requirement specifies Annual Proof Test.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-11",
+    "topic": "Work at Height Fall Protection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 19",
+    "query": "What is the legal mandate governing work at height fall protection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 19",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 19, mandatory requirement specifies 2 meters.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-12",
+    "topic": "Confined Space Gas Testing Interval",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 4.2",
+    "query": "What is the legal mandate governing confined space gas testing interval in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 4.2",
+      "text": "Pursuant to PDO SP-1143 Section 4.2, mandatory requirement specifies Continuous for H2S.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-13",
+    "topic": "Permit Receiver and Issuer Separation",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 3.1.4",
+    "query": "What is the legal mandate governing permit receiver and issuer separation in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 3.1.4",
+      "text": "Pursuant to PDO SP-1143 Section 3.1.4, mandatory requirement specifies Absolute SoD.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-14",
+    "topic": "Summer Midday Work Ban (Heat Stress)",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman Labor Law RD 53/2023",
+    "expected_article": "Article 16",
+    "query": "What is the legal mandate governing summer midday work ban (heat stress) in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman Labor Law RD 53/2023",
+      "article": "Article 16",
+      "text": "Pursuant to Oman Labor Law RD 53/2023 Article 16, mandatory requirement specifies 12:30 - 15:30.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-15",
+    "topic": "Fatality Statutory 24-Hour Reporting",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 18",
+    "query": "What is the legal mandate governing fatality statutory 24-hour reporting in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 18",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 18, mandatory requirement specifies 24 Hours Clock.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-16",
+    "topic": "Emergency Eyewash & Deluge Shower Inspection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 32",
+    "query": "What is the legal mandate governing emergency eyewash & deluge shower inspection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 32",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 32, mandatory requirement specifies Weekly Testing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-17",
+    "topic": "Contractor Safety Passport & HSE Induction",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1230",
+    "expected_article": "Section 5.1",
+    "query": "What is the legal mandate governing contractor safety passport & hse induction in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1230",
+      "article": "Section 5.1",
+      "text": "Pursuant to PDO SP-1230 Section 5.1, mandatory requirement specifies Mandatory Prior to Gate Access.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-18",
+    "topic": "LOTO Multi-Lock Hasps & Key Custody",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 6.8",
+    "query": "What is the legal mandate governing loto multi-lock hasps & key custody in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 6.8",
+      "text": "Pursuant to PDO SP-1143 Section 6.8, mandatory requirement specifies Zero Key Sharing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-19",
+    "topic": "Scaffold Inspection & Green Tagging",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 22",
+    "query": "What is the legal mandate governing scaffold inspection & green tagging in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 22",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 22, mandatory requirement specifies Every 7 Days.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-20",
+    "topic": "Pressure Relief Valve Recertification",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 8.4",
+    "query": "What is the legal mandate governing pressure relief valve recertification in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 8.4",
+      "text": "Pursuant to PDO SP-1143 Section 8.4, mandatory requirement specifies Annual Proof Test.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-21",
+    "topic": "Work at Height Fall Protection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 19",
+    "query": "What is the legal mandate governing work at height fall protection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 19",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 19, mandatory requirement specifies 2 meters.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-22",
+    "topic": "Confined Space Gas Testing Interval",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 4.2",
+    "query": "What is the legal mandate governing confined space gas testing interval in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 4.2",
+      "text": "Pursuant to PDO SP-1143 Section 4.2, mandatory requirement specifies Continuous for H2S.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-23",
+    "topic": "Permit Receiver and Issuer Separation",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 3.1.4",
+    "query": "What is the legal mandate governing permit receiver and issuer separation in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 3.1.4",
+      "text": "Pursuant to PDO SP-1143 Section 3.1.4, mandatory requirement specifies Absolute SoD.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-24",
+    "topic": "Summer Midday Work Ban (Heat Stress)",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman Labor Law RD 53/2023",
+    "expected_article": "Article 16",
+    "query": "What is the legal mandate governing summer midday work ban (heat stress) in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman Labor Law RD 53/2023",
+      "article": "Article 16",
+      "text": "Pursuant to Oman Labor Law RD 53/2023 Article 16, mandatory requirement specifies 12:30 - 15:30.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-25",
+    "topic": "Fatality Statutory 24-Hour Reporting",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 18",
+    "query": "What is the legal mandate governing fatality statutory 24-hour reporting in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 18",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 18, mandatory requirement specifies 24 Hours Clock.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-26",
+    "topic": "Emergency Eyewash & Deluge Shower Inspection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 32",
+    "query": "What is the legal mandate governing emergency eyewash & deluge shower inspection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 32",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 32, mandatory requirement specifies Weekly Testing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-27",
+    "topic": "Contractor Safety Passport & HSE Induction",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1230",
+    "expected_article": "Section 5.1",
+    "query": "What is the legal mandate governing contractor safety passport & hse induction in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1230",
+      "article": "Section 5.1",
+      "text": "Pursuant to PDO SP-1230 Section 5.1, mandatory requirement specifies Mandatory Prior to Gate Access.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-28",
+    "topic": "LOTO Multi-Lock Hasps & Key Custody",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 6.8",
+    "query": "What is the legal mandate governing loto multi-lock hasps & key custody in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 6.8",
+      "text": "Pursuant to PDO SP-1143 Section 6.8, mandatory requirement specifies Zero Key Sharing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-29",
+    "topic": "Scaffold Inspection & Green Tagging",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 22",
+    "query": "What is the legal mandate governing scaffold inspection & green tagging in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 22",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 22, mandatory requirement specifies Every 7 Days.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-30",
+    "topic": "Pressure Relief Valve Recertification",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 8.4",
+    "query": "What is the legal mandate governing pressure relief valve recertification in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 8.4",
+      "text": "Pursuant to PDO SP-1143 Section 8.4, mandatory requirement specifies Annual Proof Test.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-31",
+    "topic": "Work at Height Fall Protection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 19",
+    "query": "What is the legal mandate governing work at height fall protection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 19",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 19, mandatory requirement specifies 2 meters.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-32",
+    "topic": "Confined Space Gas Testing Interval",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 4.2",
+    "query": "What is the legal mandate governing confined space gas testing interval in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 4.2",
+      "text": "Pursuant to PDO SP-1143 Section 4.2, mandatory requirement specifies Continuous for H2S.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-33",
+    "topic": "Permit Receiver and Issuer Separation",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 3.1.4",
+    "query": "What is the legal mandate governing permit receiver and issuer separation in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 3.1.4",
+      "text": "Pursuant to PDO SP-1143 Section 3.1.4, mandatory requirement specifies Absolute SoD.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-34",
+    "topic": "Summer Midday Work Ban (Heat Stress)",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman Labor Law RD 53/2023",
+    "expected_article": "Article 16",
+    "query": "What is the legal mandate governing summer midday work ban (heat stress) in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman Labor Law RD 53/2023",
+      "article": "Article 16",
+      "text": "Pursuant to Oman Labor Law RD 53/2023 Article 16, mandatory requirement specifies 12:30 - 15:30.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-35",
+    "topic": "Fatality Statutory 24-Hour Reporting",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 18",
+    "query": "What is the legal mandate governing fatality statutory 24-hour reporting in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 18",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 18, mandatory requirement specifies 24 Hours Clock.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-36",
+    "topic": "Emergency Eyewash & Deluge Shower Inspection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 32",
+    "query": "What is the legal mandate governing emergency eyewash & deluge shower inspection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 32",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 32, mandatory requirement specifies Weekly Testing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-37",
+    "topic": "Contractor Safety Passport & HSE Induction",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1230",
+    "expected_article": "Section 5.1",
+    "query": "What is the legal mandate governing contractor safety passport & hse induction in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1230",
+      "article": "Section 5.1",
+      "text": "Pursuant to PDO SP-1230 Section 5.1, mandatory requirement specifies Mandatory Prior to Gate Access.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-38",
+    "topic": "LOTO Multi-Lock Hasps & Key Custody",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 6.8",
+    "query": "What is the legal mandate governing loto multi-lock hasps & key custody in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 6.8",
+      "text": "Pursuant to PDO SP-1143 Section 6.8, mandatory requirement specifies Zero Key Sharing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-39",
+    "topic": "Scaffold Inspection & Green Tagging",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 22",
+    "query": "What is the legal mandate governing scaffold inspection & green tagging in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 22",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 22, mandatory requirement specifies Every 7 Days.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-40",
+    "topic": "Pressure Relief Valve Recertification",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 8.4",
+    "query": "What is the legal mandate governing pressure relief valve recertification in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 8.4",
+      "text": "Pursuant to PDO SP-1143 Section 8.4, mandatory requirement specifies Annual Proof Test.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-41",
+    "topic": "Work at Height Fall Protection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 19",
+    "query": "What is the legal mandate governing work at height fall protection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 19",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 19, mandatory requirement specifies 2 meters.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-42",
+    "topic": "Confined Space Gas Testing Interval",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 4.2",
+    "query": "What is the legal mandate governing confined space gas testing interval in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 4.2",
+      "text": "Pursuant to PDO SP-1143 Section 4.2, mandatory requirement specifies Continuous for H2S.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-43",
+    "topic": "Permit Receiver and Issuer Separation",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 3.1.4",
+    "query": "What is the legal mandate governing permit receiver and issuer separation in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 3.1.4",
+      "text": "Pursuant to PDO SP-1143 Section 3.1.4, mandatory requirement specifies Absolute SoD.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-44",
+    "topic": "Summer Midday Work Ban (Heat Stress)",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman Labor Law RD 53/2023",
+    "expected_article": "Article 16",
+    "query": "What is the legal mandate governing summer midday work ban (heat stress) in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman Labor Law RD 53/2023",
+      "article": "Article 16",
+      "text": "Pursuant to Oman Labor Law RD 53/2023 Article 16, mandatory requirement specifies 12:30 - 15:30.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-45",
+    "topic": "Fatality Statutory 24-Hour Reporting",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 18",
+    "query": "What is the legal mandate governing fatality statutory 24-hour reporting in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 18",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 18, mandatory requirement specifies 24 Hours Clock.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-46",
+    "topic": "Emergency Eyewash & Deluge Shower Inspection",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 32",
+    "query": "What is the legal mandate governing emergency eyewash & deluge shower inspection in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 32",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 32, mandatory requirement specifies Weekly Testing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-47",
+    "topic": "Contractor Safety Passport & HSE Induction",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1230",
+    "expected_article": "Section 5.1",
+    "query": "What is the legal mandate governing contractor safety passport & hse induction in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1230",
+      "article": "Section 5.1",
+      "text": "Pursuant to PDO SP-1230 Section 5.1, mandatory requirement specifies Mandatory Prior to Gate Access.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-48",
+    "topic": "LOTO Multi-Lock Hasps & Key Custody",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 6.8",
+    "query": "What is the legal mandate governing loto multi-lock hasps & key custody in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Article 19b",
+      "text": "Pursuant to PDO SP-1143 Section 6.8, mandatory requirement specifies Zero Key Sharing.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-49",
+    "topic": "Scaffold Inspection & Green Tagging",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "Oman MoL MD 286/2008",
+    "expected_article": "Article 22",
+    "query": "What is the legal mandate governing scaffold inspection & green tagging in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "Oman MoL MD 286/2008",
+      "article": "Article 22",
+      "text": "Pursuant to Oman MoL MD 286/2008 Article 22, mandatory requirement specifies Every 7 Days.",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-CITE-50",
+    "topic": "Pressure Relief Valve Recertification",
+    "jurisdiction": "Sultanate of Oman",
+    "expected_statute": "PDO SP-1143",
+    "expected_article": "Section 8.4",
+    "query": "What is the legal mandate governing pressure relief valve recertification in Sultanate of Oman industrial operations?",
+    "retrieved_citation": {
+      "law": "PDO SP-1143",
+      "article": "Section 8.4",
+      "text": "Pursuant to PDO SP-1143 Section 8.4, mandatory requirement specifies Annual Proof Test.",
+      "confidence": 0.96
+    }
+  }
+]

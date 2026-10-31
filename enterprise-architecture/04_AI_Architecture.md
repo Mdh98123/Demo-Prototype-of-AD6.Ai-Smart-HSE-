@@ -21,7 +21,7 @@ This document specifies the three distinct tiers of AI processing required by th
   - LLM Orchestrator (e.g., LangChain) invoking OpenAI / Gemini models.
 - **Workflow:** User describes the job -> Copilot fetches relevant regulations -> Drafts a HIRA -> Requires human-in-the-loop (HITL) approval.
 
-## 3. Predictive Analytics (Forward Modeling)
+## 3. Leading-Indicator Analytics (Forward Modeling)
 **Objective:** Predict safety incidents using historical and real-time telemetry (fatigue, heat stress).
 **Constraint:** 72-hour forward risk modeling.
 **Implementation:**

@@ -75,6 +75,9 @@ export enum Permission {
   ESCALATION_MANAGE = 'escalation:manage',
   AUDIT_READ = 'audit:read',
   AUDIT_VERIFY = 'audit:verify',
+  AI_OUTPUT_READ = 'ai:read',
+  AI_OUTPUT_CREATE = 'ai:create',
+  AI_GATE_CONFIRM = 'ai:confirm',
   ADMIN_FULL_ACCESS = '*'
 }
 
@@ -97,7 +100,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.OBSERVATION_CREATE,
     Permission.PERMIT_READ,
     Permission.DOCUMENT_READ,
-    Permission.TRAINING_READ
+    Permission.TRAINING_READ,
+    Permission.AI_OUTPUT_READ
   ],
   [EnterpriseRole.SUPERVISOR]: [
     Permission.INCIDENT_READ,
@@ -112,7 +116,10 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.INSPECTION_READ,
     Permission.INSPECTION_CREATE,
     Permission.DOCUMENT_READ,
-    Permission.TRAINING_READ
+    Permission.TRAINING_READ,
+    Permission.AI_OUTPUT_READ,
+    Permission.AI_OUTPUT_CREATE,
+    Permission.AI_GATE_CONFIRM
   ],
   [EnterpriseRole.HSE_OFFICER]: [
     Permission.INCIDENT_READ,
@@ -130,7 +137,10 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.TRAINING_READ,
     Permission.TRAINING_CREATE,
     Permission.STATUTORY_CLOCK_ACKNOWLEDGE,
-    Permission.AUDIT_READ
+    Permission.AUDIT_READ,
+    Permission.AI_OUTPUT_READ,
+    Permission.AI_OUTPUT_CREATE,
+    Permission.AI_GATE_CONFIRM
   ],
   [EnterpriseRole.CONTRACTOR_ADMIN]: [
     Permission.CONTRACTOR_READ,
@@ -140,7 +150,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.TRAINING_CREATE,
     Permission.DOCUMENT_READ,
     Permission.INCIDENT_CREATE,
-    Permission.PERMIT_READ
+    Permission.PERMIT_READ,
+    Permission.AI_OUTPUT_READ
   ],
   [EnterpriseRole.SITE_MANAGER]: [
     Permission.INCIDENT_READ,
@@ -164,7 +175,10 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.TRAINING_READ,
     Permission.STATUTORY_CLOCK_ACKNOWLEDGE,
     Permission.DELEGATION_MANAGE,
-    Permission.AUDIT_READ
+    Permission.AUDIT_READ,
+    Permission.AI_OUTPUT_READ,
+    Permission.AI_OUTPUT_CREATE,
+    Permission.AI_GATE_CONFIRM
   ],
   [EnterpriseRole.GROUP_HSE_DIRECTOR]: [
     Permission.INCIDENT_READ,
@@ -184,7 +198,10 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.ESCALATION_MANAGE,
     Permission.SOD_MANAGE,
     Permission.AUDIT_READ,
-    Permission.AUDIT_VERIFY
+    Permission.AUDIT_VERIFY,
+    Permission.AI_OUTPUT_READ,
+    Permission.AI_OUTPUT_CREATE,
+    Permission.AI_GATE_CONFIRM
   ],
   [EnterpriseRole.AUDITOR_READONLY]: [
     Permission.INCIDENT_READ,
@@ -195,7 +212,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.DOCUMENT_READ,
     Permission.TRAINING_READ,
     Permission.AUDIT_READ,
-    Permission.AUDIT_VERIFY
+    Permission.AUDIT_VERIFY,
+    Permission.AI_OUTPUT_READ
   ],
   [EnterpriseRole.TENANT_ADMIN]: [
     Permission.ADMIN_FULL_ACCESS

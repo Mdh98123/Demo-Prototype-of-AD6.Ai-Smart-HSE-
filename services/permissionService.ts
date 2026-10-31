@@ -754,7 +754,7 @@ export const MASTER_NAVIGATION_ITEMS: CentralNavItem[] = [
     subtitle: 'Serious Injury & Fatality analytics, Campbell Institute pSIF',
     sectionId: 'hse-assess',
     sectionTitle: 'Assess: Risks & Analytics',
-    sectionSubtitle: 'SIF predictive analytics, RAMS, JSA & Bowtie barriers',
+    sectionSubtitle: 'SIF leading-indicator analytics, RAMS, JSA & Bowtie barriers',
     requiredPermissions: [PERMISSIONS.PREDICTIVE_SAFETY_VIEW],
     badge: 'SIF AI',
     badgeColor: 'red',

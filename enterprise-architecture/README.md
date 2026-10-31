@@ -18,7 +18,7 @@ This repository contains the production-ready specifications, code scaffolds, co
 *   **`03_Compliance_Mapping.md`**: Directly maps the technological implementations (e.g., PostGIS SIMOPS, RLS, TLS 1.3) to the regional regulatory requirements (Oman MoL MD 286/2008, PDO HSE-MS, SACS-002, Oman National Cybersecurity Framework).
 
 ### 4. Artificial Intelligence & Analytics
-*   **`04_AI_Architecture.md`**: Breaks down the three distinct AI tiers: Edge AI (<300ms computer vision), Generative AI (RAG-based Copilot for HIRA/Method Statements), and Predictive Analytics (Wearable IoT forward modeling).
+*   **`04_AI_Architecture.md`**: Breaks down the three distinct AI tiers: Edge AI (<300ms computer vision), Generative AI (RAG-based Copilot for HIRA/Method Statements), and Leading-Indicator Analytics (Wearable IoT forward modeling).
 *   **`08_EdgeAI_Configuration.yaml`**: Configuration scaffold for deploying optimized TensorRT object detection models (PPE, red-zone incursion) to edge devices (e.g., NVIDIA Jetson) with MQTT event publishing.
 
 ### 5. User Experience & Workflows

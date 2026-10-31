@@ -36,6 +36,8 @@ import { DelegationService } from '../delegation/delegationService.js';
 import { EscalationWorker } from '../escalation/escalationWorker.js';
 import { getPool } from '../db/connection.js';
 import crypto from 'node:crypto';
+import { requireAiGate } from '../middleware/aiGate.js';
+import { AiSafetyService } from '../ai/aiSafetyService.js';
 
 export const v1Router = Router();
 
@@ -177,7 +179,7 @@ v1Router.get('/incidents/:id', async (req: Request, res: Response) => {
   }
 });
 
-v1Router.post('/incidents', requirePermission(Permission.INCIDENT_CREATE), async (req: Request, res: Response) => {
+v1Router.post('/incidents', requirePermission(Permission.INCIDENT_CREATE), requireAiGate('incident'), async (req: Request, res: Response) => {
   try {
     const tenantId = getTenantId(req);
     const parsed = IncidentCreateSchema.parse(req.body);
@@ -189,7 +191,7 @@ v1Router.post('/incidents', requirePermission(Permission.INCIDENT_CREATE), async
   }
 });
 
-v1Router.put('/incidents/:id', requirePermission(Permission.INCIDENT_UPDATE), async (req: Request, res: Response) => {
+v1Router.put('/incidents/:id', requirePermission(Permission.INCIDENT_UPDATE), requireAiGate('incident'), async (req: Request, res: Response) => {
   try {
     const tenantId = getTenantId(req);
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
@@ -258,7 +260,7 @@ v1Router.get('/capas/:id', async (req: Request, res: Response) => {
   }
 });
 
-v1Router.post('/capas', requirePermission(Permission.CAPA_CREATE), async (req: Request, res: Response) => {
+v1Router.post('/capas', requirePermission(Permission.CAPA_CREATE), requireAiGate('capa'), async (req: Request, res: Response) => {
   try {
     const tenantId = getTenantId(req);
     const parsed = CapaCreateSchema.parse(req.body);
@@ -273,7 +275,7 @@ v1Router.post('/capas', requirePermission(Permission.CAPA_CREATE), async (req: R
   }
 });
 
-v1Router.put('/capas/:id', requirePermission(Permission.CAPA_UPDATE), async (req: Request, res: Response) => {
+v1Router.put('/capas/:id', requirePermission(Permission.CAPA_UPDATE), requireAiGate('capa'), async (req: Request, res: Response) => {
   try {
     const tenantId = getTenantId(req);
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
@@ -1260,7 +1262,9 @@ v1Router.get('/admin/rbac/coverage-report', async (req: Request, res: Response) 
     { method: 'DELETE', path: '/admin/delegations/:id', guarded: true, permission: Permission.DELEGATION_MANAGE },
     { method: 'POST', path: '/admin/sod-rules', guarded: true, permission: Permission.SOD_MANAGE },
     { method: 'POST', path: '/admin/escalation-rules', guarded: true, permission: Permission.ESCALATION_MANAGE },
-    { method: 'POST', path: '/admin/escalation-rules/evaluate', guarded: true, permission: Permission.ESCALATION_MANAGE }
+    { method: 'POST', path: '/admin/escalation-rules/evaluate', guarded: true, permission: Permission.ESCALATION_MANAGE },
+    { method: 'POST', path: '/ai/outputs', guarded: true, permission: Permission.AI_OUTPUT_CREATE },
+    { method: 'POST', path: '/ai/outputs/:id/confirm', guarded: true, permission: Permission.AI_GATE_CONFIRM }
   ];
 
   const total = mutatingRoutes.length;
@@ -1274,4 +1278,83 @@ v1Router.get('/admin/rbac/coverage-report', async (req: Request, res: Response) 
     routes: mutatingRoutes
   });
 });
+
+// =============================================================================
+// AI SAFETY HARDENING & AUDITABLE AI OUTPUTS (Phase 5 - Gap G4)
+// =============================================================================
+
+v1Router.post('/ai/outputs', requirePermission(Permission.AI_OUTPUT_CREATE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const { use_case, model, prompt, input, output, confidence, evidence_refs } = req.body;
+
+    if (!use_case || !model || !prompt || output === undefined || confidence === undefined) {
+      return sendError(res, 'VALIDATION_ERROR', 'Missing required fields for ai_outputs creation (use_case, model, prompt, output, confidence)', 400);
+    }
+
+    const result = await AiSafetyService.createOutput({
+      tenantId,
+      useCase: use_case,
+      model,
+      prompt,
+      input,
+      output,
+      confidence: Number(confidence),
+      evidenceRefs: evidence_refs || []
+    });
+
+    return sendSuccess(res, {
+      ...result.record,
+      manual_entry_required: result.manualEntryRequired,
+      reason: result.reason
+    }, 201);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/ai/outputs/:id/confirm', requirePermission(Permission.AI_GATE_CONFIRM), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const { decision, edited_output, review_notes } = req.body;
+    const user = (req as any).user || {};
+    const reviewedBy = user.name || req.body.reviewed_by || 'Unknown Reviewer';
+    const reviewerRole = user.role || req.body.reviewer_role || 'hse_officer';
+
+    if (!decision || !['accepted', 'edited', 'rejected'].includes(decision)) {
+      return sendError(res, 'VALIDATION_ERROR', "Decision must be 'accepted', 'edited', or 'rejected'", 400);
+    }
+
+    const updated = await AiSafetyService.confirmOutput({
+      tenantId,
+      aiOutputId: id,
+      reviewedBy,
+      reviewerRole,
+      decision,
+      editedOutput: edited_output,
+      reviewNotes: review_notes
+    });
+
+    return sendSuccess(res, updated, 200);
+  } catch (err: any) {
+    if (err.message.includes('Forbidden: Role') || err.message.includes('not authorized')) {
+      return sendError(res, 'FORBIDDEN', err.message, 403);
+    }
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.get('/ai/outputs/:id', requirePermission(Permission.AI_OUTPUT_READ), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const record = await AiSafetyService.getOutput(tenantId, id);
+    if (!record) return sendError(res, 'NOT_FOUND', 'AI output not found', 404);
+    return sendSuccess(res, record);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
 

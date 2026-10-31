@@ -1,0 +1,502 @@
+[
+  {
+    "id": "GOLDEN-ASR-01",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_01.wav",
+    "ground_truth_verbatim": "Gas leak in sector four near high pressure pump",
+    "model_transcript": "Gas leak in sector four near high pressure pump",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-02",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_02.wav",
+    "ground_truth_verbatim": "Worker fell from scaffold because safety harness was not tied off properly",
+    "model_transcript": "Worker fell from scaffold because safety harness was not tied off properly",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-03",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_03.wav",
+    "ground_truth_verbatim": "We observed light smoke emerging from main electrical distribution panel",
+    "model_transcript": "We observed light smoke emerging from main electrical distribution panel",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-04",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_04.wav",
+    "ground_truth_verbatim": "Mobile crane moved without sounding warning siren",
+    "model_transcript": "Mobile crane moved without sounding warning siren",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-05",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_05.wav",
+    "ground_truth_verbatim": "Transformer temperature exceeded eighty degrees Celsius",
+    "model_transcript": "Transformer temperature exceeded eighty degrees Celsius",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-06",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_06.wav",
+    "ground_truth_verbatim": "Valve number six is isolated but showing hydraulic oil weeping",
+    "model_transcript": "Valve number six is isolated but showing hydraulic oil weeping",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-07",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_07.wav",
+    "ground_truth_verbatim": "Excavator operating close to gas transmission line without excavation permit",
+    "model_transcript": "Excavator operating close to gas transmission line without excavation permit",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-08",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_08.wav",
+    "ground_truth_verbatim": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "model_transcript": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-09",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_09.wav",
+    "ground_truth_verbatim": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "model_transcript": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-10",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_10.wav",
+    "ground_truth_verbatim": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "model_transcript": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-11",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_11.wav",
+    "ground_truth_verbatim": "Gas leak in sector four near high pressure pump",
+    "model_transcript": "Gas leak in sector four near high pressure pump",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-12",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_12.wav",
+    "ground_truth_verbatim": "Worker fell from scaffold because safety harness was not tied off properly",
+    "model_transcript": "Worker fell from scaffold because safety harness was not tied off properly",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-13",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_13.wav",
+    "ground_truth_verbatim": "We observed light smoke emerging from main electrical distribution panel",
+    "model_transcript": "We observed light smoke emerging from main electrical distribution panel",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-14",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_14.wav",
+    "ground_truth_verbatim": "Mobile crane moved without sounding warning siren",
+    "model_transcript": "Mobile crane moved without sounding warning siren",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-15",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_15.wav",
+    "ground_truth_verbatim": "Transformer temperature exceeded eighty degrees Celsius",
+    "model_transcript": "Transformer temperature exceeded eighty degrees Celsius",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-16",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_16.wav",
+    "ground_truth_verbatim": "Valve number six is isolated but showing hydraulic oil weeping",
+    "model_transcript": "Valve number six is isolated but showing hydraulic oil weeping",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-17",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_17.wav",
+    "ground_truth_verbatim": "Excavator operating close to gas transmission line without excavation permit",
+    "model_transcript": "Excavator operating close to gas transmission line without excavation permit",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-18",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_18.wav",
+    "ground_truth_verbatim": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "model_transcript": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-19",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_19.wav",
+    "ground_truth_verbatim": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "model_transcript": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-20",
+    "noise_band": "clean",
+    "snr_db": 25,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_20.wav",
+    "ground_truth_verbatim": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "model_transcript": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "confidence": 0.94
+  },
+  {
+    "id": "GOLDEN-ASR-21",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_21.wav",
+    "ground_truth_verbatim": "Gas leak in sector four near high pressure pump",
+    "model_transcript": "Gas leak in sector four near high presser pump",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-22",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_22.wav",
+    "ground_truth_verbatim": "Worker fell from scaffold because safety harness was not tied off properly",
+    "model_transcript": "Worker fell from scaffold because safety harness was not tied off properly",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-23",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_23.wav",
+    "ground_truth_verbatim": "We observed light smoke emerging from main electrical distribution panel",
+    "model_transcript": "We observed light smoke emerging from main electrical electrical panel",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-24",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_24.wav",
+    "ground_truth_verbatim": "Mobile crane moved without sounding warning siren",
+    "model_transcript": "Mobile crane moved without sounding warning siren",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-25",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_25.wav",
+    "ground_truth_verbatim": "Transformer temperature exceeded eighty degrees Celsius",
+    "model_transcript": "Transformer temperature exceeded eighty degrees Celsius",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-26",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_26.wav",
+    "ground_truth_verbatim": "Valve number six is isolated but showing hydraulic oil weeping",
+    "model_transcript": "Valve number six is isolated but showing hydraulic oil weeping",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-27",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_27.wav",
+    "ground_truth_verbatim": "Excavator operating close to gas transmission line without excavation permit",
+    "model_transcript": "Excavator operating close to gas transmission line without excavation permit",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-28",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_28.wav",
+    "ground_truth_verbatim": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "model_transcript": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-29",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_29.wav",
+    "ground_truth_verbatim": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "model_transcript": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-30",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_30.wav",
+    "ground_truth_verbatim": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "model_transcript": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-31",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_31.wav",
+    "ground_truth_verbatim": "Gas leak in sector four near high pressure pump",
+    "model_transcript": "Gas leak in sector four near high presser pump",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-32",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_32.wav",
+    "ground_truth_verbatim": "Worker fell from scaffold because safety harness was not tied off properly",
+    "model_transcript": "Worker fell from scaffold because safety harness was not tied off properly",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-33",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_33.wav",
+    "ground_truth_verbatim": "We observed light smoke emerging from main electrical distribution panel",
+    "model_transcript": "We observed light smoke emerging from main electrical electrical panel",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-34",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_34.wav",
+    "ground_truth_verbatim": "Mobile crane moved without sounding warning siren",
+    "model_transcript": "Mobile crane moved without sounding warning siren",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-35",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_35.wav",
+    "ground_truth_verbatim": "Transformer temperature exceeded eighty degrees Celsius",
+    "model_transcript": "Transformer temperature exceeded eighty degrees Celsius",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-36",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_36.wav",
+    "ground_truth_verbatim": "Valve number six is isolated but showing hydraulic oil weeping",
+    "model_transcript": "Valve number six is isolated but showing hydraulic oil weeping",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-37",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_37.wav",
+    "ground_truth_verbatim": "Excavator operating close to gas transmission line without excavation permit",
+    "model_transcript": "Excavator operating close to gas transmission line without excavation permit",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-38",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_38.wav",
+    "ground_truth_verbatim": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "model_transcript": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-39",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_39.wav",
+    "ground_truth_verbatim": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "model_transcript": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-40",
+    "noise_band": "moderate",
+    "snr_db": 18,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_40.wav",
+    "ground_truth_verbatim": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "model_transcript": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "confidence": 0.86
+  },
+  {
+    "id": "GOLDEN-ASR-41",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_41.wav",
+    "ground_truth_verbatim": "Gas leak in sector four near high pressure pump",
+    "model_transcript": "Gas leak in sector four near high pressure pump",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-42",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_42.wav",
+    "ground_truth_verbatim": "Worker fell from scaffold because safety harness was not tied off properly",
+    "model_transcript": "Worker fell from scaffold because safety harness was not tied off properly",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-43",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_43.wav",
+    "ground_truth_verbatim": "We observed light smoke emerging from main electrical distribution panel",
+    "model_transcript": "We observed light smoke emerging from main electrical distribution panel",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-44",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_44.wav",
+    "ground_truth_verbatim": "Mobile crane moved without sounding warning siren",
+    "model_transcript": "Mobile crane moved without sounding warning siren",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-45",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_45.wav",
+    "ground_truth_verbatim": "Transformer temperature exceeded eighty degrees Celsius",
+    "model_transcript": "Transformer temperature exceeded eighty degrees Celsius",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-46",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_46.wav",
+    "ground_truth_verbatim": "Valve number six is isolated but showing hydraulic oil weeping",
+    "model_transcript": "Valve number six is isolated but showing hydraulic oil weeping",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-47",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_47.wav",
+    "ground_truth_verbatim": "Excavator operating close to gas transmission line without excavation permit",
+    "model_transcript": "Excavator operating close to gas transmission line without excavation permit",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-48",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_48.wav",
+    "ground_truth_verbatim": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "model_transcript": "Contractor deployed workers without medical fitness certs and without PDO passports",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-49",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Gulf Regional Industrial English",
+    "audio_reference": "assets/audio/benchmark_49.wav",
+    "ground_truth_verbatim": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "model_transcript": "Engine noise exhibiting harshness and excessive vibration on compressor train",
+    "confidence": 0.74
+  },
+  {
+    "id": "GOLDEN-ASR-50",
+    "noise_band": "heavy",
+    "snr_db": 8,
+    "dialect": "Omani Arabic (Dakhiliyah/Wusta)",
+    "audio_reference": "assets/audio/benchmark_50.wav",
+    "ground_truth_verbatim": "Gas samples at wellhead number two indicate elevated H2S concentration",
+    "model_transcript": "Gas well samples number two indicate high H2S level",
+    "confidence": 0.74
+  }
+]

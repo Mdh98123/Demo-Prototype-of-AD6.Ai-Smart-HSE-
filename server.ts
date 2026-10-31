@@ -394,7 +394,7 @@ async function startServer() {
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, hmr: false },
       appType: "spa",
     });
     app.use(vite.middlewares);
@@ -405,6 +405,15 @@ async function startServer() {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
+
+  // Handle server-level bind/network errors gracefully
+  server.on("error", (err: any) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(`[RUNTIME STABILITY] Port ${PORT} already in use. Waiting for port release...`);
+    } else {
+      console.error("[RUNTIME STABILITY] Server network error:", err);
+    }
+  });
 
   // Listen on 0.0.0.0 and dynamically bound PORT
   server.listen(PORT, "0.0.0.0", () => {

@@ -174,7 +174,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSignUpClick, onDemoClick }) => 
                       </div>
                       <div>
                           <h3 className="font-bold text-slate-900 text-base">Regulatory Integrity</h3>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">100% Oman Ministry of Labour & PDO Alignment.</p>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">Oman MoL-aligned workflows & PDO compliance.</p>
                       </div>
                   </div>
                   
@@ -183,8 +183,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSignUpClick, onDemoClick }) => 
                         <Activity size={24}/>
                       </div>
                       <div>
-                          <h3 className="font-bold text-slate-900 text-base">Predictive Analytics</h3>
-                          <p className="text-xs text-slate-500 mt-1 font-medium">Forecast incidents before they occur.</p>
+                          <h3 className="font-bold text-slate-900 text-base">Leading-Indicator Analytics</h3>
+                          <p className="text-xs text-slate-500 mt-1 font-medium">Proactively monitor leading safety indicators.</p>
                       </div>
                   </div>
              </motion.div>

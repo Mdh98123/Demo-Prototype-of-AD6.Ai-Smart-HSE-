@@ -470,14 +470,23 @@ export interface NotificationOutboxRecord {
 export interface AiOutputRecord {
   id: string;
   tenant_id: string;
-  model_alias: string;
+  use_case: string;
+  model: string;
   prompt_hash: string;
-  output_text: string;
-  confidence_score?: number;
-  hitl_status: string;
+  input_hash: string;
+  output_json: any;
+  confidence: number;
+  evidence_refs: any[];
+  created_at: string;
   reviewed_by?: string;
   reviewed_at?: string;
-  created_at: string;
+  review_decision: 'pending' | 'accepted' | 'edited' | 'rejected';
+  edit_diff?: any;
+  // Backward compatibility fields
+  model_alias?: string;
+  output_text?: string;
+  confidence_score?: number;
+  hitl_status?: string;
 }
 
 export interface AuthSessionRecord {

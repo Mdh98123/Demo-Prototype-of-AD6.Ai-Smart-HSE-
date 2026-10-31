@@ -710,14 +710,22 @@ CREATE POLICY tenant_isolation_audit_log ON audit_log
 CREATE TABLE IF NOT EXISTS ai_outputs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-    model_alias VARCHAR(128) NOT NULL,
+    use_case VARCHAR(64) NOT NULL DEFAULT 'incident_classification',
+    model VARCHAR(128) NOT NULL DEFAULT 'gemini-2.5-flash',
     prompt_hash VARCHAR(64) NOT NULL,
-    output_text TEXT NOT NULL,
-    confidence_score NUMERIC(5,4),
-    hitl_status VARCHAR(64) NOT NULL DEFAULT 'Pending_Review',
+    input_hash VARCHAR(64) NOT NULL DEFAULT '',
+    output_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+    confidence NUMERIC(5,4) NOT NULL DEFAULT 0.8500,
+    evidence_refs JSONB NOT NULL DEFAULT '[]'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     reviewed_by VARCHAR(255),
     reviewed_at TIMESTAMPTZ,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    review_decision VARCHAR(32) NOT NULL DEFAULT 'pending',
+    edit_diff JSONB,
+    model_alias VARCHAR(128),
+    output_text TEXT,
+    confidence_score NUMERIC(5,4),
+    hitl_status VARCHAR(64)
 );
 CREATE INDEX IF NOT EXISTS idx_ai_outputs_tenant_id ON ai_outputs(tenant_id);
 ALTER TABLE ai_outputs ENABLE ROW LEVEL SECURITY;

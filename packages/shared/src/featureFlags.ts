@@ -85,6 +85,10 @@ export class FeatureFlagRegistry {
     this.overrides = {};
   }
 
+  public static resetOverrides(): void {
+    this.clearOverrides();
+  }
+
   private static parseBoolean(val: string | undefined, defaultVal: boolean): boolean {
     if (val === undefined || val === null || val === '') {
       return defaultVal;

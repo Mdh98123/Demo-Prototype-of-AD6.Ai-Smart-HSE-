@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-10-31T17:09:17.692Z",
+  "overallPassed": true,
+  "canEnableAiGates": true,
+  "metrics": {
+    "classification_agreement": {
+      "metricName": "Classification Agreement vs. Certified Investigator",
+      "actual": 0.87,
+      "threshold": 0.85,
+      "unit": "ratio",
+      "comparison": ">=",
+      "passed": true,
+      "sampleCount": 100,
+      "details": {
+        "matches": 87,
+        "total": 100,
+        "agreementPercent": "87.0%"
+      }
+    },
+    "rca_edit_distance": {
+      "metricName": "RCA Edit Distance after Review",
+      "actual": 0.1166,
+      "threshold": 0.35,
+      "unit": "norm_edit_distance",
+      "comparison": "<=",
+      "passed": true,
+      "sampleCount": 20,
+      "details": {
+        "avgEditDistance": 0.1166,
+        "threshold": 0.35
+      }
+    },
+    "wer_clean": {
+      "metricName": "WER — Clean Audio (SNR >= 25dB)",
+      "actual": 0,
+      "threshold": 0.1,
+      "unit": "ratio",
+      "comparison": "<=",
+      "passed": true,
+      "sampleCount": 20
+    },
+    "wer_moderate": {
+      "metricName": "WER — Moderate Industrial Noise (15-25dB)",
+      "actual": 0.0211,
+      "threshold": 0.18,
+      "unit": "ratio",
+      "comparison": "<=",
+      "passed": true,
+      "sampleCount": 20
+    },
+    "wer_heavy": {
+      "metricName": "WER — Heavy Industrial Noise (< 15dB)",
+      "actual": 0.05,
+      "threshold": 0.3,
+      "unit": "ratio",
+      "comparison": "<=",
+      "passed": true,
+      "sampleCount": 10
+    },
+    "statutory_citation_precision": {
+      "metricName": "Statutory Citation Precision",
+      "actual": 0.98,
+      "threshold": 0.95,
+      "unit": "ratio",
+      "comparison": ">=",
+      "passed": true,
+      "sampleCount": 50,
+      "details": {
+        "matches": 49,
+        "total": 50,
+        "precisionPercent": "98.0%"
+      }
+    }
+  }
+}

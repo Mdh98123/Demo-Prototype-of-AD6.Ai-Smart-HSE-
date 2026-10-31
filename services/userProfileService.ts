@@ -798,7 +798,7 @@ export class UserProfileService {
           'Executive reporting for Board of Directors and statutory regulatory bodies',
           'Strategic AI Safety & Predictive SIF reduction platform oversight'
         ],
-        skills: ['Executive Risk Governance', 'ISO 45001 / ISO 14001', 'SIF Predictive Analytics', 'ESG Board Strategy'],
+        skills: ['Executive Risk Governance', 'ISO 45001 / ISO 14001', 'SIF Leading-Indicator Analytics', 'ESG Board Strategy'],
         competencies: [
           { competency: 'Certified Safety Professional (CSP - BCSP USA)', level: 'Expert', verifiedDate: '2025-05-10', verifierName: 'BCSP USA' },
           { competency: 'Chartered Fellow IOSH (CFIOSH)', level: 'Expert', verifiedDate: '2025-01-12', verifierName: 'IOSH UK' },

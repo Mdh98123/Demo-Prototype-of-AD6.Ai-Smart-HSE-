@@ -1,0 +1,542 @@
+[
+  {
+    "id": "GOLDEN-RCA-01",
+    "title": "Subsea Flange Bolt Shear & Crude Weep",
+    "category": "Pressure Release",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for subsea flange bolt shear & crude weep.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for subsea flange bolt shear & crude weep.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.86
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-02",
+    "title": "132kV Transformer Bushing Flashover",
+    "category": "Electrical Contact",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for 132kv transformer bushing flashover.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for 132kv transformer bushing flashover.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.865
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-03",
+    "title": "Mobile Crane Outrigger Punch-Through on Uncompacted Marls",
+    "category": "Structural Collapse",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for mobile crane outrigger punch-through on uncompacted marls.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for mobile crane outrigger punch-through on uncompacted marls.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.87
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-04",
+    "title": "H2S Sensor Drift & Scrubber Venting Alarm",
+    "category": "Chemical/Gas Exposure",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for h2s sensor drift & scrubber venting alarm.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for h2s sensor drift & scrubber venting alarm.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.875
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-05",
+    "title": "Scaffold Bracket Fatigue Failure at 22m Height",
+    "category": "Fall From Height",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for scaffold bracket fatigue failure at 22m height.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for scaffold bracket fatigue failure at 22m height.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-06",
+    "title": "Centrifugal Pump Seal Catastrophic Rupture",
+    "category": "Pressure Release",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for centrifugal pump seal catastrophic rupture.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for centrifugal pump seal catastrophic rupture.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.885
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-07",
+    "title": "Nitrogen Purge Oxygen Deficiency in Deaerator Drum",
+    "category": "Confined Space Asphyxiation",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for nitrogen purge oxygen deficiency in deaerator drum.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for nitrogen purge oxygen deficiency in deaerator drum.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-08",
+    "title": "Overhead Gantry Hook Latch Failure & 1.2T Dropped Spool",
+    "category": "Dropped Object",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for overhead gantry hook latch failure & 1.2t dropped spool.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for overhead gantry hook latch failure & 1.2t dropped spool.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.895
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-09",
+    "title": "Hydraulic Excavator Slewing Blindspot Contact with Pickup",
+    "category": "Vehicle/Plant Collision",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for hydraulic excavator slewing blindspot contact with pickup.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for hydraulic excavator slewing blindspot contact with pickup.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-10",
+    "title": "Thermal Dehydration Collapse during Extreme Ambient TWL",
+    "category": "Thermal Burn/Heat Stress",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for thermal dehydration collapse during extreme ambient twl.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for thermal dehydration collapse during extreme ambient twl.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.905
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-11",
+    "title": "Rotary Drilling Kelly Hose Clamp Rupture",
+    "category": "Pressure Release",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for rotary drilling kelly hose clamp rupture.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for rotary drilling kelly hose clamp rupture.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-12",
+    "title": "Acid Injection Line Corroded Elbow Pinhole",
+    "category": "Chemical/Gas Exposure",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for acid injection line corroded elbow pinhole.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for acid injection line corroded elbow pinhole.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.915
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-13",
+    "title": "LOTO Lockbox Key Shared Without Supervisor Authorization",
+    "category": "Management Failure",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for loto lockbox key shared without supervisor authorization.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for loto lockbox key shared without supervisor authorization.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.9199999999999999
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-14",
+    "title": "High-Pressure Water Jet Lancing Backsplash Injury",
+    "category": "Caught-In/Between",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for high-pressure water jet lancing backsplash injury.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for high-pressure water jet lancing backsplash injury.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.925
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-15",
+    "title": "Storage Tank Roof Plate Pinhole Vapor Ignited by Static",
+    "category": "Thermal Burn/Heat Stress",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for storage tank roof plate pinhole vapor ignited by static.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for storage tank roof plate pinhole vapor ignited by static.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.9299999999999999
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-16",
+    "title": "Forklift Mast Collapse due to Uncertified Cylinder Repair",
+    "category": "Dropped Object",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for forklift mast collapse due to uncertified cylinder repair.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for forklift mast collapse due to uncertified cylinder repair.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.9349999999999999
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-17",
+    "title": "Flare Knockout Drum Level Switch Float Stuck",
+    "category": "Pressure Release",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for flare knockout drum level switch float stuck.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for flare knockout drum level switch float stuck.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-18",
+    "title": "Manbasket Hoisting without Dual Winch Anti-Two-Block",
+    "category": "Fall From Height",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for manbasket hoisting without dual winch anti-two-block.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for manbasket hoisting without dual winch anti-two-block.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.945
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-19",
+    "title": "Boiler Feed Pump Cavitation and Bearing Seizure",
+    "category": "Pressure Release",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for boiler feed pump cavitation and bearing seizure.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for boiler feed pump cavitation and bearing seizure.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-RCA-20",
+    "title": "Underground Cable Trench Wall Slumping during Dewatering",
+    "category": "Structural Collapse",
+    "investigator_ground_truth": {
+      "root_cause": "Deficient inspection verification protocol combined with procurement specification non-conformance for underground cable trench wall slumping during dewatering.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Lack of formal risk assessment gate in CMMS deferral workflow."
+      ],
+      "fishbone_latent_cause": "Organizational & Procedural Latent Defect"
+    },
+    "ai_draft": {
+      "root_cause": "Deficient inspection verification protocol and procurement non-conformance for underground cable trench wall slumping during dewatering.",
+      "five_whys": [
+        "Why 1: Unit operational failure during high duty cycle.",
+        "Why 2: Physical barrier degraded prematurely under cyclic pressure.",
+        "Why 3: Inspection interval was extended from 12 to 24 months without approved MOC.",
+        "Why 4: Reliability engineering backlog delayed preventative maintenance sign-off.",
+        "Why 5: Root Cause: Inadequate risk assessment gate in CMMS maintenance deferral workflow."
+      ],
+      "confidence": 0.955
+    }
+  }
+]

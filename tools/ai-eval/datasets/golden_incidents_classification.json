@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "GOLDEN-INC-001",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #1",
+    "narrative": "While conducting scheduled maintenance on unit 1 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-002",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #2",
+    "narrative": "While conducting scheduled maintenance on unit 2 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-003",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #3",
+    "narrative": "While conducting scheduled maintenance on unit 3 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-004",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #4",
+    "narrative": "While conducting scheduled maintenance on unit 4 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-005",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #5",
+    "narrative": "While conducting scheduled maintenance on unit 5 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-006",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #6",
+    "narrative": "While conducting scheduled maintenance on unit 6 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-007",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #7",
+    "narrative": "While conducting scheduled maintenance on unit 7 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-008",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #8",
+    "narrative": "While conducting scheduled maintenance on unit 8 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-009",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #9",
+    "narrative": "While conducting scheduled maintenance on unit 9 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-010",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #10",
+    "narrative": "While conducting scheduled maintenance on unit 10 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-011",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #11",
+    "narrative": "While conducting scheduled maintenance on unit 11 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-012",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #12",
+    "narrative": "While conducting scheduled maintenance on unit 12 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-013",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #13",
+    "narrative": "While conducting scheduled maintenance on unit 13 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-014",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #14",
+    "narrative": "While conducting scheduled maintenance on unit 14 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-015",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #15",
+    "narrative": "While conducting scheduled maintenance on unit 15 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CRITICAL",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-016",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #16",
+    "narrative": "While conducting scheduled maintenance on unit 16 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-017",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #17",
+    "narrative": "While conducting scheduled maintenance on unit 17 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-018",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #18",
+    "narrative": "While conducting scheduled maintenance on unit 18 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-019",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #19",
+    "narrative": "While conducting scheduled maintenance on unit 19 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-020",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #20",
+    "narrative": "While conducting scheduled maintenance on unit 20 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-021",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #21",
+    "narrative": "While conducting scheduled maintenance on unit 21 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-022",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #22",
+    "narrative": "While conducting scheduled maintenance on unit 22 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-023",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #23",
+    "narrative": "While conducting scheduled maintenance on unit 23 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-024",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #24",
+    "narrative": "While conducting scheduled maintenance on unit 24 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-025",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #25",
+    "narrative": "While conducting scheduled maintenance on unit 25 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-026",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #26",
+    "narrative": "While conducting scheduled maintenance on unit 26 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-027",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #27",
+    "narrative": "While conducting scheduled maintenance on unit 27 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-028",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #28",
+    "narrative": "While conducting scheduled maintenance on unit 28 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-029",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #29",
+    "narrative": "While conducting scheduled maintenance on unit 29 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-030",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #30",
+    "narrative": "While conducting scheduled maintenance on unit 30 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CRITICAL",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-031",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #31",
+    "narrative": "While conducting scheduled maintenance on unit 31 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-032",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #32",
+    "narrative": "While conducting scheduled maintenance on unit 32 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-033",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #33",
+    "narrative": "While conducting scheduled maintenance on unit 33 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-034",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #34",
+    "narrative": "While conducting scheduled maintenance on unit 34 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-035",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #35",
+    "narrative": "While conducting scheduled maintenance on unit 35 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-036",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #36",
+    "narrative": "While conducting scheduled maintenance on unit 36 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-037",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #37",
+    "narrative": "While conducting scheduled maintenance on unit 37 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-038",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #38",
+    "narrative": "While conducting scheduled maintenance on unit 38 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-039",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #39",
+    "narrative": "While conducting scheduled maintenance on unit 39 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-040",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #40",
+    "narrative": "While conducting scheduled maintenance on unit 40 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-041",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #41",
+    "narrative": "While conducting scheduled maintenance on unit 41 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-042",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #42",
+    "narrative": "While conducting scheduled maintenance on unit 42 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-043",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #43",
+    "narrative": "While conducting scheduled maintenance on unit 43 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-044",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #44",
+    "narrative": "While conducting scheduled maintenance on unit 44 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-045",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #45",
+    "narrative": "While conducting scheduled maintenance on unit 45 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CRITICAL",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-046",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #46",
+    "narrative": "While conducting scheduled maintenance on unit 46 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-047",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #47",
+    "narrative": "While conducting scheduled maintenance on unit 47 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-048",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #48",
+    "narrative": "While conducting scheduled maintenance on unit 48 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-049",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #49",
+    "narrative": "While conducting scheduled maintenance on unit 49 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-050",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #50",
+    "narrative": "While conducting scheduled maintenance on unit 50 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-051",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #51",
+    "narrative": "While conducting scheduled maintenance on unit 51 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-052",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #52",
+    "narrative": "While conducting scheduled maintenance on unit 52 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-053",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #53",
+    "narrative": "While conducting scheduled maintenance on unit 53 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-054",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #54",
+    "narrative": "While conducting scheduled maintenance on unit 54 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-055",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #55",
+    "narrative": "While conducting scheduled maintenance on unit 55 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-056",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #56",
+    "narrative": "While conducting scheduled maintenance on unit 56 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-057",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #57",
+    "narrative": "While conducting scheduled maintenance on unit 57 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-058",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #58",
+    "narrative": "While conducting scheduled maintenance on unit 58 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-059",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #59",
+    "narrative": "While conducting scheduled maintenance on unit 59 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-060",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #60",
+    "narrative": "While conducting scheduled maintenance on unit 60 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "CRITICAL",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-061",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #61",
+    "narrative": "While conducting scheduled maintenance on unit 61 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-062",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #62",
+    "narrative": "While conducting scheduled maintenance on unit 62 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-063",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #63",
+    "narrative": "While conducting scheduled maintenance on unit 63 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-064",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #64",
+    "narrative": "While conducting scheduled maintenance on unit 64 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-065",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #65",
+    "narrative": "While conducting scheduled maintenance on unit 65 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-066",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #66",
+    "narrative": "While conducting scheduled maintenance on unit 66 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-067",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #67",
+    "narrative": "While conducting scheduled maintenance on unit 67 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-068",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #68",
+    "narrative": "While conducting scheduled maintenance on unit 68 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-069",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #69",
+    "narrative": "While conducting scheduled maintenance on unit 69 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-070",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #70",
+    "narrative": "While conducting scheduled maintenance on unit 70 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-071",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #71",
+    "narrative": "While conducting scheduled maintenance on unit 71 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-072",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #72",
+    "narrative": "While conducting scheduled maintenance on unit 72 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-073",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #73",
+    "narrative": "While conducting scheduled maintenance on unit 73 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-074",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #74",
+    "narrative": "While conducting scheduled maintenance on unit 74 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-075",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #75",
+    "narrative": "While conducting scheduled maintenance on unit 75 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CRITICAL",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-076",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #76",
+    "narrative": "While conducting scheduled maintenance on unit 76 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-077",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #77",
+    "narrative": "While conducting scheduled maintenance on unit 77 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-078",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #78",
+    "narrative": "While conducting scheduled maintenance on unit 78 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-079",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #79",
+    "narrative": "While conducting scheduled maintenance on unit 79 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-080",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #80",
+    "narrative": "While conducting scheduled maintenance on unit 80 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-081",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #81",
+    "narrative": "While conducting scheduled maintenance on unit 81 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-082",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #82",
+    "narrative": "While conducting scheduled maintenance on unit 82 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-083",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #83",
+    "narrative": "While conducting scheduled maintenance on unit 83 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-084",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #84",
+    "narrative": "While conducting scheduled maintenance on unit 84 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-085",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #85",
+    "narrative": "While conducting scheduled maintenance on unit 85 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-086",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #86",
+    "narrative": "While conducting scheduled maintenance on unit 86 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-087",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #87",
+    "narrative": "While conducting scheduled maintenance on unit 87 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-088",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #88",
+    "narrative": "While conducting scheduled maintenance on unit 88 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-089",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #89",
+    "narrative": "While conducting scheduled maintenance on unit 89 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-090",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #90",
+    "narrative": "While conducting scheduled maintenance on unit 90 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CRITICAL",
+      "confidence": 0.88
+    }
+  },
+  {
+    "id": "GOLDEN-INC-091",
+    "facility": "Marmul Production Station (PDO South)",
+    "activity": "Routine operational maintenance and turnaround activity #91",
+    "narrative": "While conducting scheduled maintenance on unit 91 at Marmul Production Station (PDO South), a caught-in/between scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Caught-In/Between",
+      "severity": "MINOR",
+      "confidence": 0.89
+    }
+  },
+  {
+    "id": "GOLDEN-INC-092",
+    "facility": "Sohar Refinery & Petrochemicals",
+    "activity": "Routine operational maintenance and turnaround activity #92",
+    "narrative": "While conducting scheduled maintenance on unit 92 at Sohar Refinery & Petrochemicals, a fall from height scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Fall From Height",
+      "severity": "MODERATE",
+      "confidence": 0.9
+    }
+  },
+  {
+    "id": "GOLDEN-INC-093",
+    "facility": "Duqm Drydock Berth 4",
+    "activity": "Routine operational maintenance and turnaround activity #93",
+    "narrative": "While conducting scheduled maintenance on unit 93 at Duqm Drydock Berth 4, a chemical/gas exposure scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Chemical/Gas Exposure",
+      "severity": "MAJOR",
+      "confidence": 0.91
+    }
+  },
+  {
+    "id": "GOLDEN-INC-094",
+    "facility": "Nimr Water Treatment Plant",
+    "activity": "Routine operational maintenance and turnaround activity #94",
+    "narrative": "While conducting scheduled maintenance on unit 94 at Nimr Water Treatment Plant, a dropped object scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Dropped Object",
+      "severity": "CRITICAL",
+      "confidence": 0.92
+    }
+  },
+  {
+    "id": "GOLDEN-INC-095",
+    "facility": "Fahud Gas Processing Facility",
+    "activity": "Routine operational maintenance and turnaround activity #95",
+    "narrative": "While conducting scheduled maintenance on unit 95 at Fahud Gas Processing Facility, a electrical contact scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Electrical Contact",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.93
+    }
+  },
+  {
+    "id": "GOLDEN-INC-096",
+    "facility": "Qalhat LNG Terminal",
+    "activity": "Routine operational maintenance and turnaround activity #96",
+    "narrative": "While conducting scheduled maintenance on unit 96 at Qalhat LNG Terminal, a thermal burn/heat stress scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MINOR.",
+    "ground_truth": {
+      "category": "Thermal Burn/Heat Stress",
+      "severity": "MINOR",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "General Unsafe Condition",
+      "severity": "MINOR",
+      "confidence": 0.94
+    }
+  },
+  {
+    "id": "GOLDEN-INC-097",
+    "facility": "Rusayl Industrial City Substation",
+    "activity": "Routine operational maintenance and turnaround activity #97",
+    "narrative": "While conducting scheduled maintenance on unit 97 at Rusayl Industrial City Substation, a pressure release/line breach scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MODERATE.",
+    "ground_truth": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "statutory_reportable": false,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Pressure Release/Line Breach",
+      "severity": "MODERATE",
+      "confidence": 0.95
+    }
+  },
+  {
+    "id": "GOLDEN-INC-098",
+    "facility": "Salalah Port Container Yard",
+    "activity": "Routine operational maintenance and turnaround activity #98",
+    "narrative": "While conducting scheduled maintenance on unit 98 at Salalah Port Container Yard, a vehicle/plant collision scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as MAJOR.",
+    "ground_truth": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Vehicle/Plant Collision",
+      "severity": "MAJOR",
+      "confidence": 0.96
+    }
+  },
+  {
+    "id": "GOLDEN-INC-099",
+    "facility": "Mukhaizna Steam Flood Facility",
+    "activity": "Routine operational maintenance and turnaround activity #99",
+    "narrative": "While conducting scheduled maintenance on unit 99 at Mukhaizna Steam Flood Facility, a confined space asphyxiation scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CRITICAL.",
+    "ground_truth": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Confined Space Asphyxiation",
+      "severity": "CRITICAL",
+      "confidence": 0.97
+    }
+  },
+  {
+    "id": "GOLDEN-INC-100",
+    "facility": "Lekhwair Oil Gathering Center",
+    "activity": "Routine operational maintenance and turnaround activity #100",
+    "narrative": "While conducting scheduled maintenance on unit 100 at Lekhwair Oil Gathering Center, a structural collapse scenario unfolded. Safety barriers failed to prevent sequence when primary isolation was compromised. Observed immediate impact assessed as CATASTROPHIC.",
+    "ground_truth": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "statutory_reportable": true,
+      "certified_lead_investigator": "Eng. Salim Al-Maskari (NEBOSH ID-7821)",
+      "applicable_statute": "Oman MoL MD 286/2008 Article 18"
+    },
+    "model_prediction": {
+      "category": "Structural Collapse",
+      "severity": "CATASTROPHIC",
+      "confidence": 0.88
+    }
+  }
+]

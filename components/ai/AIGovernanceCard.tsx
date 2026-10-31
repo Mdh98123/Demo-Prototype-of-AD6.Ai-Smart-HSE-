@@ -53,6 +53,34 @@ export const AIGovernanceCard: React.FC<AIGovernanceCardProps> = ({
     onAccept(decision);
   };
 
+  // Phase 5 Runtime Guardrail: If confidence < threshold (0.70), suppress draft and display manual entry required
+  const threshold = 0.70;
+  if (confidenceScore < threshold) {
+    return (
+      <div className="rounded-2xl border-2 border-red-500/60 bg-slate-900/90 p-5 space-y-3 shadow-xl">
+        <div className="flex items-center gap-2.5 text-red-400">
+          <AlertTriangle size={20} />
+          <span className="font-bold text-sm tracking-wide uppercase">AI Suggestion Suppressed</span>
+        </div>
+        <p className="text-xs text-slate-300">
+          AI output confidence ({Math.round(confidenceScore * 100)}%) is below the safety threshold ({Math.round(threshold * 100)}%).
+        </p>
+        <div className="p-3 bg-red-950/30 border border-red-900/50 rounded-xl text-xs font-semibold text-red-200">
+          manual entry required — automated suggestion disabled for safety.
+        </div>
+        <div className="flex justify-end pt-1">
+          <button
+            type="button"
+            onClick={onDiscard}
+            className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition-colors"
+          >
+            Acknowledge & Proceed with Manual Entry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl border-2 border-amber-500/70 bg-gradient-to-b from-slate-900 via-slate-900 to-amber-950/20 shadow-2xl shadow-amber-950/30 overflow-hidden space-y-4 animate-in fade-in duration-300">
       
@@ -65,7 +93,7 @@ export const AIGovernanceCard: React.FC<AIGovernanceCardProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 font-mono shadow-sm">
-                AI-Generated Draft
+                AI-generated draft — requires review
               </span>
               <span className="text-[11px] text-amber-300/90 font-mono font-semibold">
                 HITL Gate: Human Sign-off Required
