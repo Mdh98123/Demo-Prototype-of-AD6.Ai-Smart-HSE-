@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [main, master]
   schedule:
-    # Run daily at 02:00 UTC
     - cron: '0 2 * * *'
 
 jobs:
@@ -21,10 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: TypeScript Static Typecheck
         run: npm run lint
