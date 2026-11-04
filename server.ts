@@ -19,7 +19,7 @@ import { geminiRouter } from "./routes/geminiRouter";
 import { predictiveMaintenanceRouter } from "./routes/predictiveMaintenanceRouter";
 import { regulatoryRouter } from "./routes/regulatoryRouter";
 import { enterpriseDataRouter } from "./routes/enterpriseDataRouter";
-import { v1Router, checkDatabaseHealth } from "./apps/api/src";
+import { v1Router, checkDatabaseHealth, enterpriseSecurityHeaders, createEnterpriseRateLimiter } from "./apps/api/src";
 import { ROLE_PERMISSIONS_MAP, VIEW_PERMISSION_REQUIREMENTS } from "./services/permissionService";
 import { UserRole, View } from "./types";
 
@@ -86,6 +86,8 @@ async function startServer() {
     });
   });
 
+  app.use(enterpriseSecurityHeaders);
+  app.use(createEnterpriseRateLimiter({ windowMs: 60 * 1000, maxRequests: 500 }));
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
   app.use("/api/workflow", workflowRouter);

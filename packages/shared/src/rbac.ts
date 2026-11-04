@@ -78,6 +78,13 @@ export enum Permission {
   AI_OUTPUT_READ = 'ai:read',
   AI_OUTPUT_CREATE = 'ai:create',
   AI_GATE_CONFIRM = 'ai:confirm',
+  SYNC_SUBMIT = 'sync:submit',
+  INTEGRATION_READ = 'integration:read',
+  INTEGRATION_EXECUTE = 'integration:execute',
+  SCIM_MANAGE = 'scim:manage',
+  SECURITY_MANAGE = 'security:manage',
+  RETENTION_PURGE = 'retention:purge',
+  SAR_MANAGE = 'sar:manage',
   ADMIN_FULL_ACCESS = '*'
 }
 
@@ -101,7 +108,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.PERMIT_READ,
     Permission.DOCUMENT_READ,
     Permission.TRAINING_READ,
-    Permission.AI_OUTPUT_READ
+    Permission.AI_OUTPUT_READ,
+    Permission.SYNC_SUBMIT
   ],
   [EnterpriseRole.SUPERVISOR]: [
     Permission.INCIDENT_READ,
@@ -119,7 +127,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.TRAINING_READ,
     Permission.AI_OUTPUT_READ,
     Permission.AI_OUTPUT_CREATE,
-    Permission.AI_GATE_CONFIRM
+    Permission.AI_GATE_CONFIRM,
+    Permission.SYNC_SUBMIT
   ],
   [EnterpriseRole.HSE_OFFICER]: [
     Permission.INCIDENT_READ,
@@ -140,7 +149,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.AUDIT_READ,
     Permission.AI_OUTPUT_READ,
     Permission.AI_OUTPUT_CREATE,
-    Permission.AI_GATE_CONFIRM
+    Permission.AI_GATE_CONFIRM,
+    Permission.SYNC_SUBMIT
   ],
   [EnterpriseRole.CONTRACTOR_ADMIN]: [
     Permission.CONTRACTOR_READ,
@@ -151,7 +161,8 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.DOCUMENT_READ,
     Permission.INCIDENT_CREATE,
     Permission.PERMIT_READ,
-    Permission.AI_OUTPUT_READ
+    Permission.AI_OUTPUT_READ,
+    Permission.SYNC_SUBMIT
   ],
   [EnterpriseRole.SITE_MANAGER]: [
     Permission.INCIDENT_READ,
@@ -178,7 +189,9 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.AUDIT_READ,
     Permission.AI_OUTPUT_READ,
     Permission.AI_OUTPUT_CREATE,
-    Permission.AI_GATE_CONFIRM
+    Permission.AI_GATE_CONFIRM,
+    Permission.SYNC_SUBMIT,
+    Permission.INTEGRATION_READ
   ],
   [EnterpriseRole.GROUP_HSE_DIRECTOR]: [
     Permission.INCIDENT_READ,
@@ -201,7 +214,14 @@ export const ROLE_PERMISSIONS_MAPPING: Record<EnterpriseRole, Permission[]> = {
     Permission.AUDIT_VERIFY,
     Permission.AI_OUTPUT_READ,
     Permission.AI_OUTPUT_CREATE,
-    Permission.AI_GATE_CONFIRM
+    Permission.AI_GATE_CONFIRM,
+    Permission.SYNC_SUBMIT,
+    Permission.INTEGRATION_READ,
+    Permission.INTEGRATION_EXECUTE,
+    Permission.SCIM_MANAGE,
+    Permission.SECURITY_MANAGE,
+    Permission.RETENTION_PURGE,
+    Permission.SAR_MANAGE
   ],
   [EnterpriseRole.AUDITOR_READONLY]: [
     Permission.INCIDENT_READ,

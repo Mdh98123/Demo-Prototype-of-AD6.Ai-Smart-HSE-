@@ -38,6 +38,15 @@ import { getPool } from '../db/connection.js';
 import crypto from 'node:crypto';
 import { requireAiGate } from '../middleware/aiGate.js';
 import { AiSafetyService } from '../ai/aiSafetyService.js';
+import { SyncService } from '../sync/syncService.js';
+import { ScimService } from '../integrations/identity/scimService.js';
+import { TwlEvaluationWorker } from '../integrations/weather/twlEvaluationWorker.js';
+import { PublicWeatherProvider } from '../integrations/weather/publicWeatherProvider.js';
+import { SandboxErpAdapter } from '../integrations/erp/sandboxErpAdapter.js';
+import { TemplatedNotificationService } from '../integrations/notification/templatedNotificationService.js';
+import { DATA_CLASSIFICATION_REGISTRY, RetentionWorker } from '../security/retentionWorker.js';
+import { SubjectAccessService } from '../security/subjectAccessService.js';
+import { FieldEncryption } from '../security/fieldEncryption.js';
 
 export const v1Router = Router();
 
@@ -1264,7 +1273,9 @@ v1Router.get('/admin/rbac/coverage-report', async (req: Request, res: Response) 
     { method: 'POST', path: '/admin/escalation-rules', guarded: true, permission: Permission.ESCALATION_MANAGE },
     { method: 'POST', path: '/admin/escalation-rules/evaluate', guarded: true, permission: Permission.ESCALATION_MANAGE },
     { method: 'POST', path: '/ai/outputs', guarded: true, permission: Permission.AI_OUTPUT_CREATE },
-    { method: 'POST', path: '/ai/outputs/:id/confirm', guarded: true, permission: Permission.AI_GATE_CONFIRM }
+    { method: 'POST', path: '/ai/outputs/:id/confirm', guarded: true, permission: Permission.AI_GATE_CONFIRM },
+    { method: 'POST', path: '/sync/batch', guarded: true, permission: Permission.SYNC_SUBMIT },
+    { method: 'POST', path: '/sync/item', guarded: true, permission: Permission.SYNC_SUBMIT }
   ];
 
   const total = mutatingRoutes.length;
@@ -1356,5 +1367,393 @@ v1Router.get('/ai/outputs/:id', requirePermission(Permission.AI_OUTPUT_READ), as
     return sendError(res, 'INTERNAL_ERROR', err.message, 500);
   }
 });
+
+// =============================================================================
+// OFFLINE SYNC AND CONFLICT RESOLUTION (Phase 6 - Gap G5)
+// =============================================================================
+
+/**
+ * POST /api/v1/sync/batch
+ * Batch ingestion of queued offline submissions with idempotency & conflict resolution
+ */
+v1Router.post('/sync/batch', requirePermission(Permission.SYNC_SUBMIT), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const { items } = req.body;
+    if (!Array.isArray(items)) {
+      return sendError(res, 'VALIDATION_ERROR', 'items array is required for batch sync', 400);
+    }
+    const actorId = (req as any).user?.id || (req.headers['x-user-id'] as string) || 'field_worker';
+    const actorRole = (req as any).user?.role || (req.headers['x-user-role'] as string) || 'Worker';
+    const result = await SyncService.processBatch(tenantId, items, actorId, actorRole);
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+/**
+ * POST /api/v1/sync/item
+ * Single item ingestion with idempotency key
+ */
+v1Router.post('/sync/item', requirePermission(Permission.SYNC_SUBMIT), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const item = req.body;
+    if (!item.localId || !item.idempotencyKey || !item.entityType || !item.payload) {
+      return sendError(res, 'VALIDATION_ERROR', 'Missing required sync item fields (localId, idempotencyKey, entityType, payload)', 400);
+    }
+    const actorId = (req as any).user?.id || (req.headers['x-user-id'] as string) || 'field_worker';
+    const actorRole = (req as any).user?.role || (req.headers['x-user-role'] as string) || 'Worker';
+    const result = await SyncService.processSingleItem(tenantId, item, actorId, actorRole);
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+/**
+ * GET /api/v1/sync/conflicts
+ * Auditable log of all resolved offline conflicts
+ */
+v1Router.get('/sync/conflicts', requirePermission(Permission.AUDIT_READ), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const pool = getPool();
+    const rows = await pool.query(
+      `SELECT * FROM sync_conflict_audits WHERE tenant_id = $1 ORDER BY created_at DESC LIMIT 50`,
+      [tenantId]
+    );
+    return sendSuccess(res, rows.rows);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+// =============================================================================
+// PHASE 7: SCIM 2.0 USER PROVISIONING ENDPOINTS (RFC 7643 / RFC 7644)
+// =============================================================================
+
+v1Router.get('/scim/v2/Users', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const startIndex = parseInt(req.query.startIndex as string, 10) || 1;
+    const count = parseInt(req.query.count as string, 10) || 50;
+    const result = await ScimService.listUsers(tenantId, startIndex, count);
+    return res.status(200).type('application/scim+json').json(result);
+  } catch (err: any) {
+    return res.status(500).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '500',
+      detail: err.message
+    });
+  }
+});
+
+v1Router.get('/scim/v2/Users/:id', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const userId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const user = await ScimService.getUser(tenantId, userId);
+    if (!user) {
+      return res.status(404).type('application/scim+json').json({
+        schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+        status: '404',
+        detail: 'User not found'
+      });
+    }
+    return res.status(200).type('application/scim+json').json(user);
+  } catch (err: any) {
+    return res.status(500).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '500',
+      detail: err.message
+    });
+  }
+});
+
+v1Router.post('/scim/v2/Users', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const user = await ScimService.createUser(tenantId, req.body);
+    return res.status(201).type('application/scim+json').json(user);
+  } catch (err: any) {
+    return res.status(400).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '400',
+      detail: err.message
+    });
+  }
+});
+
+v1Router.put('/scim/v2/Users/:id', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const userId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const user = await ScimService.updateUser(tenantId, userId, req.body);
+    if (!user) {
+      return res.status(404).type('application/scim+json').json({
+        schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+        status: '404',
+        detail: 'User not found'
+      });
+    }
+    return res.status(200).type('application/scim+json').json(user);
+  } catch (err: any) {
+    return res.status(500).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '500',
+      detail: err.message
+    });
+  }
+});
+
+v1Router.patch('/scim/v2/Users/:id', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const userId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const user = await ScimService.patchUser(tenantId, userId, req.body);
+    if (!user) {
+      return res.status(404).type('application/scim+json').json({
+        schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+        status: '404',
+        detail: 'User not found'
+      });
+    }
+    return res.status(200).type('application/scim+json').json(user);
+  } catch (err: any) {
+    return res.status(500).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '500',
+      detail: err.message
+    });
+  }
+});
+
+v1Router.delete('/scim/v2/Users/:id', requirePermission(Permission.SCIM_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const userId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    await ScimService.deleteUser(tenantId, userId);
+    return res.status(204).send();
+  } catch (err: any) {
+    return res.status(500).type('application/scim+json').json({
+      schemas: ['urn:ietf:params:scim:api:messages:2.0:Error'],
+      status: '500',
+      detail: err.message
+    });
+  }
+});
+
+// =============================================================================
+// PHASE 7: EXTERNAL INTEGRATIONS STATUS & DISPATCH ENDPOINTS
+// =============================================================================
+
+v1Router.get('/integrations/status', requirePermission(Permission.INTEGRATION_READ), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const pool = getPool();
+
+    const [scimCount, readingCount, breachCount, erpLogs, outboxCount] = await Promise.all([
+      pool.query<{ count: string }>('SELECT COUNT(*) as count FROM scim_users WHERE tenant_id = $1', [tenantId]),
+      pool.query<{ count: string }>('SELECT COUNT(*) as count FROM twl_readings WHERE tenant_id = $1', [tenantId]),
+      pool.query<{ count: string }>('SELECT COUNT(*) as count FROM twl_breaches WHERE tenant_id = $1 AND resolved_at IS NULL', [tenantId]),
+      pool.query('SELECT * FROM erp_sync_logs WHERE tenant_id = $1 ORDER BY created_at DESC LIMIT 5', [tenantId]),
+      pool.query<{ count: string }>('SELECT COUNT(*) as count FROM notification_outbox WHERE tenant_id = $1', [tenantId])
+    ]);
+
+    return sendSuccess(res, {
+      identity: {
+        provider: 'Azure AD / Okta / Keycloak OIDC/SAML',
+        scimUsersProvisioned: parseInt(scimCount.rows[0]?.count || '0', 10),
+        status: 'CONNECTED'
+      },
+      iotWeatherTwl: {
+        specification: 'PDO SP-1170 Heat Stress Protocol',
+        liveReadingsIngested: parseInt(readingCount.rows[0]?.count || '0', 10),
+        activeBreaches: parseInt(breachCount.rows[0]?.count || '0', 10),
+        status: 'OPERATIONAL'
+      },
+      erpProcurement: {
+        targetSystem: 'SAP S/4HANA (Ariba / PM) & IBM Maximo',
+        recentLogs: erpLogs.rows,
+        status: 'CONFIGURED_SANDBOX'
+      },
+      notifications: {
+        channels: ['email', 'sms', 'whatsapp'],
+        totalOutboxMessages: parseInt(outboxCount.rows[0]?.count || '0', 10),
+        status: 'READY'
+      }
+    });
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/integrations/weather/evaluate', requirePermission(Permission.INTEGRATION_EXECUTE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const { siteId, location } = req.body;
+    const provider = new PublicWeatherProvider();
+    const result = await TwlEvaluationWorker.evaluateSite(
+      tenantId,
+      siteId || crypto.randomUUID(),
+      location || 'Fahud Concession Block 9',
+      provider,
+      (req as any).user?.id || 'operator'
+    );
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/integrations/erp/sync-contractors', requirePermission(Permission.INTEGRATION_EXECUTE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const adapter = new SandboxErpAdapter();
+    const result = await adapter.syncContractorMaster(tenantId);
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/integrations/erp/sync-documents', requirePermission(Permission.INTEGRATION_EXECUTE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const adapter = new SandboxErpAdapter();
+    const result = await adapter.syncDocumentExpiry(tenantId);
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/integrations/erp/export-hse-stats', requirePermission(Permission.INTEGRATION_EXECUTE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const reportingPeriod = req.body.reportingPeriod || '2026-10';
+    const adapter = new SandboxErpAdapter();
+    const result = await adapter.exportMonthlyHseStatistics(tenantId, reportingPeriod);
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/integrations/notifications/test', requirePermission(Permission.INTEGRATION_EXECUTE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const { recipient, channel, templateId, payload } = req.body;
+    if (!recipient || !channel || !templateId) {
+      return sendError(res, 'VALIDATION_ERROR', 'recipient, channel, and templateId are required', 400);
+    }
+    const result = await TemplatedNotificationService.dispatch(
+      tenantId,
+      recipient,
+      channel,
+      templateId,
+      payload || {}
+    );
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.get('/integrations/notifications/outbox', requirePermission(Permission.INTEGRATION_READ), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const limit = parseInt(req.query.limit as string, 10) || 50;
+    const messages = await TemplatedNotificationService.getOutboxMessages(tenantId, limit);
+    return sendSuccess(res, messages);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+// =============================================================================
+// PHASE 8: SECURITY, PRIVACY & COMPLIANCE HARDENING ENDPOINTS
+// =============================================================================
+
+v1Router.get('/security/data-classification', async (req: Request, res: Response) => {
+  return sendSuccess(res, DATA_CLASSIFICATION_REGISTRY);
+});
+
+v1Router.post('/security/retention/purge', requirePermission(Permission.RETENTION_PURGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const dryRun = Boolean(req.body.dryRun);
+    const simulatedDate = req.body.simulatedDate ? new Date(req.body.simulatedDate) : undefined;
+    const result = await RetentionWorker.executeRetentionPurge(tenantId, {
+      dryRun,
+      simulatedCurrentDate: simulatedDate,
+      actorId: req.user?.id
+    });
+    return sendSuccess(res, result);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/security/legal-hold', requirePermission(Permission.SECURITY_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const { entityType, entityId, holdStatus, reason } = req.body;
+    if (!entityType || !entityId || holdStatus === undefined) {
+      return sendError(res, 'VALIDATION_ERROR', 'entityType, entityId, and holdStatus are required', 400);
+    }
+    const updated = await RetentionWorker.setLegalHold(
+      tenantId,
+      entityType,
+      entityId,
+      Boolean(holdStatus),
+      reason || 'Statutory regulatory hold',
+      req.user?.id
+    );
+    return sendSuccess(res, { updated, entityType, entityId, holdStatus: Boolean(holdStatus) });
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/security/sar/export', requirePermission(Permission.SAR_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const tenantId = getTenantId(req);
+    const subjectIdentifier = req.body.subjectIdentifier || req.body.email || req.body.userId;
+    if (!subjectIdentifier) {
+      return sendError(res, 'VALIDATION_ERROR', 'subjectIdentifier is required', 400);
+    }
+    const bundle = await SubjectAccessService.generateSubjectAccessBundle(
+      tenantId,
+      subjectIdentifier,
+      req.user?.id
+    );
+    return sendSuccess(res, bundle);
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+v1Router.post('/security/encrypt-test', requirePermission(Permission.SECURITY_MANAGE), async (req: Request, res: Response) => {
+  try {
+    const plaintext = req.body.plaintext;
+    if (!plaintext) {
+      return sendError(res, 'VALIDATION_ERROR', 'plaintext is required', 400);
+    }
+    const ciphertext = await FieldEncryption.encrypt(plaintext);
+    const decrypted = await FieldEncryption.decrypt(ciphertext);
+    return sendSuccess(res, {
+      ciphertext,
+      decrypted,
+      verified: decrypted === plaintext
+    });
+  } catch (err: any) {
+    return sendError(res, 'INTERNAL_ERROR', err.message, 500);
+  }
+});
+
+
 
 

@@ -9,3 +9,8 @@ export * from './db/schema';
 export { enterpriseDataRouter } from '../../../routes/enterpriseDataRouter';
 export { geminiRouter } from '../../../routes/geminiRouter';
 export { regulatoryRouter } from '../../../routes/regulatoryRouter';
+export * from './security/securityMiddleware';
+export * from './security/retentionWorker';
+export * from './security/fieldEncryption';
+export * from './security/secretsManager';
+export * from './security/subjectAccessService';

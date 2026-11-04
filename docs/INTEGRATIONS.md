@@ -95,10 +95,40 @@ graph TD
 
 ---
 
-## 4. Failure Modes, Dead-Letter Queues & Runbooks
+## 4. Phase 7 Delivered Integration Adapters
+
+### 4.1 Enterprise Identity & SCIM 2.0 User Provisioning
+- **Location:** `apps/api/src/integrations/identity/`
+- **Adapters:** `OidcSamlConnector.ts`, `ScimService.ts`
+- **Supported Providers:** Microsoft Entra ID (Azure AD), Okta Enterprise, Keycloak (GCC Sovereign Cloud).
+- **Documentation:** Complete matrix in `/docs/IDP_MATRIX.md`.
+- **SCIM Endpoints:** `/api/v1/scim/v2/Users` with CRUD, pagination, and soft-deactivation.
+
+### 4.2 IoT Weather Telemetry & TWL Worker (PDO SP-1170)
+- **Location:** `apps/api/src/integrations/weather/`
+- **Adapters:** `PublicWeatherProvider.ts` (live Open-Meteo), `MockWeatherProvider.ts`, `TwlEvaluationWorker.ts`.
+- **Thermal Logic:** Computes wet bulb temperature (Stull formulation) and Thermal Work Limit (TWL) in W/m².
+- **Permit Safety Gate:** Evaluates active TWL against the mandatory 115 W/m² withdrawal threshold per PDO SP-1170. If TWL < 115 W/m², logs `twl_breaches` and blocks permit activation.
+
+### 4.3 ERP / Procurement Integration (SAP S/4HANA & IBM Maximo)
+- **Location:** `apps/api/src/integrations/erp/`
+- **Adapters:** `SandboxErpAdapter.ts` (with 10 contractor & 10 document fixtures), `LiveErpAdapter.ts` (skeleton with strict fail-closed security).
+- **Features:** Contractor master sync, compliance document expiry sync, and byte-for-byte monthly HSE statistics export matching the official operator return template.
+
+### 4.4 Multi-Channel Notification Outbox
+- **Location:** `apps/api/src/integrations/notification/`
+- **Adapters:** `TemplatedNotificationService.ts`, `MockNotificationProvider.ts`, `LiveNotificationProvider.ts`.
+- **Channels:** Email (SendGrid/SMTP), SMS (Twilio), WhatsApp Business.
+- **Templates:** Statutory Form G 24-hr escalation (MD 286/2008), CAPA overdue, TWL heat breach stand-down, Permit pending approval.
+- **Auditing:** All attempts and delivery receipts persisted in `notification_outbox`.
+
+---
+
+## 5. Failure Modes, Dead-Letter Queues & Runbooks
 
 | Integration Point | Failure Scenario | Automated Recovery Behavior | Manual Runbook Action |
 |---|---|---|---|
 | **Gemini AI API** | Quota exhausted / HTTP 429 | Failover to `gemini-3.1-flash-lite`. If both fail, return structured fallback template. | Verify billing credit in Google Cloud Console; increase quota limits. |
 | **IoT Weather Stream** | Loss of station connectivity $> 30\text{m}$ | Default to conservative summer midday work stoppage policy (12:30–15:30 ban). | Site safety officer takes manual psychrometric / sling hygrometer reading. |
-| **Statutory Portal** | Government endpoint offline | Queue statutory notice in `outbound_dead_letter_queue` with exponential retry. | Download generated Form G PDF and submit via government manual email protocol. |
+| **Live ERP Gateway** | Missing credentials or host unreachable | Fails closed with descriptive error; logs event in `erp_sync_logs`. | Configure `SAP_ODATA_ENDPOINT` and `SAP_CLIENT_SECRET`. |
+| **Statutory Outbox** | Notification delivery failure | Recorded as `FAILED` in `notification_outbox` with error message for retry. | Re-dispatch or use manual email notification channel. |

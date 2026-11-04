@@ -110,6 +110,9 @@ export interface IncidentRecord {
   form_g_receipt_number?: string;
   form_g_deadline?: string;
   details: Record<string, any>;
+  legal_hold?: boolean;
+  medical_notes_encrypted?: string;
+  encryption_key_id?: string;
   created_at: string;
   updated_at: string;
 }
@@ -181,6 +184,7 @@ export interface CapaRecord {
   due_date: string;
   hierarchy: string;
   details: Record<string, any>;
+  legal_hold?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -210,6 +214,7 @@ export interface PermitRecord {
   issuer_signature?: Record<string, any>;
   receiver_signature?: Record<string, any>;
   details: Record<string, any>;
+  legal_hold?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -455,16 +460,50 @@ export interface IncidentStatutoryClockRecord {
 export interface NotificationOutboxRecord {
   id: string;
   tenant_id: string;
-  event_type: string;
-  entity_type: string;
-  entity_id: string;
-  recipient_role: string;
+  channel: 'email' | 'sms' | 'whatsapp' | string;
+  recipient: string;
+  template_id: string;
+  subject?: string;
   payload: Record<string, any>;
-  status: 'PENDING' | 'SENT' | 'FAILED' | string;
-  scheduled_for: string;
-  sent_at?: string;
+  status: 'QUEUED' | 'DELIVERED' | 'FAILED' | string;
+  delivery_receipt?: Record<string, any>;
   error_message?: string;
+  attempts: number;
   created_at: string;
+  sent_at?: string;
+  // Legacy / escalation worker compatibility
+  event_type?: string;
+  entity_type?: string;
+  entity_id?: string;
+  recipient_role?: string;
+  scheduled_for?: string;
+}
+
+export interface ErpSyncLogRecord {
+  id: string;
+  tenant_id: string;
+  erp_system: string;
+  sync_type: string;
+  records_synced: number;
+  status: 'SUCCESS' | 'FAILED' | string;
+  details: Record<string, any>;
+  checksum?: string;
+  created_at: string;
+}
+
+export interface ScimUserRecord {
+  id: string;
+  tenant_id: string;
+  external_id: string;
+  user_name: string;
+  email: string;
+  display_name?: string;
+  role: string;
+  active: boolean;
+  idp_type: string;
+  meta: Record<string, any>;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AiOutputRecord {
@@ -547,4 +586,53 @@ export interface EscalationRuleRecord {
   created_at: string;
   updated_at: string;
 }
+
+export interface SyncIdempotencyRecord {
+  id: string;
+  tenant_id: string;
+  idempotency_key: string;
+  entity_type: string;
+  response_json: Record<string, any>;
+  device_id?: string;
+  created_at: string;
+}
+
+export interface SyncConflictAuditRecord {
+  id: string;
+  tenant_id: string;
+  entity_type: string;
+  entity_id: string;
+  resolution_strategy: string;
+  client_version: Record<string, any>;
+  server_version: Record<string, any>;
+  resolved_version: Record<string, any>;
+  device_id?: string;
+  actor_id?: string;
+  reason?: string;
+  created_at: string;
+}
+
+export interface DataRetentionPolicyRecord {
+  id: string;
+  tenant_id: string;
+  entity_type: string;
+  retention_period_days: number;
+  regulatory_basis: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DataSubjectRequestRecord {
+  id: string;
+  tenant_id: string;
+  subject_id: string;
+  subject_email: string;
+  request_type: 'ACCESS' | 'RECTIFICATION' | 'ERASURE';
+  status: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'REJECTED';
+  export_payload: Record<string, any>;
+  completed_at?: string;
+  created_at: string;
+}
+
 

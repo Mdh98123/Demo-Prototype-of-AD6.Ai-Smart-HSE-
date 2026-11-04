@@ -176,6 +176,11 @@ CREATE TABLE IF NOT EXISTS incidents (
     form_g_receipt_number VARCHAR(128),
     form_g_deadline TIMESTAMPTZ,
     details JSONB NOT NULL DEFAULT '{}'::jsonb,
+    duplicate_flag BOOLEAN NOT NULL DEFAULT false,
+    sync_idempotency_key VARCHAR(255),
+    legal_hold BOOLEAN NOT NULL DEFAULT false,
+    medical_notes_encrypted TEXT,
+    encryption_key_id VARCHAR(64),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -295,6 +300,7 @@ CREATE TABLE IF NOT EXISTS capas (
     due_date DATE NOT NULL,
     hierarchy VARCHAR(64) NOT NULL DEFAULT 'Engineering',
     details JSONB NOT NULL DEFAULT '{}'::jsonb,
+    legal_hold BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT chk_capa_sod_owner_not_verifier CHECK (
@@ -343,6 +349,7 @@ CREATE TABLE IF NOT EXISTS permits (
     issuer_signature JSONB,
     receiver_signature JSONB,
     details JSONB NOT NULL DEFAULT '{}'::jsonb,
+    legal_hold BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT chk_permit_sod_receiver_not_issuer CHECK (
@@ -473,7 +480,10 @@ CREATE TABLE IF NOT EXISTS inspections (
     status VARCHAR(32) NOT NULL DEFAULT 'Scheduled',
     score NUMERIC(5,2),
     completed_at TIMESTAMPTZ,
+    answers JSONB NOT NULL DEFAULT '{}'::jsonb,
     details JSONB NOT NULL DEFAULT '{}'::jsonb,
+    client_updated_at TIMESTAMPTZ,
+    sync_device_id VARCHAR(128),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -730,5 +740,161 @@ CREATE TABLE IF NOT EXISTS ai_outputs (
 CREATE INDEX IF NOT EXISTS idx_ai_outputs_tenant_id ON ai_outputs(tenant_id);
 ALTER TABLE ai_outputs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY tenant_isolation_ai_outputs ON ai_outputs
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 35. SYNC IDEMPOTENCY KEYS (Phase 6)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS sync_idempotency_keys (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    idempotency_key VARCHAR(255) NOT NULL,
+    entity_type VARCHAR(64) NOT NULL,
+    response_json JSONB NOT NULL,
+    device_id VARCHAR(128),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT uq_sync_idempotency UNIQUE (tenant_id, idempotency_key)
+);
+CREATE INDEX IF NOT EXISTS idx_sync_idempotency_tenant ON sync_idempotency_keys(tenant_id);
+ALTER TABLE sync_idempotency_keys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_sync_idempotency_keys ON sync_idempotency_keys
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 36. SYNC CONFLICT AUDITS (Phase 6)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS sync_conflict_audits (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    entity_type VARCHAR(64) NOT NULL,
+    entity_id VARCHAR(255) NOT NULL,
+    resolution_strategy VARCHAR(64) NOT NULL,
+    client_version JSONB NOT NULL,
+    server_version JSONB NOT NULL,
+    resolved_version JSONB NOT NULL,
+    device_id VARCHAR(128),
+    actor_id VARCHAR(255),
+    reason TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_sync_conflict_tenant ON sync_conflict_audits(tenant_id);
+ALTER TABLE sync_conflict_audits ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_sync_conflict_audits ON sync_conflict_audits
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 37. NOTIFICATION OUTBOX (Phase 2 & Phase 7)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS notification_outbox (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    event_type VARCHAR(64) DEFAULT 'ESCALATION_LEVEL_1',
+    entity_type VARCHAR(64) DEFAULT 'permit',
+    entity_id VARCHAR(128) DEFAULT '',
+    recipient_role VARCHAR(64) DEFAULT 'HSE_Officer',
+    channel VARCHAR(32) NOT NULL DEFAULT 'email',
+    recipient VARCHAR(255) NOT NULL DEFAULT 'safety@operator.om',
+    template_id VARCHAR(64) NOT NULL DEFAULT 'statutory_clock_escalation',
+    subject VARCHAR(255),
+    payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+    status VARCHAR(32) NOT NULL DEFAULT 'QUEUED',
+    scheduled_for TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    delivery_receipt JSONB,
+    error_message TEXT,
+    attempts INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    sent_at TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_notification_outbox_tenant ON notification_outbox(tenant_id);
+ALTER TABLE notification_outbox ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_notification_outbox ON notification_outbox
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 38. ERP SYNC LOGS (Phase 7)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS erp_sync_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    erp_system VARCHAR(64) NOT NULL,
+    sync_type VARCHAR(64) NOT NULL,
+    records_synced INT NOT NULL DEFAULT 0,
+    status VARCHAR(32) NOT NULL DEFAULT 'SUCCESS',
+    details JSONB NOT NULL DEFAULT '{}'::jsonb,
+    checksum VARCHAR(128),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_erp_sync_logs_tenant ON erp_sync_logs(tenant_id);
+ALTER TABLE erp_sync_logs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_erp_sync_logs ON erp_sync_logs
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 39. SCIM USERS (Phase 7)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS scim_users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    external_id VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    display_name VARCHAR(255),
+    role VARCHAR(64) NOT NULL DEFAULT 'field_worker',
+    active BOOLEAN NOT NULL DEFAULT true,
+    idp_type VARCHAR(64) NOT NULL DEFAULT 'azure_ad',
+    meta JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT uq_scim_user UNIQUE (tenant_id, user_name)
+);
+CREATE INDEX IF NOT EXISTS idx_scim_users_tenant ON scim_users(tenant_id);
+ALTER TABLE scim_users ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_scim_users ON scim_users
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 40. DATA RETENTION POLICIES (Phase 8)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS data_retention_policies (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    entity_type VARCHAR(64) NOT NULL,
+    retention_period_days INT NOT NULL,
+    regulatory_basis VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_data_retention_policies_tenant ON data_retention_policies(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_data_retention_policies_entity ON data_retention_policies(entity_type);
+ALTER TABLE data_retention_policies ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_data_retention_policies ON data_retention_policies
+    FOR ALL
+    USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+-- -----------------------------------------------------------------------------
+-- 41. DATA SUBJECT ACCESS REQUESTS (Phase 8)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS data_subject_requests (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    subject_id VARCHAR(255) NOT NULL,
+    subject_email VARCHAR(255) NOT NULL,
+    request_type VARCHAR(64) NOT NULL DEFAULT 'ACCESS',
+    status VARCHAR(32) NOT NULL DEFAULT 'PENDING',
+    export_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+    completed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_data_subject_requests_tenant ON data_subject_requests(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_data_subject_requests_subject ON data_subject_requests(subject_id);
+ALTER TABLE data_subject_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation_data_subject_requests ON data_subject_requests
     FOR ALL
     USING (tenant_id = current_setting('app.tenant_id')::uuid);

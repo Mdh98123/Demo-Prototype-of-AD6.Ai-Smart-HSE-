@@ -21,6 +21,7 @@ export interface FeatureFlags {
   aiGates: boolean;
   offlineSyncV2: boolean;
   integrations: boolean;
+  securityHardening: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: Readonly<FeatureFlags> = Object.freeze({
@@ -31,6 +32,7 @@ export const DEFAULT_FEATURE_FLAGS: Readonly<FeatureFlags> = Object.freeze({
   aiGates: false,
   offlineSyncV2: false,
   integrations: false,
+  securityHardening: false,
 });
 
 export type FeatureFlagKey = keyof FeatureFlags;
@@ -43,6 +45,7 @@ const ENV_VAR_MAPPING: Record<FeatureFlagKey, string> = {
   aiGates: 'FEATURE_FLAG_AI_GATES',
   offlineSyncV2: 'FEATURE_FLAG_OFFLINE_SYNC_V2',
   integrations: 'FEATURE_FLAG_INTEGRATIONS',
+  securityHardening: 'FEATURE_FLAG_SECURITY_HARDENING',
 };
 
 export class FeatureFlagRegistry {
@@ -64,6 +67,7 @@ export class FeatureFlagRegistry {
       aiGates: this.parseBoolean(env[ENV_VAR_MAPPING.aiGates], DEFAULT_FEATURE_FLAGS.aiGates),
       offlineSyncV2: this.parseBoolean(env[ENV_VAR_MAPPING.offlineSyncV2], DEFAULT_FEATURE_FLAGS.offlineSyncV2),
       integrations: this.parseBoolean(env[ENV_VAR_MAPPING.integrations], DEFAULT_FEATURE_FLAGS.integrations),
+      securityHardening: this.parseBoolean(env[ENV_VAR_MAPPING.securityHardening], DEFAULT_FEATURE_FLAGS.securityHardening),
     };
 
     return {
